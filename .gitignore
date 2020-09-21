@@ -1,0 +1,12 @@
+# JetBrains IDE
+.idea
+
+# VSCode
+.vscode
+
+# Dependencies
+node_modules
+
+# Logs
+logs
+*.log
