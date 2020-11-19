@@ -1,0 +1,15 @@
+{
+  "name": "@byndyusoft-ui/button",
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "source": "index.tsx",
+  "license": "MIT",
+   "scripts": {
+    "start": "microbundle watch --jsx React.createElement"
+  },
+  "peerDependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  }
+}
