@@ -10,3 +10,6 @@ node_modules
 # Logs
 logs
 *.log
+
+# all dist folders
+dist
