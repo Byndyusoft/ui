@@ -2,8 +2,16 @@
   "name": "root",
   "private": true,
   "devDependencies": {
-    "lerna": "^3.22.1"
+    "lerna": "^3.22.1",
+    "microbundle": "^0.12.4"
   },
+  "scripts": {
+    "start": "lerna run start --parallel"
+  },
+  "workspaces": [
+    "packages/*",
+    "demo"
+  ],
   "dependencies": {
     "typescript": "^4.0.3"
   }
