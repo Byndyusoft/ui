@@ -11,6 +11,10 @@ React-based UI library
 - Для внешней ссылки используем сторибук на облачком хостинге, или свой сайт на gihub pages?
 - Чем собирать отдельные пакеты?
 
+### Storybook
+
+Есть 2 варианта использования storybook в монорепе. Sorybook-in-root или storybook-as-a-packages. Я пока за второй вариант, подробнее в заметке вот [тут](https://richsoni.com/posts/2019-01-24-comparing-lerna-storybook-architectures/)
+
 ### TODO
 
 1. Настроить билд отдельных пакетов.
