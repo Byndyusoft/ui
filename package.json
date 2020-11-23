@@ -17,8 +17,7 @@
     "build-storybook": "build-storybook"
   },
   "workspaces": [
-    "packages/*",
-    "demo"
+    "packages/*"
   ],
   "dependencies": {
     "typescript": "^4.0.3"
