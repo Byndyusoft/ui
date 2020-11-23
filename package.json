@@ -2,11 +2,19 @@
   "name": "root",
   "private": true,
   "devDependencies": {
+    "@babel/core": "^7.12.7",
+    "@storybook/addon-actions": "^6.1.2",
+    "@storybook/addon-essentials": "^6.1.2",
+    "@storybook/addon-links": "^6.1.2",
+    "@storybook/react": "^6.1.2",
+    "babel-loader": "^8.2.1",
     "lerna": "^3.22.1",
     "microbundle": "^0.12.4"
   },
   "scripts": {
-    "start": "lerna run start --parallel"
+    "start": "lerna run start --parallel",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "workspaces": [
     "packages/*",
