@@ -4,7 +4,7 @@ React-based UI library
 
 1. Lerna `npm install --global lerna`
 2. Чтобы добавить в зависимости одного пакета другой, нужно сделать `lerna add package-to-add --scope package-where-to-add`
-
+3. Добавить пакет в отдельный репозиторий `lerna add @storybook/react —-scope=@my-project/library` или `lerna add @storybook/react packages/library`
 ## Заметки
 
 ### Вопросы
@@ -31,11 +31,17 @@ React-based UI library
 [Boost your create-react-app workflow with esbuild / swc](https://dev.to/pradel/boost-your-create-react-app-workflow-with-esbuild-swc-3a8m)
 
 [Zero-Config Monorepo for a React Component Library in 2019](https://medium.com/@MattBlackDev/zero-config-monorepo-for-a-react-component-library-in-2019-dd9137bdd0a6)
-
+Еще один пример конфига монорепы с `cra` и `react-app-rewired customize-cra`  [](https://jibin.tech/monorepo-with-create-react-app/)
 [Component Library in Tetrisly.com](https://medium.com/sketch-app-sources/how-we-organized-the-component-library-in-tetrisly-com-part-1-introduction-a2eb5ff61395)
 [Starter Kit to create Design System and Wireframes in Figma](https://tetrisly.com/figma/)
 
-Пакеты:
+Базовый конфиг монорепы и проблемы, с которыми можно столкнуться
+[Creating Monorepo using Lerna](https://medium.com/@harshverma04111989/creating-monorepo-using-lerna-dd431d0db072)
+
+issue [facebook / create-react-app](https://github.com/facebook/create-react-app/issues/1333) с использованием Lerna и/или Yarn Workspaces
+
+
+###Пакеты:
 
 [Линтер для монореп](https://github.com/Thinkmill/manypkg)
 
@@ -46,6 +52,8 @@ React-based UI library
 [react-workspaces-playground](https://github.com/react-workspaces/react-workspaces-playground)
 
 Свежая репа примером[tsdx-monorepo](https://github.com/jaredpalmer/tsdx-monorepo)
+
+Еще один вариант. Конфиг не очень понравился, но глянуть можно [Building a Multi-CRA using Lerna and Monorepo](https://medium.com/swlh/building-a-multi-cra-using-lerna-and-monorepo-4628de405c6b)
 
 ---
 
