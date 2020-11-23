@@ -1,5 +1,6 @@
-import React from 'react';
-import Button from '../index.tsx';
+import Button from '../index';
+import * as React from 'react';
+import '@byndyusoft-ui/button/index.css';
 
 export const ButtonStory = () => <Button>Кнопочка</Button>
 
