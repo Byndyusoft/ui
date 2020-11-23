@@ -1,5 +1,5 @@
 import * as React from 'react';
 
-const Button = ({ children }) => <button>{children}</button>;
+const Button: Reac.FC = ({ children }) => <button>{children}</button>;
 
 export default Button;
