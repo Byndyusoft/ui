@@ -3,6 +3,7 @@
 React-based UI library
 
 1. Lerna `npm install --global lerna`
+2. Чтобы добавить в зависимости одного пакета другой, нужно сделать `lerna add package-to-add --scope package-where-to-add`
 
 ## Заметки
 
@@ -31,7 +32,7 @@ React-based UI library
 
 [Zero-Config Monorepo for a React Component Library in 2019](https://medium.com/@MattBlackDev/zero-config-monorepo-for-a-react-component-library-in-2019-dd9137bdd0a6)
 
-[Component Library in Tetrisly.com]https://medium.com/sketch-app-sources/how-we-organized-the-component-library-in-tetrisly-com-part-1-introduction-a2eb5ff61395)
+[Component Library in Tetrisly.com](https://medium.com/sketch-app-sources/how-we-organized-the-component-library-in-tetrisly-com-part-1-introduction-a2eb5ff61395)
 [Starter Kit to create Design System and Wireframes in Figma](https://tetrisly.com/figma/)
 
 Пакеты:
@@ -39,3 +40,27 @@ React-based UI library
 [Линтер для монореп](https://github.com/Thinkmill/manypkg)
 
 [Microbundle](https://github.com/developit/microbundle)
+
+Стартеры с монорепой на github
+
+[react-workspaces-playground](https://github.com/react-workspaces/react-workspaces-playground)
+
+Свежая репа примером[tsdx-monorepo](https://github.com/jaredpalmer/tsdx-monorepo)
+
+---
+
+###TODO 
+
+ -[x] посмотреть tsdx? **штука хорошая, но пока непонятно, как это работает с глобальным сторибуком. Посмотрю в отдельной ветке попозже**
+ -[ ] Выбрать способ стилизации, темы. Дефолтные кастомизируемые стили
+ -[ ] Опубликовать 1 компонент со стилями
+ -[ ] Опубликовать хук в npm
+ -[ ] Попробовать хук на реальном проекте
+
+
+---
+###История
+
+ 1. Попробовал сделать по этому [гайду](https://dev.to/shnydercom/monorepos-lerna-typescript-cra-and-storybook-combined-4hli) и [хэтому гайду](https://medium.com/@MattBlackDev/zero-config-monorepo-for-a-react-component-library-in-2019-dd9137bdd0a6) все заработало.
+ 2. Накатил в корне монорепы `storybook`, он стал конфликтовать с `cra`. Думаю между отказаться от `cra` или накатить сверху шаблон сторибука.
+ 
