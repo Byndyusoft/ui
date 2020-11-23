@@ -5,7 +5,7 @@
   "module": "dist/index.esm.js",
   "source": "index.tsx",
   "license": "MIT",
-   "scripts": {
+  "scripts": {
     "start": "microbundle watch --jsx React.createElement"
   },
   "peerDependencies": {
