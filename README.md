@@ -67,6 +67,20 @@ issue [facebook / create-react-app](https://github.com/facebook/create-react-app
 
 
 ---
+
+###Стилизация
+
+1.  Обычный CSS
+2.  CSS Modules
+3.  CSS-in-JS
+    -   [JSS](https://cssinjs.org/?v=v10.5.0), в частности [React-JSS](https://cssinjs.org/react-jss/?v=v10.5.0). Решение не очень популярное сейчас, но иимеет место быть. 6к звезд на гитхабе.
+    -   [Styled Components](https://github.com/styled-components/styled-components). Самое популярное решение в стиле `CSS-in-JS`. Обычно используют его. 31.7к звезд.
+    -   [Emotion](https://emotion.sh/docs/introduction). Альтернатива `Styled Components`. Пишут, что `focused on performance and developer experience`. 12к зевезд, релизы выходят часто.
+    -   [Linaria](https://github.com/callstack/linaria). Альтернатива `Styled Components`. По описанию - неплохо. Релизы частые, 6к звезд.
+4.  Пре/пост процессоры.
+    -   Всем известные SCSS, Less, Stylus.
+    -   [Stylable](https://stylable.io/). Интересный препроцессор для CSS, который делаютв в WIX. Со всякими штуками типо экстендов, миксинов, неймспейсов. Я бы даже и попробовал, но пока нет плагина под IDEA, только под VSCode. 1.1к звезд, релизы выходят часто.
+
 ###История
 
  1. Попробовал сделать по этому [гайду](https://dev.to/shnydercom/monorepos-lerna-typescript-cra-and-storybook-combined-4hli) и [хэтому гайду](https://medium.com/@MattBlackDev/zero-config-monorepo-for-a-react-component-library-in-2019-dd9137bdd0a6) все заработало.
