@@ -1,6 +1,18 @@
 import * as React from 'react';
-import { sum } from '@byndyusoft-ui/hooks';
+import { useInterval } from '@byndyusoft-ui/hooks';
+import { useEffect } from 'react';
 
-const Button: React.FC = ({ children }) => <button className="Button"> 2 + 2 = {sum(2, 2)}</button>;
+const Button: React.FC = ({ children }) => {
+    const [count, setCount] = React.useState(0);
+    const {start, stop} = useInterval(() => {
+        setCount(count + 1);
+    });
+
+    useEffect(() => {
+        start(1000);
+    }, [start]);
+
+    return <button className="Button"> count: {count}</button>;
+};
 
 export default Button;
