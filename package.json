@@ -15,6 +15,7 @@
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
+    "lint-fix": "tsdx lint --fix",
     "prepare": "tsdx build",
     "size": "size-limit",
     "analyze": "size-limit --why",
@@ -30,10 +31,11 @@
     }
   },
   "prettier": {
-    "printWidth": 80,
-    "semi": true,
+    "arrowParens": "avoid",
     "singleQuote": true,
-    "trailingComma": "es5"
+    "tabWidth": 4,
+    "trailingComma": "none",
+    "printWidth": 120
   },
   "name": "bui",
   "author": "Nick Kuznetsov",
