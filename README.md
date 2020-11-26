@@ -10,8 +10,8 @@ React-based UI library
 
 ### Вопросы
 
-- Для внешней ссылки используем сторибук на облачком хостинге, или свой сайт на gihub pages?
-- Чем собирать отдельные пакеты?
+-   Для внешней ссылки используем сторибук на облачком хостинге, или свой сайт на gihub pages?
+-   Чем собирать отдельные пакеты?
 
 ### Storybook
 
@@ -32,7 +32,7 @@ React-based UI library
 [Boost your create-react-app workflow with esbuild / swc](https://dev.to/pradel/boost-your-create-react-app-workflow-with-esbuild-swc-3a8m)
 
 [Zero-Config Monorepo for a React Component Library in 2019](https://medium.com/@MattBlackDev/zero-config-monorepo-for-a-react-component-library-in-2019-dd9137bdd0a6)
-Еще один пример конфига монорепы с `cra` и `react-app-rewired customize-cra`  [](https://jibin.tech/monorepo-with-create-react-app/)
+Еще один пример конфига монорепы с `cra` и `react-app-rewired customize-cra` [](https://jibin.tech/monorepo-with-create-react-app/)
 [Component Library in Tetrisly.com](https://medium.com/sketch-app-sources/how-we-organized-the-component-library-in-tetrisly-com-part-1-introduction-a2eb5ff61395)
 [Starter Kit to create Design System and Wireframes in Figma](https://tetrisly.com/figma/)
 
@@ -40,7 +40,9 @@ React-based UI library
 [Creating Monorepo using Lerna](https://medium.com/@harshverma04111989/creating-monorepo-using-lerna-dd431d0db072)
 
 issue [facebook / create-react-app](https://github.com/facebook/create-react-app/issues/1333) с использованием Lerna и/или Yarn Workspaces
+[Стартуем библиотеку компонентов на React и TypeScript](https://habr.com/ru/post/461439/)
 
+[Большая обзорная статья про lerna, yarn, npm](https://doppelmutzi.github.io/monorepo-lerna-yarn-workspaces/)
 
 ###Пакеты:
 
@@ -56,16 +58,16 @@ issue [facebook / create-react-app](https://github.com/facebook/create-react-app
 
 Еще один вариант. Конфиг не очень понравился, но глянуть можно [Building a Multi-CRA using Lerna and Monorepo](https://medium.com/swlh/building-a-multi-cra-using-lerna-and-monorepo-4628de405c6b)
 
+[⚛🐈Zero Config Create-React-App Monorepos with Yarn Workspaces, Lerna and React Storybook.](https://github.com/react-workspaces/react-workspaces-playground)
 ---
 
-###TODO 
+###TODO
 
- -[x] посмотреть tsdx? **штука хорошая, но пока непонятно, как это работает с глобальным сторибуком. Посмотрю в отдельной ветке попозже**
- -[ ] Выбрать способ стилизации, темы. Дефолтные кастомизируемые стили
- -[ ] Опубликовать 1 компонент со стилями
- -[ ] Опубликовать хук в npm
- -[ ] Попробовать хук на реальном проекте
-
+-[x] посмотреть tsdx? **штука хорошая, но пока непонятно, как это работает с глобальным сторибуком. Посмотрю в отдельной ветке попозже**
+-[x] Выбрать способ стилизации, темы. Дефолтные кастомизируемые стили
+-[x] Опубликовать 1 компонент со стилями. Предварительно решили, что будем использовать обычный CSS
+-[x] Попробовать хук ~~на реальном проекте~~ в монорепе.
+-[ ] Опубликовать что нибудь в npm
 
 ---
 
@@ -84,6 +86,5 @@ issue [facebook / create-react-app](https://github.com/facebook/create-react-app
 
 ###История
 
- 1. Попробовал сделать по этому [гайду](https://dev.to/shnydercom/monorepos-lerna-typescript-cra-and-storybook-combined-4hli) и [хэтому гайду](https://medium.com/@MattBlackDev/zero-config-monorepo-for-a-react-component-library-in-2019-dd9137bdd0a6) все заработало.
- 2. Накатил в корне монорепы `storybook`, он стал конфликтовать с `cra`. Думаю между отказаться от `cra` или накатить сверху шаблон сторибука.
- 
+1.  Попробовал сделать по этому [гайду](https://dev.to/shnydercom/monorepos-lerna-typescript-cra-and-storybook-combined-4hli) и [хэтому гайду](https://medium.com/@MattBlackDev/zero-config-monorepo-for-a-react-component-library-in-2019-dd9137bdd0a6) все заработало.
+2.  Накатил в корне монорепы `storybook`, он стал конфликтовать с `cra`. Думаю между отказаться от `cra` или накатить сверху шаблон сторибука.
