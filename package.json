@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -38,7 +38,7 @@
     "trailingComma": "none",
     "printWidth": 120
   },
-  "name": "bui",
+  "name": "@pixelfixer/ui-test",
   "author": "Nick Kuznetsov",
   "module": "dist/ui.esm.js",
   "size-limit": [
@@ -62,10 +62,12 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "babel-loader": "^8.2.1",
+    "copyfiles": "^2.4.0",
     "husky": "^4.3.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-is": "^17.0.1",
+    "rimraf": "^3.0.2",
     "rollup-plugin-copy": "^3.3.0",
     "size-limit": "^4.9.0",
     "tsdx": "^0.14.1",
