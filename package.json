@@ -12,7 +12,8 @@
   },
   "scripts": {
     "start": "tsdx watch",
-    "build": "tsdx build",
+    "copy-css": "copyfiles \"./src/**/*.css\" dist -u 1",
+    "build": "tsdx build && npm run copy-css",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
     "lint-fix": "tsdx lint --fix",
