@@ -6,6 +6,7 @@ React-based UI library
 2. Чтобы добавить в зависимости одного пакета другой, нужно сделать `lerna add package-to-add --scope package-where-to-add`
 3. Добавить пакет в отдельный репозиторий `lerna add @storybook/react —-scope=@my-project/library` или `lerna add @storybook/react packages/library`
 4. Выполнить команду в конкрентном пакете `yarn workspace awesome-package add react --dev`
+
 ## Заметки
 
 ### Вопросы
@@ -43,6 +44,9 @@ issue [facebook / create-react-app](https://github.com/facebook/create-react-app
 [Стартуем библиотеку компонентов на React и TypeScript](https://habr.com/ru/post/461439/)
 
 [Большая обзорная статья про lerna, yarn, npm](https://doppelmutzi.github.io/monorepo-lerna-yarn-workspaces/)
+[Using Create-React-App In A Monorepo](https://medium.com/frontend-digest/using-create-react-app-in-a-monorepo-a4e6f25be7aa)
+[](https://medium.com/@tymekluczko/the-complete-guide-to-publish-react-hook-as-npm-package-880049829e89)
+[Setup a Create React App Monorepo](https://f1lt3r.io/create-react-app-monorepo-with-lerna-storybook-jest)
 
 ###Пакеты:
 
@@ -59,15 +63,12 @@ issue [facebook / create-react-app](https://github.com/facebook/create-react-app
 Еще один вариант. Конфиг не очень понравился, но глянуть можно [Building a Multi-CRA using Lerna and Monorepo](https://medium.com/swlh/building-a-multi-cra-using-lerna-and-monorepo-4628de405c6b)
 
 [⚛🐈Zero Config Create-React-App Monorepos with Yarn Workspaces, Lerna and React Storybook.](https://github.com/react-workspaces/react-workspaces-playground)
----
+
+[azu /lerna-monorepo-github-actions-release](https://github.com/azu/lerna-monorepo-github-actions-release)
 
 ###TODO
 
--[x] посмотреть tsdx? **штука хорошая, но пока непонятно, как это работает с глобальным сторибуком. Посмотрю в отдельной ветке попозже**
--[x] Выбрать способ стилизации, темы. Дефолтные кастомизируемые стили
--[x] Опубликовать 1 компонент со стилями. Предварительно решили, что будем использовать обычный CSS
--[x] Попробовать хук ~~на реальном проекте~~ в монорепе.
--[ ] Опубликовать что нибудь в npm
+-[x] посмотреть tsdx? **штука хорошая, но пока непонятно, как это работает с глобальным сторибуком. Посмотрю в отдельной ветке попозже** -[x] Выбрать способ стилизации, темы. Дефолтные кастомизируемые стили -[x] Опубликовать 1 компонент со стилями. Предварительно решили, что будем использовать обычный CSS -[x] Попробовать хук ~~на реальном проекте~~ в монорепе. -[x] Опубликовать тестовы пакет в npm npm
 
 ---
 
@@ -83,8 +84,3 @@ issue [facebook / create-react-app](https://github.com/facebook/create-react-app
 4.  Пре/пост процессоры.
     -   Всем известные SCSS, Less, Stylus.
     -   [Stylable](https://stylable.io/). Интересный препроцессор для CSS, который делаютв в WIX. Со всякими штуками типо экстендов, миксинов, неймспейсов. Я бы даже и попробовал, но пока нет плагина под IDEA, только под VSCode. 1.1к звезд, релизы выходят часто.
-
-###История
-
-1.  Попробовал сделать по этому [гайду](https://dev.to/shnydercom/monorepos-lerna-typescript-cra-and-storybook-combined-4hli) и [хэтому гайду](https://medium.com/@MattBlackDev/zero-config-monorepo-for-a-react-component-library-in-2019-dd9137bdd0a6) все заработало.
-2.  Накатил в корне монорепы `storybook`, он стал конфликтовать с `cra`. Думаю между отказаться от `cra` или накатить сверху шаблон сторибука.
