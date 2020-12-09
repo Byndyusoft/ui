@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import cn from 'classnames';
-import './Skeleton.css';
+import '@byndyusoft-ui/styles/Skeleton/Skeleton.css';
 
 interface ISkeletonProps {
     className?: string

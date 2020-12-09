@@ -1,11 +1,12 @@
-import React, { FC, ReactNode, createElement, ReactElement } from 'react'
+// @ts-ignore
+import React, { FC, ReactNode, ReactElement } from 'react'
 import renderAsProp from '../utils/renderAsProp';
 
-interface iContentProps {
-    as?: ReactNode | ReactElement
+interface IContentProps {
+    as?: ReactNode | ReactElement | string
 }
 
-const Content: FC = (props) => {
+const Content: FC<IContentProps> = (props) => {
     const { children, as = 'div', ...rest } = props;
 
     return renderAsProp({ as, props: rest, children })

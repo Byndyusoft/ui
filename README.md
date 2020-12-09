@@ -6,7 +6,7 @@ React-based UI library
 2. Чтобы добавить в зависимости одного пакета другой, нужно сделать `lerna add package-to-add --scope package-where-to-add`
 3. Добавить пакет в отдельный репозиторий `lerna add @storybook/react —-scope=@my-project/library` или `lerna add @storybook/react packages/library`
 4. Выполнить команду в конкрентном пакете `yarn workspace awesome-package add react --dev`
-
+5. `lerna link` создает симлинки между пакетами
 ## Заметки
 
 ### Вопросы
