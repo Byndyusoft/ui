@@ -1,14 +1,14 @@
 import React, { FC, useRef } from 'react';
 
 interface IFileInputProps {
-    children: JSX.Element;
+    component: JSX.Element;
     name: string;
-    acceptFiles: string;
+    acceptFiles?: string;
     isMultiupload?: boolean;
     onChangeHandler: (files: File[]) => void;
 }
 
-const FileInput: FC<IFileInputProps> = ({ children, name, acceptFiles, isMultiupload, onChangeHandler }) => {
+const FileInput: FC<IFileInputProps> = ({ component, name, acceptFiles, isMultiupload, onChangeHandler }) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const onClickHandler = (e: React.MouseEvent) => {
@@ -34,7 +34,7 @@ const FileInput: FC<IFileInputProps> = ({ children, name, acceptFiles, isMultiup
     return (
         <>
             {/* toDo: unset default button's style */}
-            <button onClick={onClickHandler}>{children}</button>
+            <button onClick={onClickHandler}>{component}</button>
             <input
                 ref={fileInputRef}
                 name={name}
