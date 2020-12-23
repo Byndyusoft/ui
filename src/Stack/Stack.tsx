@@ -1,18 +1,14 @@
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 import cn from 'classnames';
 import './Stack.css';
 // import './Stack.css';
 
 interface IStackProps {
-    className?: string
+    className?: string;
 }
 
-const Stack: FC<IStackProps> = ({className, children}) => {
-    return (
-        <div className={cn(className, 'Stack')}>
-            {children}
-        </div>
-    )
-}
+const Stack: FC<IStackProps> = ({ className, children }) => {
+    return <div className={cn(className, 'Stack')}>{children}</div>;
+};
 
-export default Stack
+export default Stack;
