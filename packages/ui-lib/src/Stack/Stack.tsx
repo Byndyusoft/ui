@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import cn from 'classnames';
-import '@byndyusoft-ui/styles/Stack/Stack.css';
+import './Stack.css';
 // import './Stack.css';
 
 interface IStackProps {

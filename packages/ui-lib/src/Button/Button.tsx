@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import cn from 'classnames';
-import '@byndyusoft-ui/styles/Button/Button.css';
+import './Button.css';
 import { Variant } from './constants';
 
 interface IButtonProps {
