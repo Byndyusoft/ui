@@ -1,15 +1,6 @@
-# JetBrains IDE
-.idea
-
-# VSCode
-.vscode
-
-# Dependencies
-node_modules
-
-# Logs
-logs
 *.log
-
-# all dist folders
+.idea
+.DS_Store
+node_modules
+.cache
 dist
