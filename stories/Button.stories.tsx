@@ -1,5 +1,6 @@
 import {Meta} from '@storybook/react';
 import Button, {Variant} from '../src/Button';
+import '../src/Button/Button.css';
 
 export const ButtonStory = () => <Button>Button</Button>;
 
