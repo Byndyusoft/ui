@@ -1,6 +1,7 @@
-import React, { FC } from 'react';
+import React from 'react';
+import { FC } from 'react';
 import cn from 'classnames';
-import '../Stack/Stack.css';
+
 interface IStackProps {
     className?: string;
 }

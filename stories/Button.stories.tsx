@@ -1,5 +1,6 @@
-import {Meta} from '@storybook/react';
-import Button, {Variant} from '../src/Button';
+import React from 'react';
+import { Meta } from '@storybook/react';
+import Button, { Variant } from '../src/Button';
 import '../src/Button/Button.css';
 
 export const ButtonStory = () => <Button>Button</Button>;
@@ -8,13 +9,13 @@ export const ButtonPrimary = () => <Button variant={Variant.Primary}>Primary But
 
 export const ButtonDanger = () => <Button variant={Variant.Danger}>Danger Button</Button>;
 
-ButtonStory.storyName  = 'Default';
-ButtonPrimary.storyName  = 'Primary';
-ButtonDanger.storyName  = 'Danger';
+ButtonStory.storyName = 'Default';
+ButtonPrimary.storyName = 'Primary';
+ButtonDanger.storyName = 'Danger';
 
 const meta: Meta = {
-  title: 'Button',
-  component: Button,
+    title: 'Button',
+    component: Button
 };
 
 export default meta;
