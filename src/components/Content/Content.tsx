@@ -1,8 +1,8 @@
 // @ts-ignore
 import React, { FC, ReactNode, ReactElement } from 'react';
 import cn from 'classnames';
-import renderAsProp from '../utils/renderAsProp';
-import { TSize } from '../constansts';
+import renderAsProp from '../../utils/renderAsProp';
+import { TSize } from '../../constansts';
 
 interface IContentProps {
     as?: ReactNode | ReactElement | string;

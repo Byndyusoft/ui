@@ -1,9 +1,9 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
-import '../src/Content/Content.css';
-import Content from '../src/Content';
-import Skeleton from '../src/Skeleton';
-import Spacer from '../src/Spacer';
+import '../src/components/Content/Content.css';
+import Content from '../src/components/Content';
+import Skeleton from '../src/components/Skeleton';
+import Spacer from '../src/components/Spacer';
 
 export const ContentStory = () => (
     <Content auto>
@@ -37,7 +37,7 @@ export const ContentMaxWidthStory = () => (
         <Spacer y={1} />
         <Content maxWidth="Large">
             <Skeleton className="font-white">Max width Large</Skeleton>
-        </Content>{' '}
+        </Content>
         <Spacer y={1} />
         <Content maxWidth="ExtraLarge">
             <Skeleton className="font-white">Max width ExtraLarge</Skeleton>

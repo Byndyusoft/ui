@@ -1,8 +1,8 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
-import '../src/Skeleton/Skeleton.css';
-import Skeleton from '../src/Skeleton';
-import Spacer from '../src/Spacer';
+import '../src/components/Skeleton/Skeleton.css';
+import Skeleton from '../src/components/Skeleton';
+import Spacer from '../src/components/Spacer';
 
 export const SpacerStory = () => (
     <>
