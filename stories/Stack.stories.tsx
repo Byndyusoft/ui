@@ -1,8 +1,8 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
-import Stack from '../src/Stack';
-import Skeleton from '../src/Skeleton';
-import '../src/Skeleton/Skeleton.css';
+import Stack from '../src/components/Stack';
+import Skeleton from '../src/components/Skeleton';
+import '../src/components/Skeleton/Skeleton.css';
 
 export const StackStory = () => (
     <>

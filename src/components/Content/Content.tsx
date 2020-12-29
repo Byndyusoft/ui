@@ -1,6 +1,6 @@
 // @ts-ignore
 import React, { FC, ReactNode, ReactElement } from 'react';
-import renderAsProp from '../utils/renderAsProp';
+import renderAsProp from '../../utils/renderAsProp';
 
 interface IContentProps {
     as?: ReactNode | ReactElement | string;
