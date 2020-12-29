@@ -43,6 +43,7 @@ export const UncontrolledTextInputStory = () => {
 };
 
 DefaultTextInputStory.storyName = 'Default';
+UncontrolledTextInputStory.storyName = 'Uncontrolled';
 
 const meta: Meta = {
     title: 'Components/TextInput',
