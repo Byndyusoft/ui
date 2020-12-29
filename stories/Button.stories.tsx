@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
-import Button, { Variant } from '../src/Button';
+import Button, { Variant } from '../src/components/Button';
 import '../src/Button/Button.css';
 
 export const ButtonStory = () => <Button>Button</Button>;

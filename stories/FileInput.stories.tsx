@@ -1,6 +1,6 @@
 import { action } from '@storybook/addon-actions';
 import { Meta } from '@storybook/react';
-import FileInput from '../src/FileInput';
+import FileInput from '../src/components/FileInput';
 
 export const FileInputStory = () => (
     <FileInput onChangeHandler={action('onChangeHandler')} name="fileInput" component={<div>Загрузить...</div>} />
