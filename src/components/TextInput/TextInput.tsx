@@ -1,15 +1,14 @@
 import React, { FC } from 'react';
-import cn from 'classnames';
+import { IInputProps } from '../Input';
+import Input, { Size, Variant } from '../Input';
 
-interface ITextInputProps {
+interface ITextInputProps extends IInputProps {
     defaultValue?: string;
     value?: string;
     name: string;
     autoComplete?: 'on' | 'off';
     className?: string;
     inputRef?: (ref: HTMLInputElement) => void;
-    onChange?: (value: string) => void;
-    onChangeEvent?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const TextInput: FC<ITextInputProps> = ({
@@ -18,31 +17,33 @@ const TextInput: FC<ITextInputProps> = ({
     name,
     autoComplete = 'off',
     className,
+    placeholder,
     inputRef,
     onChange,
-    onChangeEvent
+    size = Size.Medium,
+    variant = Variant.Regular,
+    leftComponent,
+    rightComponent,
+    isDisabled,
+    isInvalid
 }) => {
     return (
-        <input
-            ref={refInstance => {
-                if (inputRef && refInstance) {
-                    inputRef(refInstance);
-                }
-            }}
-            className={cn('TextInput', className)}
-            autoComplete={autoComplete}
-            onChange={e => {
-                if (onChangeEvent) {
-                    onChangeEvent(e);
-                }
-                if (onChange) {
-                    onChange(e.target.value);
-                }
-            }}
+        <Input
+            type="text"
             name={name}
+            className={className}
+            placeholder={placeholder}
             defaultValue={defaultValue}
             value={value}
-            type="text"
+            inputRef={inputRef}
+            size={size}
+            variant={variant}
+            autoComplete={autoComplete}
+            onChange={onChange}
+            leftComponent={leftComponent}
+            rightComponent={rightComponent}
+            isInvalid={isInvalid}
+            isDisabled={isDisabled}
         />
     );
 };

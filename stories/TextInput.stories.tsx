@@ -7,13 +7,17 @@ import '../src/components/TextInput/TextInput.css';
 export const DefaultTextInputStory = () => {
     const [inputValue, setInputValue] = useState<string>('');
 
+    const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInputValue(e.target.value);
+    };
+
     return (
         <form
             onSubmit={e => {
                 e.preventDefault();
             }}
         >
-            <TextInput name="default-story-input" value={inputValue} onChange={setInputValue} />
+            <TextInput name="default-story-input" value={inputValue} onChange={onChangeHandler} />
             <p>Input value: {inputValue}</p>
         </form>
     );
@@ -29,15 +33,25 @@ export const UncontrolledTextInputStory = () => {
                 action('onSubmit input value')(inputRef.current.value);
             }}
         >
-            <TextInput
-                inputRef={ref => {
-                    if (ref) {
-                        inputRef.current = ref;
-                    }
-                }}
-                name="uncontrolled-story-input"
-                defaultValue={''}
-            />
+            <div>
+                <TextInput
+                    inputRef={ref => {
+                        if (ref) {
+                            inputRef.current = ref;
+                        }
+                    }}
+                    name="uncontrolled-story-input"
+                    defaultValue={''}
+                />
+            </div>
+            <br />
+            <div>
+                <input type="submit" value="OK" />
+            </div>
+            <div>
+                <br />
+                <i>Check actions for result</i>
+            </div>
         </form>
     );
 };

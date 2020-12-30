@@ -23,7 +23,11 @@ export const UncontrolledInput = () => {
             />
             <br />
             <br />
-            <input type="submit" value="Send" />
+            <input type="submit" value="OK" />
+            <div>
+                <br />
+                <i>Check actions for result</i>
+            </div>
         </form>
     );
 };
