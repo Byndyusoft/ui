@@ -36,8 +36,13 @@ const Input: FC<IInputProps> = ({
     leftComponent,
     rightComponent
 }) => {
-    const inputContainerClassName = cn('InputContainer', `InputContainer${variant}`);
-    const inputClassName = cn('Input', className, isInvalid && 'Invalid', `Input${size}`);
+    const inputContainerClassName = cn(
+        'InputContainer',
+        `InputContainer${variant}`,
+        isInvalid && 'InputInvalid',
+        isDisabled && 'InputDisabled'
+    );
+    const inputClassName = cn('Input', className, `Input${size}`);
 
     const renderSideComponent = ({
         sideComponent,

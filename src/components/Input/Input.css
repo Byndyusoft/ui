@@ -4,6 +4,7 @@
     align-items: center;
     transition: border-color 0.25s ease-out;
     overflow: hidden;
+    background: #fff;
 }
 
 .InputContainerRegular {
@@ -88,4 +89,13 @@
 
 .InputSideComponentContainerExtraLarge {
     font-size: 1.5rem;
+}
+
+.InputInvalid {
+    border: 1px solid rgba(255, 0, 0, 0.75);
+}
+
+.InputDisabled {
+    pointer-events: none;
+    opacity: 0.5;
 }

@@ -95,12 +95,28 @@ export const InputVariants = () => (
     </>
 );
 
+export const InputInvalid = () => (
+    <>
+        <h3>Invalid</h3>
+        <Input defaultValue="123" name="invalid" isInvalid={true} />
+    </>
+);
+
+export const InputDisabled = () => (
+    <>
+        <h3>Disabled</h3>
+        <Input defaultValue="123" name="invalid" isDisabled={true} />
+    </>
+);
+
 InputTypeText.storyName = 'Type text';
 InputTypePassword.storyName = 'Type password';
 UncontrolledInput.storyName = 'Uncontrolled';
 InputSize.storyName = 'Sizes';
 InputSideComponents.storyName = 'Side components';
 InputVariants.storyName = 'Variants';
+InputInvalid.storyName = 'isInvalid';
+InputDisabled.storyName = 'isDisabled';
 
 const meta: Meta = {
     title: 'Components/Input',
