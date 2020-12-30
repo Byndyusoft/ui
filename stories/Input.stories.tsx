@@ -105,7 +105,7 @@ export const InputInvalid = () => (
 export const InputDisabled = () => (
     <>
         <h3>Disabled</h3>
-        <Input defaultValue="123" name="invalid" isDisabled={true} />
+        <Input defaultValue="123" name="disabled" isDisabled={true} />
     </>
 );
 
