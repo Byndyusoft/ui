@@ -1,0 +1,64 @@
+.InputContainer {
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    border: 1px solid black;
+}
+
+.Input {
+    outline: 0;
+    border: 0;
+}
+
+.InputExtraSmall {
+    padding: 0.25rem;
+    font-size: 0.65rem;
+}
+
+.InputSmall {
+    padding: 0.25rem;
+    font-size: 0.75rem;
+}
+
+.InputMedium {
+    padding: 0.25rem;
+    font-size: 1rem;
+}
+
+.InputLarge {
+    padding: 0.25rem;
+    font-size: 1.25rem;
+}
+
+.InputExtraLarge {
+    padding: 0.25rem;
+    font-size: 1.5rem;
+}
+
+.InputSideComponentContainerLeft {
+    padding: 0 0.45rem 0 0.25rem;
+}
+
+.InputSideComponentContainerRight {
+    padding: 0 0.25rem 0 0.45rem;
+}
+
+.InputSideComponentContainerExtraSmall {
+    font-size: 0.65rem;
+}
+
+.InputSideComponentContainerSmall {
+    font-size: 0.75rem;
+}
+
+.InputSideComponentContainerMedium {
+    font-size: 1rem;
+}
+
+.InputSideComponentContainerLarge {
+    font-size: 1.25rem;
+}
+
+.InputSideComponentContainerExtraLarge {
+    font-size: 1.5rem;
+}
