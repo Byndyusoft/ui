@@ -1,5 +1,6 @@
 import Input from './Input';
-import Size from './sizes';
+import Size from './constants/sizes';
+import Variant from './constants/variants';
 
-export { Size };
+export { Size, Variant };
 export default Input;

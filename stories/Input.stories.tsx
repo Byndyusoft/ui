@@ -1,11 +1,11 @@
 import { useRef } from 'react';
 import { action } from '@storybook/addon-actions';
 import { Meta } from '@storybook/react';
-import Input, { Size } from '../src/components/Input';
+import Input, { Size, Variant } from '../src/components/Input';
 import '../src/components/Input/Input.css';
 
-export const InputTypeText = () => <Input name="default-input" />;
-export const InputTypePassword = () => <Input name="default-input" type="password" />;
+export const InputTypeText = () => <Input placeholder="Default" name="default-input" />;
+export const InputTypePassword = () => <Input placeholder="Enter password" name="default-input" type="password" />;
 export const UncontrolledInput = () => {
     const inputRef = useRef<HTMLInputElement>();
     return (
@@ -21,6 +21,7 @@ export const UncontrolledInput = () => {
                 }}
                 name="default-input"
             />
+            <br />
             <br />
             <input type="submit" value="Send" />
         </form>
@@ -83,10 +84,23 @@ export const InputSideComponents = () => (
     </>
 );
 
-InputTypeText.storyName = 'Input type text';
-InputTypePassword.storyName = 'Input type password';
+export const InputVariants = () => (
+    <>
+        <h3>Regular</h3>
+        <Input defaultValue="123" name="regularVariant" variant={Variant.Regular} />
+        <h3>Underlined</h3>
+        <Input defaultValue="123" name="underlinedVariant" variant={Variant.Underlined} />
+        <h3>Space</h3>
+        <Input defaultValue="123" name="spaceVariant" variant={Variant.Space} />
+    </>
+);
+
+InputTypeText.storyName = 'Type text';
+InputTypePassword.storyName = 'Type password';
 UncontrolledInput.storyName = 'Uncontrolled';
 InputSize.storyName = 'Sizes';
+InputSideComponents.storyName = 'Side components';
+InputVariants.storyName = 'Variants';
 
 const meta: Meta = {
     title: 'Components/Input',

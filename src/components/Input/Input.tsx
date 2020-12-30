@@ -1,6 +1,7 @@
 import React, { FC, InputHTMLAttributes } from 'react';
 import cn from 'classnames';
-import Size from './sizes';
+import Size from './constants/sizes';
+import Variant from './constants/variants';
 
 interface IInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {
     type?: 'text' | 'password';
@@ -10,6 +11,7 @@ interface IInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'
     value?: string;
     autoComplete?: 'on' | 'off';
     size?: Size;
+    variant?: Variant;
     inputRef?: (ref: HTMLInputElement) => void;
     isDisabled?: boolean;
     isInvalid?: boolean;
@@ -25,6 +27,8 @@ const Input: FC<IInputProps> = ({
     autoComplete = 'off',
     type = 'text',
     size = Size.Medium,
+    variant = Variant.Regular,
+    placeholder,
     inputRef,
     onChange,
     isDisabled,
@@ -32,6 +36,7 @@ const Input: FC<IInputProps> = ({
     leftComponent,
     rightComponent
 }) => {
+    const inputContainerClassName = cn('InputContainer', `InputContainer${variant}`);
     const inputClassName = cn('Input', className, isInvalid && 'Invalid', `Input${size}`);
 
     const renderSideComponent = ({
@@ -58,9 +63,10 @@ const Input: FC<IInputProps> = ({
     };
 
     return (
-        <div className="InputContainer">
+        <div className={inputContainerClassName}>
             {renderSideComponent({ sideComponent: leftComponent, placement: 'Left' })}
             <input
+                placeholder={placeholder}
                 type={type}
                 name={name}
                 className={inputClassName}
