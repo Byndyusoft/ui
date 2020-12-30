@@ -7,29 +7,29 @@
     background: #fff;
 }
 
-.InputContainerRegular {
+.InputContainer--Regular {
     border: 1px solid rgba(0, 0, 0, 0.25);
     border-radius: 5px;
 }
 
-.InputContainerUnderlined {
+.InputContainer--Underlined {
     border-bottom: 1px solid rgba(0, 0, 0, 0.25);
 }
 
-.InputContainerSpace {
+.InputContainer--Space {
     border: 1px solid rgba(0, 0, 0, 0);
     border-radius: 5px;
 }
 
-.InputContainerRegular:focus-within {
+.InputContainer--Regular:focus-within {
     border-color: rgba(0, 0, 0, 1);
 }
 
-.InputContainerUnderlined:focus-within {
+.InputContainer--Underlined:focus-within {
     border-color: rgba(0, 0, 0, 1);
 }
 
-.InputContainerSpace:focus-within {
+.InputContainer--Space:focus-within {
     border-color: rgba(0, 0, 0, 1);
 }
 
@@ -38,27 +38,27 @@
     outline: 0;
 }
 
-.InputExtraSmall {
+.Input--ExtraSmall {
     padding: 0.25rem 0.45rem;
     font-size: 0.65rem;
 }
 
-.InputSmall {
+.Input--Small {
     padding: 0.25rem 0.45rem;
     font-size: 0.75rem;
 }
 
-.InputMedium {
+.Input--Medium {
     padding: 0.25rem 0.45rem;
     font-size: 1rem;
 }
 
-.InputLarge {
+.Input--Large {
     padding: 0.25rem 0.45rem;
     font-size: 1.25rem;
 }
 
-.InputExtraLarge {
+.Input--ExtraLarge {
     padding: 0.25rem 0.45rem;
     font-size: 1.5rem;
 }
@@ -71,31 +71,31 @@
     padding: 0 0.25rem 0 0.45rem;
 }
 
-.InputSideComponentContainerExtraSmall {
+.InputSideComponentContainer--ExtraSmall {
     font-size: 0.65rem;
 }
 
-.InputSideComponentContainerSmall {
+.InputSideComponentContainer--Small {
     font-size: 0.75rem;
 }
 
-.InputSideComponentContainerMedium {
+.InputSideComponentContainer--Medium {
     font-size: 1rem;
 }
 
-.InputSideComponentContainerLarge {
+.InputSideComponentContainer--Large {
     font-size: 1.25rem;
 }
 
-.InputSideComponentContainerExtraLarge {
+.InputSideComponentContainer--ExtraLarge {
     font-size: 1.5rem;
 }
 
-.InputInvalid {
+.Input--Invalid {
     border: 1px solid rgba(255, 0, 0, 0.75);
 }
 
-.InputDisabled {
+.Input--Disabled {
     pointer-events: none;
     opacity: 0.5;
 }

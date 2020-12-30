@@ -38,11 +38,11 @@ const Input: FC<IInputProps> = ({
 }) => {
     const inputContainerClassName = cn(
         'InputContainer',
-        `InputContainer${variant}`,
-        isInvalid && 'InputInvalid',
-        isDisabled && 'InputDisabled'
+        `InputContainer--${variant}`,
+        isInvalid && 'Input--Invalid',
+        isDisabled && 'Input--Disabled'
     );
-    const inputClassName = cn('Input', className, `Input${size}`);
+    const inputClassName = cn('Input', className, `Input--${size}`);
 
     const renderSideComponent = ({
         sideComponent,
@@ -57,7 +57,10 @@ const Input: FC<IInputProps> = ({
             } else {
                 return (
                     <div
-                        className={cn(`InputSideComponentContainer${placement}`, `InputSideComponentContainer${size}`)}
+                        className={cn(
+                            `InputSideComponentContainer${placement}`,
+                            `InputSideComponentContainer--${size}`
+                        )}
                     >
                         {sideComponent}
                     </div>
