@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react';
 
-type TInitialState = boolean | (() => boolean);
+type TInitialValue = boolean | (() => boolean);
 
-function useToggle(initialState: TInitialState = false) {
-    const [value, setValue] = useState(initialState);
+function useToggle(initialValue: TInitialValue = false) {
+    const [value, setValue] = useState(initialValue);
 
     const on = useCallback(() => setValue(true), []);
 
