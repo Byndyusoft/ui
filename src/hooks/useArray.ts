@@ -1,11 +1,19 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 type TInitialState<T> = Array<T> | (() => Array<T>);
 
 function useArray<T>(initialState: TInitialState<T> = []) {
-    const [value] = useState<Array<T>>(initialState);
+    const [value, setValue] = useState<Array<T>>(initialState);
 
-    return [value] as const;
+    const append = useCallback((item: T) => {
+        setValue(previousValue => [...previousValue, item]);
+    }, []);
+
+    const prepend = useCallback((item: T) => {
+        setValue(previousValue => [item, ...previousValue]);
+    }, []);
+
+    return [value, { append, prepend }] as const;
 }
 
 export default useArray;

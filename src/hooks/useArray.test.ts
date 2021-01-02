@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react-hooks';
 import useArray from './useArray';
 
 describe('hooks/useArray', () => {
@@ -18,5 +18,29 @@ describe('hooks/useArray', () => {
         const { result } = renderHook(() => useArray<number>(() => [1, 2, 3, 4]));
 
         expect(result.current[0]).toEqual([1, 2, 3, 4]);
+    });
+
+    test('appends item', () => {
+        const { result } = renderHook(() => useArray<number>(() => [1, 2, 3, 4]));
+
+        const [, { append }] = result.current;
+
+        act(() => {
+            append(5);
+        });
+
+        expect(result.current[0]).toEqual([1, 2, 3, 4, 5]);
+    });
+
+    test('prepends item', () => {
+        const { result } = renderHook(() => useArray<number>(() => [1, 2, 3, 4]));
+
+        const [, { prepend }] = result.current;
+
+        act(() => {
+            prepend(0);
+        });
+
+        expect(result.current[0]).toEqual([0, 1, 2, 3, 4]);
     });
 });
