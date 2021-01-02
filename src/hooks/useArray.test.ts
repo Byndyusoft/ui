@@ -91,4 +91,16 @@ describe('hooks/useArray', () => {
 
         expect(result.current[0]).toEqual([4, 3, 2, 1]);
     });
+
+    test('updates item by index', () => {
+        const { result } = renderHook(() => useArray<number>(() => [1, 2, 3, 4]));
+
+        const [, { update }] = result.current;
+
+        act(() => {
+            update(2, 2.5);
+        });
+
+        expect(result.current[0]).toEqual([1, 2, 2.5, 4]);
+    });
 });
