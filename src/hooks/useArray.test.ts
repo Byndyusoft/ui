@@ -20,7 +20,7 @@ describe('hooks/useArray', () => {
         expect(result.current[0]).toEqual([1, 2, 3, 4]);
     });
 
-    test('appends item', () => {
+    test('appends item to array', () => {
         const { result } = renderHook(() => useArray<number>(() => [1, 2, 3, 4]));
 
         const [, { append }] = result.current;
@@ -32,7 +32,7 @@ describe('hooks/useArray', () => {
         expect(result.current[0]).toEqual([1, 2, 3, 4, 5]);
     });
 
-    test('prepends item', () => {
+    test('prepends item to array', () => {
         const { result } = renderHook(() => useArray<number>(() => [1, 2, 3, 4]));
 
         const [, { prepend }] = result.current;
@@ -42,5 +42,17 @@ describe('hooks/useArray', () => {
         });
 
         expect(result.current[0]).toEqual([0, 1, 2, 3, 4]);
+    });
+
+    test('clears array', () => {
+        const { result } = renderHook(() => useArray<number>(() => [1, 2, 3, 4]));
+
+        const [, { clear }] = result.current;
+
+        act(() => {
+            clear();
+        });
+
+        expect(result.current[0]).toEqual([]);
     });
 });

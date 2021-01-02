@@ -13,7 +13,11 @@ function useArray<T>(initialState: TInitialState<T> = []) {
         setValue(previousValue => [item, ...previousValue]);
     }, []);
 
-    return [value, { append, prepend }] as const;
+    const clear = useCallback(() => {
+        setValue(() => []);
+    }, []);
+
+    return [value, { append, prepend, clear }] as const;
 }
 
 export default useArray;
