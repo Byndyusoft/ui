@@ -68,6 +68,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-is": "^17.0.1",
+    "react-test-renderer": "^17.0.1",
     "rimraf": "^3.0.2",
     "rollup-plugin-copy": "^3.3.0",
     "size-limit": "^4.9.0",
