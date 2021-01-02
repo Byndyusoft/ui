@@ -23,7 +23,7 @@ describe('hooks/useArray', () => {
     test('appends item to array', () => {
         const { result } = renderHook(() => useArray<number>(() => [1, 2, 3, 4]));
 
-        const [, { append }] = result.current;
+        const [, , { append }] = result.current;
 
         act(() => {
             append(5);
@@ -35,7 +35,7 @@ describe('hooks/useArray', () => {
     test('prepends item to array', () => {
         const { result } = renderHook(() => useArray<number>(() => [1, 2, 3, 4]));
 
-        const [, { prepend }] = result.current;
+        const [, , { prepend }] = result.current;
 
         act(() => {
             prepend(0);
@@ -47,7 +47,7 @@ describe('hooks/useArray', () => {
     test('clears array', () => {
         const { result } = renderHook(() => useArray<number>(() => [1, 2, 3, 4]));
 
-        const [, { clear }] = result.current;
+        const [, , { clear }] = result.current;
 
         act(() => {
             clear();
@@ -59,7 +59,7 @@ describe('hooks/useArray', () => {
     test('removes item by index', () => {
         const { result } = renderHook(() => useArray<number>(() => [1, 2, 3, 4]));
 
-        const [, { remove }] = result.current;
+        const [, , { remove }] = result.current;
 
         act(() => {
             remove(2);
@@ -71,7 +71,7 @@ describe('hooks/useArray', () => {
     test('inserts item by index', () => {
         const { result } = renderHook(() => useArray<number>(() => [1, 2, 3, 4]));
 
-        const [, { insert }] = result.current;
+        const [, , { insert }] = result.current;
 
         act(() => {
             insert(2, 2.5);
@@ -83,7 +83,7 @@ describe('hooks/useArray', () => {
     test('sorts array', () => {
         const { result } = renderHook(() => useArray<number>(() => [1, 2, 3, 4]));
 
-        const [, { sort }] = result.current;
+        const [, , { sort }] = result.current;
 
         act(() => {
             sort((left, right) => right - left);
@@ -95,7 +95,7 @@ describe('hooks/useArray', () => {
     test('updates item by index', () => {
         const { result } = renderHook(() => useArray<number>(() => [1, 2, 3, 4]));
 
-        const [, { update }] = result.current;
+        const [, , { update }] = result.current;
 
         act(() => {
             update(2, 2.5);

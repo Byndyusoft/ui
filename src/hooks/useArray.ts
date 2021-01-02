@@ -35,7 +35,7 @@ function useArray<T>(initialState: TInitialState<T> = []) {
         setValue(previousValue => [...previousValue.slice(0, index), item, ...previousValue.slice(index + 1)]);
     }, []);
 
-    return [value, { append, prepend, clear, remove, insert, sort, update }] as const;
+    return [value, setValue, { append, prepend, clear, remove, insert, sort, update }] as const;
 }
 
 export default useArray;
