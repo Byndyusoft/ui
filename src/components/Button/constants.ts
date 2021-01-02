@@ -1,6 +1,7 @@
 export enum Size {
-    LARGE = 'large',
-    MEDIUM = 'medium'
+    Large = 'large',
+    Medium = 'medium',
+    Small = 'small'
 }
 
 export enum Type {
@@ -10,12 +11,8 @@ export enum Type {
 }
 
 export enum Variant {
-    NEUTRAL = 'neutral',
     Default = 'default',
     Primary = 'primary',
-    Danger = 'danger'
-}
-
-export enum Size {
-    Medium = 'medium'
+    Danger = 'danger',
+    Neutral = 'neutral'
 }
