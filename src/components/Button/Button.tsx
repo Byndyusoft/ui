@@ -4,7 +4,7 @@ import { Variant } from './constants';
 
 interface IButtonProps {
     className?: string;
-    variant?: Variant.Danger | Variant.Primary | Variant.Default;
+    variant?: Variant;
 }
 
 const Button: FC<IButtonProps> = ({ children, className, variant = Variant.Default }) => {
