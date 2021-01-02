@@ -14,7 +14,7 @@
     "start": "tsdx watch",
     "copy-css": "copyfiles \"./src/**/*.css\" dist -u 1",
     "build": "tsdx build && npm run copy-css",
-    "test": "tsdx test --passWithNoTests",
+    "test": "tsdx test --passWithNoTests --verbose",
     "lint": "tsdx lint",
     "lint-fix": "tsdx lint --fix",
     "prepare": "tsdx build && npm run copy-css",
