@@ -67,4 +67,16 @@ describe('hooks/useArray', () => {
 
         expect(result.current[0]).toEqual([1, 2, 4]);
     });
+
+    test('inserts item by index', () => {
+        const { result } = renderHook(() => useArray<number>(() => [1, 2, 3, 4]));
+
+        const [, { insert }] = result.current;
+
+        act(() => {
+            insert(2, 2.5);
+        });
+
+        expect(result.current[0]).toEqual([1, 2, 2.5, 3, 4]);
+    });
 });
