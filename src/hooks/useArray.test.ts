@@ -79,4 +79,16 @@ describe('hooks/useArray', () => {
 
         expect(result.current[0]).toEqual([1, 2, 2.5, 3, 4]);
     });
+
+    test('sorts array', () => {
+        const { result } = renderHook(() => useArray<number>(() => [1, 2, 3, 4]));
+
+        const [, { sort }] = result.current;
+
+        act(() => {
+            sort((left, right) => right - left);
+        });
+
+        expect(result.current[0]).toEqual([4, 3, 2, 1]);
+    });
 });
