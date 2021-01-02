@@ -55,4 +55,16 @@ describe('hooks/useArray', () => {
 
         expect(result.current[0]).toEqual([]);
     });
+
+    test('removes item by index', () => {
+        const { result } = renderHook(() => useArray<number>(() => [1, 2, 3, 4]));
+
+        const [, { remove }] = result.current;
+
+        act(() => {
+            remove(2);
+        });
+
+        expect(result.current[0]).toEqual([1, 2, 4]);
+    });
 });

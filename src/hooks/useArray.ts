@@ -17,7 +17,11 @@ function useArray<T>(initialState: TInitialState<T> = []) {
         setValue(() => []);
     }, []);
 
-    return [value, { append, prepend, clear }] as const;
+    const remove = useCallback((index: number) => {
+        setValue(previousValue => [...previousValue.slice(0, index), ...previousValue.slice(index + 1)]);
+    }, []);
+
+    return [value, { append, prepend, clear, remove }] as const;
 }
 
 export default useArray;
