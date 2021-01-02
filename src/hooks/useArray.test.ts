@@ -103,4 +103,16 @@ describe('hooks/useArray', () => {
 
         expect(result.current[0]).toEqual([1, 2, 2.5, 4]);
     });
+
+    test('filters array', () => {
+        const { result } = renderHook(() => useArray<number>(() => [1, 2, 3, 4]));
+
+        const [, , { filter }] = result.current;
+
+        act(() => {
+            filter(item => Boolean(item % 2));
+        });
+
+        expect(result.current[0]).toEqual([1, 3]);
+    });
 });

@@ -4,6 +4,8 @@ type TInitialState<T> = Array<T> | (() => Array<T>);
 
 type TComparator<T> = (left: T, right: T) => number;
 
+type TPredicate<T> = (item: T, index: number, array: Array<T>) => boolean;
+
 function useArray<T>(initialState: TInitialState<T> = []) {
     const [value, setValue] = useState<Array<T>>(initialState);
 
@@ -35,7 +37,11 @@ function useArray<T>(initialState: TInitialState<T> = []) {
         setValue(previousValue => [...previousValue.slice(0, index), item, ...previousValue.slice(index + 1)]);
     }, []);
 
-    return [value, setValue, { append, prepend, clear, remove, insert, sort, update }] as const;
+    const filter = useCallback((predicate: TPredicate<T>) => {
+        setValue(previousValue => previousValue.filter(predicate));
+    }, []);
+
+    return [value, setValue, { append, prepend, clear, remove, insert, sort, update, filter }] as const;
 }
 
 export default useArray;
