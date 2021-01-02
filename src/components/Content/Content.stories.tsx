@@ -1,7 +1,7 @@
+import React from 'react';
 import { Meta } from '@storybook/react';
-import Content from '../src/components/Content';
-import Skeleton from '../src/components/Skeleton';
-import Stack from '../src/components/Stack';
+import Content from './Content';
+import Skeleton from '../Skeleton';
 
 export const ContentStory = () => (
     <Content>
@@ -20,7 +20,7 @@ export const ContentAsSectionStory = () => (
 ContentAsSectionStory.storyName = 'Use custom element';
 
 const meta: Meta = {
-    title: 'Layout/Content',
+    title: 'Content',
     component: Content
 };
 
