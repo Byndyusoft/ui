@@ -115,4 +115,22 @@ describe('hooks/useArray', () => {
 
         expect(result.current[0]).toEqual([1, 3]);
     });
+
+    test('resets array to initial value', () => {
+        const { result } = renderHook(() => useArray<number>(() => [1, 2, 3, 4]));
+
+        const [, setArray, { reset }] = result.current;
+
+        act(() => {
+            setArray([5, 6, 7, 8]);
+        });
+
+        expect(result.current[0]).toEqual([5, 6, 7, 8]);
+
+        act(() => {
+            reset();
+        });
+
+        expect(result.current[0]).toEqual([1, 2, 3, 4]);
+    });
 });
