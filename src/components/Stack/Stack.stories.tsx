@@ -2,7 +2,7 @@ import React from 'react';
 import { Meta } from '@storybook/react';
 import Stack from './Stack';
 import Skeleton from '../Skeleton';
-import '../src/components/Skeleton/Skeleton.css';
+import '../Skeleton/Skeleton.css';
 
 export const StackStory = () => (
     <>

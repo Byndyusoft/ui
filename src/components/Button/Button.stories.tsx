@@ -2,7 +2,7 @@ import React from 'react';
 import { Meta } from '@storybook/react';
 import Button from './Button';
 import { Variant } from './constants';
-import '../src/Button/Button.css';
+import './Button.css';
 
 export const DefaultStory = () => <Button>Button</Button>;
 

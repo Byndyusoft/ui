@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
 import Skeleton from './Skeleton';
-import '../src/components/Skeleton/Skeleton.css';
+import './Skeleton.css';
 
 export const SkeletonStory = () => <Skeleton className="font-white">Skeleton</Skeleton>;
 
