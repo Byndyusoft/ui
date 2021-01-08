@@ -1,3 +1,4 @@
+import React from 'react';
 import { Meta } from '@storybook/react';
 import Skeleton from '../src/components/Skeleton';
 import '../src/components/Skeleton/Skeleton.css';
