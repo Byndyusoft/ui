@@ -9,8 +9,8 @@ interface IImageProps extends Partial<HTMLImageElement>, Omit<Partial<HTMLImageE
 }
 
 const Image: FC<IImageProps> = ({
-    width,
-    height,
+    width = '100%',
+    height = '100%',
     src,
     bgPlaceholderColor = 'transparent',
     bgPlaceholderImage,
@@ -19,17 +19,22 @@ const Image: FC<IImageProps> = ({
     className
 }) => {
     return (
-        <div
+        <img
             style={{
                 width,
                 height,
                 backgroundColor: bgPlaceholderColor,
                 backgroundImage: `url(${bgPlaceholderImage})`,
-                backgroundSize: 'contain'
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat'
             }}
-        >
-            <img className={className} src={src} alt={alt} width={width} height={height} title={title} />
-        </div>
+            className={className}
+            src={src}
+            alt={alt}
+            width={width}
+            height={height}
+            title={title}
+        />
     );
 };
 
