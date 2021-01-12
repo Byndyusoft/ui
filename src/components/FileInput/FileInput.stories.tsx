@@ -1,6 +1,7 @@
+import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { Meta } from '@storybook/react';
-import FileInput from '../src/components/FileInput';
+import FileInput from './FileInput';
 
 export const FileInputStory = () => (
     <FileInput onChangeHandler={action('onChangeHandler')} name="fileInput" component={<div>Загрузить...</div>} />
@@ -29,7 +30,7 @@ FileInputMultiple.storyName = 'Multiupload';
 FileInputUploadImage.storyName = 'Upload images';
 
 const meta: Meta = {
-    title: 'Components/FileInput',
+    title: 'FileInput',
     component: FileInput
 };
 

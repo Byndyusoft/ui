@@ -1,7 +1,8 @@
+import React from 'react';
 import { useRef } from 'react';
 import { action } from '@storybook/addon-actions';
 import { Meta } from '@storybook/react';
-import Input, { Size, Variant } from '../src/components/Input';
+import Input, { Size, Variant } from '.';
 import '../src/components/Input/Input.css';
 
 export const InputTypeText = () => <Input placeholder="Default" name="default-input" />;
@@ -12,7 +13,9 @@ export const UncontrolledInput = () => {
         <form
             onSubmit={e => {
                 e.preventDefault();
-                action('Input value: ')(inputRef.current.value);
+                if (inputRef.current) {
+                    action('Input value: ')(inputRef.current.value);
+                }
             }}
         >
             <Input
