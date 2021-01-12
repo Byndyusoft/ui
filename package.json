@@ -13,7 +13,6 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "rollup -c",
-    "test": "tsdx test --passWithNoTests",
     "lint": "eslint src && stylelint src/**/*.css",
     "lint-fix": "eslint src --fix && stylelint src/**/*.css --fix",
     "storybook": "start-storybook -p 6006",
