@@ -12,8 +12,7 @@
   },
   "scripts": {
     "start": "tsdx watch",
-    "build": "tsdx build && npm run copy-css",
-    "build-rollup": "rollup -c",
+    "build": "rollup -c",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
     "lint-fix": "tsdx lint --fix",
