@@ -34,7 +34,8 @@
     "printWidth": 120
   },
   "name": "@byndyusoft/ui",
-  "author": "Nick Kuznetsov",
+  "author": "Byndyusoft",
+  "url": "https://byndyusoft.com/",
   "module": "lib/index.js",
   "size-limit": [
     {
