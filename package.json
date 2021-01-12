@@ -35,7 +35,7 @@
   },
   "name": "@byndyusoft/ui",
   "author": "Nick Kuznetsov",
-  "module": "dist/ui.esm.js",
+  "module": "lib/index.js",
   "size-limit": [
     {
       "path": "dist/ui.cjs.production.min.js",
