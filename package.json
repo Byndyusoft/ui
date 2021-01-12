@@ -16,9 +16,6 @@
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
     "lint-fix": "tsdx lint --fix",
-    "prepare": "tsdx build && npm run copy-css",
-    "size": "size-limit",
-    "analyze": "size-limit --why",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
@@ -36,23 +33,12 @@
   "author": "Byndyusoft",
   "url": "https://byndyusoft.com/",
   "module": "lib/index.js",
-  "size-limit": [
-    {
-      "path": "dist/ui.cjs.production.min.js",
-      "limit": "200 KB"
-    },
-    {
-      "path": "dist/ui.esm.js",
-      "limit": "200 KB"
-    }
-  ],
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-multi-entry": "^4.0.0",
     "@rollup/plugin-node-resolve": "^11.0.1",
     "@rollup/plugin-typescript": "^8.1.0",
-    "@size-limit/preset-small-lib": "^4.9.0",
     "@storybook/addon-essentials": "^6.1.6",
     "@storybook/addon-info": "^5.3.21",
     "@storybook/addon-links": "^6.1.6",
@@ -72,7 +58,6 @@
     "rollup-plugin-copy": "^3.3.0",
     "rollup-plugin-delete": "^2.0.0",
     "rollup-plugin-styles": "^3.12.1",
-    "size-limit": "^4.9.0",
     "tslib": "^2.0.3",
     "typescript": "^4.1.2"
   },
