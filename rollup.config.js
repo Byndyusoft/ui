@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import path from 'path';
 import fs from 'fs-extra';
 import typescript from '@rollup/plugin-typescript';
@@ -27,7 +29,9 @@ export default [
                     return false;
                 }
             }),
-            typescript()
+            typescript({
+                exclude: ['**/*.stories.tsx']
+            })
         ]
     }
 ];
