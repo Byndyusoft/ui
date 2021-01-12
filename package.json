@@ -14,7 +14,7 @@
     "start": "tsdx watch",
     "build": "rollup -c",
     "test": "tsdx test --passWithNoTests",
-    "lint": "tsdx lint",
+    "lint": "eslint src",
     "lint-fix": "tsdx lint --fix",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
@@ -35,6 +35,7 @@
   "module": "lib/index.js",
   "devDependencies": {
     "@babel/core": "^7.12.9",
+    "@byndyusoft/eslint-config": "^0.3.0",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-multi-entry": "^4.0.0",
     "@rollup/plugin-node-resolve": "^11.0.1",
@@ -47,6 +48,7 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "babel-loader": "^8.2.1",
+    "eslint": "^7.17.0",
     "fs-extra": "^9.0.1",
     "husky": "^4.3.0",
     "postcss": "^8.2.4",

@@ -1,0 +1,11 @@
+{
+    "extends": [
+        "@byndyusoft/eslint-config/typescript",
+        "@byndyusoft/eslint-config/jest",
+        "@byndyusoft/eslint-config/react",
+        "@byndyusoft/eslint-config/react-testing"
+    ],
+    "parserOptions": {
+        "project": "tsconfig.json"
+    }
+}
