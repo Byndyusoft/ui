@@ -12,7 +12,7 @@ const Image: FC<IImageProps> = ({
     width,
     height,
     src,
-    bgPlaceholderColor = '#f8f8fc',
+    bgPlaceholderColor = 'transparent',
     bgPlaceholderImage,
     alt,
     title,
@@ -27,7 +27,6 @@ const Image: FC<IImageProps> = ({
                 backgroundImage: `url(${bgPlaceholderImage})`,
                 backgroundSize: 'contain'
             }}
-            className={className}
         >
             <img className={className} src={src} alt={alt} width={width} height={height} title={title} />
         </div>
