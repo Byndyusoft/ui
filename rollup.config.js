@@ -1,10 +1,8 @@
-import del from 'rollup-plugin-delete';
-import commonjs from '@rollup/plugin-commonjs';
-import multi from '@rollup/plugin-multi-entry';
-import resolve from '@rollup/plugin-node-resolve';
+import path from 'path';
+import fs from 'fs-extra';
 import typescript from '@rollup/plugin-typescript';
-import postcss from 'rollup-plugin-postcss';
-import copy from 'rollup-plugin-copy';
+import del from 'rollup-plugin-delete';
+import styles from 'rollup-plugin-styles';
 
 export default [
     {
@@ -16,24 +14,20 @@ export default [
         },
         plugins: [
             del({ targets: 'lib/*' }),
-            postcss({
-                extract: false
+            styles({
+                mode: 'extract',
+                onExtract: data => {
+                    if (!data.name.includes('/index.css')) {
+                        fs.outputFile(path.resolve(__dirname, 'lib', data.name), data.css, err => {
+                            if (err) {
+                                console.error('Error with bundling css', err);
+                            }
+                        });
+                    }
+                    return false;
+                }
             }),
-            // multi(),
-            // resolve(),
-            // commonjs(),
             typescript()
-        ]
-    },
-    {
-        input: ['src/components/Button/Button.css'],
-        output: {
-            dir: 'output'
-        },
-        plugins: [
-            postcss({
-                extract: false
-            })
         ]
     }
 ];

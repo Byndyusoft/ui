@@ -1,6 +1,7 @@
 import React from 'react';
 import { FC } from 'react';
 import cn from 'classnames';
+import './Stack.css';
 
 interface IStackProps {
     className?: string;

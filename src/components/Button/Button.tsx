@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import cn from 'classnames';
 import { Variant } from './constants';
+import './Button.css';
 
 interface IButtonProps {
     className?: string;
