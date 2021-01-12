@@ -1,5 +1,5 @@
-import React from 'react';
-import { FC } from 'react';
+import React, { FC } from 'react';
+
 import cn from 'classnames';
 import './Stack.css';
 
@@ -7,8 +7,6 @@ interface IStackProps {
     className?: string;
 }
 
-const Stack: FC<IStackProps> = ({ className, children }) => {
-    return <div className={cn(className, 'Stack')}>{children}</div>;
-};
+const Stack: FC<IStackProps> = ({ className, children }) => <div className={cn(className, 'Stack')}>{children}</div>;
 
 export default Stack;
