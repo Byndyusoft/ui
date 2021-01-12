@@ -1,6 +1,7 @@
-import Input, { IInputProps } from './Input';
+
+import Input from './Input';
 import Size from './constants/sizes';
 import Variant from './constants/variants';
 
-export { Size, Variant, IInputProps };
+export { Size, Variant };
 export default Input;

@@ -3,7 +3,7 @@ import cn from 'classnames';
 import Size from './constants/sizes';
 import Variant from './constants/variants';
 
-export interface IInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {
+interface IInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {
     type?: 'text' | 'password';
     name: string;
     className?: string;
