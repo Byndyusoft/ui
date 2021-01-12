@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { action } from '@storybook/addon-actions';
 import { Meta } from '@storybook/react';
 import Input, { Size, Variant } from '.';
-import '../src/components/Input/Input.css';
+import './Input.css';
 
 export const InputTypeText = () => <Input placeholder="Default" name="default-input" />;
 export const InputTypePassword = () => <Input placeholder="Enter password" name="default-input" type="password" />;
