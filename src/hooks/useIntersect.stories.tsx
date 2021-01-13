@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Meta } from '@storybook/react';
 import useIntersect from './useIntersect';
 
 export const UseIntersect = () => {
-    const [element, setElement] = useState<HTMLDivElement | null>(null);
-    const [element2, setElement2] = useState<HTMLDivElement | null>(null);
-    const { isIntersecting } = useIntersect({ node: element });
-    const { isIntersecting: isIntersecting2 } = useIntersect({ node: element2 });
+    const [node1, isIntersecting] = useIntersect({});
+    const [node2, isIntersecting2] = useIntersect({});
 
     return (
         <div>
@@ -90,11 +88,11 @@ export const UseIntersect = () => {
                 </p>
             </div>
             <div>
-                <p ref={setElement}>
+                <p ref={node1}>
                     <b>First element</b>
                 </p>
                 <p>Morbi eu finibus sem. Cras luctus ut massa gravida</p>
-                <p ref={setElement2}>
+                <p ref={node2}>
                     <b>Lorem ipsum</b> elementum leo eget auctor pharetra. feugiat. Nulla sit amet hendrerit nisl. Cras
                     et viverra orci. Proin non pellentesque lacus, non molestie purus. Phasellus sodales auctor nunc ac
                     pharetra. Maecenas a eleifend leo, at fermentum lorem. Duis vel placerat lorem. Nulla sed dictum

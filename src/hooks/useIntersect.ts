@@ -1,56 +1,61 @@
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState, useRef } from 'react';
 
 interface IUseIntersect {
-    node?: Element | null;
-    onIntersect?: (value: boolean) => void;
     threshold?: number | number[];
 }
 
-function useIntersect({ node, onIntersect, threshold = 1 }: IUseIntersect) {
-    // If some browsers do not support Intersection Observer API, then return intersected state
-    const [isIntersecting, setIntersecting] = useState<boolean>(true);
+type TUseIntersectResponse = [Dispatch<SetStateAction<Element | null>>, boolean];
 
-    let observer: IntersectionObserver | null = null;
+function useIntersect({ threshold = 1 }: IUseIntersect): TUseIntersectResponse {
+    const [isIntersecting, setIntersecting] = useState<boolean>(false);
+    // Check for browser Intersection API support
+    const getIntersectionAPI = () => {
+        if (window.IntersectionObserver) {
+            return new window.IntersectionObserver(
+                entries => {
+                    const firstEntry = entries[0];
 
-    if (window.IntersectionObserverEntry) {
-        observer = new window.IntersectionObserver(
-            entries => {
-                const firstEntry = entries[0];
-
-                if (firstEntry.isIntersecting) {
-                    if (onIntersect) {
-                        onIntersect(true);
+                    if (firstEntry.isIntersecting) {
+                        setIntersecting(true);
+                    } else {
+                        setIntersecting(false);
                     }
-                    setIntersecting(true);
-                } else {
-                    if (onIntersect) {
-                        onIntersect(false);
-                    }
-                    setIntersecting(false);
+                },
+                {
+                    rootMargin: '0px',
+                    threshold
                 }
-            },
-            {
-                rootMargin: '0px',
-                threshold
+            );
+        } else {
+            if (isIntersecting === false) {
+                setIntersecting(true);
             }
-        );
-    }
+            return null;
+        }
+    };
+
+    // Using state for security purposes
+    const [node, setNode] = useState<Element | null>(null);
+    const observer = useRef<IntersectionObserver | null>(getIntersectionAPI());
 
     useEffect(() => {
-        if (observer) {
+        const { current: currentObserver } = observer;
+        if (currentObserver) {
+            // disconnect to prevent observing different referred nodes
+            currentObserver.disconnect();
             if (node) {
-                observer.observe(node);
+                currentObserver.observe(node);
             }
         }
 
         return () => {
-            if (node && observer) {
-                observer.unobserve(node);
+            if (node && currentObserver) {
+                currentObserver.unobserve(node);
             }
         };
-    }, [node, observer]);
+    }, [node, threshold]);
 
-    return { isIntersecting };
+    return [setNode, isIntersecting];
 }
 
 export default useIntersect;
