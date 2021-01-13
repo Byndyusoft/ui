@@ -1,7 +1,7 @@
 import { isValidElement, cloneElement, createElement, ReactNode } from 'react';
 
 interface IRenderAsProp<P> {
-    as: never; //TODO проверить тип
+    as: string;
     props?: P;
     children: ReactNode[] | ReactNode;
 }
