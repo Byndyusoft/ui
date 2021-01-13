@@ -22,7 +22,6 @@ function useIntersect({ node, onIntersect, threshold = 1 }: IUseIntersect) {
                 if (onIntersect) {
                     onIntersect(false);
                 }
-                console.log(false);
                 setIntersecting(false);
             }
         },
