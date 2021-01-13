@@ -4,7 +4,7 @@ interface IUseIntersect {
     threshold?: number | number[];
 }
 
-type TUseIntersectResponse = [Dispatch<SetStateAction<Element | null>>, boolean];
+type TUseIntersectResponse = { node: Dispatch<SetStateAction<Element | null>>; isIntersecting: boolean };
 
 function useIntersect({ threshold = 1 }: IUseIntersect): TUseIntersectResponse {
     const [isIntersecting, setIntersecting] = useState<boolean>(false);
@@ -55,7 +55,7 @@ function useIntersect({ threshold = 1 }: IUseIntersect): TUseIntersectResponse {
         };
     }, [node, threshold]);
 
-    return [setNode, isIntersecting];
+    return { node: setNode, isIntersecting };
 }
 
 export default useIntersect;

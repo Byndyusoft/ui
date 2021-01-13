@@ -3,8 +3,8 @@ import { Meta } from '@storybook/react';
 import useIntersect from './useIntersect';
 
 export const UseIntersect = () => {
-    const [node1, isIntersecting] = useIntersect({});
-    const [node2, isIntersecting2] = useIntersect({});
+    const { node: node1, isIntersecting } = useIntersect({});
+    const { node: node2, isIntersecting: isIntersecting2 } = useIntersect({});
 
     return (
         <div>
