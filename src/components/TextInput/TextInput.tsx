@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
-import { IInputProps } from '../Input';
-import Input, { Size, Variant } from '../Input';
+import Input, { IInputProps, Size, Variant } from '../Input';
 
 interface ITextInputProps extends IInputProps {
     defaultValue?: string;
