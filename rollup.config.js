@@ -10,6 +10,8 @@ export default [
     {
         input: ['src/index.tsx'],
         output: {
+            exports: 'auto',
+            format: 'cjs',
             dir: 'lib',
             preserveModules: true,
             preserveModulesRoot: 'src'
