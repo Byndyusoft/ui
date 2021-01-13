@@ -90,13 +90,15 @@ export const UseIntersect = () => {
                 </p>
             </div>
             <div>
-                <p ref={setElement}>First element</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p ref={setElement}>
+                    <b>First element</b>
+                </p>
+                <p>Morbi eu finibus sem. Cras luctus ut massa gravida</p>
                 <p ref={setElement2}>
-                    Integer elementum leo eget auctor pharetra. Morbi eu finibus sem. Cras luctus ut massa gravida
-                    feugiat. Nulla sit amet hendrerit nisl. Cras et viverra orci. Proin non pellentesque lacus, non
-                    molestie purus. Phasellus sodales auctor nunc ac pharetra. Maecenas a eleifend leo, at fermentum
-                    lorem. Duis vel placerat lorem. Nulla sed dictum massa. Fusce nec semper massa
+                    <b>Lorem ipsum</b> elementum leo eget auctor pharetra. feugiat. Nulla sit amet hendrerit nisl. Cras
+                    et viverra orci. Proin non pellentesque lacus, non molestie purus. Phasellus sodales auctor nunc ac
+                    pharetra. Maecenas a eleifend leo, at fermentum lorem. Duis vel placerat lorem. Nulla sed dictum
+                    massa. Fusce nec semper massa
                 </p>
             </div>
         </div>

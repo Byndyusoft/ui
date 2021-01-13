@@ -7,41 +7,48 @@ interface IUseIntersect {
 }
 
 function useIntersect({ node, onIntersect, threshold = 1 }: IUseIntersect) {
-    const [isIntersecting, setIntersecting] = useState<boolean>(false);
+    // If some browsers do not support Intersection Observer API, then return intersected state
+    const [isIntersecting, setIntersecting] = useState<boolean>(true);
 
-    const observer = new window.IntersectionObserver(
-        entries => {
-            const firstEntry = entries[0];
+    let observer: IntersectionObserver | null = null;
 
-            if (firstEntry.isIntersecting) {
-                if (onIntersect) {
-                    onIntersect(true);
+    if (window.IntersectionObserverEntry) {
+        observer = new window.IntersectionObserver(
+            entries => {
+                const firstEntry = entries[0];
+
+                if (firstEntry.isIntersecting) {
+                    if (onIntersect) {
+                        onIntersect(true);
+                    }
+                    setIntersecting(true);
+                } else {
+                    if (onIntersect) {
+                        onIntersect(false);
+                    }
+                    setIntersecting(false);
                 }
-                setIntersecting(true);
-            } else {
-                if (onIntersect) {
-                    onIntersect(false);
-                }
-                setIntersecting(false);
+            },
+            {
+                rootMargin: '0px',
+                threshold
             }
-        },
-        {
-            rootMargin: '0px',
-            threshold
-        }
-    );
+        );
+    }
 
     useEffect(() => {
-        if (node) {
-            observer.observe(node);
+        if (observer) {
+            if (node) {
+                observer.observe(node);
+            }
         }
 
         return () => {
-            if (node) {
+            if (node && observer) {
                 observer.unobserve(node);
             }
         };
-    }, [node]);
+    }, [node, observer]);
 
     return { isIntersecting };
 }
