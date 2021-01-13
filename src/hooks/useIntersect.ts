@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 interface IUseIntersect {
     node?: Element | null;
     onIntersect?: (value: boolean) => void;
-    threshold?: number;
+    threshold?: number | number[];
 }
 
 function useIntersect({ node, onIntersect, threshold = 1 }: IUseIntersect) {
