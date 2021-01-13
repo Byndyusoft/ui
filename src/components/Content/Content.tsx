@@ -6,7 +6,7 @@ interface IContentProps {
     as?: string;
 }
 
-const Content = (props: IContentProps) => {
+const Content = (props: IContentProps): ReactNode => {
     const { children, as = 'div', ...rest } = props;
 
     return renderAsProp({ as, props: rest, children });
