@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, HTMLAttributes } from 'react';
 
 interface Props {
     x?: number;
@@ -7,7 +7,7 @@ interface Props {
     className?: string;
 }
 
-type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof Props>;
+type NativeAttrs = Omit<HTMLAttributes<HTMLSpanElement>, keyof Props>;
 
 export type SpacerProps = Props & NativeAttrs;
 
@@ -15,7 +15,7 @@ export const getMargin = (num: number): string => {
     return `calc(${num}rem - 1px)`;
 };
 
-const Spacer: React.FC<SpacerProps> = ({ x = 1, y = 1, inline = false, className = '', ...props }) => {
+const Spacer: FC<SpacerProps> = ({ x = 1, y = 1, inline = false, className = '', ...props }) => {
     const left = getMargin(x);
     const top = getMargin(y);
 

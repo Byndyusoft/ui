@@ -1,28 +1,5 @@
-@keyframes skeleton-animation-wave {
-    0% {
-        background-position: -200px 0;
-    }
-    100% {
-        background-position: calc(200px + 100%) 0;
-    }
-}
-
-@keyframes skeleton-animation-blink {
-    0% {
-        opacity: 1;
-    }
-
-    40% {
-        opacity: 0.65;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
 .Skeleton {
-    border-radius: 5px;
+    border-radius: 4px;
     padding: 7px 10px;
     background: #4ba3c3;
 }
-
