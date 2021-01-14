@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
-import { IInputProps } from '../Input';
-import Input, { Size, Variant } from '../Input';
+import Input, { IInputProps, Size, Variant } from '../Input';
 
 interface ITextInputProps extends IInputProps {
     defaultValue?: string;
@@ -26,8 +25,7 @@ const TextInput: FC<ITextInputProps> = ({
     rightComponent,
     isDisabled,
     isInvalid
-}) => {
-    return (
+}) => (
         <Input
             type="text"
             name={name}
@@ -46,6 +44,5 @@ const TextInput: FC<ITextInputProps> = ({
             isDisabled={isDisabled}
         />
     );
-};
 
 export default TextInput;

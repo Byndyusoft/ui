@@ -52,9 +52,9 @@ const Input: FC<IInputProps> = ({
         placement: 'Left' | 'Right';
     }) => {
         if (sideComponent) {
-            if (React.isValidElement(sideComponent) === false) {
+            if (!React.isValidElement(sideComponent)) {
                 return null;
-            } else {
+            } 
                 return (
                     <div
                         className={cn(
@@ -65,7 +65,7 @@ const Input: FC<IInputProps> = ({
                         {sideComponent}
                     </div>
                 );
-            }
+            
         }
         return null;
     };

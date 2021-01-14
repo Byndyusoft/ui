@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { action } from '@storybook/addon-actions';
-import { Meta } from '@storybook/react';
-import TextInput from '../TextInput';
-import '../TextInput/TextInput.css';
+import { Meta, Story } from '@storybook/react';
+import TextInput from '.';
+import './TextInput.css';
 
-export const DefaultTextInputStory = () => {
+export const DefaultTextInputStory: Story = () => {
     const [inputValue, setInputValue] = useState<string>('');
 
     const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +23,7 @@ export const DefaultTextInputStory = () => {
     );
 };
 
-export const UncontrolledTextInputStory = () => {
+export const UncontrolledTextInputStory: Story = () => {
     const inputRef = useRef<HTMLInputElement>();
 
     return (
@@ -43,7 +43,7 @@ export const UncontrolledTextInputStory = () => {
                         }
                     }}
                     name="uncontrolled-story-input"
-                    defaultValue={''}
+                    defaultValue=""
                 />
             </div>
             <br />

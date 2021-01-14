@@ -1,13 +1,14 @@
-import React from 'react';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import { action } from '@storybook/addon-actions';
-import { Meta } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import Input, { Size, Variant } from '.';
 import './Input.css';
 
-export const InputTypeText = () => <Input placeholder="Default" name="default-input" />;
-export const InputTypePassword = () => <Input placeholder="Enter password" name="default-input" type="password" />;
-export const UncontrolledInput = () => {
+export const InputTypeText: Story = () => <Input placeholder="Default" name="default-input" />;
+export const InputTypePassword: Story = () => (
+    <Input placeholder="Enter password" name="default-input" type="password" />
+);
+export const UncontrolledInput: Story = () => {
     const inputRef = useRef<HTMLInputElement>();
     return (
         <form
@@ -31,7 +32,7 @@ export const UncontrolledInput = () => {
     );
 };
 
-export const InputSize = () => (
+export const InputSize: Story = () => (
     <>
         <h3>Input sizes</h3>
         <div>
@@ -71,7 +72,7 @@ export const InputSize = () => (
     </>
 );
 
-export const InputSideComponents = () => (
+export const InputSideComponents: Story = () => (
     <>
         <h3>With left component</h3>
         <Input defaultValue="123" name="withLeftComponent" leftComponent={<span>🔍</span>} />
@@ -87,7 +88,7 @@ export const InputSideComponents = () => (
     </>
 );
 
-export const InputVariants = () => (
+export const InputVariants: Story = () => (
     <>
         <h3>Regular</h3>
         <Input defaultValue="123" name="regularVariant" variant={Variant.Regular} />
@@ -98,17 +99,17 @@ export const InputVariants = () => (
     </>
 );
 
-export const InputInvalid = () => (
+export const InputInvalid: Story = () => (
     <>
         <h3>Invalid</h3>
-        <Input defaultValue="123" name="invalid" isInvalid={true} />
+        <Input defaultValue="123" name="invalid" isInvalid />
     </>
 );
 
-export const InputDisabled = () => (
+export const InputDisabled: Story = () => (
     <>
         <h3>Disabled</h3>
-        <Input defaultValue="123" name="disabled" isDisabled={true} />
+        <Input defaultValue="123" name="disabled" isDisabled />
     </>
 );
 

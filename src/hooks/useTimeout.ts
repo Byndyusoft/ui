@@ -6,11 +6,11 @@ function useTimeout(callback: () => void, delay = 0): void {
 
     useEffect(() => {
         if (delay === 0) {
-            return;
+            return undefined;
         }
 
         const timeoutId = setTimeout(() => {
-            savedCallback.current?.();
+            savedCallback.current();
         }, delay);
 
         return () => {
