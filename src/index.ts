@@ -10,6 +10,7 @@ export { default as Content } from './components/Content';
 export { default as FileInput } from './components/FileInput';
 export { default as Skeleton } from './components/Skeleton';
 export { default as Stack } from './components/Stack';
+export { default as Spacer } from './components/Spacer';
 export { Variant as ButtonVariant } from './components/Button';
 
 export * from './components/Button/constants';
