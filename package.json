@@ -11,7 +11,7 @@
     "node": ">=10"
   },
   "scripts": {
-    "start": "tsdx watch",
+    "start": "yarn storybook",
     "build": "rollup -c",
     "eslint": "eslint src",
     "stylelint": "stylelint src/**/*.css",
