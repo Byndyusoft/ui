@@ -25,8 +25,7 @@ const TextInput: FC<ITextInputProps> = ({
     rightComponent,
     isDisabled,
     isInvalid
-}) => {
-    return (
+}) => (
         <Input
             type="text"
             name={name}
@@ -45,6 +44,5 @@ const TextInput: FC<ITextInputProps> = ({
             isDisabled={isDisabled}
         />
     );
-};
 
 export default TextInput;

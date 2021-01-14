@@ -102,14 +102,14 @@ export const InputVariants: Story = () => (
 export const InputInvalid: Story = () => (
     <>
         <h3>Invalid</h3>
-        <Input defaultValue="123" name="invalid" isInvalid={true} />
+        <Input defaultValue="123" name="invalid" isInvalid />
     </>
 );
 
 export const InputDisabled: Story = () => (
     <>
         <h3>Disabled</h3>
-        <Input defaultValue="123" name="disabled" isDisabled={true} />
+        <Input defaultValue="123" name="disabled" isDisabled />
     </>
 );
 
