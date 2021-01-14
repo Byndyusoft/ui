@@ -1,3 +1,5 @@
+import './shared/styles/styles.css';
+
 export { default as useInterval } from './hooks/useInterval';
 export { default as useLatestRef } from './hooks/useLatestRef';
 export { default as useTimeout } from './hooks/useTimeout';
