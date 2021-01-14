@@ -10,7 +10,7 @@ export default [
     {
         input: ['src/index.tsx'],
         output: {
-            exports: 'auto',
+            exports: 'named',
             format: 'cjs',
             dir: 'lib',
             preserveModules: true,
@@ -21,6 +21,7 @@ export default [
             styles({
                 mode: 'extract',
                 onExtract: data => {
+                    /* TODO захендлить стили из shared. Пока они клеятся только в lib/index.css */
                     if (!data.name.includes('/index.css')) {
                         fs.outputFile(path.resolve(__dirname, 'lib', data.name), data.css, err => {
                             if (err) {
