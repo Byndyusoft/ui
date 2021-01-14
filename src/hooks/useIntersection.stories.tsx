@@ -1,10 +1,10 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
-import useIntersect from './useIntersect';
+import useIntersection from './useIntersection';
 
-export const UseIntersect = () => {
-    const { node: node1, isIntersecting } = useIntersect({});
-    const { node: node2, isIntersecting: isIntersecting2 } = useIntersect({});
+export const useIntersectionStory = () => {
+    const { node: node1, isIntersecting } = useIntersection({});
+    const { node: node2, isIntersecting: isIntersecting2 } = useIntersection({});
 
     return (
         <div>
@@ -96,17 +96,30 @@ export const UseIntersect = () => {
                     <b>Lorem ipsum</b> elementum leo eget auctor pharetra. feugiat. Nulla sit amet hendrerit nisl. Cras
                     et viverra orci. Proin non pellentesque lacus, non molestie purus. Phasellus sodales auctor nunc ac
                     pharetra. Maecenas a eleifend leo, at fermentum lorem. Duis vel placerat lorem. Nulla sed dictum
-                    massa. Fusce nec semper massa
+                    massa. Fusce nec semper massa Ut et tempor odio, in lobortis sapien. Curabitur a rhoncus mi, vel
+                    interdum nunc. Interdum et malesuada fames ac ante ipsum primis in faucibus. Cras sit amet ipsum id
+                    urna congue aliquet. Donec faucibus orci quis magna facilisis fermentum. Sed quis elit sed nulla
+                    malesuada vehicula. Nam pharetra vehicula odio quis sagittis. Vestibulum quis ipsum luctus, mattis
+                    orci eu, facilisis magna. Integer bibendum consequat nisl, ac pharetra tellus facilisis at. Quisque
+                    varius pellentesque arcu, et condimentum metus condimentum non. Nulla id erat sed purus volutpat
+                    sodales. Phasellus in lacinia sem. Integer non massa tincidunt, congue ligula nec, pretium augue.
+                    Sed mi ex, tincidunt ut elementum rutrum, feugiat eu sem. Phasellus libero odio, aliquam et ante
+                    sed, dictum finibus lectus. Pellentesque id enim fringilla, tempor ligula at, elementum est. Cras
+                    accumsan nibh eget sapien tempor condimentum. Sed sed augue sit amet enim posuere lacinia eget ac
+                    lacus. Vestibulum odio sem, vulputate non faucibus non, eleifend eu ex. In convallis diam vitae odio
+                    molestie mollis. Nunc luctus, enim placerat rutrum scelerisque, ante nisi condimentum dolor, at
+                    euismod mauris ipsum sed est. Maecenas imperdiet odio urna, pellentesque tincidunt sapien aliquam
+                    sed. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
                 </p>
             </div>
         </div>
     );
 };
 
-UseIntersect.storyName = 'useIntersect';
+useIntersectionStory.storyName = 'useIntersection';
 
 const meta: Meta = {
-    title: 'Hooks/useIntersect'
+    title: 'Hooks/useIntersection'
 };
 
 export default meta;

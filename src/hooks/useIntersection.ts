@@ -1,12 +1,12 @@
 import { Dispatch, SetStateAction, useEffect, useState, useRef } from 'react';
 
-interface IUseIntersect {
+interface IUseIntersection {
     threshold?: number | number[];
 }
 
-type TUseIntersectResponse = { node: Dispatch<SetStateAction<Element | null>>; isIntersecting: boolean };
+type TUseIntersectionResponse = { node: Dispatch<SetStateAction<Element | null>>; isIntersecting: boolean };
 
-function useIntersect({ threshold = 1 }: IUseIntersect): TUseIntersectResponse {
+function useIntersection({ threshold = 0 }: IUseIntersection): TUseIntersectionResponse {
     const [isIntersecting, setIntersecting] = useState<boolean>(false);
     // Check for browser Intersection API support
     const getIntersectionAPI = () => {
@@ -14,7 +14,6 @@ function useIntersect({ threshold = 1 }: IUseIntersect): TUseIntersectResponse {
             return new window.IntersectionObserver(
                 entries => {
                     const firstEntry = entries[0];
-
                     if (firstEntry.isIntersecting) {
                         setIntersecting(true);
                     } else {
@@ -58,4 +57,4 @@ function useIntersect({ threshold = 1 }: IUseIntersect): TUseIntersectResponse {
     return { node: setNode, isIntersecting };
 }
 
-export default useIntersect;
+export default useIntersection;
