@@ -1,0 +1,101 @@
+.InputContainer {
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    transition: border-color 0.25s ease-out;
+    overflow: hidden;
+    background: #fff;
+}
+
+.InputContainer--Regular {
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+}
+
+.InputContainer--Underlined {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.InputContainer--Space {
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 5px;
+}
+
+.InputContainer--Regular:focus-within {
+    border-color: rgba(0, 0, 0, 1);
+}
+
+.InputContainer--Underlined:focus-within {
+    border-color: rgba(0, 0, 0, 1);
+}
+
+.InputContainer--Space:focus-within {
+    border-color: rgba(0, 0, 0, 1);
+}
+
+.Input {
+    border: 0;
+    outline: 0;
+}
+
+.Input--ExtraSmall {
+    padding: 0.25rem 0.45rem;
+    font-size: 0.65rem;
+}
+
+.Input--Small {
+    padding: 0.25rem 0.45rem;
+    font-size: 0.75rem;
+}
+
+.Input--Medium {
+    padding: 0.25rem 0.45rem;
+    font-size: 1rem;
+}
+
+.Input--Large {
+    padding: 0.25rem 0.45rem;
+    font-size: 1.25rem;
+}
+
+.Input--ExtraLarge {
+    padding: 0.25rem 0.45rem;
+    font-size: 1.5rem;
+}
+
+.InputSideComponentContainerLeft {
+    padding: 0 0.45rem 0 0.25rem;
+}
+
+.InputSideComponentContainerRight {
+    padding: 0 0.25rem 0 0.45rem;
+}
+
+.InputSideComponentContainer--ExtraSmall {
+    font-size: 0.65rem;
+}
+
+.InputSideComponentContainer--Small {
+    font-size: 0.75rem;
+}
+
+.InputSideComponentContainer--Medium {
+    font-size: 1rem;
+}
+
+.InputSideComponentContainer--Large {
+    font-size: 1.25rem;
+}
+
+.InputSideComponentContainer--ExtraLarge {
+    font-size: 1.5rem;
+}
+
+.Input--Invalid {
+    border: 1px solid rgba(255, 0, 0, 0.75);
+}
+
+.Input--Disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
