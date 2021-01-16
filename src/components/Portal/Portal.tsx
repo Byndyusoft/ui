@@ -7,12 +7,10 @@ const Portal: FC<IPortalProps> = ({ children }) => {
     const container = React.useRef<HTMLDivElement>(document.createElement('div'));
 
     useEffect(() => {
-        document.appendChild(container.current);
-        debugger;
+        document.body.appendChild(container.current);
 
         return () => {
-            document.removeChild(container.current);
-            debugger;
+            document.body.removeChild(container.current);
         };
     }, []);
 
