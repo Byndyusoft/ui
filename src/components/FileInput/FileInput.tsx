@@ -20,7 +20,7 @@ const FileInput: FC<IFileInputProps> = ({ component, name, acceptFiles, isMultiu
 
     const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         const filesCollection: File[] = [];
-        const target = e.target;
+        const { target } = e;
         if (target.files) {
             for (let i = 0; i < target.files.length; i += 1) {
                 filesCollection.push(target.files[i]);
@@ -34,7 +34,9 @@ const FileInput: FC<IFileInputProps> = ({ component, name, acceptFiles, isMultiu
     return (
         <>
             {/* toDo: unset default button's style */}
-            <button onClick={onClickHandler}>{component}</button>
+            <button type="button" onClick={onClickHandler}>
+                {component}
+            </button>
             <input
                 ref={fileInputRef}
                 name={name}
