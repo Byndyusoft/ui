@@ -6,7 +6,13 @@ interface IUseImageProps {
     crossOrigin?: string;
 }
 
-function useImage({ srcList, decode = true, crossOrigin = '' }: IUseImageProps) {
+interface IUseImageResponse {
+    src: string;
+    isLoading: boolean;
+    hasError: boolean;
+}
+
+function useImage({ srcList, decode = true, crossOrigin = '' }: IUseImageProps): IUseImageResponse {
     const [src, setSrc] = useState<string>('');
     const [isLoading, setLoading] = useState<boolean>(true);
     const [hasError, setHasError] = useState<boolean>(false);
@@ -36,14 +42,15 @@ function useImage({ srcList, decode = true, crossOrigin = '' }: IUseImageProps) 
                             i.crossOrigin = crossOrigin;
                         }
                         i.onload = () => {
-                            decode && i.decode
-                                ? i
-                                      .decode()
-                                      .then(() => {
-                                          resolve(srcItem);
-                                      })
-                                      .catch(reject)
-                                : resolve(srcItem);
+                            if (decode) {
+                                i.decode()
+                                    .then(() => {
+                                        resolve(srcItem);
+                                    })
+                                    .catch(reject);
+                            } else {
+                                resolve(srcItem);
+                            }
                         };
                         i.onerror = err => {
                             reject(err);
@@ -54,10 +61,16 @@ function useImage({ srcList, decode = true, crossOrigin = '' }: IUseImageProps) 
                     })
                 )
             );
-            Promise.race(promiseArray).then(res => {
-                setSrc(res);
-                setLoading(false);
-            });
+
+            Promise.race(promiseArray)
+                .then(res => {
+                    setSrc(res);
+                    setLoading(false);
+                })
+                .catch(() => {
+                    setLoading(false);
+                    setHasError(true);
+                });
         } else if (srcList && !Array.isArray(srcList)) {
             // When image source is a string
             new Promise<string>((resolve, reject) => {
@@ -66,14 +79,15 @@ function useImage({ srcList, decode = true, crossOrigin = '' }: IUseImageProps) 
                     i.crossOrigin = crossOrigin;
                 }
                 i.onload = () => {
-                    decode && i.decode
-                        ? i
-                              .decode()
-                              .then(() => {
-                                  resolve(srcList);
-                              })
-                              .catch(reject)
-                        : resolve(srcList);
+                    if (decode) {
+                        i.decode()
+                            .then(() => {
+                                resolve(srcList);
+                            })
+                            .catch(reject);
+                    } else {
+                        resolve(srcList);
+                    }
                 };
                 i.onerror = err => {
                     reject(err);
