@@ -7,6 +7,8 @@ interface IUseIntersection {
 type TUseIntersectionResponse = [node: Dispatch<SetStateAction<Element | null>>, isIntersecting: boolean];
 
 
+// ToDo: Figure out how to test this hook. Some notes and thoughts can be found in Notion.
+
 function useIntersection({ threshold = 0 }: IUseIntersection): TUseIntersectionResponse {
     const [isIntersecting, setIntersecting] = useState<boolean>(false);
     // Check for browser Intersection API support
