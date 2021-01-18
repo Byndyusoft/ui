@@ -17,24 +17,22 @@ const Image: FC<IImageProps> = ({
     title,
     className,
     bgPlaceholderColor
-}) => {
-    return (
-        <img
-            style={{
-                width,
-                height,
-                backgroundSize: 'contain',
-                backgroundRepeat: 'no-repeat',
-                backgroundColor: bgPlaceholderColor
-            }}
-            className={className}
-            src={src}
-            alt={alt}
-            width={width}
-            height={height}
-            title={title}
-        />
-    );
-};
+}) => (
+    <img
+        style={{
+            width,
+            height,
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat',
+            backgroundColor: bgPlaceholderColor
+        }}
+        className={className}
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        title={title}
+    />
+);
 
 export default Image;

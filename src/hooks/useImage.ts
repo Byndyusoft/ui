@@ -20,7 +20,7 @@ function useImage({ srcList, decode = true, crossOrigin = '' }: IUseImageProps):
     const sourceKey = useMemo(() => {
         if (srcList && Array.isArray(srcList)) {
             return srcList.join('');
-        } else if (srcList && Array.isArray(srcList) === false) {
+        } else if (srcList && !Array.isArray(srcList)) {
             return srcList;
         }
         return srcList;
