@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
 
-interface IImageProps extends Partial<HTMLImageElement>, Omit<Partial<HTMLImageElement>, 'src' | 'alt'> {
-    bgPlaceholderColor?: string;
-    bgPlaceholderImage?: string;
+interface IImageProps
+    extends Partial<HTMLImageElement>,
+        Omit<Partial<HTMLImageElement>, 'src' | 'alt' | 'onError' | 'onLoad'> {
     className?: string;
     src: string;
+    bgPlaceholderColor?: string;
     alt?: string;
 }
 
@@ -12,21 +13,19 @@ const Image: FC<IImageProps> = ({
     width = '100%',
     height = '100%',
     src,
-    bgPlaceholderColor = 'transparent',
-    bgPlaceholderImage,
     alt,
     title,
-    className
+    className,
+    bgPlaceholderColor
 }) => {
     return (
         <img
             style={{
                 width,
                 height,
-                backgroundColor: bgPlaceholderColor,
-                backgroundImage: `url(${bgPlaceholderImage})`,
-                backgroundSize: 'cover',
-                backgroundRepeat: 'no-repeat'
+                backgroundSize: 'contain',
+                backgroundRepeat: 'no-repeat',
+                backgroundColor: bgPlaceholderColor
             }}
             className={className}
             src={src}
