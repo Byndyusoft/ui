@@ -27,83 +27,85 @@ function useImage({ srcList, decode = true, crossOrigin = '' }: IUseImageProps):
     }, [srcList]);
 
     useEffect(() => {
-        setLoading(true);
-        setHasError(false);
-        setSrc('');
+        if (srcList) {
+            setLoading(true);
+            setHasError(false);
+            setSrc('');
 
-        if (srcList && Array.isArray(srcList)) {
-            // When image source is array of urls
-            const promiseArray: Promise<string>[] = [];
-            srcList.forEach(srcItem =>
-                promiseArray.push(
-                    new Promise((resolve, reject) => {
-                        const i = new Image();
-                        if (crossOrigin) {
-                            i.crossOrigin = crossOrigin;
-                        }
-                        i.onload = () => {
-                            if (decode) {
-                                i.decode()
-                                    .then(() => {
-                                        resolve(srcItem);
-                                    })
-                                    .catch(reject);
-                            } else {
-                                resolve(srcItem);
+            if (Array.isArray(srcList)) {
+                // When image source is array of urls
+                const promiseArray: Promise<string>[] = [];
+                srcList.forEach(srcItem =>
+                    promiseArray.push(
+                        new Promise((resolve, reject) => {
+                            const i = new Image();
+                            if (crossOrigin) {
+                                i.crossOrigin = crossOrigin;
                             }
-                        };
-                        i.onerror = err => {
-                            reject(err);
-                            setHasError(true);
-                            setLoading(false);
-                        };
-                        i.src = srcItem;
-                    })
-                )
-            );
+                            i.onload = () => {
+                                if (decode) {
+                                    i.decode()
+                                        .then(() => {
+                                            resolve(srcItem);
+                                        })
+                                        .catch(reject);
+                                } else {
+                                    resolve(srcItem);
+                                }
+                            };
+                            i.onerror = err => {
+                                reject(err);
+                                setHasError(true);
+                                setLoading(false);
+                            };
+                            i.src = srcItem;
+                        })
+                    )
+                );
 
-            Promise.race(promiseArray)
-                .then(res => {
-                    setSrc(res);
-                    setLoading(false);
-                })
-                .catch(() => {
-                    setLoading(false);
-                    setHasError(true);
-                });
-        } else if (srcList && !Array.isArray(srcList)) {
-            // When image source is a string
-            new Promise<string>((resolve, reject) => {
-                const i = new Image();
-                if (crossOrigin) {
-                    i.crossOrigin = crossOrigin;
-                }
-                i.onload = () => {
-                    if (decode) {
-                        i.decode()
-                            .then(() => {
-                                resolve(srcList);
-                            })
-                            .catch(reject);
-                    } else {
-                        resolve(srcList);
+                Promise.race(promiseArray)
+                    .then(res => {
+                        setSrc(res);
+                        setLoading(false);
+                    })
+                    .catch(() => {
+                        setLoading(false);
+                        setHasError(true);
+                    });
+            } else if (!Array.isArray(srcList)) {
+                // When image source is a string
+                new Promise<string>((resolve, reject) => {
+                    const i = new Image();
+                    if (crossOrigin) {
+                        i.crossOrigin = crossOrigin;
                     }
-                };
-                i.onerror = err => {
-                    reject(err);
-                };
-                i.src = srcList;
-            })
-                .then(res => {
-                    setSrc(res);
-                    setLoading(false);
+                    i.onload = () => {
+                        if (decode) {
+                            i.decode()
+                                .then(() => {
+                                    resolve(srcList);
+                                })
+                                .catch(reject);
+                        } else {
+                            resolve(srcList);
+                        }
+                    };
+                    i.onerror = err => {
+                        reject(err);
+                    };
+                    i.src = srcList;
                 })
-                .catch(() => {
-                    setHasError(true);
-                    setLoading(false);
-                });
+                    .then(res => {
+                        setSrc(res);
+                        setLoading(false);
+                    })
+                    .catch(() => {
+                        setHasError(true);
+                        setLoading(false);
+                    });
+            }
         }
-    }, [sourceKey]);
+    }, [sourceKey, crossOrigin, decode]);
 
     return { src, isLoading, hasError };
 }
