@@ -1,7 +1,7 @@
 import { useCallback, useState, useEffect } from 'react';
 
-const getInitialValue = <T>(key:string) : T | undefined => {
-    const initialValue = localStorage.getItem(key) ?? undefined;
+const getInitialValue = <T>(key:string) : T | null => {
+    const initialValue = localStorage.getItem(key);
 
     if(initialValue){
         const parsedData = JSON.parse(initialValue) as T;
@@ -9,7 +9,12 @@ const getInitialValue = <T>(key:string) : T | undefined => {
             return parsedData;
         }
     }
-    return undefined;
+
+    if(typeof initialValue !== 'string'){
+        return initialValue;
+    }
+
+    return null;
 }
 
 const writeToLocalStorage = (key: string, data: unknown) : void => {
@@ -25,10 +30,10 @@ export const clearEntireLocalStorage = () : void => {
     localStorage.clear();
 }
 
-type TUseLocalStorageResponse<T> = [data: T | undefined, setData: (value: T) => void, remove: () => void]
+type TUseLocalStorageResponse<T> = [data: T | null, setData: (value: T) => void, remove: () => void]
 
-function useLocalStorage<T>(key: string): TUseLocalStorageResponse<T>{
-    const [data, setData] = useState<T | undefined>(getInitialValue(key));
+function useLocalStorage<T>(key: string, initialData?: T): TUseLocalStorageResponse<T>{
+    const [data, setData] = useState<T | null>(initialData ?? getInitialValue(key));
 
     const set = useCallback(localStorageData => {
         writeToLocalStorage(key, localStorageData);
@@ -37,7 +42,7 @@ function useLocalStorage<T>(key: string): TUseLocalStorageResponse<T>{
 
     const remove = useCallback(()=>{
         clearLocalStorageByKey(key)
-        setData(undefined);
+        setData(null);
     }, [key])
 
     const checkLocalStorage = useCallback(
@@ -52,6 +57,12 @@ function useLocalStorage<T>(key: string): TUseLocalStorageResponse<T>{
         },
         [key],
       );
+
+    useEffect(() => {
+        if(initialData){
+            set(initialData);
+        }
+    },[initialData])
 
     useEffect(() => {
         window.addEventListener("storage", checkLocalStorage);
