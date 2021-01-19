@@ -2,10 +2,10 @@ import React, { FC, createContext, useContext } from 'react';
 import { Meta, Story } from '@storybook/react';
 import useLocalStorage from './useLocalStorage';
 
-type TLocalStorageContext<T> = [data: T | undefined, setData: (value: T) => void, remove: () => void]
+type TLocalStorageContext<T> = [data: T | null, setData: (value: T) => void, remove: () => void]
 type TLocalStorageStringContext = TLocalStorageContext<string>
 
-const LocalStorageContext = createContext<TLocalStorageStringContext>([undefined, () => {}, () => {}]);
+const LocalStorageContext = createContext<TLocalStorageStringContext>([null, () => {}, () => {}]);
 
 const LocalStorageProvider : FC = ({children}) => {
     const ctxValue = useLocalStorage<string>('userData');
@@ -40,12 +40,12 @@ const AnotherComponent : FC = () => {
     </div>
 }
 
-export const useLocalStorageStory: Story = (): JSX.Element => <LocalStorageProvider>
+export const useLocalStorageWithContextStory: Story = (): JSX.Element => <LocalStorageProvider>
         <SomeComponent/>
         <AnotherComponent/>
     </LocalStorageProvider>;
 
-useLocalStorageStory.storyName = 'useLocalStorage with Context';
+useLocalStorageWithContextStory.storyName = 'useLocalStorage with Context';
 
 const meta: Meta = {
     title: 'Hooks/useLocalStorage'
