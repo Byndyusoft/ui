@@ -1,6 +1,7 @@
-// import {render, act} from '@testing-library/react';
+import React, {createContext, useContext, FC, useEffect} from 'react';
+import { render, screen, act as actReact } from '@testing-library/react';
 import { renderHook, act } from '@testing-library/react-hooks';
-import useLocalStorage, { clearEntireLocalStorage } from './useLocalStorage';
+import useLocalStorage from './useLocalStorage';
 
 const LOCALSTORAGE_KEY_TEST = 'userData';
 
@@ -85,5 +86,62 @@ describe('hooks/useLocalStorage', () => {
     */
     test.todo('useLocalStorage clearing entire storage');
 
-    test.todo('useLocalStorage changing state everywhere with using context');
+    test('useLocalStorage changing state everywhere with using context', () => {
+        /* Arrange */
+
+        let setUserDataAnchor : (value:string) => void = () => {};
+
+        // Context
+        type TLocalStorageContext<T> = [data: T | null, setData: (value: T) => void, remove: () => void]
+        type TLocalStorageStringContext = TLocalStorageContext<string>
+
+        const LocalStorageContext = createContext<TLocalStorageStringContext>([null, ()=> {}, ()=>{}]);
+
+        const LocalStorageProvider : FC = ({children}) => {
+            const ctxValue = useLocalStorage<string>('userData');
+
+            return <LocalStorageContext.Provider value={ctxValue}>
+                {children}
+                </LocalStorageContext.Provider>
+        }
+
+        // Component using context
+        const SomeComponent : FC = () => {
+            const [userData] = useContext(LocalStorageContext);
+
+            return <input type="text" data-testid="someComponentInput" value={userData ?? ''} onChange={()=>{}} />
+        }
+
+        // Another component using context
+        const AnotherComponent : FC = () => {
+            const [userData, setUserData] = useContext(LocalStorageContext);
+
+            setUserDataAnchor = setUserData;
+
+            return <input type="text" data-testid="anotherComponentInput" value={userData ?? ''} onChange={()=>{}} />
+        }
+
+        // App
+        const App : FC = () => <LocalStorageProvider>
+            <SomeComponent/>
+            <AnotherComponent />
+        </LocalStorageProvider>;
+
+        /* Act */
+        render(<App />);
+
+        const someComponentInput = screen.getByTestId('someComponentInput') as HTMLInputElement;
+        const anotherComponentInput = screen.getByTestId('anotherComponentInput') as HTMLInputElement;
+
+        /* Assert */
+        expect(someComponentInput.value).toBe('');
+        expect(anotherComponentInput.value).toBe('');
+
+        actReact(() => {
+            setUserDataAnchor('test');
+        })
+
+        expect(someComponentInput.value).toBe('test');
+        expect(anotherComponentInput.value).toBe('test');
+    });
 });
