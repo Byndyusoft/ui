@@ -1,7 +1,7 @@
-import React, {createContext, useContext, FC, useEffect} from 'react';
-import { render, screen, act as actReact } from '@testing-library/react';
-import { renderHook, act } from '@testing-library/react-hooks';
-import useLocalStorage from './useLocalStorage';
+import React, { FC, createContext, useContext } from 'react';
+import { render, screen, act as actReact, act } from '@testing-library/react';
+import { renderHook, act as actHook } from '@testing-library/react-hooks';
+import useLocalStorage, { clearEntireLocalStorage } from './useLocalStorage';
 
 const LOCALSTORAGE_KEY_TEST = 'userData';
 
@@ -38,7 +38,7 @@ describe('hooks/useLocalStorage', () => {
         const { result } = renderHook(() => useLocalStorage<string>(LOCALSTORAGE_KEY_TEST));
 
         // Set data
-        act(() => {
+        actHook(() => {
             const [, setUserData] = result.current;
 
             setUserData('test');
@@ -53,21 +53,21 @@ describe('hooks/useLocalStorage', () => {
         const { result } = renderHook(() => useLocalStorage<string>(LOCALSTORAGE_KEY_TEST));
 
         // Set data
-        act(() => {
+        actHook(() => {
             const [, setUserData] = result.current;
 
             setUserData('test');
         });
 
         // Check data
-        act(() => {
+        actHook(() => {
             const [userData] = result.current;
 
             expect(userData).toBeDefined();
         });
 
         // Clear data
-        act(() => {
+        actHook(() => {
             const [, , clearUserData] = result.current;
 
             clearUserData();
@@ -84,7 +84,18 @@ describe('hooks/useLocalStorage', () => {
             because it is not available to subscribe for changes.
             You can only subscribe for watching changes from different pages(tabs).
     */
-    test.todo('useLocalStorage clearing entire storage');
+    test('useLocalStorage clearing entire storage',() => {
+        expect(localStorage.getItem('userData')).toBeNull();
+
+        localStorage.setItem('userData','test');
+
+        expect(localStorage.getItem('userData')).toBe('test');
+
+        clearEntireLocalStorage();
+
+        expect(localStorage.getItem('userData')).toBeNull();
+
+    });
 
     test('useLocalStorage changing state everywhere with using context', () => {
         /* Arrange */
@@ -97,7 +108,11 @@ describe('hooks/useLocalStorage', () => {
         type TLocalStorageContext<T> = [data: T | null, setData: (value: T) => void, remove: () => void]
         type TLocalStorageStringContext = TLocalStorageContext<string>
 
-        const LocalStorageContext = createContext<TLocalStorageStringContext>([null, ()=> {}, ()=>{}]);
+        const LocalStorageContext = createContext<TLocalStorageStringContext>([null, () => {
+            //do nothing
+        }, () => {
+            // do nothing
+        }]);
 
         const LocalStorageProvider : FC = ({children}) => {
             const ctxValue = useLocalStorage<string>('userData');
@@ -111,7 +126,9 @@ describe('hooks/useLocalStorage', () => {
         const SomeComponent : FC = () => {
             const [userData] = useContext(LocalStorageContext);
 
-            return <input type="text" data-testid="someComponentInput" value={userData ?? ''} onChange={()=>{}} />
+            return <input type="text" data-testid="someComponentInput" value={userData ?? ''} onChange={() => {
+                // do nothing
+            }} />
         }
 
         // Another component using context
@@ -120,7 +137,9 @@ describe('hooks/useLocalStorage', () => {
 
             setUserDataAnchor = setUserData;
 
-            return <input type="text" data-testid="anotherComponentInput" value={userData ?? ''} onChange={()=>{}} />
+            return <input type="text" data-testid="anotherComponentInput" value={userData ?? ''} onChange={() => {
+                // do nothing
+            }} />
         }
 
         // App
