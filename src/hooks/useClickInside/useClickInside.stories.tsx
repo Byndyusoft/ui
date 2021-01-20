@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Meta, Story } from '@storybook/react';
 import useClickInside from './useClickInside';
 
-export const useClickInsideStory: Story = (): JSX.Element => {
+export const useClickInsideStory: Story = () => {
     const [counterValue, setCounterValue] = useState<number>(0);
     const [ref] = useClickInside(() => {
         setCounterValue(prevValue => prevValue + 1);
