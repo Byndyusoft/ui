@@ -89,7 +89,9 @@ describe('hooks/useLocalStorage', () => {
     test('useLocalStorage changing state everywhere with using context', () => {
         /* Arrange */
 
-        let setUserDataAnchor : (value:string) => void = () => {};
+        let setUserDataAnchor : (value:string) => void = () => {
+            // do nothing
+        };
 
         // Context
         type TLocalStorageContext<T> = [data: T | null, setData: (value: T) => void, remove: () => void]
