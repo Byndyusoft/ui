@@ -23,6 +23,16 @@ export const BackgroundPlaceholderColor: Story = () => {
     return <Image bgPlaceholderColor="#3e3e3e" width={480} height={360} src={src} />;
 };
 
+export const ComponentPlaceholder: Story = () => {
+    const { src } = useImage({
+        srcList: [
+            'https://images.pexels.com/photos/531321/pexels-photo-531321.jpeg?crop=entropy&cs=srgb&dl=pexels-pixabay-531321.jpg&fit=crop&fm=jpg&h=3313&w=4970'
+        ]
+    });
+
+    return <Image placeholderComponent={<div>Image is loading</div>} width={480} height={360} src={src} />;
+};
+
 export const ImageRaceLoading: Story = () => {
     const { src } = useImage({
         srcList: [
@@ -63,6 +73,7 @@ export const ImageOnLoad: Story = () => {
 
 DefaultImageStory.storyName = 'Default';
 BackgroundPlaceholderColor.storyName = 'Background placeholder color';
+ComponentPlaceholder.storyName = 'Component placeholder';
 ImageRaceLoading.storyName = 'First loaded image display';
 
 const meta: Meta = {
