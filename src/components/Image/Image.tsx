@@ -6,6 +6,7 @@ interface IImageProps
     className?: string;
     src: string;
     bgPlaceholderColor?: string;
+    placeholderComponent?: JSX.Element;
     alt?: string;
 }
 
@@ -16,9 +17,12 @@ const Image: FC<IImageProps> = ({
     alt,
     title,
     className,
-    bgPlaceholderColor
+    bgPlaceholderColor,
+    placeholderComponent
 }) => {
-    if (!src) {
+    if (!src && placeholderComponent && React.isValidElement(placeholderComponent)) {
+        return React.cloneElement(placeholderComponent);
+    } else if (!src) {
         return (
             <div
                 style={{
