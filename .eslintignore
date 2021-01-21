@@ -1,2 +1,4 @@
 jest.config.js
 jest-setup.ts
+plopfile.js
+plop-templates

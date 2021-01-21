@@ -20,7 +20,8 @@
         "lint": "yarn eslint && yarn stylelint",
         "lint-fix": "yarn eslint --fix && yarn stylelint --fix",
         "storybook": "start-storybook -p 6006",
-        "build-storybook": "build-storybook"
+        "build-storybook": "build-storybook",
+        "plop": "plop"
     },
     "peerDependencies": {
         "react": ">=16"
@@ -60,6 +61,7 @@
         "eslint": "^7.17.0",
         "fs-extra": "^9.0.1",
         "jest": "^26.6.3",
+        "plop": "^2.7.4",
         "postcss": "^8.2.4",
         "react": "^17.0.1",
         "react-dom": "^17.0.1",
