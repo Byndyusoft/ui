@@ -17,13 +17,13 @@ function useInterval(callback: () => void): IUseInterval {
 
     const stop = (): void => {
         setDelay(0);
-        clearInterval(timer?.current);
+        clearInterval(timer.current);
     };
 
     useEffect(() => {
         if (delay > 0) {
             timer.current = window.setInterval(() => {
-                savedCallback?.current();
+                savedCallback.current();
             }, delay);
 
             return () => stop();

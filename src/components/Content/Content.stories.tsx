@@ -1,9 +1,9 @@
-import { Meta } from '@storybook/react';
-import Content from '../src/components/Content';
-import Skeleton from '../src/components/Skeleton';
-import Stack from '../src/components/Stack';
+import React from 'react';
+import { Meta, Story } from '@storybook/react';
+import Content from './Content';
+import Skeleton from '../Skeleton';
 
-export const ContentStory = () => (
+export const ContentStory: Story = () => (
     <Content>
         <Skeleton className="font-white">Content</Skeleton>
     </Content>
@@ -11,7 +11,7 @@ export const ContentStory = () => (
 
 ContentStory.storyName = 'Default';
 
-export const ContentAsSectionStory = () => (
+export const ContentAsSectionStory: Story = () => (
     <Content as="section">
         <Skeleton className="font-white">Wrapper rendered as section</Skeleton>
     </Content>
@@ -20,7 +20,7 @@ export const ContentAsSectionStory = () => (
 ContentAsSectionStory.storyName = 'Use custom element';
 
 const meta: Meta = {
-    title: 'Layout/Content',
+    title: 'Content',
     component: Content
 };
 

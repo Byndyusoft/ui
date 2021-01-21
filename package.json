@@ -1,81 +1,81 @@
 {
-  "version": "0.1.11",
-  "license": "MIT",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
-  "files": [
-    "dist",
-    "src"
-  ],
-  "engines": {
-    "node": ">=10"
-  },
-  "scripts": {
-    "start": "tsdx watch",
-    "copy-css": "copyfiles \"./src/**/*.css\" dist -u 1",
-    "build": "tsdx build && npm run copy-css",
-    "test": "tsdx test --passWithNoTests",
-    "lint": "tsdx lint",
-    "lint-fix": "tsdx lint --fix",
-    "prepare": "tsdx build && npm run copy-css",
-    "size": "size-limit",
-    "analyze": "size-limit --why",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
-  },
-  "peerDependencies": {
-    "react": ">=16"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
-  },
-  "prettier": {
-    "arrowParens": "avoid",
-    "singleQuote": true,
-    "tabWidth": 4,
-    "trailingComma": "none",
-    "printWidth": 120
-  },
-  "name": "@byndyusoft/ui",
-  "author": "Nick Kuznetsov",
-  "module": "dist/ui.esm.js",
-  "size-limit": [
-    {
-      "path": "dist/ui.cjs.production.min.js",
-      "limit": "200 KB"
+    "version": "0.1.11",
+    "license": "MIT",
+    "main": "dist/index.js",
+    "typings": "dist/index.d.ts",
+    "files": [
+        "dist",
+        "src"
+    ],
+    "engines": {
+        "node": ">=10"
     },
-    {
-      "path": "dist/ui.esm.js",
-      "limit": "200 KB"
+    "scripts": {
+        "start": "yarn storybook",
+        "build": "rollup -c",
+        "test": "jest",
+        "test:watch": "jest --watchAll",
+        "eslint": "eslint src",
+        "stylelint": "stylelint src/**/*.css",
+        "lint": "yarn eslint && yarn stylelint",
+        "lint-fix": "yarn eslint --fix && yarn stylelint --fix",
+        "storybook": "start-storybook -p 6006",
+        "build-storybook": "build-storybook"
+    },
+    "peerDependencies": {
+        "react": ">=16"
+    },
+    "prettier": {
+        "arrowParens": "avoid",
+        "singleQuote": true,
+        "tabWidth": 4,
+        "trailingComma": "none",
+        "printWidth": 120
+    },
+    "name": "@byndyusoft/ui",
+    "author": "Byndyusoft",
+    "url": "https://byndyusoft.com/",
+    "module": "lib/index.js",
+    "devDependencies": {
+        "@babel/core": "^7.12.9",
+        "@byndyusoft/eslint-config": "^0.3.0",
+        "@byndyusoft/stylelint-config": "^0.3.0",
+        "@rollup/plugin-commonjs": "^17.0.0",
+        "@rollup/plugin-multi-entry": "^4.0.0",
+        "@rollup/plugin-node-resolve": "^11.0.1",
+        "@rollup/plugin-typescript": "^8.1.0",
+        "@storybook/addon-essentials": "^6.1.6",
+        "@storybook/addon-info": "^5.3.21",
+        "@storybook/addon-links": "^6.1.6",
+        "@storybook/addons": "^6.1.6",
+        "@storybook/react": "^6.1.6",
+        "@testing-library/jest-dom": "^5.11.9",
+        "@testing-library/react": "^11.2.3",
+        "@testing-library/react-hooks": "^5.0.0",
+        "@testing-library/user-event": "^12.6.0",
+        "@types/jest": "^26.0.20",
+        "@types/react": "^17.0.0",
+        "@types/react-dom": "^17.0.0",
+        "babel-loader": "^8.2.1",
+        "eslint": "^7.17.0",
+        "fs-extra": "^9.0.1",
+        "jest": "^26.6.3",
+        "postcss": "^8.2.4",
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1",
+        "react-is": "^17.0.1",
+        "rimraf": "^3.0.2",
+        "rollup": "^2.36.1",
+        "rollup-plugin-copy": "^3.3.0",
+        "rollup-plugin-delete": "^2.0.0",
+        "rollup-plugin-styles": "^3.12.1",
+        "stylelint": "^13.8.0",
+        "ts-jest": "^26.4.4",
+        "tslib": "^2.0.3",
+        "typescript": "^4.1.2"
+    },
+    "dependencies": {
+        "@types/classnames": "^2.2.11",
+        "classnames": "^2.2.6"
     }
-  ],
-  "devDependencies": {
-    "@babel/core": "^7.12.9",
-    "@size-limit/preset-small-lib": "^4.9.0",
-    "@storybook/addon-essentials": "^6.1.6",
-    "@storybook/addon-info": "^5.3.21",
-    "@storybook/addon-links": "^6.1.6",
-    "@storybook/addons": "^6.1.6",
-    "@storybook/react": "^6.1.6",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
-    "babel-loader": "^8.2.1",
-    "copyfiles": "^2.4.0",
-    "husky": "^4.3.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-is": "^17.0.1",
-    "rimraf": "^3.0.2",
-    "rollup-plugin-copy": "^3.3.0",
-    "size-limit": "^4.9.0",
-    "tsdx": "^0.14.1",
-    "tslib": "^2.0.3",
-    "typescript": "^4.1.2"
-  },
-  "dependencies": {
-    "@types/classnames": "^2.2.11",
-    "classnames": "^2.2.6"
-  }
 }

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Meta } from '@storybook/react';
-import Stack from '../src/components/Stack';
-import Skeleton from '../src/components/Skeleton';
-import '../src/components/Skeleton/Skeleton.css';
+import { Meta, Story } from '@storybook/react';
+import Stack from './Stack';
+import Skeleton from '../Skeleton';
+import '../Skeleton/Skeleton.css';
 
-export const StackStory = () => (
+export const StackStory: Story = () => (
     <>
         <Stack className="font-white">
             <Skeleton>Заготовка под stack</Skeleton>
@@ -18,7 +18,7 @@ export const StackStory = () => (
 StackStory.storyName = 'Stack';
 
 const meta: Meta = {
-    title: 'Layout/Stack',
+    title: 'Stack',
     component: Stack
 };
 
