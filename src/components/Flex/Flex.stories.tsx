@@ -3,7 +3,6 @@ import { Meta, Story } from '@storybook/react';
 // import { Meta } from '@storybook/react/types';
 import Flex from './index';
 import { IFlexProps } from './Flex';
-import './Flex.css';
 import Skeleton from '../Skeleton';
 
 const Template: Story<IFlexProps> = args => (
@@ -22,15 +21,24 @@ FlexStory.storyName = 'Flex';
 
 FlexStory.args = {
     wrap: 'wrap',
-    direction: 'row'
+    direction: 'row',
+    justify: 'start',
+    alignItems: 'start',
+    alignContent: 'start',
 };
 
 const meta: Meta = {
-    title: 'Layout',
+    title: 'Layout/Flex',
     component: Flex,
     argTypes: {
         wrap: { control: { type: 'select', options: [true, 'wrap', 'no-wrap', 'wrap-reverse'] } },
-        direction: { control: { type: 'select' } }
+        direction: { control: { type: 'select' } },
+        justify: {
+            control: {
+                type: 'select',
+                options: ['start', 'center', 'end', 'between', 'around', 'evenly']
+            }
+        }
     }
 };
 

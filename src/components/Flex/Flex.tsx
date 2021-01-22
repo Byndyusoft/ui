@@ -1,15 +1,24 @@
 import React, { FC } from 'react';
 import cn from 'classnames';
+import './Flex.css';
 
-type TWrap = boolean | 'wrap' | 'nowrap' | 'wrap-reverse';
+type TWrapValue = boolean | 'wrap' | 'nowrap' | 'wrap-reverse';
+
+type TJustifyValue = 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
+
+type TDirectionValue = 'row' | 'column' | 'row-reverse' | 'column-reverse';
+
+type TAlignValue = 'start' | 'end' | 'center' | 'stretch' | 'baseline';
 
 export interface IFlexProps {
-    direction?: 'row' | 'column' | 'row-reverse' | 'column-reverse';
-    wrap?: TWrap;
-    justify?: 'flex-start' | 'center' | 'flex-end' | 'space-between' | 'space-around' | 'space-evenly';
+    direction?: TDirectionValue;
+    wrap?: TWrapValue;
+    justify?: TJustifyValue;
+    alignContent?: TAlignValue;
+    alignItems?: TAlignValue;
 }
 
-function getWrapClass(value: TWrap) {
+function getWrapClass(value: TWrapValue): string | boolean {
     if (value === true) {
         return 'flex-wrap';
     }
@@ -21,15 +30,41 @@ function getWrapClass(value: TWrap) {
     return false;
 }
 
-const Flex: FC<IFlexProps> = ({ children, direction = 'row', wrap = false, justify = 'flex-start' }) => {
-    const styles = {
-        flexDirection: direction,
-        justifyContent: justify
-        // flexWrap: 'wrap'
-    };
+function getJustifyClass(value: TJustifyValue): string {
+    return `flex-justify-${value}`;
+}
 
+function getDirectionValue(value: TDirectionValue): string {
+    return `flex-direction-${value}`;
+}
+
+function getAlignItemsValue(value: TAlignValue): string {
+    return `flex-align-${value}`;
+}
+
+function getAlignContentValue(value: TAlignValue): string {
+    return `flex-align-content-${value}`;
+}
+
+const Flex: FC<IFlexProps> = ({
+    children,
+    direction = 'row',
+    wrap = false,
+    justify = 'start',
+    alignItems = 'stretch',
+    alignContent = 'start'
+}) => {
     return (
-        <div className={cn('flex', getWrapClass(wrap))} style={styles}>
+        <div
+            className={cn(
+                'flex',
+                getWrapClass(wrap),
+                getJustifyClass(justify),
+                getDirectionValue(direction),
+                getAlignItemsValue(alignItems),
+                getAlignContentValue(alignContent)
+            )}
+        >
             {children}
         </div>
     );
