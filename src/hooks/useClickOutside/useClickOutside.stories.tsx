@@ -13,7 +13,7 @@ export const useClickOutsideStory: Story = () => {
             <div>{`Counter: ${counterValue}`}</div>
             <div>
                 <button type="button" ref={ref}>
-                    Click me!
+                    Do not click me!
                 </button>
             </div>
         </div>
