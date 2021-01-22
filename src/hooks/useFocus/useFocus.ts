@@ -9,7 +9,6 @@ const useFocus = (): TUseFocusResponse => {
         (e: HTMLElement | null) => {
             // Remove listener when changing ref
             if (e && ref.current && e !== ref.current) {
-                console.log('focusing');
                 ref.current.focus();
             }
             ref.current = e;
