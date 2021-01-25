@@ -1,10 +1,10 @@
 import React from 'react';
-import { Meta } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import Stack from './Stack';
 import Skeleton from '../Skeleton';
 import '../Skeleton/Skeleton.css';
 
-export const StackStory = () => (
+export const StackStory: Story = () => (
     <>
         <Stack className="font-white">
             <Skeleton>Заготовка под stack</Skeleton>

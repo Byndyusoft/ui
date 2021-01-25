@@ -1,0 +1,14 @@
+{
+    "extends": [
+        "@byndyusoft/eslint-config/typescript",
+        "@byndyusoft/eslint-config/jest",
+        "@byndyusoft/eslint-config/react",
+        "@byndyusoft/eslint-config/react-testing"
+    ],
+    "parserOptions": {
+        "project": "tsconfig.json"
+    },
+    "rules": {
+        "jsx-a11y/accessible-emoji": "warn"
+    }
+}
