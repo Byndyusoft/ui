@@ -1,0 +1,14 @@
+---
+to: "<%= withTest ? `src/components/${name}/${name}.test.tsx` : null %>"
+---
+import React from 'react';
+import { render } from '@testing-library/react';
+import <%= name%>from './<%= name%>';
+
+describe('<%= name%>', () => {
+    test('rendered', () => {
+        const { container } = render(<<%= name%> />);
+
+        expect(container).toBeDefined();
+    });
+});

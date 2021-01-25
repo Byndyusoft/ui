@@ -9,5 +9,11 @@ module.exports = [
         name: 'withStory',
         initial: 'Y',
         message: 'Do you want to generate component with story?'
+    },
+    {
+        type: 'confirm',
+        name: 'withTest',
+        initial: 'Y',
+        message: 'Do you want to generate component with default test?'
     }
 ];
