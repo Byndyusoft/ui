@@ -13,7 +13,7 @@ const Component: FC = () => {
 };
 
 describe('hook/useAutofocus', () => {
-    test('Component is focused on referred node', () => {
+    test('Component is focused on referred node after render', () => {
         render(<Component />);
 
         const input = screen.getByRole('textbox') as HTMLInputElement;
