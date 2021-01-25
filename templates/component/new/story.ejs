@@ -1,0 +1,19 @@
+---
+to: "<%= withStory ? `src/components/${name}/${name}.story.tsx` : null %>"
+skip: withStory
+---
+import React from 'react';
+import { Meta, Story } from '@storybook/react';
+import <%= name%> from './<%= name%>';
+import './<%= name%>.css';
+
+export const <%= name%>Story: Story = () => <<%= name%>>Button</<%= name%>>;
+
+<%= name%>Story.storyName = '<%= name%>';
+
+const meta: Meta = {
+    title: '<%= name%>',
+    component: <%= name%>
+};
+
+export default meta;
