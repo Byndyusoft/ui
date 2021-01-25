@@ -3,12 +3,12 @@ import { Meta, Story } from '@storybook/react';
 import useAutofocus from '.';
 
 export const useAutofocusStory: Story = (): JSX.Element => {
-    const refToFocus = useAutofocus();
+    const refToAutofocus = useAutofocus();
 
     return (
         <div>
             Input should be focused:
-            <input type="text" ref={refToFocus} />
+            <input type="text" ref={refToAutofocus} />
         </div>
     );
 };

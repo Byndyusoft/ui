@@ -3,17 +3,17 @@ import { render, screen } from '@testing-library/react';
 import useAutofocus from '.';
 
 const Component: FC = () => {
-    const refToFocus = useAutofocus();
+    const refToAutofocus = useAutofocus();
 
     return (
         <div>
-            <input ref={refToFocus} type="text" name="testInput" data-testid="test" />
+            <input ref={refToAutofocus} type="text" name="testInput" data-testid="test" />
         </div>
     );
 };
 
 describe('hook/useAutofocus', () => {
-    test('focus is working', () => {
+    test('Component is focused on referred node', () => {
         render(<Component />);
 
         const input = screen.getByTestId('test') as HTMLInputElement;
