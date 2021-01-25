@@ -7,7 +7,7 @@ const Component: FC = () => {
 
     return (
         <div>
-            <input ref={refToAutofocus} type="text" name="testInput" data-testid="test" />
+            <input ref={refToAutofocus} type="text" name="testInput" aria-labelledby="textbox" />
         </div>
     );
 };
@@ -16,7 +16,7 @@ describe('hook/useAutofocus', () => {
     test('Component is focused on referred node', () => {
         render(<Component />);
 
-        const input = screen.getByTestId('test') as HTMLInputElement;
+        const input = screen.getByRole('textbox') as HTMLInputElement;
 
         expect(input).toHaveFocus();
     });
