@@ -1,9 +1,9 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import useFocus from '.';
+import useAutofocus from '.';
 
-export const useFocusStory: Story = (): JSX.Element => {
-    const refToFocus = useFocus();
+export const useAutofocusStory: Story = (): JSX.Element => {
+    const refToFocus = useAutofocus();
 
     return (
         <div>
@@ -13,10 +13,10 @@ export const useFocusStory: Story = (): JSX.Element => {
     );
 };
 
-useFocusStory.storyName = 'useFocus';
+useAutofocusStory.storyName = 'useAutofocus';
 
 const meta: Meta = {
-    title: 'Hooks/useFocus'
+    title: 'Hooks/useAutofocus'
 };
 
 export default meta;

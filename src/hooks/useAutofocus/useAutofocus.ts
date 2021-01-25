@@ -1,8 +1,8 @@
 import { useRef, useEffect, useCallback } from 'react';
 
-type TUseFocusResponse = (e: HTMLElement | null) => void;
+type TUseAutofocusResponse = (e: HTMLElement | null) => void;
 
-const useFocus = (): TUseFocusResponse => {
+const useAutofocus = (): TUseAutofocusResponse => {
     const ref = useRef<HTMLElement | null>(null);
 
     const bindRefHandler = useCallback(
@@ -25,4 +25,4 @@ const useFocus = (): TUseFocusResponse => {
     return bindRefHandler;
 };
 
-export default useFocus;
+export default useAutofocus;

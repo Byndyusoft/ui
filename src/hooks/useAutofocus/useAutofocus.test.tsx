@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import { render, screen } from '@testing-library/react';
-import useFocus from '.';
+import useAutofocus from '.';
 
 const Component: FC = () => {
-    const refToFocus = useFocus();
+    const refToFocus = useAutofocus();
 
     return (
         <div>
@@ -12,7 +12,7 @@ const Component: FC = () => {
     );
 };
 
-describe('hook/useFocus', () => {
+describe('hook/useAutofocus', () => {
     test('focus is working', () => {
         render(<Component />);
 
