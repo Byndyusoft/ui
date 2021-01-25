@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useRef, useState } from 'react';
 
 type TInitialValue<T> = Array<T> | (() => Array<T>);
 
@@ -6,7 +6,21 @@ type TComparator<T> = (left: T, right: T) => number;
 
 type TPredicate<T> = (item: T, index: number, array: Array<T>) => boolean;
 
-function useArray<T>(initialValue: TInitialValue<T> = []) {
+interface IUseArrayMethods<T> {
+    append: (item: T) => void;
+    prepend: (item: T) => void;
+    clear: () => void;
+    remove: (index: number) => void;
+    insert: (index: number, item: T) => void;
+    sort: (comparator: TComparator<T>) => void;
+    update: (index: number, item: T) => void;
+    filter: (predicate: TPredicate<T>) => void;
+    reset: () => void;
+}
+
+export type TUseArray<T> = [Array<T>, Dispatch<SetStateAction<Array<T>>>, IUseArrayMethods<T>];
+
+function useArray<T>(initialValue: TInitialValue<T> = []): TUseArray<T> {
     const initialValueRef = useRef<TInitialValue<T>>(initialValue);
 
     const [value, setValue] = useState<Array<T>>(initialValue);
@@ -51,7 +65,7 @@ function useArray<T>(initialValue: TInitialValue<T> = []) {
         setValue(() => [...currentValue]);
     }, []);
 
-    return [value, setValue, { append, prepend, clear, remove, insert, sort, update, filter, reset }] as const;
+    return [value, setValue, { append, prepend, clear, remove, insert, sort, update, filter, reset }];
 }
 
 export default useArray;
