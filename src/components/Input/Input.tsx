@@ -19,23 +19,26 @@ export interface IInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>,
     rightComponent?: JSX.Element;
 }
 
-const Input: FC<IInputProps> = ({
-    name,
-    className,
-    defaultValue,
-    value,
-    autoComplete = 'off',
-    type = 'text',
-    size = Size.Medium,
-    variant = Variant.Regular,
-    placeholder,
-    inputRef,
-    onChange,
-    isDisabled,
-    isInvalid,
-    leftComponent,
-    rightComponent
-}) => {
+const Input: FC<IInputProps> = props => {
+    const {
+        name,
+        className,
+        defaultValue,
+        value,
+        autoComplete = 'off',
+        type = 'text',
+        size = Size.Medium,
+        variant = Variant.Regular,
+        placeholder,
+        inputRef,
+        onChange,
+        isDisabled,
+        isInvalid,
+        leftComponent,
+        rightComponent,
+        ...rest
+    } = props;
+
     const inputContainerClassName = cn(
         'InputContainer',
         `InputContainer--${variant}`,
@@ -50,22 +53,16 @@ const Input: FC<IInputProps> = ({
     }: {
         sideComponent?: JSX.Element;
         placement: 'Left' | 'Right';
-    }) => {
+    }): JSX.Element | null => {
         if (sideComponent) {
             if (!React.isValidElement(sideComponent)) {
                 return null;
-            } 
-                return (
-                    <div
-                        className={cn(
-                            `InputSideComponentContainer${placement}`,
-                            `InputSideComponentContainer--${size}`
-                        )}
-                    >
-                        {sideComponent}
-                    </div>
-                );
-            
+            }
+            return (
+                <div className={cn(`InputSideComponentContainer${placement}`, `InputSideComponentContainer--${size}`)}>
+                    {sideComponent}
+                </div>
+            );
         }
         return null;
     };
@@ -74,6 +71,7 @@ const Input: FC<IInputProps> = ({
         <div className={inputContainerClassName}>
             {renderSideComponent({ sideComponent: leftComponent, placement: 'Left' })}
             <input
+                {...rest}
                 placeholder={placeholder}
                 type={type}
                 name={name}
