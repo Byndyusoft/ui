@@ -3,17 +3,32 @@
 }
 
 .ModalContainer {
-
+    background-color: lavender;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    outline: none;
 }
 
 .ModalHeader {
-
+    flex-shrink: 0;
+    background-color: tomato;
 }
 
 .ModalBody {
-
+    flex-grow: 1;
+    flex-shrink: 1;
+    overflow-y: auto;
+    background-color: beige;
 }
 
 .ModalFooter {
+    flex-shrink: 0;
+    background-color: cornflowerblue;
+}
 
+.ModalCloseButton {
+    position: absolute;
+    top: 0;
+    right: 0;
 }
