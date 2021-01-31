@@ -1,11 +1,11 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, HTMLAttributes, useEffect } from 'react';
 import './Overlay.css';
 
-export interface IOverlayProps {
+export interface IOverlayProps extends HTMLAttributes<HTMLDivElement> {
     isOpen?: boolean;
 }
 
-const Overlay: FC<IOverlayProps> = ({ children, isOpen = false }) => {
+const Overlay: FC<IOverlayProps> = ({ children, isOpen = false, ...props }) => {
     useEffect(() => {
         if (isOpen) {
             document.body.classList.add('OverflowHidden');
@@ -20,7 +20,7 @@ const Overlay: FC<IOverlayProps> = ({ children, isOpen = false }) => {
         };
     }, []);
 
-    return isOpen ? <div className="Overlay">{children}</div> : null;
+    return isOpen ? <div className="Overlay" {...props}>{children}</div> : null;
 };
 
 export default Overlay;
