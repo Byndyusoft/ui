@@ -7,5 +7,6 @@ describe('components/Overlay', () => {
         render(<Overlay isOpen><div data-testid="content" /></Overlay>);
 
         expect(screen.getByTestId('content')).toBeInTheDocument();
+        expect(document.body).toHaveClass('OverflowHidden');
     });
 });
