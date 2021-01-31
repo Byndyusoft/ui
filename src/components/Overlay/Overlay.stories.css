@@ -1,0 +1,9 @@
+.Overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.OverlayCustomBackgroundColorStory {
+    --overlay-background-color: rgba(30, 30, 130, 0.3);
+}
