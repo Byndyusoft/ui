@@ -1,4 +1,5 @@
 import React, { FC, useEffect } from 'react';
+import './Overlay.css';
 
 export interface IOverlayProps {
     isOpen?: boolean;

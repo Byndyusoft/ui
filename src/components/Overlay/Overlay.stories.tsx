@@ -1,7 +1,6 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import Overlay from './Overlay';
-import './Overlay.css';
 import './Overlay.stories.css';
 
 export const DefaultStory: Story = () => <Overlay isOpen>Цвет фона: rgba(0, 0, 0, 0.5)</Overlay>;
