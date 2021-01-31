@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { FC } from 'react';
+import ModalContainer from './ModalContainer';
+import ModalCloseButton from './ModalCloseButton';
 
-export interface IModalProps {}
+export interface IModalProps {
+    className?: string;
+}
 
-const Modal = () => <div />;
+const Modal: FC<IModalProps> = ({ className, children }) => (
+    <ModalContainer className={className}>
+        <ModalCloseButton />
+        { children }
+    </ModalContainer>
+);
 
 export default Modal;

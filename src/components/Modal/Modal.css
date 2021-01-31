@@ -2,14 +2,18 @@
 
 }
 
-.Modal__Header {
+.ModalContainer {
 
 }
 
-.Modal__Body {
+.ModalHeader {
 
 }
 
-.Modal__Footer {
+.ModalBody {
+
+}
+
+.ModalFooter {
 
 }
