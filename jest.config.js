@@ -6,5 +6,6 @@ module.exports = {
     },
     testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-    coveragePathIgnorePatterns: ['index.ts']
+    coveragePathIgnorePatterns: ['index.ts'],
+    moduleNameMapper: { '\\.(css)$': '<rootDir>/.jest/__mocks__/styleMock.js' }
 };
