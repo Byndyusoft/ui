@@ -1,16 +1,20 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
+import TabContent from './TabContent';
 import Tabs from './Tabs';
 import Tab from './Tab';
-import TabContent from './TabContent';
 
 export const TabsStories: Story = () => (
     <Tabs>
-        {['firts', 'second', 'third'].map((tab, i) => (
-            <Tab key={i}>{tab}</Tab>
+        {['first', 'second', 'third'].map((tab, i) => (
+            <Tab key={i} index={i}>
+                {tab}
+            </Tab>
         ))}
-        {['firts', 'second', 'third'].map((tab, i) => (
-            <TabContent key={i}>{tab}</TabContent>
+        {['firts content', 'second content', 'third content'].map((tab, i) => (
+            <TabContent key={i} index={i}>
+                {tab}
+            </TabContent>
         ))}
     </Tabs>
 );

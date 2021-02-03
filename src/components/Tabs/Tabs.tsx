@@ -1,22 +1,14 @@
-import React, { FC, ReactElement, useState, createContext } from 'react';
-import { ITabContent } from './TabContent';
-// eslint-disable-next-line import/no-cycle
-import { ITabsListProps } from './TabsList';
+import React, { FC, useState, createContext, useContext } from 'react';
 
-type TTabsChildren = Array<ReactElement<ITabsListProps | ITabContent>>;
-
-export interface ITabsProps {
-    children: TTabsChildren;
+export interface ITabsContext {
+    currentTabIndex: number;
+    setIndex: (i: number) => void;
 }
 
-export interface ITabsContext {}
+export const TabsContext = createContext<ITabsContext | undefined>(undefined);
 
-export const TabsContext = createContext({});
-
-const Tabs: FC<ITabsProps> = ({ children }) => {
+const Tabs: FC = ({ children }) => {
     const [currentTabIndex, setCurrentTabIndex] = useState(0);
-
-    console.log(children);
 
     return (
         <TabsContext.Provider
@@ -27,10 +19,19 @@ const Tabs: FC<ITabsProps> = ({ children }) => {
                 }
             }}
         >
-            i{currentTabIndex}
             {children}
         </TabsContext.Provider>
     );
 };
+
+export function useTabContext(): ITabsContext {
+    const context = useContext(TabsContext);
+
+    if (context === undefined) {
+        throw new Error('TabsContext using outside of Tabs component');
+    }
+
+    return context;
+}
 
 export default Tabs;

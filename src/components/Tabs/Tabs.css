@@ -1,3 +1,7 @@
 .Tab {
     display: inline-flex;
 }
+
+.Tab--active {
+    font-weight: bold;
+}
