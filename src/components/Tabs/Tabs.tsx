@@ -1,4 +1,8 @@
-import React, { FC, useState, createContext, useContext } from 'react';
+import React, { FC, useState, createContext, useContext, useEffect } from 'react';
+
+interface ITabsProps {
+    activeTabIndex?: number;
+}
 
 export interface ITabsContext {
     currentTabIndex: number;
@@ -7,15 +11,24 @@ export interface ITabsContext {
 
 export const TabsContext = createContext<ITabsContext | undefined>(undefined);
 
-const Tabs: FC = ({ children }) => {
-    const [currentTabIndex, setCurrentTabIndex] = useState(0);
+const Tabs: FC<ITabsProps> = ({ activeTabIndex, children }) => {
+    const [currentTabIndex, setCurrentTabIndex] = useState(activeTabIndex || 0);
 
+    useEffect(() => {
+        if (activeTabIndex) {
+            setCurrentTabIndex(activeTabIndex);
+        }
+    }, [activeTabIndex]);
+
+    console.log('activeTabIndex', activeTabIndex);
     return (
         <TabsContext.Provider
             value={{
                 currentTabIndex,
                 setIndex: (i: number) => {
-                    setCurrentTabIndex(i);
+                    if (activeTabIndex === undefined) {
+                        setCurrentTabIndex(i);
+                    }
                 }
             }}
         >
