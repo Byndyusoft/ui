@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react';
 import useInterval from './useInterval';
 
-interface ICountdown {
+interface ICountdownParams {
     count: number;
     onStop?: () => void;
 }
 
-function useCountdown({ count, onStop }: ICountdown): { count: number; stop: () => void; start: () => void } {
+interface ICountdown {
+    (params: ICountdownParams): { count: number; stop: () => void; start: () => void };
+}
+
+const useCountdown: ICountdown = ({ count, onStop }) => {
     const [counter, setCounter] = useState(count);
 
     const { start: startIterval, stop } = useInterval(() => {
@@ -33,6 +37,6 @@ function useCountdown({ count, onStop }: ICountdown): { count: number; stop: () 
     };
 
     return { count: counter, stop, start: reset };
-}
+};
 
 export default useCountdown;
