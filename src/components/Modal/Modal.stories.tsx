@@ -25,7 +25,7 @@ export const DefaultStory: Story = () => (
                 </p>
             </ModalBody>
             <ModalFooter>
-                <button>Action</button>
+                <button type="button">Action</button>
             </ModalFooter>
         </Modal>
     </ModalsManager>
