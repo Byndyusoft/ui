@@ -1,14 +1,22 @@
 {
-    "extends": [
-        "@byndyusoft/eslint-config/typescript",
-        "@byndyusoft/eslint-config/jest",
-        "@byndyusoft/eslint-config/react",
-        "@byndyusoft/eslint-config/react-testing"
-    ],
-    "parserOptions": {
-        "project": "tsconfig.json"
-    },
-    "rules": {
-        "jsx-a11y/accessible-emoji": "warn"
+  "extends": [
+    "@byndyusoft/eslint-config/typescript",
+    "@byndyusoft/eslint-config/jest",
+    "@byndyusoft/eslint-config/react",
+    "@byndyusoft/eslint-config/react-testing"
+  ],
+  "parserOptions": {
+    "project": "tsconfig.json"
+  },
+  "rules": {
+    "jsx-a11y/accessible-emoji": "warn"
+  },
+  "overrides": [
+    {
+      "files": ["src/**/*.test.@(ts|tsx|js|jsx)"],
+      "rules": {
+        "@typescript-eslint/no-magic-numbers": "off"
+      }
     }
+  ]
 }
