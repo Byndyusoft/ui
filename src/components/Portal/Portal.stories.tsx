@@ -4,7 +4,7 @@ import cn from 'classnames';
 import Portal from './Portal';
 import './Portal.stories.css';
 
-export const DefaultStory: Story = () => {
+export const PortalStory: Story = () => {
     return (
         <div className="PortalStory">
             <p>Тест в основном контейнере приложения</p>
@@ -32,7 +32,7 @@ export const DefaultStory: Story = () => {
     );
 };
 
-DefaultStory.storyName = 'Default';
+PortalStory.storyName = 'Portal';
 
 const meta: Meta = {
     title: 'components/Portal',
