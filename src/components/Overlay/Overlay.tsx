@@ -8,19 +8,24 @@ export interface IOverlayProps extends HTMLAttributes<HTMLDivElement> {
 const Overlay: FC<IOverlayProps> = ({ children, isOpen = false, ...props }) => {
     useEffect(() => {
         if (isOpen) {
-            document.body.classList.add('OverflowHidden');
+            document.body.style.overflow = 'hidden';
         } else {
-            document.body.classList.remove('OverflowHidden');
+            document.body.style.overflow = '';
         }
-    }, [isOpen])
+    }, [isOpen]);
 
-    useEffect(() => {
-        return () => {
-            document.body.classList.remove('OverflowHidden');
-        };
-    }, []);
+    useEffect(
+        () => () => {
+            document.body.style.overflow = '';
+        },
+        []
+    );
 
-    return isOpen ? <div className="Overlay" {...props}>{children}</div> : null;
+    return isOpen ? (
+        <div className="Overlay" {...props}>
+            {children}
+        </div>
+    ) : null;
 };
 
 export default Overlay;
