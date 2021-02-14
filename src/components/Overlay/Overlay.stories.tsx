@@ -11,12 +11,14 @@ export const DefaultStory: Story = () => {
             <button type="button" onClick={() => setIsOpen(true)}>
                 Показать оверлей
             </button>
-            <Overlay isOpen={isOpen}>
-                <p>Цвет фона: rgba(0, 0, 0, 0.5)</p>
-                <button type="button" onClick={() => setIsOpen(false)}>
-                    Скрыть оверлей
-                </button>
-            </Overlay>
+            {isOpen && (
+                <Overlay>
+                    <p>Цвет фона: rgba(0, 0, 0, 0.5)</p>
+                    <button type="button" onClick={() => setIsOpen(false)}>
+                        Скрыть оверлей
+                    </button>
+                </Overlay>
+            )}
         </>
     );
 };
@@ -31,12 +33,14 @@ export const CustomBackgroundColorStory: Story = () => {
             <button type="button" onClick={() => setIsOpen(true)}>
                 Показать оверлей
             </button>
-            <Overlay isOpen={isOpen}>
-                <p>Цвет фона: rgba(30, 30, 130, 0.3)</p>
-                <button type="button" onClick={() => setIsOpen(false)}>
-                    Скрыть оверлей
-                </button>
-            </Overlay>
+            {isOpen && (
+                <Overlay>
+                    <p>Цвет фона: rgba(30, 30, 130, 0.3)</p>
+                    <button type="button" onClick={() => setIsOpen(false)}>
+                        Скрыть оверлей
+                    </button>
+                </Overlay>
+            )}
         </div>
     );
 };
