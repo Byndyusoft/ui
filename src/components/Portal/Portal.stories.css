@@ -1,0 +1,29 @@
+.PortalStory {
+    width: calc(100vw - 2rem);
+    height: calc(100vh - 2rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.PortalStory__Block {
+    position: absolute;
+    background-color: lavender;
+    padding: 1rem 2rem;
+}
+
+.PortalStory__Block--Top {
+    top: 0;
+}
+
+.PortalStory__Block--Right {
+    right: 0;
+}
+
+.PortalStory__Block--Bottom {
+    bottom: 0;
+}
+
+.PortalStory__Block--Left {
+    left: 0;
+}
