@@ -1,4 +1,5 @@
 import React, { FC, HTMLAttributes, useEffect } from 'react';
+import Portal from '../Portal';
 import './Overlay.css';
 
 export interface IOverlayProps extends HTMLAttributes<HTMLDivElement> {
@@ -22,9 +23,11 @@ const Overlay: FC<IOverlayProps> = ({ children, isOpen = false, ...props }) => {
     );
 
     return isOpen ? (
-        <div className="Overlay" {...props}>
-            {children}
-        </div>
+        <Portal id="Overlay">
+            <div className="Overlay" {...props}>
+                {children}
+            </div>
+        </Portal>
     ) : null;
 };
 

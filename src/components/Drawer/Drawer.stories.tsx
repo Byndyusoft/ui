@@ -7,7 +7,7 @@ export const DefaultStory: Story = () => <Drawer />;
 DefaultStory.storyName = 'Default';
 
 const meta: Meta = {
-    title: 'components/Work in progress/Drawer',
+    title: 'components/Drawer',
     component: Drawer
 };
 

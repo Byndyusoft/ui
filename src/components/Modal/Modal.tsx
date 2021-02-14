@@ -9,7 +9,7 @@ export interface IModalProps {
 }
 
 const Modal: FC<IModalProps> = ({ className, children, id }) => (
-    <ModalContainer className={className}>
+    <ModalContainer className={className} modalId={id}>
         <ModalCloseButton modalId={id}>X</ModalCloseButton>
         { children }
     </ModalContainer>

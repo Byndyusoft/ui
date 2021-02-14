@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import cn from 'classnames';
+import { useModalsManager } from './ModalsManager';
 
 export interface IModalCloseButtonProps {
     className?: string;
@@ -7,8 +8,11 @@ export interface IModalCloseButtonProps {
 }
 
 const ModalCloseButton: FC<IModalCloseButtonProps> = ({ className, children, modalId }) => {
+    const { close } = useModalsManager();
+
     const handleClick = () => {
         console.log('Close modal with id: ', modalId);
+        close(modalId);
     };
 
     return (

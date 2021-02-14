@@ -1,17 +1,26 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Meta, Story } from '@storybook/react';
 import Modal from './Modal';
 import ModalBody from './ModalBody';
 import ModalHeader from './ModalHeader';
 import ModalFooter from './ModalFooter';
-import ModalsManager from './ModalsManager';
+import ModalsManager, { useModalsManager } from './ModalsManager';
 import './Modal.stories.css';
+
+const ModalOpenButton: FC = ({ children }) => {
+    const { open } = useModalsManager();
+
+    return (
+        <button type="button" onClick={() => open('modal')}>{children}</button>
+    )
+};
 
 export const DefaultStory: Story = () => (
     <ModalsManager>
+        <ModalOpenButton>Открыть модальное окно</ModalOpenButton>
         <Modal className="ModalContainerDefaultStory" id="modal">
             <ModalHeader>
-                <h1>Lorem ipsum</h1>
+                <h1>Заголовок модального окна</h1>
             </ModalHeader>
             <ModalBody>
                 <p>
@@ -25,7 +34,7 @@ export const DefaultStory: Story = () => (
                 </p>
             </ModalBody>
             <ModalFooter>
-                <button type="button">Action</button>
+                <button type="button">Действуй!</button>
             </ModalFooter>
         </Modal>
     </ModalsManager>
@@ -34,7 +43,7 @@ export const DefaultStory: Story = () => (
 DefaultStory.storyName = 'Default';
 
 const meta: Meta = {
-    title: 'components/Work in progress/Modal',
+    title: 'components/Modal',
     component: Modal
 };
 
