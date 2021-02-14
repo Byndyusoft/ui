@@ -4,8 +4,14 @@ import Portal from './Portal';
 
 describe('components/Portal', () => {
     test('renders correctly with children', () => {
-        render(<Portal><div data-testid="content" /></Portal>);
+        const { baseElement } = render(
+            <Portal id="portal">
+                <div data-testid="content" />
+            </Portal>
+        );
 
         expect(screen.getByTestId('content')).toBeInTheDocument();
+
+        expect(baseElement.querySelector('[id="portal"]')).toBeInTheDocument();
     });
 });
