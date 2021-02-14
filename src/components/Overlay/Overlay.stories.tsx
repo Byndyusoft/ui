@@ -44,7 +44,7 @@ export const CustomBackgroundColorStory: Story = () => {
 CustomBackgroundColorStory.storyName = 'Custom background color';
 
 const meta: Meta = {
-    title: 'components/draft/Overlay',
+    title: 'components/Overlay',
     component: Overlay
 };
 

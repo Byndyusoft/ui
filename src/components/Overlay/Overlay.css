@@ -10,9 +10,4 @@
     left: 0;
     background-color: var(--overlay-background-color);
     z-index: 1;
-    outline: none;
-}
-
-.OverflowHidden {
-    overflow: hidden;
 }
