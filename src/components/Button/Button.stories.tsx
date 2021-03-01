@@ -6,10 +6,22 @@ import './Button.css';
 
 export const PrimaryStory: Story = () => (
     <>
-        <Button variant={Variant.Primary}>Кнопка</Button>
-        <Button variant={Variant.Primary} isDisabled>
-            Кнопка
-        </Button>
+        <div>
+            Default:
+            <Button variant={Variant.Primary}>Кнопка</Button>
+        </div>
+        <div>
+            Disabled:
+            <Button variant={Variant.Primary} isDisabled>
+                Кнопка
+            </Button>
+        </div>
+        <div>
+            Pending:
+            <Button variant={Variant.Primary} isPending>
+                Кнопка
+            </Button>
+        </div>
     </>
 );
 
@@ -17,10 +29,22 @@ PrimaryStory.storyName = 'Primary';
 
 export const SecondaryStory: Story = () => (
     <>
-        <Button variant={Variant.Secondary}>Кнопка</Button>
-        <Button variant={Variant.Secondary} isDisabled>
-            Кнопка
-        </Button>
+        <div>
+            Default:
+            <Button variant={Variant.Secondary}>Кнопка</Button>
+        </div>
+        <div>
+            Disabled:
+            <Button variant={Variant.Secondary} isDisabled>
+                Кнопка
+            </Button>
+        </div>
+        <div>
+            Pending:
+            <Button variant={Variant.Secondary} isPending>
+                Кнопка
+            </Button>
+        </div>
     </>
 );
 
@@ -28,10 +52,22 @@ SecondaryStory.storyName = 'Secondary';
 
 export const OutlineStory: Story = () => (
     <>
-        <Button variant={Variant.Outline}>Кнопка</Button>
-        <Button variant={Variant.Outline} isDisabled>
-            Кнопка
-        </Button>
+        <div>
+            Default:
+            <Button variant={Variant.Outline}>Кнопка</Button>
+        </div>
+        <div>
+            Disabled:
+            <Button variant={Variant.Outline} isDisabled>
+                Кнопка
+            </Button>
+        </div>
+        <div>
+            Pending:
+            <Button variant={Variant.Outline} isPending>
+                Кнопка
+            </Button>
+        </div>
     </>
 );
 
@@ -39,10 +75,22 @@ OutlineStory.storyName = 'Outline';
 
 export const DangerStory: Story = () => (
     <>
-        <Button variant={Variant.Danger}>Кнопка</Button>
-        <Button variant={Variant.Danger} isDisabled>
-            Кнопка
-        </Button>
+        <div>
+            Default:
+            <Button variant={Variant.Danger}>Кнопка</Button>
+        </div>
+        <div>
+            Disabled:
+            <Button variant={Variant.Danger} isDisabled>
+                Кнопка
+            </Button>
+        </div>
+        <div>
+            Pending:
+            <Button variant={Variant.Danger} isPending>
+                Кнопка
+            </Button>
+        </div>
     </>
 );
 

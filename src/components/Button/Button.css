@@ -19,6 +19,7 @@
     color: var(--color);
     padding: var(--padding);
     border: none;
+    border: 1px solid transparent;
     outline: none;
     border-radius: var(--border-radius);
     cursor: pointer;
@@ -28,15 +29,15 @@
     background: var(--background-primary);
 }
 
-.Button.Button--primary:hover {
+.Button.Button--primary:is(.actionable):hover {
     background: var(--background-primary-hovered);
 }
 
-.Button.Button--primary:active {
+.Button.Button--primary:is(.actionable):active {
     background: var(--background-primary-active);
 }
 
-.Button.Button--primary-disabled {
+.Button.Button--primary:is(.disabled) {
     cursor: default;
     color: #7a7f82;
     background: #e0e0e0;
@@ -46,15 +47,15 @@
     background: var(--background-secondary);
 }
 
-.Button.Button--secondary:hover {
+.Button.Button--secondary:is(.actionable):hover {
     background: var(--background-secondary-hovered);
 }
 
-.Button.Button--secondary:active {
+.Button.Button--secondary:is(.actionable):active {
     background: var(--background-secondary-active);
 }
 
-.Button.Button--secondary-disabled {
+.Button.Button--secondary:is(.disabled) {
     cursor: default;
     color: #7a7f82;
     background: #e0e0e0;
@@ -62,42 +63,42 @@
 
 .Button.Button--outline {
     color: #21272b;
-    box-shadow: 0 0 0 1px #21272b;
+    border: 1px solid #21272b;
     background: var(--background-outline);
 }
 
-.Button.Button--outline:hover {
+.Button.Button--outline:is(.actionable):hover {
     color: #fff;
     background: var(--background-outline-hovered);
-    box-shadow: 0 0 0 0 transparent;
+    border: 1px solid transparent;
 }
 
-.Button.Button--outline:active {
+.Button.Button--outline:is(.actionable):active {
     color: #fff;
-    box-shadow: 0 0 0 0 transparent;
+    border: 1px solid transparent;
     background: var(--background-outline-active);
 }
 
-.Button.Button--outline-disabled {
+.Button.Button--outline:is(.disabled) {
     cursor: default;
     color: #7a7f82;
-    backgrund: #7a7f82;
-    box-shadow: 0 0 0 1px #7a7f82;
+    background: #fff;
+    border: 1px solid #7a7f82;
 }
 
 .Button.Button--danger {
     background: var(--background-danger);
 }
 
-.Button.Button--danger:hover {
+.Button.Button--danger:is(.actionable):hover {
     background: var(--background-danger-hovered);
 }
 
-.Button.Button--danger:active {
+.Button.Button--danger:is(.actionable):active {
     background: var(--background-danger-active);
 }
 
-.Button.Button--danger-disabled {
+.Button.Button--danger:is(.disabled) {
     cursor: default;
     background: #e0e0e0;
     color: #7a7f82;

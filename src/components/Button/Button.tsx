@@ -7,14 +7,28 @@ interface IButtonProps {
     className?: string;
     variant?: Variant;
     isDisabled?: boolean;
+    isPending?: boolean;
 }
 
-const Button: FC<IButtonProps> = ({ children, className, variant = Variant.Primary, isDisabled = false }) => (
+const Button: FC<IButtonProps> = ({
+    children,
+    className,
+    variant = Variant.Primary,
+    isDisabled = false,
+    isPending = false
+}) => (
     <button
         type="button"
-        className={cn('Button', isDisabled ? `Button--${variant}-disabled` : `Button--${variant}`, className)}
+        className={cn(
+            'Button',
+            `Button--${variant}`,
+            !isDisabled && !isPending && `actionable`,
+            isDisabled && `disabled`,
+            className
+        )}
     >
-        {children}
+        {isPending && `Загрузка`}
+        {!isPending && children}
     </button>
 );
 
