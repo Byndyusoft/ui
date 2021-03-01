@@ -4,15 +4,19 @@ import Button from './Button';
 import { Variant } from './constants';
 import './Button.css';
 
-export const DefaultStory: Story = () => <Button>Button</Button>;
-
-DefaultStory.storyName = 'Default';
-
-export const PrimaryStory: Story = () => <Button variant={Variant.Primary}>Primary Button</Button>;
+export const PrimaryStory: Story = () => <Button variant={Variant.Primary}>Кнопка</Button>;
 
 PrimaryStory.storyName = 'Primary';
 
-export const DangerStory: Story = () => <Button variant={Variant.Danger}>Danger Button</Button>;
+export const SecondaryStory: Story = () => <Button variant={Variant.Secondary}>Кнопка</Button>;
+
+SecondaryStory.storyName = 'Secondary';
+
+export const OutlineStory: Story = () => <Button variant={Variant.Outline}>Кнопка</Button>;
+
+OutlineStory.storyName = 'Outline';
+
+export const DangerStory: Story = () => <Button variant={Variant.Danger}>Кнопка</Button>;
 
 DangerStory.storyName = 'Danger';
 

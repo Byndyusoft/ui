@@ -8,7 +8,7 @@ interface IButtonProps {
     variant?: Variant;
 }
 
-const Button: FC<IButtonProps> = ({ children, className, variant = Variant.Default }) => (
+const Button: FC<IButtonProps> = ({ children, className, variant = Variant.Primary }) => (
     <button type="button" className={cn('Button', `Button--${variant}`, className)}>
         {children}
     </button>

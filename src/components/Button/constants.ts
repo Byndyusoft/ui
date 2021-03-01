@@ -11,8 +11,8 @@ export enum Type {
 }
 
 export enum Variant {
-    Default = 'default',
     Primary = 'primary',
-    Danger = 'danger',
-    Neutral = 'neutral'
+    Secondary = 'secondary',
+    Outline = 'outline',
+    Danger = 'danger'
 }
