@@ -6,10 +6,14 @@ import './Button.css';
 interface IButtonProps {
     className?: string;
     variant?: Variant;
+    isDisabled?: boolean;
 }
 
-const Button: FC<IButtonProps> = ({ children, className, variant = Variant.Primary }) => (
-    <button type="button" className={cn('Button', `Button--${variant}`, className)}>
+const Button: FC<IButtonProps> = ({ children, className, variant = Variant.Primary, isDisabled = false }) => (
+    <button
+        type="button"
+        className={cn('Button', isDisabled ? `Button--${variant}-disabled` : `Button--${variant}`, className)}
+    >
         {children}
     </button>
 );
