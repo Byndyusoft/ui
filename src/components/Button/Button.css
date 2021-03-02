@@ -15,6 +15,7 @@
     --background-danger-active: #a32a24;
     --border-radius: 4px;
     --color: #fff;
+    --focus-color: #49c8ff;
     --padding-small: 4px 24px;
     --padding-medium: 8px 24px;
     --padding-large: 12px 24px;
@@ -27,6 +28,10 @@
     border-radius: var(--border-radius);
     cursor: pointer;
     font-family: 'IBM Plex Sans Regular', sans-serif;
+}
+
+.Button:is(.actionable):focus {
+    box-shadow: 0 0 0 3px var(--focus-color);
 }
 
 .Button--small {
