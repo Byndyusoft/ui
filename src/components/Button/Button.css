@@ -19,6 +19,8 @@
     --padding-small: 4px 24px;
     --padding-medium: 8px 24px;
     --padding-large: 12px 24px;
+    --font-size: 16px;
+    --line-height: 24px;
 
     background: var(--background);
     color: var(--color);
@@ -28,6 +30,8 @@
     border-radius: var(--border-radius);
     cursor: pointer;
     font-family: 'IBM Plex Sans Regular', sans-serif;
+    font-size: var(--font-size);
+    line-height: var(--line-height);
 }
 
 .Button:is(.actionable):focus {
