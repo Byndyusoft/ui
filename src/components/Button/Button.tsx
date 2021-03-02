@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
 import cn from 'classnames';
-import { Variant } from './constants';
+import { Variant, Size } from './constants';
 import './Button.css';
 
 interface IButtonProps {
     className?: string;
     variant?: Variant;
+    size?: Size;
     isDisabled?: boolean;
     isPending?: boolean;
 }
@@ -13,6 +14,7 @@ interface IButtonProps {
 const Button: FC<IButtonProps> = ({
     children,
     className,
+    size = Size.Medium,
     variant = Variant.Primary,
     isDisabled = false,
     isPending = false
@@ -22,6 +24,7 @@ const Button: FC<IButtonProps> = ({
         className={cn(
             'Button',
             `Button--${variant}`,
+            `Button--${size}`,
             !isDisabled && !isPending && `actionable`,
             isDisabled && `disabled`,
             className

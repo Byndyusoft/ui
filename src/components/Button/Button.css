@@ -1,3 +1,5 @@
+@import '../../shared/styles/fonts.css';
+
 .Button {
     --background-primary: #2b83ba;
     --background-primary-hovered: #3b99d4;
@@ -13,16 +15,30 @@
     --background-danger-active: #a32a24;
     --border-radius: 4px;
     --color: #fff;
-    --padding: 8px 24px;
+    --padding-small: 4px 24px;
+    --padding-medium: 8px 24px;
+    --padding-large: 12px 24px;
 
     background: var(--background);
     color: var(--color);
-    padding: var(--padding);
     border: none;
     border: 1px solid transparent;
     outline: none;
     border-radius: var(--border-radius);
     cursor: pointer;
+    font-family: 'IBM Plex Sans Regular', sans-serif;
+}
+
+.Button--small {
+    padding: var(--padding-small);
+}
+
+.Button--medium {
+    padding: var(--padding-medium);
+}
+
+.Button--large {
+    padding: var(--padding-large);
 }
 
 .Button.Button--primary {

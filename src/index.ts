@@ -1,4 +1,5 @@
 import './shared/styles/styles.css';
+import './shared/styles/fonts.css';
 
 export { default as useInterval } from './hooks/useInterval';
 export { default as useLatestRef } from './hooks/useLatestRef';
