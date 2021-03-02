@@ -10,14 +10,14 @@ export const RadioStory: Story = () => {
             <h1>Radio</h1>
             <div>
                 <div>Actionable:</div>
-                <Radio checked={isChecked} onChange={setChecked}>
+                <Radio name="Russian Post" isChecked={isChecked} onChange={setChecked}>
                     Почта России
                 </Radio>
             </div>
             <div>
                 <div>Disabled:</div>
-                <Radio checked={isChecked} onChange={setChecked} isDisabled>
-                    Test
+                <Radio name="Unclickable" isChecked={isChecked} onChange={setChecked} isDisabled>
+                    Unclickable
                 </Radio>
             </div>
         </>

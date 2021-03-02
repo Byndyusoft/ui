@@ -3,7 +3,8 @@ import cn from 'classnames';
 import './Radio.css';
 
 interface IRadioProps {
-    checked: boolean;
+    name: string;
+    isChecked: boolean;
     onChange: (value: boolean) => void;
     isDisabled?: boolean;
     isIndeterminate?: boolean;
@@ -11,10 +12,11 @@ interface IRadioProps {
 
 // ToDo: Add indeterminate state
 const Radio: FC<IRadioProps> = ({
-    checked,
+    name,
+    isChecked,
     onChange,
     isDisabled,
-    isIndeterminate = checked === undefined,
+    isIndeterminate = isChecked === undefined,
     children
 }) => (
     <button
@@ -22,16 +24,17 @@ const Radio: FC<IRadioProps> = ({
         type="button"
         onClick={() => {
             if (!isDisabled) {
-                onChange(!checked);
+                onChange(!isChecked);
             }
         }}
     >
+        <input name={name} type="radio" className="Radio--input" checked={isChecked} />
         <div
             className={cn(
                 'Radio--sphere',
-                checked && !isDisabled && 'Radio--checked',
-                isDisabled && checked && 'Radio--isDisabledFilled',
-                isDisabled && !checked && 'Radio--isDisabled'
+                isChecked && !isDisabled && 'Radio--checked',
+                isDisabled && isChecked && 'Radio--isDisabledFilled',
+                isDisabled && !isChecked && 'Radio--isDisabled'
             )}
         />
         {children}
