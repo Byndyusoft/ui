@@ -1,0 +1,58 @@
+.Radio {
+    border: 0;
+    background-color: transparent;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    font-size: 1rem;
+    line-height: 1.5rem;
+}
+
+.Radio:not(.Radio--container-isDisabled) {
+    cursor: pointer;
+}
+
+.Radio--sphere {
+    transition: all 0.25s ease-in-out;
+    position: relative;
+    width: 14px;
+    height: 14px;
+    border-radius: 14px;
+    border: 1px solid #21272b;
+    margin-right: 8px;
+}
+
+.Radio--sphere:is(.Radio--isDisabled) {
+    border-color: #adb0b2;
+}
+
+.Radio--sphere:is(.Radio--isDisabledFilled) {
+    border-color: #adb0b2;
+    background: #adb0b2;
+}
+
+.Radio--sphere:not(.Radio--isDisabledFilled):is(.Radio--checked) {
+    border-color: transparent;
+    background-color: #2b83ba;
+}
+
+.Radio:hover .Radio--sphere:not(.Radio--checked):not(.Radio--isDisabled):not(.Radio--isDisabledFilled) {
+    background-color: #e0e0e0;
+}
+
+.Radio:active .Radio--sphere:not(.Radio--checked):not(.Radio--isDisabled):not(.Radio--isDisabledFilled) {
+    background-color: #adb0b2;
+}
+
+.Radio--sphere:not(.Radio--isDisabledFilled):is(.Radio--checked)::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    background-color: #fff;
+    width: 8px;
+    height: 8px;
+    border-radius: 8px;
+}
