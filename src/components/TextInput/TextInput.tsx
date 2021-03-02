@@ -1,5 +1,8 @@
 import React, { FC } from 'react';
+import cn from 'classnames';
 import Input, { IInputProps, Size, Variant } from '../Input';
+import { CloseIcon } from '../Icon';
+import './TextInput.css';
 
 interface ITextInputProps extends IInputProps {
     defaultValue?: string;
@@ -8,6 +11,8 @@ interface ITextInputProps extends IInputProps {
     autoComplete?: 'on' | 'off';
     className?: string;
     inputRef?: (ref: HTMLInputElement) => void;
+    clearButton?: boolean;
+    onClear?: () => void;
 }
 
 const TextInput: FC<ITextInputProps> = props => {
@@ -22,12 +27,27 @@ const TextInput: FC<ITextInputProps> = props => {
         onChange,
         size = Size.Medium,
         variant = Variant.Regular,
-        leftComponent,
-        rightComponent,
+        clearButton = true,
+        onClear,
         isDisabled,
         isInvalid,
         ...rest
     } = props;
+
+    const renderClearButton = (): JSX.Element | undefined => {
+        if (clearButton) {
+            return (
+                <button
+                    className={cn('TextInput--ClearButton', !value && 'TextInput--ClearButtonHidden')}
+                    type="button"
+                    onClick={onClear}
+                >
+                    <CloseIcon fill="#ADB0B2" />
+                </button>
+            );
+        }
+        return undefined;
+    };
 
     return (
         <Input
@@ -43,8 +63,7 @@ const TextInput: FC<ITextInputProps> = props => {
             variant={variant}
             autoComplete={autoComplete}
             onChange={onChange}
-            leftComponent={leftComponent}
-            rightComponent={rightComponent}
+            rightComponent={renderClearButton()}
             isInvalid={isInvalid}
             isDisabled={isDisabled}
         />

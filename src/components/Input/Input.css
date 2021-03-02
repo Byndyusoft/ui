@@ -1,4 +1,14 @@
+@import '../../shared/styles/fonts.css';
+
 .InputContainer {
+    --regular-border: #e0e0e0;
+    --regular-border-hover: #21272b;
+    --regular-border-focus: #2b83ba;
+    --regular-color-placeholder: #7a7f82;
+    --regular-disabled-background: #e0e0e0;
+    --regular-disabled-color: #7a7f82;
+    --invalid-color: #d73027;
+
     display: inline-flex;
     justify-content: flex-start;
     align-items: center;
@@ -8,34 +18,27 @@
 }
 
 .InputContainer--Regular {
-    border: 1px solid rgba(0, 0, 0, 0.25);
-    border-radius: 5px;
-}
-
-.InputContainer--Underlined {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
-}
-
-.InputContainer--Space {
-    border: 1px solid rgba(0, 0, 0, 0);
+    border: 1px solid var(--regular-border);
     border-radius: 5px;
 }
 
 .InputContainer--Regular:focus-within {
-    border-color: rgba(0, 0, 0, 1);
+    border-color: var(--regular-border-focus);
+    box-shadow: 0 0 0 1px var(--regular-border-focus);
 }
 
-.InputContainer--Underlined:focus-within {
-    border-color: rgba(0, 0, 0, 1);
-}
-
-.InputContainer--Space:focus-within {
-    border-color: rgba(0, 0, 0, 1);
+.InputContainer--Regular:not(.Input--Invalid):hover {
+    border-color: var(--regular-border-hover);
 }
 
 .Input {
     border: 0;
     outline: 0;
+    font-family: 'IBM Plex Sans Regular', sans-serif;
+}
+
+.Input::placeholder {
+    color: var(--regular-color-placeholder);
 }
 
 .Input--ExtraSmall {
@@ -92,10 +95,12 @@
 }
 
 .Input--Invalid {
-    border: 1px solid rgba(255, 0, 0, 0.75);
+    border: 1px solid var(--invalid-color);
+    box-shadow: 0 0 0 1px var(--invalid-color);
 }
 
 .Input--Disabled {
     pointer-events: none;
-    opacity: 0.5;
+    background: var(--regular-disabled-background);
+    color: var(--regular-disabled-color);
 }

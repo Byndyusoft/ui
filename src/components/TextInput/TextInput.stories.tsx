@@ -17,7 +17,14 @@ export const DefaultTextInputStory: Story = () => {
                 e.preventDefault();
             }}
         >
-            <TextInput name="default-story-input" value={inputValue} onChange={onChangeHandler} />
+            <TextInput
+                name="default-story-input"
+                value={inputValue}
+                onChange={onChangeHandler}
+                onClear={() => {
+                    setInputValue('');
+                }}
+            />
             <p>Input value: {inputValue}</p>
         </form>
     );
@@ -43,6 +50,11 @@ export const UncontrolledTextInputStory: Story = () => {
                         }
                     }}
                     name="uncontrolled-story-input"
+                    onClear={() => {
+                        if (inputRef.current) {
+                            inputRef.current.value = '';
+                        }
+                    }}
                     defaultValue=""
                 />
             </div>

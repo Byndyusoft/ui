@@ -4,7 +4,7 @@ import { Meta, Story } from '@storybook/react';
 import Input, { Size, Variant } from '.';
 import './Input.css';
 
-export const InputTypeText: Story = () => <Input placeholder="Default" name="default-input" />;
+export const InputTypeText: Story = () => <Input placeholder="Placeholder" name="default-input" />;
 export const InputTypePassword: Story = () => (
     <Input placeholder="Enter password" name="default-input" type="password" />
 );
@@ -92,10 +92,6 @@ export const InputVariants: Story = () => (
     <>
         <h3>Regular</h3>
         <Input defaultValue="123" name="regularVariant" variant={Variant.Regular} />
-        <h3>Underlined</h3>
-        <Input defaultValue="123" name="underlinedVariant" variant={Variant.Underlined} />
-        <h3>Space</h3>
-        <Input defaultValue="123" name="spaceVariant" variant={Variant.Space} />
     </>
 );
 
