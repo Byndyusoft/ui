@@ -29,7 +29,7 @@ const Button: FC<IButtonProps> = ({
             `Button--${variant}`,
             `Button--${size}`,
             !isDisabled && !isPending && `Button--actionable`,
-            isDisabled && `disabled`,
+            isDisabled && `Button--disabled`,
             className
         )}
     >

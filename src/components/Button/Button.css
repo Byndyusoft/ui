@@ -65,7 +65,7 @@
     background: var(--background-primary-active);
 }
 
-.Button.Button--primary:is(.disabled) {
+.Button.Button--primary:is(.Button--disabled) {
     cursor: default;
     color: #7a7f82;
     background: #e0e0e0;
@@ -83,7 +83,7 @@
     background: var(--background-secondary-active);
 }
 
-.Button.Button--secondary:is(.disabled) {
+.Button.Button--secondary:is(.Button--disabled) {
     cursor: default;
     color: #7a7f82;
     background: #e0e0e0;
@@ -107,7 +107,7 @@
     background: var(--background-outline-active);
 }
 
-.Button.Button--outline:is(.disabled) {
+.Button.Button--outline:is(.Button--disabled) {
     cursor: default;
     color: #7a7f82;
     background: #fff;
@@ -126,7 +126,7 @@
     background: var(--background-danger-active);
 }
 
-.Button.Button--danger:is(.disabled) {
+.Button.Button--danger:is(.Button--disabled) {
     cursor: default;
     background: #e0e0e0;
     color: #7a7f82;
