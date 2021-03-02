@@ -16,9 +16,9 @@
     --border-radius: 4px;
     --color: #fff;
     --focus-color: #49c8ff;
-    --padding-small: 4px 24px;
-    --padding-medium: 8px 24px;
-    --padding-large: 12px 24px;
+    --padding-small: 3px 24px;
+    --padding-medium: 7px 24px;
+    --padding-large: 11px 24px;
     --font-size: 16px;
     --line-height: 24px;
 
@@ -28,13 +28,16 @@
     border: 1px solid transparent;
     outline: none;
     border-radius: var(--border-radius);
-    cursor: pointer;
     font-family: 'IBM Plex Sans Regular', sans-serif;
     font-size: var(--font-size);
     line-height: var(--line-height);
 }
 
-.Button:is(.actionable):focus {
+.Button--actionable {
+    cursor: pointer;
+}
+
+.Button:is(.Button--actionable):focus {
     box-shadow: 0 0 0 3px var(--focus-color);
 }
 
@@ -54,11 +57,11 @@
     background: var(--background-primary);
 }
 
-.Button.Button--primary:is(.actionable):hover {
+.Button.Button--primary:is(.Button--actionable):hover {
     background: var(--background-primary-hovered);
 }
 
-.Button.Button--primary:is(.actionable):active {
+.Button.Button--primary:is(.Button--actionable):active {
     background: var(--background-primary-active);
 }
 
@@ -72,11 +75,11 @@
     background: var(--background-secondary);
 }
 
-.Button.Button--secondary:is(.actionable):hover {
+.Button.Button--secondary:is(.Button--actionable):hover {
     background: var(--background-secondary-hovered);
 }
 
-.Button.Button--secondary:is(.actionable):active {
+.Button.Button--secondary:is(.Button--actionable):active {
     background: var(--background-secondary-active);
 }
 
@@ -92,13 +95,13 @@
     background: var(--background-outline);
 }
 
-.Button.Button--outline:is(.actionable):hover {
+.Button.Button--outline:is(.Button--actionable):hover {
     color: #fff;
     background: var(--background-outline-hovered);
     border: 1px solid transparent;
 }
 
-.Button.Button--outline:is(.actionable):active {
+.Button.Button--outline:is(.Button--actionable):active {
     color: #fff;
     border: 1px solid transparent;
     background: var(--background-outline-active);
@@ -115,11 +118,11 @@
     background: var(--background-danger);
 }
 
-.Button.Button--danger:is(.actionable):hover {
+.Button.Button--danger:is(.Button--actionable):hover {
     background: var(--background-danger-hovered);
 }
 
-.Button.Button--danger:is(.actionable):active {
+.Button.Button--danger:is(.Button--actionable):active {
     background: var(--background-danger-active);
 }
 
