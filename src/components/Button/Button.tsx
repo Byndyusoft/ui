@@ -33,8 +33,7 @@ const Button: FC<IButtonProps> = ({
             className
         )}
     >
-        {isPending && `Загружаем...`}
-        {!isPending && children}
+        {isPending ? `Загружаем...` : children}
     </button>
 );
 
