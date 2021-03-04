@@ -1,4 +1,5 @@
 @import '../src/shared/styles/fonts.css';
+@import '../src/shared/styles/colors.css';
 
 body {
     font-family: sans-serif;
