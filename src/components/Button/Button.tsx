@@ -24,12 +24,12 @@ const Button: FC<IButtonProps> = ({
     <button
         // eslint-disable-next-line react/button-has-type
         type={type}
+        disabled={isDisabled}
         className={cn(
             'Button',
             `Button--${variant}`,
             `Button--${size}`,
             !isDisabled && !isPending && `Button--actionable`,
-            isDisabled && `Button--disabled`,
             className
         )}
     >
