@@ -6,7 +6,7 @@
     align-items: stretch;
     transition: border-color 0.25s ease-out;
     overflow: hidden;
-    background: #fff;
+    background-color: #fff;
 }
 
 .InputContainer--Regular {
@@ -85,6 +85,6 @@
 
 .Input--Disabled {
     pointer-events: none;
-    background: var(--gray-light3);
+    background-color: var(--gray-light3);
     color: var(--gray-text);
 }
