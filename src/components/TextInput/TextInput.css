@@ -6,12 +6,12 @@
 
 .TextInput--ClearButton {
     transition: 0.15s opacity ease-in-out;
-    padding: 0;
     visibility: visible;
     display: block;
     cursor: pointer;
-    width: 30px;
+    height: 100%;
     background: transparent;
+    padding: 0 0.5rem;
     border: unset;
 }
 

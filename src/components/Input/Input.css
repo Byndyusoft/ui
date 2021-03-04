@@ -11,7 +11,7 @@
 
     display: inline-flex;
     justify-content: flex-start;
-    align-items: center;
+    align-items: stretch;
     transition: border-color 0.25s ease-out;
     overflow: hidden;
     background: #fff;
@@ -64,14 +64,6 @@
 .Input--ExtraLarge {
     padding: 0.25rem 0.45rem;
     font-size: 1.5rem;
-}
-
-.InputSideComponentContainerLeft {
-    padding: 0 0.45rem 0 0.25rem;
-}
-
-.InputSideComponentContainerRight {
-    padding: 0 0.25rem 0 0.45rem;
 }
 
 .InputSideComponentContainer--ExtraSmall {

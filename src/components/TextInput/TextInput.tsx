@@ -35,7 +35,7 @@ const TextInput: FC<ITextInputProps> = props => {
     } = props;
 
     const renderClearButton = (): JSX.Element | undefined => {
-        if (clearButton) {
+        if (clearButton && onClear) {
             return (
                 <button
                     className={cn('TextInput--ClearButton', !value && 'TextInput--ClearButtonHidden')}

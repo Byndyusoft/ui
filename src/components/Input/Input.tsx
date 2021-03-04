@@ -25,6 +25,7 @@ const Input: FC<IInputProps> = props => {
         defaultValue,
         value,
         autoComplete = 'off',
+        spellCheck = 'false',
         type = 'text',
         size = Size.Medium,
         variant = Variant.Regular,
@@ -46,31 +47,22 @@ const Input: FC<IInputProps> = props => {
     );
     const inputClassName = cn('Input', className, `Input--${size}`);
 
-    const renderSideComponent = ({
-        sideComponent,
-        placement
-    }: {
-        sideComponent?: JSX.Element;
-        placement: 'Left' | 'Right';
-    }): JSX.Element | null => {
+    const renderSideComponent = ({ sideComponent }: { sideComponent?: JSX.Element }): JSX.Element | null => {
         if (sideComponent) {
             if (!React.isValidElement(sideComponent)) {
                 return null;
             }
-            return (
-                <div className={cn(`InputSideComponentContainer${placement}`, `InputSideComponentContainer--${size}`)}>
-                    {sideComponent}
-                </div>
-            );
+            return <div className={`InputSideComponentContainer--${size}`}>{sideComponent}</div>;
         }
         return null;
     };
 
     return (
         <div className={inputContainerClassName}>
-            {renderSideComponent({ sideComponent: leftComponent, placement: 'Left' })}
+            {renderSideComponent({ sideComponent: leftComponent })}
             <input
                 {...rest}
+                spellCheck={spellCheck}
                 placeholder={placeholder}
                 type={type}
                 name={name}
@@ -86,7 +78,7 @@ const Input: FC<IInputProps> = props => {
                 onChange={onChange}
                 disabled={isDisabled}
             />
-            {renderSideComponent({ sideComponent: rightComponent, placement: 'Right' })}
+            {renderSideComponent({ sideComponent: rightComponent })}
         </div>
     );
 };

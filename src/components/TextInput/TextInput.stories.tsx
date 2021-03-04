@@ -50,11 +50,6 @@ export const UncontrolledTextInputStory: Story = () => {
                         }
                     }}
                     name="uncontrolled-story-input"
-                    onClear={() => {
-                        if (inputRef.current) {
-                            inputRef.current.value = '';
-                        }
-                    }}
                     defaultValue=""
                 />
             </div>

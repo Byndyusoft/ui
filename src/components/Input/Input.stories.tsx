@@ -72,18 +72,29 @@ export const InputSize: Story = () => (
     </>
 );
 
+const SearchSpanLeft = (): JSX.Element => (
+    <span role="img" aria-label="searchIcon" style={{ position: 'relative', top: '0.1rem', padding: '0 0.25rem' }}>
+        🔍
+    </span>
+);
+const SearchSpanRight = (): JSX.Element => (
+    <span role="img" aria-label="searchIcon" style={{ position: 'relative', top: '0.1rem', padding: '0 0.25rem' }}>
+        🔎
+    </span>
+);
+
 export const InputSideComponents: Story = () => (
     <>
         <h3>With left component</h3>
-        <Input defaultValue="123" name="withLeftComponent" leftComponent={<span>🔍</span>} />
+        <Input defaultValue="123" name="withLeftComponent" leftComponent={<SearchSpanLeft />} />
         <h3>With right component</h3>
-        <Input defaultValue="123" name="withRightComponent" rightComponent={<span>🔎</span>} />
+        <Input defaultValue="123" name="withRightComponent" rightComponent={<SearchSpanRight />} />
         <h3>Both</h3>
         <Input
             defaultValue="123"
             name="bothComponents"
-            leftComponent={<span>🔍</span>}
-            rightComponent={<span>🔎</span>}
+            leftComponent={<SearchSpanLeft />}
+            rightComponent={<SearchSpanRight />}
         />
     </>
 );
