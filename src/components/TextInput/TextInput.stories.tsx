@@ -66,7 +66,7 @@ export const UncontrolledTextInputStory: Story = () => {
 };
 
 export const InvalidInput: Story = () => {
-    const [inputValue, setInputValue] = useState<string>('');
+    const [inputValue, setInputValue] = useState<string>('Test');
 
     const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setInputValue(e.target.value);
@@ -81,6 +81,7 @@ export const InvalidInput: Story = () => {
                 setInputValue('');
             }}
             isInvalid={true}
+            error="Неверное значение"
         />
     );
 };

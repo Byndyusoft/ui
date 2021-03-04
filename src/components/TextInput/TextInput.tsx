@@ -13,6 +13,7 @@ interface ITextInputProps extends IInputProps {
     inputRef?: (ref: HTMLInputElement) => void;
     clearButton?: boolean;
     onClear?: () => void;
+    error?: string;
 }
 
 const TextInput: FC<ITextInputProps> = props => {
@@ -31,6 +32,7 @@ const TextInput: FC<ITextInputProps> = props => {
         onClear,
         isDisabled,
         isInvalid,
+        error,
         ...rest
     } = props;
 
@@ -50,25 +52,30 @@ const TextInput: FC<ITextInputProps> = props => {
     };
 
     return (
-        <div className="TextInput--Container">
-            <Input
-                {...rest}
-                type="text"
-                name={name}
-                className={className}
-                placeholder={placeholder}
-                defaultValue={defaultValue}
-                value={value}
-                inputRef={inputRef}
-                size={size}
-                variant={variant}
-                autoComplete={autoComplete}
-                onChange={onChange}
-                isInvalid={isInvalid}
-                isDisabled={isDisabled}
-            />
-            {renderClearButton()}
-        </div>
+        <>
+            <div className="TextInput--Container">
+                <Input
+                    {...rest}
+                    type="text"
+                    name={name}
+                    className={cn(className, clearButton && onClear && 'TextInput--WithClearButtonPadding')}
+                    placeholder={placeholder}
+                    defaultValue={defaultValue}
+                    value={value}
+                    inputRef={inputRef}
+                    size={size}
+                    variant={variant}
+                    autoComplete={autoComplete}
+                    onChange={onChange}
+                    isInvalid={isInvalid}
+                    isDisabled={isDisabled}
+                />
+                {renderClearButton()}
+            </div>
+            <div className="TextInput--ErrorContainer">
+                {isInvalid && error && <span className="TextInput--ErrorHint">{error}</span>}
+            </div>
+        </>
     );
 };
 

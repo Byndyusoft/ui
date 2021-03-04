@@ -1,14 +1,6 @@
 @import '../../shared/styles/fonts.css';
 
 .InputContainer {
-    --regular-border: #e0e0e0;
-    --regular-border-hover: #21272b;
-    --regular-border-focus: #2b83ba;
-    --regular-color-placeholder: #7a7f82;
-    --regular-disabled-background: #e0e0e0;
-    --regular-disabled-color: #7a7f82;
-    --invalid-color: #d73027;
-
     display: inline-flex;
     justify-content: flex-start;
     align-items: stretch;
@@ -18,17 +10,17 @@
 }
 
 .InputContainer--Regular {
-    border: 1px solid var(--regular-border);
+    border: 1px solid var(--gray-light3);
     border-radius: 5px;
 }
 
 .InputContainer--Regular:focus-within {
-    border-color: var(--regular-border-focus);
-    box-shadow: 0 0 0 1px var(--regular-border-focus);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 1px var(--primary);
 }
 
 .InputContainer--Regular:not(.Input--Invalid):hover {
-    border-color: var(--regular-border-hover);
+    border-color: var(--ocean-black);
 }
 
 .Input {
@@ -38,7 +30,7 @@
 }
 
 .Input::placeholder {
-    color: var(--regular-color-placeholder);
+    color: var(--gray-text);
 }
 
 .Input--ExtraSmall {
@@ -87,12 +79,12 @@
 }
 
 .Input--Invalid {
-    border: 1px solid var(--invalid-color);
-    box-shadow: 0 0 0 1px var(--invalid-color);
+    border: 1px solid var(--danger);
+    box-shadow: 0 0 0 1px var(--danger);
 }
 
 .Input--Disabled {
     pointer-events: none;
-    background: var(--regular-disabled-background);
-    color: var(--regular-disabled-color);
+    background: var(--gray-light3);
+    color: var(--gray-text);
 }

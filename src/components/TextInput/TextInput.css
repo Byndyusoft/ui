@@ -1,5 +1,6 @@
 .TextInput--Container {
     display: inline-flex;
+    align-items: center;
     position: relative;
 }
 
@@ -7,6 +8,10 @@
     font-size: inherit;
     font-family: inherit;
     color: inherit;
+}
+
+.TextInput--WithClearButtonPadding {
+    padding-right: 30px;
 }
 
 .TextInput--ClearButton {
@@ -27,4 +32,13 @@
     visibility: hidden;
     outline: 0;
     opacity: 0;
+}
+
+.TextInput--ErrorContainer {
+    display: inline-flex;
+}
+
+.TextInput--ErrorHint {
+    color: var(--danger);
+    margin-left: 0.5rem;
 }
