@@ -72,9 +72,11 @@ const TextInput: FC<ITextInputProps> = props => {
                 />
                 {renderClearButton()}
             </div>
-            <div className="TextInput--ErrorContainer">
-                {isInvalid && error && <span className="TextInput--ErrorHint">{error}</span>}
-            </div>
+            {isInvalid && error && (
+                <div className="TextInput--ErrorContainer">
+                    <span className="TextInput--ErrorHint">{error}</span>
+                </div>
+            )}
         </>
     );
 };
