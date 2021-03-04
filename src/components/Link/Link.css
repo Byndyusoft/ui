@@ -3,18 +3,14 @@
     font-family: 'IBM Plex Sans Regular', sans-serif;
     font-size: 1rem;
     line-height: 1.5rem;
-    text-decoration: none;
-    border-bottom: 1px solid #2b83ba;
 }
 
 .Link:not(.Link--disabled):hover {
     color: #84cdfa;
-    border-color: #84cdfa;
 }
 
 .Link--disabled {
     cursor: default;
     pointer-events: none;
     color: #7a7f82;
-    border-color: #7a7f82;
 }

@@ -20,8 +20,6 @@ describe('Link', () => {
 
         const link = screen.getByText('Click me');
 
-        const hrefAttribute = link.getAttribute('href');
-
-        expect(hrefAttribute).toBe(null);
+        expect(link).toHaveClass('Link--disabled');
     });
 });
