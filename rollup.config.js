@@ -4,6 +4,7 @@ import path from 'path';
 import fs from 'fs-extra';
 import typescript from '@rollup/plugin-typescript';
 import del from 'rollup-plugin-delete';
+import svgr from '@svgr/rollup';
 import styles from 'rollup-plugin-styles';
 
 export default [
@@ -17,6 +18,7 @@ export default [
             preserveModulesRoot: 'src'
         },
         plugins: [
+            svgr(),
             del({ targets: 'lib/*' }),
             styles({
                 mode: 'extract',
