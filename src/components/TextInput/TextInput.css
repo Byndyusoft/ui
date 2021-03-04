@@ -1,3 +1,8 @@
+.TextInput--Container {
+    display: inline-flex;
+    position: relative;
+}
+
 .TextInput {
     font-size: inherit;
     font-family: inherit;
@@ -5,18 +10,21 @@
 }
 
 .TextInput--ClearButton {
+    position: absolute;
+    top: 0;
+    right: 0;
     transition: 0.15s opacity ease-in-out;
     visibility: visible;
     display: block;
-    cursor: pointer;
     height: 100%;
     background: transparent;
     padding: 0 0.5rem;
     border: unset;
+    cursor: pointer;
 }
 
 .TextInput--ClearButtonHidden {
+    visibility: hidden;
     outline: 0;
     opacity: 0;
-    pointer-events: none;
 }

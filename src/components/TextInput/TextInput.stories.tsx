@@ -65,8 +65,29 @@ export const UncontrolledTextInputStory: Story = () => {
     );
 };
 
+export const InvalidInput: Story = () => {
+    const [inputValue, setInputValue] = useState<string>('');
+
+    const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setInputValue(e.target.value);
+    };
+
+    return (
+        <TextInput
+            name="invalidInput"
+            value={inputValue}
+            onChange={onChangeHandler}
+            onClear={() => {
+                setInputValue('');
+            }}
+            isInvalid={true}
+        />
+    );
+};
+
 DefaultTextInputStory.storyName = 'Default';
 UncontrolledTextInputStory.storyName = 'Uncontrolled';
+InvalidInput.storyName = 'Invalid';
 
 const meta: Meta = {
     title: 'Components/TextInput',

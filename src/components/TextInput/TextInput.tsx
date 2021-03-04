@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useRef } from 'react';
 import cn from 'classnames';
 import Input, { IInputProps, Size, Variant } from '../Input';
 import { CloseIcon } from '../Icon';
@@ -50,23 +50,25 @@ const TextInput: FC<ITextInputProps> = props => {
     };
 
     return (
-        <Input
-            {...rest}
-            type="text"
-            name={name}
-            className={className}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
-            value={value}
-            inputRef={inputRef}
-            size={size}
-            variant={variant}
-            autoComplete={autoComplete}
-            onChange={onChange}
-            rightComponent={renderClearButton()}
-            isInvalid={isInvalid}
-            isDisabled={isDisabled}
-        />
+        <div className="TextInput--Container">
+            <Input
+                {...rest}
+                type="text"
+                name={name}
+                className={className}
+                placeholder={placeholder}
+                defaultValue={defaultValue}
+                value={value}
+                inputRef={inputRef}
+                size={size}
+                variant={variant}
+                autoComplete={autoComplete}
+                onChange={onChange}
+                isInvalid={isInvalid}
+                isDisabled={isDisabled}
+            />
+            {renderClearButton()}
+        </div>
     );
 };
 
