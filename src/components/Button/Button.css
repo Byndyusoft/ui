@@ -1,28 +1,132 @@
-.Button {
-    --background: #445555;
-    --background-primary: #1cdd49;
-    --background-danger: #DD4B39;
-    --background-hover: black;
-    --border-radius: 6px;
-    --color: white;
-    --padding: 5px  10px;
+@import '../../shared/styles/fonts.css';
 
-    background: var(--background);
+.Button {
+    --background-primary: #2b83ba;
+    --background-primary-hovered: #3b99d4;
+    --background-primary-active: #174866;
+    --background-secondary: #53585c;
+    --background-secondary-hovered: #777c80;
+    --background-secondary-active: #21272b;
+    --background-outline: #fff;
+    --background-outline-hovered: #53585c;
+    --background-outline-active: #21272b;
+    --background-danger: #d73027;
+    --background-danger-hovered: #eb483f;
+    --background-danger-active: #a32a24;
+    --border-radius: 4px;
+    --color: #fff;
+    --focus-color: #49c8ff;
+    --padding-small: 3px 24px;
+    --padding-medium: 7px 24px;
+    --padding-large: 11px 24px;
+    --font-size: 16px;
+    --line-height: 24px;
+
     color: var(--color);
-    padding: var(--padding);
     border: none;
+    border: 1px solid transparent;
     outline: none;
     border-radius: var(--border-radius);
+    font-family: 'IBM Plex Sans Regular', sans-serif;
+    font-size: var(--font-size);
+    line-height: var(--line-height);
 }
 
+.Button--actionable {
+    cursor: pointer;
+}
 
+.Button:is(.Button--actionable):focus {
+    box-shadow: 0 0 0 3px var(--focus-color);
+}
+
+.Button--small {
+    padding: var(--padding-small);
+}
+
+.Button--medium {
+    padding: var(--padding-medium);
+}
+
+.Button--large {
+    padding: var(--padding-large);
+}
 
 .Button.Button--primary {
     background-color: var(--background-primary);
 }
 
-.Button.Button--danger {
+.Button--primary:disabled {
+    cursor: default;
+    color: #7a7f82;
+    background-color: #e0e0e0;
+}
+
+.Button--primary:is(.Button--actionable):hover {
+    background-color: var(--background-primary-hovered);
+}
+
+.Button--primary:is(.Button--actionable):active {
+    background-color: var(--background-primary-active);
+}
+
+.Button--secondary {
+    background-color: var(--background-secondary);
+}
+
+.Button--secondary:disabled {
+    cursor: default;
+    color: #7a7f82;
+    background-color: #e0e0e0;
+}
+
+.Button--secondary:is(.Button--actionable):hover {
+    background-color: var(--background-secondary-hovered);
+}
+
+.Button--secondary:is(.Button--actionable):active {
+    background-color: var(--background-secondary-active);
+}
+
+.Button--outline {
+    color: #21272b;
+    border: 1px solid #21272b;
+    background-color: var(--background-outline);
+}
+
+.Button--outline:disabled {
+    cursor: default;
+    color: #7a7f82;
+    background-color: #fff;
+    border: 1px solid #7a7f82;
+}
+
+.Button--outline:is(.Button--actionable):hover {
+    color: #fff;
+    background-color: var(--background-outline-hovered);
+    border: 1px solid transparent;
+}
+
+.Button--outline:is(.Button--actionable):active {
+    color: #fff;
+    border: 1px solid transparent;
+    background-color: var(--background-outline-active);
+}
+
+.Button--danger {
     background-color: var(--background-danger);
 }
 
+.Button--danger:disabled {
+    cursor: default;
+    background-color: #e0e0e0;
+    color: #7a7f82;
+}
 
+.Button--danger:is(.Button--actionable):hover {
+    background-color: var(--background-danger-hovered);
+}
+
+.Button--danger:is(.Button--actionable):active {
+    background-color: var(--background-danger-active);
+}
