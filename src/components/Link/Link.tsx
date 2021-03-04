@@ -8,16 +8,16 @@ interface ILinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
     isDisabled?: boolean;
 }
 
-const Link: FC<ILinkProps> = ({ href, target, children, rel = 'noopener noreferrer', isDisabled, ...rest }) => {
-    if (isDisabled) {
-        return <span className={cn('Link', 'Link--disabled')}>{children}</span>;
-    }
-
-    return (
-        <a className="Link" rel={rel} href={href} target={target} {...rest}>
-            {children}
-        </a>
-    );
-};
+const Link: FC<ILinkProps> = ({ href, target, children, rel = 'noopener noreferrer', isDisabled, ...rest }) => (
+    <a
+        className={cn('Link', isDisabled && 'Link--disabled')}
+        rel={rel}
+        href={!isDisabled ? href : undefined}
+        target={target}
+        {...rest}
+    >
+        {children}
+    </a>
+);
 
 export default Link;
