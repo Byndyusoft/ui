@@ -51,7 +51,7 @@ const Checkbox: FC<ICheckboxProps> = ({
             />
             <div className={cn(checkboxClassName)}>
                 {isChecked && <CheckedSvg />}
-                {isChecked === undefined && <IndeterminateSvg />}
+                {(isChecked === undefined || isIndeterminate) && <IndeterminateSvg />}
             </div>
             <div className={cn('Checkbox--label', isDisabled && 'Checkbox--isDisabled')}>{children}</div>
         </label>
