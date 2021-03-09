@@ -1,0 +1,72 @@
+.Checkbox--container {
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.Checkbox--input {
+    display: none;
+}
+
+.Checkbox--field {
+    width: 16px;
+    height: 16px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #21272b;
+    box-sizing: border-box;
+    border-radius: 2px;
+    margin-right: 8px;
+}
+
+/* Not checked  */
+
+.Checkbox--container:hover .Checkbox--field:not(.Checkbox--isChecked):not(.Checkbox--isDisabled) {
+    background-color: #e0e0e0;
+}
+
+.Checkbox--container:active .Checkbox--field:not(.Checkbox--isChecked):not(.Checkbox--isDisabled) {
+    background-color: #adb0b2;
+}
+
+/* Checked */
+
+.Checkbox--container:hover .Checkbox--field:is(.Checkbox--isChecked):not(.Checkbox--isDisabled) {
+    background-color: #3b99d4;
+    border-color: #3b99d4;
+}
+
+.Checkbox--container:active .Checkbox--field:is(.Checkbox--isChecked):not(.Checkbox--isDisabled) {
+    background-color: #174866;
+    border-color: #174866;
+}
+
+/* Disabled checkbox && not checked */
+
+.Checkbox--isDisabled:not(.Checkbox--isChecked) .Checkbox--field {
+    border-color: #adb0b2;
+}
+
+.Checkbox--isDisabled:not(.Checkbox--isChecked) {
+    cursor: default;
+}
+
+.Checkbox--isDisabled:not(.Checkbox--isChecked) .Checkbox--label {
+    color: #7a7f82;
+}
+
+/* Disabled checkbox && is checked */
+
+.Checkbox--isChecked:is(.Checkbox--isDisabled) {
+    background-color: #adb0b2;
+}
+
+/* Checked */
+
+.Checkbox--isChecked:not(.Checkbox--isDisabled) {
+    background-color: #2b83ba;
+    border-color: #2b83ba;
+}
