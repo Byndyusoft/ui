@@ -73,4 +73,14 @@ describe('Checkbox', () => {
         // Check that className is still the same
         expect(checkboxClass.className).toBe('Checkbox Checkbox--isChecked Checkbox--isDisabled');
     });
+
+    test('has indeterminate class', () => {
+        const dom = render(<Checkbox name="test-checkbox" />);
+
+        const checkboxClass = dom.container.querySelector(
+            '[class="Checkbox Checkbox--isIndeterminate"]'
+        ) as HTMLElement;
+
+        expect(checkboxClass).toBeDefined();
+    });
 });
