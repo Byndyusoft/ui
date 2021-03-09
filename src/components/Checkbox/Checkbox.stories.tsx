@@ -30,7 +30,7 @@ export const CheckboxStory: Story = () => {
 CheckboxStory.storyName = 'Checkbox';
 
 const meta: Meta = {
-    title: 'Checkbox',
+    title: 'components/Checkbox',
     component: Checkbox
 };
 
