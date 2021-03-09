@@ -11,7 +11,6 @@ interface ICheckboxProps {
     isChecked?: boolean;
     isDisabled?: boolean;
     value?: string | number;
-    defaultChecked?: boolean;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>, isChecked: boolean) => void;
     isInvalid?: boolean;
     isIndeterminate?: boolean;
@@ -23,7 +22,6 @@ const Checkbox: FC<ICheckboxProps> = ({
     isChecked,
     isDisabled,
     value,
-    defaultChecked,
     onChange,
     isInvalid,
     isIndeterminate,
@@ -52,7 +50,6 @@ const Checkbox: FC<ICheckboxProps> = ({
                 checked={isChecked ?? false}
                 disabled={isDisabled}
                 value={value}
-                defaultChecked={defaultChecked}
                 onChange={handleChange}
             />
             <div className={cn(checkboxClassName)}>
