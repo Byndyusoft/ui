@@ -33,6 +33,11 @@
         "trailingComma": "none",
         "printWidth": 120
     },
+    "babel": {
+        "plugins": [
+            "inline-react-svg"
+        ]
+    },
     "name": "@byndyusoft/ui",
     "author": "Byndyusoft",
     "url": "https://byndyusoft.com/",
@@ -59,6 +64,7 @@
         "@types/react": "^17.0.0",
         "@types/react-dom": "^17.0.0",
         "babel-loader": "^8.2.1",
+        "babel-plugin-inline-react-svg": "^2.0.1",
         "eslint": "^7.17.0",
         "eslint-formatter-summary": "^1.0.5",
         "fs-extra": "^9.0.1",
