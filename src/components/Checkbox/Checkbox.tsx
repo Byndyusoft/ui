@@ -35,8 +35,8 @@ const Checkbox: FC<ICheckboxProps> = ({
         }
     };
 
-    const fieldClassName = cn(
-        'Checkbox--field',
+    const checkboxClassName = cn(
+        'Checkbox',
         isChecked && 'Checkbox--isChecked',
         isDisabled && 'Checkbox--isDisabled',
         (isChecked === undefined || isIndeterminate) && 'Checkbox--isIndeterminate',
@@ -55,7 +55,7 @@ const Checkbox: FC<ICheckboxProps> = ({
                 defaultChecked={defaultChecked}
                 onChange={handleChange}
             />
-            <div className={cn(fieldClassName)}>
+            <div className={cn(checkboxClassName)}>
                 {isChecked && <CheckedSvg />}
                 {isChecked === undefined && <IndeterminateSvg />}
             </div>
