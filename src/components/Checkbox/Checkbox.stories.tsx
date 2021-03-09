@@ -7,6 +7,7 @@ export const CheckboxStory: Story = () => {
 
     return (
         <>
+            <h1>Checkbox</h1>
             <Checkbox
                 isChecked={isChecked}
                 onChange={(event, checked) => {
@@ -16,11 +17,11 @@ export const CheckboxStory: Story = () => {
             >
                 Click to check
             </Checkbox>
-            <Checkbox name="disabled" isDisabled>
-                I am disabled
+            <Checkbox name="disabled" isDisabled isIndeterminate>
+                I am Disabled and Indeterminate
             </Checkbox>
             <Checkbox name="disabled-checked" isChecked isDisabled>
-                I am disabled too
+                I am Disabled too
             </Checkbox>
         </>
     );

@@ -3,6 +3,7 @@ import cn from 'classnames';
 import './Checkbox.css';
 
 import CheckedSvg from './assets/checked.svg';
+import IndeterminateSvg from './assets/indeterminate.svg';
 
 interface ICheckboxProps {
     className?: string;
@@ -13,6 +14,7 @@ interface ICheckboxProps {
     defaultChecked?: boolean;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>, isChecked: boolean) => void;
     isInvalid?: boolean;
+    isIndeterminate?: boolean;
 }
 
 const Checkbox: FC<ICheckboxProps> = ({
@@ -24,6 +26,7 @@ const Checkbox: FC<ICheckboxProps> = ({
     defaultChecked,
     onChange,
     isInvalid,
+    isIndeterminate,
     children
 }) => {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -36,7 +39,7 @@ const Checkbox: FC<ICheckboxProps> = ({
         'Checkbox--field',
         isChecked && 'Checkbox--isChecked',
         isDisabled && 'Checkbox--isDisabled',
-        isChecked === undefined && 'Checkbox--Indeterminate',
+        (isChecked === undefined || isIndeterminate) && 'Checkbox--isIndeterminate',
         isInvalid && !isChecked && 'Checkbox--isInvalid'
     );
 
@@ -54,7 +57,7 @@ const Checkbox: FC<ICheckboxProps> = ({
             />
             <div className={cn(fieldClassName)}>
                 {isChecked && <CheckedSvg />}
-                {/* {isChecked === undefined && <IconIndeterminate />} */}
+                {isChecked === undefined && <IndeterminateSvg />}
             </div>
             <div className={cn('Checkbox--label', isDisabled && 'Checkbox--isDisabled')}>{children}</div>
         </label>
