@@ -1,6 +1,9 @@
 @import '../../shared/styles/fonts.css';
 
 .Button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
     --background-primary: #2b83ba;
     --background-primary-hovered: #3b99d4;
     --background-primary-active: #174866;
@@ -16,9 +19,15 @@
     --border-radius: 4px;
     --color: #fff;
     --focus-color: #49c8ff;
-    --padding-small: 3px 24px;
-    --padding-medium: 7px 24px;
-    --padding-large: 11px 24px;
+    --button-padding-horizontal-small: 24px;
+    --button-padding-vertical-small: 3px;
+    --button-padding-small: var(--button-padding-vertical-small) var(--button-padding-horizontal-small);
+    --button-padding-horizontal-medium: 24px;
+    --button-padding-vertical-medium: 7px;
+    --button-padding-medium: var(--button-padding-vertical-medium) var(--button-padding-horizontal-medium);
+    --button-padding-horizontal-large: 24px;
+    --button-padding-vertical-large: 11px;
+    --button-padding-large: var(--button-padding-vertical-large) var(--button-padding-horizontal-large);
     --font-size: 16px;
     --line-height: 24px;
 
@@ -41,15 +50,15 @@
 }
 
 .Button--small {
-    padding: var(--padding-small);
+    padding: var(--button-padding-small);
 }
 
 .Button--medium {
-    padding: var(--padding-medium);
+    padding: var(--button-padding-medium);
 }
 
 .Button--large {
-    padding: var(--padding-large);
+    padding: var(--button-padding-large);
 }
 
 .Button.Button--primary {
