@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { Variant, Size, Type } from './constants';
 import './Button.css';
 
-interface IButtonProps {
+export interface IButtonProps {
     className?: string;
     variant?: Variant;
     size?: Size;
