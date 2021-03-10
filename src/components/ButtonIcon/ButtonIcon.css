@@ -1,0 +1,23 @@
+.ButtonIcon--leftIcon-small {
+    padding-left: calc(var(--button-padding-horizontal-small) / 2.5);
+}
+
+.ButtonIcon--leftIcon-medium {
+    padding-left: calc(var(--button-padding-horizontal-medium) / 2.5);
+}
+
+.ButtonIcon--leftIcon-large {
+    padding-left: calc(var(--button-padding-horizontal-large) / 2.5);
+}
+
+.ButtonIcon--rightIcon-small {
+    padding-right: calc(var(--button-padding-horizontal-small) / 2.5);
+}
+
+.ButtonIcon--rightIcon-medium {
+    padding-right: calc(var(--button-padding-horizontal-medium) / 2.5);
+}
+
+.ButtonIcon--rightIcon-large {
+    padding-right: calc(var(--button-padding-horizontal-large) / 2.5);
+}
