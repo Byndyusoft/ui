@@ -9,17 +9,17 @@ const SomeIconComponent = ({ left, right }: { left?: boolean; right?: boolean })
     </span>
 );
 
-export const LeftIcon: Story = () => <ButtonIcon leftIcon={<SomeIconComponent left />}>Test</ButtonIcon>;
+export const LeftIcon: Story = () => <ButtonIcon leftIcon={<SomeIconComponent left />}>Button</ButtonIcon>;
 
 LeftIcon.storyName = 'Left Icon';
 
-export const RightIcon: Story = () => <ButtonIcon rightIcon={<SomeIconComponent right />}>Test</ButtonIcon>;
+export const RightIcon: Story = () => <ButtonIcon rightIcon={<SomeIconComponent right />}>Button</ButtonIcon>;
 
 RightIcon.storyName = 'Right Icon';
 
 export const LeftRightIcons: Story = () => (
     <ButtonIcon leftIcon={<SomeIconComponent left />} rightIcon={<SomeIconComponent right />}>
-        Test
+        Button
     </ButtonIcon>
 );
 
