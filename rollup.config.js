@@ -8,7 +8,7 @@ import styles from 'rollup-plugin-styles';
 
 export default [
     {
-        input: ['src/index.tsx'],
+        input: ['src/index.ts'],
         output: {
             exports: 'named',
             format: 'cjs',
