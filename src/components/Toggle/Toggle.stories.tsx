@@ -8,7 +8,7 @@ export const DefaultToggleStory: Story = () => {
     return (
         <>
             <h1>Default</h1>
-            <Toggle checked={isToggled} onToggle={setToggeled} />
+            <Toggle toggled={isToggled} onToggle={setToggeled} />
         </>
     );
 };
@@ -21,7 +21,7 @@ export const DisabledToggleStory: Story = () => {
     return (
         <>
             <h1>Disabled</h1>
-            <Toggle checked={isToggled} onToggle={setToggeled} isDisabled />
+            <Toggle toggled={isToggled} onToggle={setToggeled} isDisabled />
         </>
     );
 };

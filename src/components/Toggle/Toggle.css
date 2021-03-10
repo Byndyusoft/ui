@@ -8,12 +8,12 @@
     height: 16px;
     border-radius: 24px;
 
-    --toggle-checked-color: #2b83ba;
-    --toggle-unchecked-color: #adb0b2;
-    --toggle-checked-hover-color: #3b99d4;
-    --toggle-unchecked-hover-color: #cccccc;
-    --toggle-checked-active-color: #174866;
-    --toggle-unchecked-active-color: #777c80;
+    --toggle-toggled-color: #2b83ba;
+    --toggle-untoggled-color: #adb0b2;
+    --toggle-toggled-hover-color: #3b99d4;
+    --toggle-untoggled-hover-color: #cccccc;
+    --toggle-toggled-active-color: #174866;
+    --toggle-untoggled-active-color: #777c80;
     --toggle-disabled-color: #e0e0e0;
     --focus-color: #49c8ff;
     transition: background-color 0.2s ease-out;
@@ -29,32 +29,32 @@
     pointer-events: none;
 }
 
-.Toggle--container:not(.Toggle-checked):not(.Toggle--container-isDisabled) {
-    background-color: var(--toggle-unchecked-color);
+.Toggle--container:not(.Toggle-toggled):not(.Toggle--container-isDisabled) {
+    background-color: var(--toggle-untoggled-color);
 }
 
 .Toggle--container:not(.Toggle--container-isDisabled):focus {
     box-shadow: 0 0 0 3px var(--focus-color);
 }
 
-.Toggle--container:not(.Toggle-checked):not(.Toggle--container-isDisabled):hover {
-    background-color: var(--toggle-unchecked-hover-color);
+.Toggle--container:not(.Toggle-toggled):not(.Toggle--container-isDisabled):hover {
+    background-color: var(--toggle-untoggled-hover-color);
 }
 
-.Toggle--container:not(.Toggle-checked):not(.Toggle--container-isDisabled):active {
-    background-color: var(--toggle-unchecked-active-color);
+.Toggle--container:not(.Toggle-toggled):not(.Toggle--container-isDisabled):active {
+    background-color: var(--toggle-untoggled-active-color);
 }
 
-.Toggle--container:is(.Toggle--checked):not(.Toggle--container-isDisabled) {
-    background-color: var(--toggle-checked-color);
+.Toggle--container:is(.Toggle--toggled):not(.Toggle--container-isDisabled) {
+    background-color: var(--toggle-toggled-color);
 }
 
-.Toggle--container:is(.Toggle--checked):not(.Toggle--container-isDisabled):hover {
-    background-color: var(--toggle-checked-hover-color);
+.Toggle--container:is(.Toggle--toggled):not(.Toggle--container-isDisabled):hover {
+    background-color: var(--toggle-toggled-hover-color);
 }
 
-.Toggle--container:is(.Toggle--checked):not(.Toggle--container-isDisabled):active {
-    background-color: var(--toggle-checked-active-color);
+.Toggle--container:is(.Toggle--toggled):not(.Toggle--container-isDisabled):active {
+    background-color: var(--toggle-toggled-active-color);
 }
 
 .Toggle--sphere {
@@ -67,6 +67,6 @@
     transition: all 0.25s ease-in-out;
 }
 
-.Toggle--sphere-checked {
+.Toggle--sphere-toggled {
     transform: translateX(16px);
 }
