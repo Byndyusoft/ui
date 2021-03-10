@@ -10,13 +10,13 @@ const TestComponent = ({ isDisabled }: { isDisabled?: boolean }): JSX.Element =>
 
 describe('Toggle', () => {
     test('switching between values', () => {
-        const dom = render(<TestComponent />);
+        render(<TestComponent />);
 
-        const toggleButton = dom.container.querySelector('[class=Toggle--container]') as HTMLElement;
-        const sphereUntoggled = dom.container.querySelector('[class=Toggle--sphere-untoggled]') as HTMLElement;
+        const toggleButton = screen.getByRole('button');
+        const toggleValue = screen.getByRole('switch') as HTMLInputElement;
 
-        expect(toggleButton).toBeDefined();
-        expect(sphereUntoggled).toBeDefined();
+        expect(toggleButton).toBeInTheDocument();
+        expect(toggleValue.checked).toBeFalsy();
 
         // Switching to toggled state
 
@@ -24,7 +24,7 @@ describe('Toggle', () => {
             fireEvent.click(toggleButton);
         });
 
-        expect(sphereUntoggled).toBeNull();
+        expect(toggleValue.checked).toBeTruthy();
 
         act(() => {
             fireEvent.click(toggleButton);
@@ -32,21 +32,19 @@ describe('Toggle', () => {
 
         // Switching back to untoggled state
 
-        expect(sphereUntoggled).toBeDefined();
+        expect(toggleValue.checked).toBeFalsy();
     });
 
     test('disabled toggle is not switchable', () => {
-        const dom = render(<TestComponent isDisabled />);
+        render(<TestComponent isDisabled />);
 
-        const toggleButton = dom.container.querySelector(
-            '[class="Toggle--container Toggle--container-isDisabled"]'
-        ) as HTMLElement;
-        const sphereUntoggled = dom.container.querySelector('[class=Toggle--sphere-untoggled]') as HTMLElement;
+        const toggleButton = screen.getByRole('button');
+        const toggleValue = screen.getByRole('switch') as HTMLInputElement;
 
-        expect(toggleButton).toBeDefined();
-        expect(sphereUntoggled).toBeDefined();
+        expect(toggleButton).toBeInTheDocument();
+        expect(toggleValue.checked).toBeFalsy();
 
-        // Trying to switch disabled toggle
+        // Trying to switch to toggled state
 
         act(() => {
             fireEvent.click(toggleButton);
@@ -54,6 +52,6 @@ describe('Toggle', () => {
 
         // Still the same value
 
-        expect(sphereUntoggled).toBeDefined();
+        expect(toggleValue.checked).toBeFalsy();
     });
 });

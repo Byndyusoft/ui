@@ -20,6 +20,10 @@
     outline: none;
 }
 
+.Toggle--checkboxInput {
+    display: none;
+}
+
 .Toggle--container:not(.Toggle--container-isDisabled) {
     cursor: pointer;
 }
