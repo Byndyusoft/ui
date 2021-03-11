@@ -28,7 +28,15 @@ const Radio: FC<IRadioProps> = ({
             }
         }}
     >
-        <input name={name} type="radio" className="Radio--input" checked={isChecked} />
+        <input
+            name={name}
+            type="radio"
+            className="Radio--input"
+            checked={isChecked}
+            onChange={() => {
+                onChange(!isChecked);
+            }}
+        />
         <div
             className={cn(
                 'Radio--sphere',
