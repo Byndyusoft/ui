@@ -14,7 +14,8 @@ export const RadioStory: Story = () => {
                     Почта России
                 </Radio>
             </div>
-            <div>
+            {/* eslint-disable-next-line react/forbid-dom-props */}
+            <div style={{ marginTop: 10 }}>
                 <div>Disabled:</div>
                 <Radio name="Unclickable" isChecked={isChecked} onChange={setChecked} isDisabled>
                     Unclickable
