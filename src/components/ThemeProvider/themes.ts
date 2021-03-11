@@ -7,7 +7,11 @@ const themes: ITheme = {
     dark: undefined
 };
 
-themes.default = require('../../themes/default/index.css');
-themes.dark = require('../../themes/dark/index.css');
+themes.default = () => {
+    require('../../themes/default/index.css');
+};
+themes.dark = () => {
+    require('../../themes/dark/index.css');
+};
 
 export default themes;
