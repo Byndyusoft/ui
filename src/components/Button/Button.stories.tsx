@@ -2,7 +2,6 @@ import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import Button from './Button';
 import { Variant, Size } from './constants';
-import './Button.css';
 
 export const PrimaryStory: Story = () => (
     <table>
