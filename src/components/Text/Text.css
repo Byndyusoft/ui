@@ -2,4 +2,41 @@
     font-size: 1rem;
     line-height: 1.5rem;
     margin: 0;
+    font-family: 'IBM Plex Sans Regular', sans-serif;
+    white-space: pre-wrap;
+}
+
+.Text--title {
+    font-size: 6rem;
+    line-height: 6rem;
+    font-weight: 700;
+}
+
+.Text--h1 {
+    font-size: 2.875rem;
+    line-height: 3rem;
+    font-weight: 700;
+}
+
+.Text--h2 {
+    font-size: 1.5rem;
+    line-height: 1.75rem;
+    font-weight: 700;
+}
+
+.Text--h3 {
+    font-size: 1.125rem;
+    line-height: 1.5rem;
+    font-weight: 700;
+}
+
+.Text--caps {
+    font-size: 0.75rem;
+    line-height: 1.5rem;
+    text-transform: uppercase;
+}
+
+.Text--caption {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
 }
