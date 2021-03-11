@@ -4,6 +4,7 @@ import './Radio.css';
 
 interface IRadioProps {
     name: string;
+    className?: string;
     isChecked: boolean;
     onChange: (value: boolean) => void;
     isDisabled?: boolean;
@@ -13,6 +14,7 @@ interface IRadioProps {
 // ToDo: Add indeterminate state
 const Radio: FC<IRadioProps> = ({
     name,
+    className,
     isChecked,
     onChange,
     isDisabled,
@@ -20,7 +22,7 @@ const Radio: FC<IRadioProps> = ({
     children
 }) => (
     <button
-        className={cn('Radio', isDisabled && 'Radio--container-isDisabled')}
+        className={cn(className, 'Radio', isDisabled && 'Radio--container-isDisabled')}
         type="button"
         onClick={() => {
             if (!isDisabled) {
