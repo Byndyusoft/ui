@@ -1,40 +1,20 @@
-/* eslint-disable */
-
-import path from 'path';
-import fs from 'fs-extra';
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import del from 'rollup-plugin-delete';
-import styles from 'rollup-plugin-styles';
+import peerDependencies from 'rollup-plugin-peer-deps-external';
 
 export default [
     {
-        input: ['src/index.tsx'],
+        input: ['src/index.ts'],
         output: {
             exports: 'named',
-            format: 'cjs',
+            format: 'esm',
             dir: 'lib',
             preserveModules: true,
-            preserveModulesRoot: 'src'
+            preserveModulesRoot: 'src',
+            sourcemap: true
         },
-        plugins: [
-            del({ targets: 'lib/*' }),
-            styles({
-                mode: 'extract',
-                onExtract: data => {
-                    /* TODO захендлить стили из shared. Пока они клеятся только в lib/index.css */
-                    if (!data.name.includes('/index.css')) {
-                        fs.outputFile(path.resolve(__dirname, 'lib', data.name), data.css, err => {
-                            if (err) {
-                                console.error('Error with bundling css', err);
-                            }
-                        });
-                    }
-                    return false;
-                }
-            }),
-            typescript({
-                exclude: ['**/*.stories.tsx']
-            })
-        ]
+        plugins: [del({ targets: 'lib/*', verbose: true }), peerDependencies(), resolve(), commonjs(), typescript()]
     }
 ];
