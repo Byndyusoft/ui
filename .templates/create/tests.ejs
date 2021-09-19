@@ -1,0 +1,14 @@
+---
+to: "<%= hasTests ? `src/components/${name}/${name}.tests.tsx` : null %>"
+---
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import <%= name %> from './<%= name %>';
+
+describe('components/<%= name %>', () => {
+    test('renders correctly', () => {
+        render(<<%= name %>>Test</<%= name %>>);
+
+        expect(screen.getByText('Test')).toBeInTheDocument();
+    });
+});
