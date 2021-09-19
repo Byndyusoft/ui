@@ -1,83 +1,73 @@
 {
-    "version": "0.1.11",
-    "license": "MIT",
-    "main": "dist/index.js",
-    "typings": "dist/index.d.ts",
-    "files": [
-        "dist",
-        "src"
-    ],
-    "engines": {
-        "node": ">=10"
-    },
-    "scripts": {
-        "start": "yarn storybook",
-        "build": "rollup -c",
-        "test": "jest",
-        "test:watch": "jest --watchAll",
-        "eslint:summary": "eslint src -f summary",
-        "eslint": "eslint src",
-        "stylelint": "stylelint src/**/*.css",
-        "lint": "yarn eslint && yarn stylelint",
-        "lint-fix": "yarn eslint --fix && yarn stylelint --fix",
-        "storybook": "start-storybook -p 6006",
-        "build-storybook": "build-storybook"
-    },
-    "peerDependencies": {
-        "react": ">=16"
-    },
-    "prettier": {
-        "arrowParens": "avoid",
-        "singleQuote": true,
-        "tabWidth": 4,
-        "trailingComma": "none",
-        "printWidth": 120
-    },
-    "name": "@byndyusoft/ui",
-    "author": "Byndyusoft",
-    "url": "https://byndyusoft.com/",
-    "module": "lib/index.js",
-    "devDependencies": {
-        "@babel/core": "^7.12.9",
-        "@byndyusoft/eslint-config": "^0.3.0",
-        "@byndyusoft/stylelint-config": "^0.3.0",
-        "@rollup/plugin-commonjs": "^17.0.0",
-        "@rollup/plugin-multi-entry": "^4.0.0",
-        "@rollup/plugin-node-resolve": "^11.0.1",
-        "@rollup/plugin-typescript": "^8.1.0",
-        "@storybook/addon-essentials": "^6.1.6",
-        "@storybook/addon-info": "^5.3.21",
-        "@storybook/addon-links": "^6.1.6",
-        "@storybook/addons": "^6.1.6",
-        "@storybook/react": "^6.1.6",
-        "@testing-library/jest-dom": "^5.11.9",
-        "@testing-library/react": "^11.2.3",
-        "@testing-library/react-hooks": "^5.0.0",
-        "@testing-library/user-event": "^12.6.0",
-        "@types/jest": "^26.0.20",
-        "@types/react": "^17.0.0",
-        "@types/react-dom": "^17.0.0",
-        "babel-loader": "^8.2.1",
-        "eslint": "^7.17.0",
-        "eslint-formatter-summary": "^1.0.5",
-        "fs-extra": "^9.0.1",
-        "jest": "^26.6.3",
-        "postcss": "^8.2.4",
-        "react": "^17.0.1",
-        "react-dom": "^17.0.1",
-        "react-is": "^17.0.1",
-        "rimraf": "^3.0.2",
-        "rollup": "^2.36.1",
-        "rollup-plugin-copy": "^3.3.0",
-        "rollup-plugin-delete": "^2.0.0",
-        "rollup-plugin-styles": "^3.12.1",
-        "stylelint": "^13.8.0",
-        "ts-jest": "^26.4.4",
-        "tslib": "^2.0.3",
-        "typescript": "^4.1.2"
-    },
-    "dependencies": {
-        "@types/classnames": "^2.2.11",
-        "classnames": "^2.2.6"
-    }
+  "name": "@byndyusoft/ui",
+  "version": "0.1.0",
+  "description": "Byndyusoft React UI Library",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "rollup -c",
+    "build:storybook": "build-storybook",
+    "lint": "npm run lint:styles && npm run lint:scripts",
+    "lint:scripts": "eslint src",
+    "lint:styles": "stylelint src/**/*.css",
+    "prettier:check": "prettier --check \"src/**/*.{ts, tsx, css}\"",
+    "prettier:write": "prettier --write \"src/**/*.{ts, tsx, css}\"",
+    "start": "start-storybook -p 6006",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watchAll"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Byndyusoft/ui.git"
+  },
+  "keywords": [
+    "byndyusoft",
+    "react",
+    "components",
+    "hooks"
+  ],
+  "author": "Byndyusoft Frontend Stream <frontend@byndyusoft.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Byndyusoft/ui/issues"
+  },
+  "homepage": "https://github.com/Byndyusoft/ui#readme",
+  "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@byndyusoft/eslint-config": "^1.1.0",
+    "@byndyusoft/stylelint-config": "^0.3.0",
+    "@rollup/plugin-commonjs": "^20.0.0",
+    "@rollup/plugin-node-resolve": "^13.0.4",
+    "@rollup/plugin-typescript": "^8.2.5",
+    "@storybook/addon-a11y": "^6.3.8",
+    "@storybook/addon-actions": "^6.3.8",
+    "@storybook/addon-essentials": "^6.3.8",
+    "@storybook/addon-links": "^6.3.8",
+    "@storybook/react": "^6.3.8",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.1.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/classnames": "^2.3.1",
+    "@types/jest": "^27.0.1",
+    "@types/react": "^17.0.21",
+    "babel-loader": "^8.2.2",
+    "classnames": "^2.3.1",
+    "eslint": "^7.32.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^27.2.0",
+    "prettier": "^2.4.1",
+    "react": "^17.0.2",
+    "rollup": "^2.56.3",
+    "rollup-plugin-delete": "^2.0.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "stylelint": "^13.13.1",
+    "ts-jest": "^27.0.5",
+    "typescript": "^4.4.3"
+  },
+  "peerDependencies": {
+    "classnames": ">=2.3",
+    "react": ">=17",
+    "typescript": ">=4.4"
+  },
+  "dependencies": {}
 }
