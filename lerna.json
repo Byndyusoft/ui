@@ -1,0 +1,10 @@
+{
+  "packages": [
+    "components/*",
+    "hooks/*",
+    "services/*"
+  ],
+  "useWorkspaces": true,
+  "version": "independent",
+  "npmClient": "npm"
+}
