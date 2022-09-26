@@ -10,18 +10,15 @@
   "description": "Byndyusoft React UI Library",
   "main": "lib/index.js",
   "scripts": {
-    "build": "rollup -c",
+    "build": "lerna run build",
+    "clean": "lerna run clean",
+    "lint": "lerna run lint",
+    "test": "lerna run test",
+    "postinstall": "(husky install) || true",
     "build:storybook": "build-storybook",
-    "lint": "npm run lint:styles && npm run lint:scripts",
-    "lint:scripts": "eslint src",
-    "lint:styles": "stylelint src/**/*.css",
     "prettier:check": "prettier --check \"src/**/*.{ts, tsx, css}\"",
     "prettier:write": "prettier --write \"src/**/*.{ts, tsx, css}\"",
-    "start": "start-storybook -p 6006",
-    "test": "jest",
-    "test:coverage": "jest --coverage",
-    "test:watch": "jest --watchAll",
-    "prepare": "husky install"
+    "start": "start-storybook -p 6009"
   },
   "repository": {
     "type": "git",
