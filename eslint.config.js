@@ -3,6 +3,9 @@ module.exports = {
     parserOptions: {
         project: 'tsconfig.json'
     },
+    env: {
+        node: true
+    },
     overrides: [
         {
             files: ['src/**/*.tests.@(ts|tsx|js|jsx)'],
