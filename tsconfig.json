@@ -4,7 +4,11 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "noFallthroughCasesInSwitch": true,
     "module": "esnext",
     "moduleResolution": "node",
@@ -12,6 +16,13 @@
     "strict": true,
     "target": "es2018"
   },
-  "exclude": ["node_modules"],
-  "include": ["types.d.ts", "packages"]
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "types.d.ts",
+    "components",
+    "hooks",
+    "services"
+  ]
 }
