@@ -21,6 +21,7 @@
   ],
   "include": [
     "types.d.ts",
+    "packages",
     "components",
     "hooks",
     "services"
