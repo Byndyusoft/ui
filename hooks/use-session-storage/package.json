@@ -1,16 +1,16 @@
 {
-  "name": "@byndyusoft-ui/use-local-storage",
+  "name": "@byndyusoft-ui/use-session-storage",
   "version": "0.1.0",
-  "description": "Byndyusoft UI Local Storage React Hook",
+  "description": "Byndyusoft UI Session Storage React Hook",
   "keywords": [
     "byndyusoft",
     "byndyusoft-ui",
     "react",
     "hook",
-    "local-storage"
+    "session-storage"
   ],
   "author": "Eugene Abrosimov <sadcitizen@yandex.ru>",
-  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-local-storage#readme",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-session-storage#readme",
   "license": "ISC",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -31,6 +31,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@byndyusoft-ui/local-storage": "*"
+    "@byndyusoft-ui/session-storage": "*"
   }
 }
