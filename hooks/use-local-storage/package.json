@@ -1,0 +1,35 @@
+{
+  "name": "@byndyusoft-ui/use-local-storage",
+  "version": "0.1.0",
+  "description": "Byndyusoft UI Local Storage React Hook",
+  "keywords": [
+    "byndyusoft",
+    "byndyusoft-ui",
+    "react",
+    "hook"
+  ],
+  "author": "Eugene Abrosimov <sadcitizen@yandex.ru>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-local-storage#readme",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Byndyusoft/ui.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf dist",
+    "lint": "eslint src --config ../../eslint.config.js",
+    "test": "jest --config ../../jest.config.js"
+  },
+  "bugs": {
+    "url": "https://github.com/Byndyusoft/ui/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@byndyusoft-ui/local-storage": "*"
+  }
+}
