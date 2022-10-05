@@ -14,7 +14,7 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "strict": true,
-    "target": "es2018"
+    "target": "esnext"
   },
   "exclude": [
     "node_modules"
