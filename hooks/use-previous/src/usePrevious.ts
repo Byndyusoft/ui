@@ -1,11 +1,7 @@
-import { useEffect, useRef } from 'react';
+import useLatestRef from '@byndyusoft-ui/use-latest-ref';
 
 export default function usePrevious<T>(value: T): T | undefined {
-    const ref = useRef<T>();
-
-    useEffect(() => {
-        ref.current = value;
-    }, [value]);
+    const ref = useLatestRef(value);
 
     return ref.current;
 }
