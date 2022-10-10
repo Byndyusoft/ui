@@ -1,12 +1,11 @@
 module.exports = {
-    roots: ['<rootDir>/hooks'],
+    roots: ['<rootDir>/components', '<rootDir>/hooks', '<rootDir>/services'],
     setupFilesAfterEnv: ['<rootDir>/.jest/setup.ts'],
     transform: {
         '^.+\\.tsx?$': 'ts-jest'
     },
     testMatch: ['**/*.tests.(ts|tsx)'],
     testEnvironment: 'jsdom',
-    moduleDirectories: ['node_modules'],
     moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
     moduleNameMapper: {
         '\\.css$': 'identity-obj-proxy',
