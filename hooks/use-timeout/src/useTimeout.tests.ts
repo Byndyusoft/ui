@@ -32,4 +32,20 @@ describe('hooks/useTimeout', () => {
 
         expect(callback).not.toBeCalled();
     });
+
+    test('clears timeout', () => {
+        const callback = jest.fn();
+
+        const { result } = setup(callback, 100);
+        expect(clearTimeout).toHaveBeenCalledTimes(0);
+
+        expect(callback).not.toBeCalled();
+
+        result.current();
+
+        jest.advanceTimersByTime(150);
+
+        expect(callback).toHaveBeenCalledTimes(0);
+        expect(clearTimeout).toHaveBeenCalledTimes(1);
+    });
 });

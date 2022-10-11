@@ -13,5 +13,6 @@ module.exports = {
             '<rootDir>/.jest/file.ts'
     },
     coverageDirectory: '<rootDir>/.coverage',
-    coveragePathIgnorePatterns: ['index.ts']
+    coveragePathIgnorePatterns: ['index.ts'],
+    clearMocks: true
 };
