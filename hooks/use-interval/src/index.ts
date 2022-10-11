@@ -1,4 +1,3 @@
-import useInterval, { IUseInterval } from './useInterval';
+import useInterval from './useInterval';
 
-export { IUseInterval };
 export default useInterval;
