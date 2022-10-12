@@ -18,7 +18,7 @@
     "build:storybook": "build-storybook",
     "prettier:check": "prettier --check \"src/**/*.{ts, tsx, css}\"",
     "prettier:write": "prettier --write \"src/**/*.{ts, tsx, css}\"",
-    "start": "start-storybook -p 6009"
+    "start": "start-storybook -p 6009 --no-manager-cache"
   },
   "repository": {
     "type": "git",
