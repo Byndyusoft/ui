@@ -2,7 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 import { Story } from '@storybook/react';
 import Portal from './Portal';
-import './Portal.stories.scss';
+import './Portal.stories.css';
 
 const Template: Story = () => (
     <div className="portalStory">
