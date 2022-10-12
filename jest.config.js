@@ -6,7 +6,6 @@ module.exports = {
     },
     testMatch: ['**/*.tests.(ts|tsx)'],
     testEnvironment: 'jsdom',
-    moduleDirectories: ['node_modules'],
     moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
     moduleNameMapper: {
         '\\.css$': 'identity-obj-proxy',
@@ -14,5 +13,6 @@ module.exports = {
             '<rootDir>/.jest/file.ts'
     },
     coverageDirectory: '<rootDir>/.coverage',
-    coveragePathIgnorePatterns: ['index.ts']
+    coveragePathIgnorePatterns: ['index.ts'],
+    clearMocks: true
 };
