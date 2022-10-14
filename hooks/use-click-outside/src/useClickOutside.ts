@@ -1,9 +1,17 @@
-import { useRef, useEffect, MutableRefObject } from 'react';
+import { useCallback, MutableRefObject } from 'react';
+// import useEventListener from '@byndyusoft-ui/use-event-listener';
+import useEventListener from '../../use-event-listener/src';
 
-export default function useClickOutside<T>(refs: Array<MutableRefObject<T>>, handler: () => void): void {
-    const ref = useRef(refs);
+export default function useClickOutside<T extends HTMLElement = HTMLElement>(
+    refs: Array<MutableRefObject<T>>,
+    handler: () => void
+): void {
+    const internalHandler = useCallback((e: Event): void => {
+        const refWithEvent = refs.find(ref => ref.current.contains(e.target as Node));
+        if (!refWithEvent) {
+            handler();
+        }
+    }, [refs, handler]);
 
-    useEffect(() => {
-        ref.current = refs;
-    }, [refs]);
+    useEventListener('click', internalHandler);
 }

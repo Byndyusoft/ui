@@ -1123,6 +1123,10 @@
   "resolved" "file:hooks/use-click-outside"
   "version" "0.1.0"
 
+"@byndyusoft-ui/use-event-listener@file:C:\\Users\\Виктор\\WebstormProjects\\ui\\hooks\\use-event-listener":
+  "resolved" "file:hooks/use-event-listener"
+  "version" "0.1.0"
+
 "@byndyusoft-ui/use-interval@file:C:\\Users\\Виктор\\WebstormProjects\\ui\\hooks\\use-interval":
   "resolved" "file:hooks/use-interval"
   "version" "0.1.0"
@@ -1136,8 +1140,6 @@
 "@byndyusoft-ui/use-previous@file:C:\\Users\\Виктор\\WebstormProjects\\ui\\hooks\\use-previous":
   "resolved" "file:hooks/use-previous"
   "version" "0.1.0"
-  dependencies:
-    "@byndyusoft-ui/use-latest-ref" "*"
 
 "@byndyusoft-ui/use-timeout@file:C:\\Users\\Виктор\\WebstormProjects\\ui\\hooks\\use-timeout":
   "resolved" "file:hooks/use-timeout"
