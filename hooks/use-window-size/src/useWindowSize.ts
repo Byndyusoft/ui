@@ -6,7 +6,7 @@ export interface IUseWindowSize {
 }
 
 export default function useWindowSize(): IUseWindowSize {
-    const [windowSize, setWindowSize] = useState<{ width: number; height: number }>({
+    const [windowSize, setWindowSize] = useState<IUseWindowSize>({
         width: window.innerWidth,
         height: window.innerHeight
     });
