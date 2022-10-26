@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 
 export interface IUseWindowSize {
     width: number;
@@ -6,12 +6,15 @@ export interface IUseWindowSize {
 }
 
 export default function useWindowSize(): IUseWindowSize {
-    const [width, setWidth] = React.useState(window.innerWidth);
-    const [height, setHeight] = React.useState(window.innerHeight);
-
+    const [windowSize, setWindowSize] = useState<{ width: number; height: number }>({
+        width: window.innerWidth,
+        height: window.innerHeight
+    });
     const updateWidthAndHeight = useCallback(() => {
-        setWidth(window.innerWidth);
-        setHeight(window.innerHeight);
+        setWindowSize({
+            width: window.innerWidth,
+            height: window.innerHeight
+        });
     }, []);
 
     React.useEffect(() => {
@@ -19,8 +22,5 @@ export default function useWindowSize(): IUseWindowSize {
         return () => window.removeEventListener('resize', updateWidthAndHeight);
     }, [updateWidthAndHeight]);
 
-    return {
-        width,
-        height
-    };
+    return windowSize;
 }
