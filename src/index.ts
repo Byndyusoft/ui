@@ -5,6 +5,7 @@ export { default as useInterval } from './hooks/useInterval';
 export { default as useLatestRef } from './hooks/useLatestRef';
 export { default as useTimeout } from './hooks/useTimeout';
 export { default as useDebounce } from './hooks/useDebounce';
+export { default as useIsomorphicLayoutEffect} from './hooks/useIsomorphicLayoutEffect';
 
 export { default as Button } from './components/Button';
 export { default as Content } from './components/Content';
