@@ -1,3 +1,3 @@
-import useEventListener from "./useEventListener";
+import useEventListener from './useEventListener';
 
 export default useEventListener;
