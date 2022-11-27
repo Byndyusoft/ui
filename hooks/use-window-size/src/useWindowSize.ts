@@ -1,4 +1,5 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
+import useEventListener from '@byndyusoft-ui/use-event-listener';
 
 export interface IUseWindowSize {
     width: number;
@@ -10,17 +11,17 @@ export default function useWindowSize(): IUseWindowSize {
         width: window.innerWidth,
         height: window.innerHeight
     });
-    const updateWidthAndHeight = useCallback(() => {
-        setWindowSize({
-            width: window.innerWidth,
-            height: window.innerHeight
-        });
-    }, []);
 
-    React.useEffect(() => {
-        window.addEventListener('resize', updateWidthAndHeight);
-        return () => window.removeEventListener('resize', updateWidthAndHeight);
-    }, [updateWidthAndHeight]);
+    const listener = useCallback(
+        () =>
+            setWindowSize({
+                width: window.innerWidth,
+                height: window.innerHeight
+            }),
+        []
+    );
+
+    useEventListener('resize', listener);
 
     return windowSize;
 }

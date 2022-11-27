@@ -1,15 +1,16 @@
 {
-  "name": "@byndyusoft-ui/use-isomorphic-layout-effect",
+  "name": "@byndyusoft-ui/use-event-listener",
   "version": "0.1.0",
   "description": "Byndyusoft UI React Hook",
   "keywords": [
     "byndyusoft",
     "byndyusoft-ui",
     "react",
-    "hook"
+    "hook",
+    "event-listener"
   ],
-  "author": "Eugene Abrosimov <sadcitizen@yandex.ru>",
-  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-isomorphic-layout-effect#readme",
+  "author": "Viktor Smorodin <smorodin@byndyusoft.com>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-event-listener#readme",
   "license": "ISC",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -28,5 +29,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@byndyusoft-ui/use-latest-ref": "*"
   }
 }
