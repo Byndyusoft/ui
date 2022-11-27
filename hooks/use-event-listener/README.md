@@ -4,6 +4,8 @@
 
 ### Installation
 
-```
+```sh
 npm i @byndyusoft-ui/use-event-listener
+# or
+yarn add @byndyusoft-ui/use-event-listener
 ```
