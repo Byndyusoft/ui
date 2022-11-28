@@ -11,7 +11,7 @@
   ],
   "author": "Dmitrii Maletskii <mltsk94@gmail.com>",
   "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-previous#readme",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {

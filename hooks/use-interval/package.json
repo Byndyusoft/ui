@@ -11,7 +11,7 @@
   ],
   "author": "Eugene Abrosimov <sadcitizen@yandex.ru>",
   "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-interval#readme",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
