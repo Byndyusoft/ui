@@ -1,44 +1,51 @@
 import { useEffect } from 'react';
 import useLatestRef from '@byndyusoft-ui/use-latest-ref';
 
-export function useEventListener<K extends keyof HTMLElementEventMap, T extends HTMLElement = HTMLDivElement>(
-    eventName: K,
-    handler: (this: T, event: HTMLElementEventMap[K]) => void,
-    target: T,
+function useEventListener<KD extends keyof DocumentEventMap>(
+    eventName: KD,
+    handler: (this: Document, event: DocumentEventMap[KD]) => void,
+    target?: Document | null | undefined,
     options?: boolean | AddEventListenerOptions
 ): void;
 
-export function useEventListener<K extends keyof DocumentEventMap>(
-    eventName: K,
-    handler: (this: Document, event: DocumentEventMap[K]) => void,
-    target: Document,
+function useEventListener<KH extends keyof HTMLElementEventMap, T extends HTMLElement = HTMLDivElement>(
+    eventName: KH,
+    handler: (this: T, event: HTMLElementEventMap[KH]) => void,
+    target?: T | null | undefined,
     options?: boolean | AddEventListenerOptions
 ): void;
 
-export function useEventListener<K extends keyof WindowEventMap>(
-    eventName: K,
-    handler: (this: Window, event: WindowEventMap[K]) => void,
-    target: Window,
+function useEventListener<KW extends keyof WindowEventMap>(
+    eventName: KW,
+    handler: (this: Window, event: WindowEventMap[KW]) => void,
+    target?: Window | null | undefined,
     options?: boolean | AddEventListenerOptions
 ): void;
 
-export default function useEventListener<
-    KH extends keyof HTMLElementEventMap,
+function useEventListener(
+    eventName: string,
+    handler: (event: Event) => void,
+    target?: Document | HTMLElement | Window | null | undefined,
+    options?: boolean | AddEventListenerOptions
+): void;
+
+function useEventListener<
     KD extends keyof DocumentEventMap,
+    KH extends keyof HTMLElementEventMap,
     KW extends keyof WindowEventMap
 >(
     eventName: KD | KH | KW | string,
     handler: (
         this: typeof target,
-        event: HTMLElementEventMap[KH] | DocumentEventMap[KD] | WindowEventMap[KW] | Event
+        event: DocumentEventMap[KD] | HTMLElementEventMap[KH] | WindowEventMap[KW] | Event
     ) => void,
-    target: Window | Document | HTMLElement = window,
+    target?: Window | Document | HTMLElement | null | undefined,
     options?: boolean | AddEventListenerOptions
 ): void {
     const handlerRef = useLatestRef(handler);
 
     useEffect(() => {
-        if (!target.addEventListener) {
+        if (!target || !target.addEventListener) {
             return;
         }
 
@@ -51,3 +58,5 @@ export default function useEventListener<
         };
     }, [eventName, target, options]);
 }
+
+export default useEventListener;

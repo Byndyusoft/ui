@@ -5,9 +5,9 @@ import useEventListener from './useEventListener';
 const MouseEventTemplate: Story = () => {
     const [coords, setCoords] = useState({ x: 0, y: 0 });
 
-    const handle = useCallback(({ clientX, clientY }) => setCoords({ x: clientX, y: clientY }), [setCoords]);
+    const handler = useCallback((event: MouseEvent) => setCoords({ x: event.clientX, y: event.clientY }), [setCoords]);
 
-    useEventListener('mousemove', handle);
+    useEventListener('mousemove', handler);
 
     return (
         <div>
@@ -21,9 +21,9 @@ export const MouseEvent = MouseEventTemplate.bind({});
 const KeyboardEventTemplate: Story = () => {
     const [key, setKey] = useState('none');
 
-    const handle = useCallback(event => setKey(event.key), [setKey]);
+    const handler = useCallback((event: KeyboardEvent) => setKey(event.key), [setKey]);
 
-    useEventListener('keydown', handle);
+    useEventListener('keydown', handler);
 
     return <div>Last key pressed: {key}</div>;
 };
@@ -33,9 +33,9 @@ export const KeyboardEvent = KeyboardEventTemplate.bind({});
 const HTMLElementTemplate: Story = () => {
     const ref = useRef(null);
 
-    const handle = useCallback(() => alert('Button clicked!'), []);
+    const handler = useCallback(() => alert('Button clicked!'), []);
 
-    useEventListener('click', handle);
+    useEventListener('click', handler);
 
     return (
         <button type="button" ref={ref}>
