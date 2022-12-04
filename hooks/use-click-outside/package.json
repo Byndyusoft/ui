@@ -1,0 +1,34 @@
+{
+  "name": "@byndyusoft-ui/use-click-outside",
+  "version": "0.1.0",
+  "description": "Byndyusoft UI React Hook",
+  "keywords": [
+    "byndyusoft",
+    "byndyusoft-ui",
+    "react",
+    "hook",
+    "click",
+    "click-outside"
+  ],
+  "author": "Viktor Smorodin <smorodin@byndyusoft.com>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-click-outside#readme",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Byndyusoft/ui.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf dist",
+    "lint": "eslint src --config ../../eslint.config.js",
+    "test": "jest --config ../../jest.config.js"
+  },
+  "bugs": {
+    "url": "https://github.com/Byndyusoft/ui/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

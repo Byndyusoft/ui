@@ -10,9 +10,9 @@ interface ISetupProps {
 const Setup = ({ onClick }: ISetupProps): JSX.Element => {
     const ref = useRef(null);
 
-    const handle = useCallback(() => onClick(), [onClick]);
+    const handle = useCallback(onClick, [onClick]);
 
-    useEventListener('click', handle);
+    useEventListener('click', handle, ref.current);
 
     return (
         <button type="button" ref={ref}>
@@ -26,6 +26,8 @@ describe('hooks/useEventListener', () => {
         const onClick = jest.fn();
 
         render(<Setup onClick={onClick} />);
+
+        // console.log(screen.getByRole('button', { name: 'Click on me!' }));
 
         userEvent.click(screen.getByRole('button', { name: 'Click on me!' }));
 
