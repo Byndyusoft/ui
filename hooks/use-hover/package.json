@@ -7,7 +7,7 @@
         "byndyusoft-ui",
         "react",
         "hook",
-        "previous"
+        "hover"
     ],
     "author": "Maksim Tetslav <teclav@byndyusoft.com>",
     "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-hover#readme",
