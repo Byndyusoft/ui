@@ -29,5 +29,8 @@
     },
     "publishConfig": {
         "access": "public"
+    },
+    "dependencies": {
+        "@byndyusoft-ui/use-event-listener": "^0.1.0"
     }
 }

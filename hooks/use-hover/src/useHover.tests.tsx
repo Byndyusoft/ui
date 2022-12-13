@@ -1,27 +1,30 @@
-import React from 'react';
+import React, { RefObject, useRef } from 'react';
 import { act } from 'react-dom/test-utils';
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import useHover from './useHover';
 
-const TestElement = () => {
-    const { isHovered, bind } = useHover();
+function TestElement() {
+    const ref = useRef(null);
+    const isHovered = useHover(ref);
 
     return (
-        <div data-testid="trigger" {...bind}>
+        <div data-testid="trigger" ref={ref}>
             {isHovered ? <div>Entered</div> : <div>Leaved</div>}
         </div>
     );
-};
+}
 
-const setupHook = () => renderHook(() => useHover());
+function setupHook<T extends HTMLElement = HTMLElement>(ref: RefObject<T>) {
+    return renderHook(() => useHover(ref));
+}
 
 const setupTest = () => {
+    const ref = useRef(null);
+
     const {
-        result: {
-            current: { isHovered }
-        }
-    } = setupHook();
+        result: { current: isHovered }
+    } = setupHook(ref);
 
     const { container } = render(<TestElement />);
     return { container, isHovered };

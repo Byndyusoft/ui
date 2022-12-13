@@ -1,21 +1,18 @@
-import React, { useState } from 'react';
+import { RefObject, useState } from 'react';
+import useEventListener from '@byndyusoft-ui/use-event-listener';
 
 export interface IUseHoverResult {
     isHovered: boolean;
-    bind: {
-        onMouseEnter: () => void;
-        onMouseLeave: () => void;
-    };
 }
 
-export default function useHover(): IUseHoverResult {
-    const [isHovered, setIsHovered] = useState(false);
+export default function useHover<T extends HTMLElement = HTMLElement>(elementRef: RefObject<T>): boolean {
+    const [isHovered, setIsHovered] = useState<boolean>(false);
 
-    return {
-        isHovered,
-        bind: {
-            onMouseEnter: () => setIsHovered(true),
-            onMouseLeave: () => setIsHovered(false)
-        }
-    };
+    const mouseEnterHandler = () => setIsHovered(true);
+    const mouseLeaveHandler = () => setIsHovered(false);
+
+    useEventListener('mouseenter', mouseEnterHandler, elementRef);
+    useEventListener('mouseleave', mouseLeaveHandler, elementRef);
+
+    return isHovered;
 }
