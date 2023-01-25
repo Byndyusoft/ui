@@ -1,6 +1,6 @@
 import useClickOutside from './useClickOutside';
 import React, { useCallback, useRef } from 'react';
-import {render, screen} from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 const Setup = (props: { onClick: () => void }): JSX.Element => {
