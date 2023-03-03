@@ -22,12 +22,12 @@ const Setup = ({ onClick }: ISetupProps): JSX.Element => {
 };
 
 describe('hooks/useEventListener', () => {
-    test('adds event listener', () => {
+    test('adds event listener', async () => {
         const onClick = jest.fn();
 
         render(<Setup onClick={onClick} />);
 
-        userEvent.click(screen.getByRole('button', { name: 'Click on me!' }));
+        await userEvent.click(screen.getByRole('button', { name: 'Click on me!' }));
 
         expect(onClick).toBeCalledTimes(1);
     });
