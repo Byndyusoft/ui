@@ -1,34 +1,69 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import useEventListener from './useEventListener';
 
 interface ISetupProps {
-    onClick: () => void;
+    isDocumentListener?: boolean;
 }
 
-const Setup = ({ onClick }: ISetupProps): JSX.Element => {
-    const ref = useRef(null);
+const handler = jest.fn();
 
-    const handle = useCallback(() => onClick(), [onClick]);
+afterEach(() => {
+    jest.clearAllMocks();
+});
 
-    useEventListener('click', handle);
+const Setup = ({ isDocumentListener }: ISetupProps): JSX.Element => {
+    const elementRef = useRef(null);
+    const documentRef = useRef(document);
+
+    const actualRef = useMemo(() => {
+        if (isDocumentListener) {
+            return documentRef;
+        }
+
+        return elementRef;
+    }, [isDocumentListener]);
+
+    useEventListener('click', handler, actualRef);
 
     return (
-        <button type="button" ref={ref}>
+        <button type="button" ref={elementRef}>
             Click on me!
         </button>
     );
 };
 
+const SetupForWindow = (): JSX.Element => {
+    useEventListener('click', handler);
+
+    return <button type="button">Click on me!</button>;
+};
+
+const getButtonElement = () => screen.getByRole('button', { name: 'Click on me!' });
+
 describe('hooks/useEventListener', () => {
-    test('adds event listener', async () => {
-        const onClick = jest.fn();
+    test('adds event listener to element ref', async () => {
+        render(<Setup />);
 
-        render(<Setup onClick={onClick} />);
+        await userEvent.click(getButtonElement());
 
-        await userEvent.click(screen.getByRole('button', { name: 'Click on me!' }));
+        expect(handler).toBeCalledTimes(1);
+    });
 
-        expect(onClick).toBeCalledTimes(1);
+    test('adds event listener to document ref', async () => {
+        render(<Setup isDocumentListener />);
+
+        await userEvent.click(getButtonElement());
+
+        expect(handler).toBeCalledTimes(1);
+    });
+
+    test('adds event listener to window', async () => {
+        render(<SetupForWindow />);
+
+        await userEvent.click(getButtonElement());
+
+        expect(handler).toBeCalledTimes(1);
     });
 });

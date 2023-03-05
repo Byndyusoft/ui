@@ -4,21 +4,28 @@ import useLatestRef from '@byndyusoft-ui/use-latest-ref';
 function useEventListener<KM extends keyof MediaQueryListEventMap>(
     eventName: KM,
     handler: (event: MediaQueryListEventMap[KM]) => void,
-    element: RefObject<MediaQueryList>,
+    target: RefObject<MediaQueryList>,
+    options?: boolean | AddEventListenerOptions
+): void;
+
+function useEventListener<KD extends keyof DocumentEventMap>(
+    eventName: KD,
+    handler: (event: DocumentEventMap[KD]) => void,
+    target: RefObject<Document>,
     options?: boolean | AddEventListenerOptions
 ): void;
 
 function useEventListener<KW extends keyof WindowEventMap>(
     eventName: KW,
     handler: (event: WindowEventMap[KW]) => void,
-    element?: undefined,
+    target?: undefined,
     options?: boolean | AddEventListenerOptions
 ): void;
 
 function useEventListener<KH extends keyof HTMLElementEventMap, T extends HTMLElement = HTMLDivElement>(
     eventName: KH,
     handler: (event: HTMLElementEventMap[KH]) => void,
-    element: RefObject<T>,
+    target: RefObject<T>,
     options?: boolean | AddEventListenerOptions
 ): void;
 
@@ -30,13 +37,13 @@ function useEventListener<
 >(
     eventName: KW | KH | KM,
     handler: (event: WindowEventMap[KW] | HTMLElementEventMap[KH] | MediaQueryListEventMap[KM] | Event) => void,
-    element?: RefObject<T>,
+    target?: RefObject<T>,
     options?: boolean | AddEventListenerOptions
 ) {
     const savedHandler = useLatestRef(handler);
 
     useEffect(() => {
-        const targetElement: T | Window = element?.current ?? window;
+        const targetElement: T | Window = target?.current ?? window;
 
         if (!(targetElement && targetElement.addEventListener)) return;
 
@@ -47,7 +54,7 @@ function useEventListener<
         return () => {
             targetElement.removeEventListener(eventName, listener, options);
         };
-    }, [eventName, element, options]);
+    }, [eventName, target, options]);
 }
 
 export default useEventListener;
