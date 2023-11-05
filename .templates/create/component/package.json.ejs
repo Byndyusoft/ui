@@ -1,0 +1,35 @@
+---
+to: components/<%= h.changeCase.paramCase(name) %>/package.json
+---
+{
+  "name": "@byndyusoft-ui/<%= h.changeCase.paramCase(name) %>",
+  "version": "0.0.1",
+  "description": "Byndyusoft UI <%= name %> React Component",
+  "keywords": [
+    "byndyusoft",
+    "byndyusoft-ui",
+    "react",
+    "<%= h.changeCase.paramCase(name) %>"
+  ],
+  "author": "Byndyusoft Frontend Developer <frontend@byndyusoft.com>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/components/<%= h.changeCase.paramCase(name) %>#readme",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Byndyusoft/ui.git"
+  },
+  "scripts": {
+    "build": "rollup --config",
+    "clean": "rimraf dist",
+    "lint": "eslint src --config ../../eslint.config.js",
+    "test": "jest --config ../../jest.config.js"
+  },
+  "bugs": {
+    "url": "https://github.com/Byndyusoft/ui/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
