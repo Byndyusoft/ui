@@ -1,5 +1,5 @@
 ---
-to: "<%= hasDocs ? `components/${name}/src/${name}.stories.mdx` : null %>"
+to: "<%= hasDocs ? `components/${h.changeCase.paramCase(name)}/src/${name}.stories.mdx` : null %>"
 ---
 import {
   Meta,

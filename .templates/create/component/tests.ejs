@@ -1,5 +1,5 @@
 ---
-to: "<%= hasTests ? `components/${name}/src/${name}.tests.tsx` : null %>"
+to: "<%= hasTests ? `components/${h.changeCase.paramCase(name)}/src/${name}.tests.tsx` : null %>"
 ---
 import React from 'react';
 import { render, screen } from '@testing-library/react';

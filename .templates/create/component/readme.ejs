@@ -1,13 +1,13 @@
 ---
-to: components/<%= name%>/README.md
+to: components/<%= h.changeCase.paramCase(name) %>/README.md
 ---
 
-# `@byndyusoft-ui/use-focus`
+# `@byndyusoft-ui/<%= h.changeCase.paramCase(name) %>`
 ---
-> A React hook that uses the useRef hook internally for storing the focus value.
+> Add description
 
 ### Installation
 
 ```
-npm i @byndyusoft-ui/use-focus
+npm i @byndyusoft-ui/<%= h.changeCase.paramCase(name) %>
 ```
