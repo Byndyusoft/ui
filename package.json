@@ -4,7 +4,9 @@
   "workspaces": [
     "components/*",
     "hooks/*",
-    "services/*"
+    "packages/*",
+    "services/*",
+    "styles/*"
   ],
   "version": "0.1.0",
   "description": "Byndyusoft React UI Library",
