@@ -1,0 +1,28 @@
+{
+  "name": "@byndyusoft-ui/reset-css",
+  "version": "0.0.1",
+  "description": "Byndyusoft UI Reset CSS",
+  "keywords": [
+    "byndyusoft",
+    "byndyusoft-ui",
+    "css",
+    "reset-css"
+  ],
+  "author": "Eugene Abrosimov <abrosimov@byndyusoft.com>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/styles/reset-css#readme",
+  "license": "Apache-2.0",
+  "main": "src/index.css",
+  "files": [
+    "src"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Byndyusoft/ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Byndyusoft/ui/issues"
+  }
+}
