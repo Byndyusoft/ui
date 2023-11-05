@@ -11,10 +11,7 @@
   "author": "Eugene Abrosimov <abrosimov@byndyusoft.com>",
   "homepage": "https://github.com/Byndyusoft/ui/tree/master/styles/reset-css#readme",
   "license": "Apache-2.0",
-  "main": "src/index.css",
-  "files": [
-    "src"
-  ],
+  "main": "index.css",
   "publishConfig": {
     "access": "public"
   },
