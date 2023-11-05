@@ -1,0 +1,10 @@
+---
+to: "<%= hasTests ? `hooks/${h.changeCase.paramCase(name)}/src/${name}.tests.ts` : null %>"
+---
+import React from 'react';
+import { renderHook } from '@testing-library/react-hooks';
+import <%= name %> from './<%= name %>';
+
+describe('hooks/<%= name %>', () => {
+    test('works correctly', () => {});
+});

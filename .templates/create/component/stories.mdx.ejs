@@ -6,11 +6,11 @@ import {
   Story,
   Canvas,
   Source,
-  ArgsTable,
+  ArgsTable
 } from '@storybook/addon-docs/blocks';
 import <%= name %> from './<%= name %>';
 
-<Meta title="<%= name %>" component={<%= name %>} />
+<Meta title="components/<%= name %>" component={<%= name %>} />
 
 # <%= name %>
 
@@ -24,7 +24,7 @@ To use the component in your project you must:
 
 <Source
   language="javascript"
-  code="import { <%= name %> } from '@byndyusoft/ui';"
+  code="import { <%= name %> } from '@byndyusoft-ui/<%= h.changeCase.paramCase(name) %>>';"
 />
 
 2. Call the component and give it the desired props, for example:

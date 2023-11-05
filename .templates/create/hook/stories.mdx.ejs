@@ -1,0 +1,9 @@
+---
+to: "<%= hasDocs ? `hooks/${h.changeCase.paramCase(name)}/src/${name}.stories.mdx` : null %>"
+---
+import { Meta } from '@storybook/addon-docs/blocks';
+import Readme from '../README.md';
+
+<Meta title="hooks/<%= name %>" />
+
+<Readme />
