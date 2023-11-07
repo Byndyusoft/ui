@@ -4,7 +4,7 @@ to: hooks/<%= h.changeCase.paramCase(name) %>/package.json
 {
   "name": "@byndyusoft-ui/<%= h.changeCase.paramCase(name) %>",
   "version": "0.0.1",
-  "description": "Byndyusoft UI React Component",
+  "description": "Byndyusoft UI <%= name %> React Hook",
   "keywords": [
     "byndyusoft",
     "byndyusoft-ui",
@@ -24,7 +24,7 @@ to: hooks/<%= h.changeCase.paramCase(name) %>/package.json
     "build": "tsc",
     "clean": "rimraf dist",
     "lint": "eslint src --config ../../eslint.config.js",
-    "test": "jest --config ../../jest.config.js"
+    "test": "jest --config ../../jest.config.js --roots components/<%= h.changeCase.paramCase(name) %>/src"
   },
   "bugs": {
     "url": "https://github.com/Byndyusoft/ui/issues"
