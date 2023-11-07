@@ -1,0 +1,9 @@
+.templateContainer {
+    width: max-content;
+
+    text-align: right;
+}
+
+.inlineNumbersIndent {
+    margin-right: 1rem;
+}

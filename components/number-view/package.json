@@ -1,0 +1,33 @@
+{
+    "name": "@byndyusoft-ui/number-view",
+    "version": "0.1.0",
+    "description": "Byndyusoft UI React Component",
+    "keywords": [
+        "byndyusoft",
+        "byndyusoft-ui",
+        "react",
+        "component",
+        "number"
+    ],
+    "author": "Kartashev Stepan <kartashev@byndyusoft.com>",
+    "homepage": "https://github.com/Byndyusoft/ui/tree/feature/NumberView#readme",
+    "license": "Apache-2.0",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Byndyusoft/ui.git"
+    },
+    "scripts": {
+        "build": "tsc -p tsconfig.build.json",
+        "clean": "rimraf dist",
+        "lint": "eslint src --config ../../eslint.config.js",
+        "test": "jest --config ../../jest.config.js --roots components/number-view/src"
+    },
+    "bugs": {
+        "url": "https://github.com/Byndyusoft/ui/issues"
+    },
+    "publishConfig": {
+        "access": "public"
+    }
+}

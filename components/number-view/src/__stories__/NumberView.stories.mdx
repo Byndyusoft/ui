@@ -1,0 +1,51 @@
+import { Meta, Story, Canvas, Source, ArgsTable } from '@storybook/addon-docs';
+import Readme from '../../README.md';
+import NumberView from '../NumberView';
+import {
+    FormatterCustomOptionsViewStory,
+    SimpleNumbersViewStory,
+    NumbersWithFootnotesViewStory,
+    InlineNumbersViewStory
+} from './NumberView.stories';
+
+<Meta title="NumberView" component={NumberView} />
+
+<Readme />
+
+## Usage
+
+To use the component in your project you must:
+
+1. Import the component where you need it:
+
+<Source language="javascript" code="import { NumberView } from '@byndyusoft/ui';" />
+
+2. Call the component and give it the desired props, for example:
+
+-   Simple numbers
+
+<Canvas withSource="open">
+    <Story story={SimpleNumbersViewStory} />
+</Canvas>
+
+-   Numbers inline
+
+<Canvas withSource="open">
+    <Story story={InlineNumbersViewStory} />
+</Canvas>
+
+-   Numbers with footnotes
+
+<Canvas withSource="open">
+    <Story story={NumbersWithFootnotesViewStory} />
+</Canvas>
+
+-   With formatter custom options
+
+<Canvas withSource="open">
+    <Story story={FormatterCustomOptionsViewStory} />
+</Canvas>
+
+## Props
+
+<ArgsTable of={NumberView} />
