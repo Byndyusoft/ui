@@ -1,0 +1,35 @@
+---
+to: components/<%= folderName %>/package.json
+---
+{
+    "name": "@byndyusoft-ui/<%= folderName %>",
+    "version": "0.1.0",
+    "description": "Byndyusoft UI React Component",
+    "keywords": [
+        "byndyusoft",
+        "byndyusoft-ui",
+        "react",
+        "component"<%- packageKeywords ? `,\n        "${packageKeywords.split(/\s/).join('",\n        "')}"` : ''; %>
+    ],
+    "author": "<%= authorName %> <<%= authorEmail %>>",
+    "homepage": "https://github.com/Byndyusoft/ui/tree/feature/<%= name %>#readme",
+    "license": "Apache-2.0",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Byndyusoft/ui.git"
+    },
+    "scripts": {
+        "build": "tsc -p tsconfig.build.json",
+        "clean": "rimraf dist",
+        "lint": "eslint src --config ../../eslint.config.js",
+        "test": "jest --config ../../jest.config.js --roots components/<%= folderName %>/src"
+    },
+    "bugs": {
+        "url": "https://github.com/Byndyusoft/ui/issues"
+    },
+    "publishConfig": {
+        "access": "public"
+    }
+}

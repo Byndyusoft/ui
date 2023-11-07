@@ -1,0 +1,13 @@
+---
+to: components/<%= folderName %>/tsconfig.json
+---
+{
+  "extends": "../../tsconfig.json",
+  "include": [
+    "../../types.d.ts",
+    "src"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

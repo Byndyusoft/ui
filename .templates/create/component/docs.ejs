@@ -1,20 +1,20 @@
 ---
-to: "<%= hasDocs ? `components/${name}/${name}.stories.mdx` : null %>"
+to: "<%= hasDocs ? `components/${folderName}/src/${name}.stories.mdx` : null %>"
 ---
 import {
-  Meta,
-  Story,
-  Canvas,
-  Source,
-  ArgsTable,
+    Meta,
+    Story,
+    Canvas,
+    Source,
+    ArgsTable,
 } from '@storybook/addon-docs/blocks';
+import Readme from '../README.md';
 import <%= name %> from './<%= name %>';
+import { <%= name %>Story } from './<%= name %>.stories';
 
 <Meta title="<%= name %>" component={<%= name %>} />
 
-# <%= name %>
-
-> Add description
+<Readme />
 
 ## Usage
 
@@ -23,14 +23,14 @@ To use the component in your project you must:
 1. Import the component where you need it:
 
 <Source
-  language="javascript"
-  code="import { <%= name %> } from '@byndyusoft/ui';"
+    language="javascript"
+    code="import { <%= name %> } from '@byndyusoft/ui';"
 />
 
 2. Call the component and give it the desired props, for example:
 
 <Canvas withSource="open">
-  <Story id="<%= name.toLowerCase() %>--<%= name.toLowerCase() %>-story" />
+    <Story story={<%= name %>Story} />
 </Canvas>
 
 
