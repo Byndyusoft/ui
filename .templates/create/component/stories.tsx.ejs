@@ -11,9 +11,3 @@ const Template: Story<I<%= name %>Props> = args => <<%= name %> {...args}/>;
 export const <%= name %>Story = Template.bind({});
 
 <%= name %>Story.args = {};
-
-export default {
-    title: '<%= name %>',
-    component: <%= name %>,
-    argTypes: {}
-};
