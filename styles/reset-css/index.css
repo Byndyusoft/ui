@@ -1,1 +1,4 @@
-@import "document.css";
+@import 'document.css';
+@import 'button.css';
+@import 'anchor.css';
+@import 'input.css';
