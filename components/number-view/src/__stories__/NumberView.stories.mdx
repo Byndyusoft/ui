@@ -7,7 +7,8 @@ import {
     WithSmallSupTextFootnoteViewStory,
     WithParenthesesFootnoteViewStory,
     CustomFormatterOptionsViewStory,
-    WithSameFractionalPartViewStory
+    WithSameFractionalPartViewStory,
+    WithCustomClassNamesViewStory
 } from './NumberView.stories';
 
 <Meta title="NumberView" component={NumberView} />
@@ -58,6 +59,12 @@ To use the component in your project you must:
 
 <Canvas withSource="open">
     <Story story={WithSameFractionalPartViewStory} />
+</Canvas>
+
+-   With custom classNames
+
+<Canvas withSource="open">
+    <Story story={WithCustomClassNamesViewStory} />
 </Canvas>
 
 ## Props

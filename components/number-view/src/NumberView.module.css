@@ -1,3 +1,7 @@
+.container {
+    position: relative;
+}
+
 .thinInextricableSpace::before {
     content: "\202F";
 }

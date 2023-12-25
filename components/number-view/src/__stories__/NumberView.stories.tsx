@@ -76,3 +76,25 @@ export const WithSameFractionalPartViewStory: Story = () => {
         </div>
     );
 };
+
+export const WithCustomClassNamesViewStory = Template.bind(
+    {},
+    {
+        number: 1548927,
+        formatterOptions: {
+            style: 'currency',
+            currency: 'RUB'
+        },
+        footnote: {
+            type: NumberView.footnoteTypes.SUP_TEXT,
+            value: '+10',
+            valueSizeModifier: NumberView.footnoteValueSizeMods.SMALLER
+        },
+        classNames: {
+            container: styles.customContainer,
+            number: styles.customNumber,
+            space: styles.customSpace,
+            footnote: styles.customFootnote,
+        }
+    }
+);
