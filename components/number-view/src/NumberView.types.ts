@@ -9,14 +9,9 @@ export interface IFootnote {
     className?: string;
 }
 
-export interface INumberData {
+export interface INumberViewProps {
     number: number;
     footnote?: IFootnote;
-}
-
-export interface INumberViewProps {
-    numbersData: Array<INumberData>;
     formatterOptions?: Intl.NumberFormatOptions;
     className?: string;
-    shouldRenderInline?: boolean;
 }

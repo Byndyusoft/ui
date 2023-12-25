@@ -2,10 +2,12 @@ import { Meta, Story, Canvas, Source, ArgsTable } from '@storybook/addon-docs';
 import Readme from '../../README.md';
 import NumberView from '../NumberView';
 import {
-    FormatterCustomOptionsViewStory,
-    SimpleNumbersViewStory,
-    NumbersWithFootnotesViewStory,
-    InlineNumbersViewStory
+    SimpleNumberViewStory,
+    WithSupTextFootnoteViewStory,
+    WithSmallSupTextFootnoteViewStory,
+    WithParenthesesFootnoteViewStory,
+    CustomFormatterOptionsViewStory,
+    WithSameFractionalPartViewStory
 } from './NumberView.stories';
 
 <Meta title="NumberView" component={NumberView} />
@@ -22,28 +24,40 @@ To use the component in your project you must:
 
 2. Call the component and give it the desired props, for example:
 
--   Simple numbers
+-   Simple number
 
 <Canvas withSource="open">
-    <Story story={SimpleNumbersViewStory} />
+    <Story story={SimpleNumberViewStory} />
 </Canvas>
 
--   Numbers inline
+-   With sup text footnote
 
 <Canvas withSource="open">
-    <Story story={InlineNumbersViewStory} />
+    <Story story={WithSupTextFootnoteViewStory} />
 </Canvas>
 
--   Numbers with footnotes
+-   With small sup text footnote
 
 <Canvas withSource="open">
-    <Story story={NumbersWithFootnotesViewStory} />
+    <Story story={WithSmallSupTextFootnoteViewStory} />
 </Canvas>
 
--   With formatter custom options
+-   With parentheses footnote
 
 <Canvas withSource="open">
-    <Story story={FormatterCustomOptionsViewStory} />
+    <Story story={WithParenthesesFootnoteViewStory} />
+</Canvas>
+
+-   With custom formatter options
+
+<Canvas withSource="open">
+    <Story story={CustomFormatterOptionsViewStory} />
+</Canvas>
+
+-   With same fractional part
+
+<Canvas withSource="open">
+    <Story story={WithSameFractionalPartViewStory} />
 </Canvas>
 
 ## Props

@@ -1,8 +1,12 @@
 # `@byndyusoft-ui/number-view`
+
 ---
-> Render your numbers array as column or inlined string. It divides digits of the number and inserts thin space, calculates and render maximum number of decimal places by default.<br />
-> You can add custom footnote for each entity.<br />
-> Also, you can use all power of `Intl.NumberFormat()` utility. For example, you can render numbers as money values.
+
+> Render your number with dividing digits and inserting thin space.<br />
+> You can add custom footnote.<br />
+> Also, you can use all power of `Intl.NumberFormat()` utility.
+> For example, you can render numbers as money values.
+> Or you can calculate maximum number of decimal places of your numbers' array by using `getMaxFractionalPartOfNumbers()` function and format the number by `minimumFractionDigits` option.
 
 ## Installation
 

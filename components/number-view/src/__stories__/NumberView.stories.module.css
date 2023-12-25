@@ -1,9 +1,7 @@
 .templateContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+
     width: max-content;
-
-    text-align: right;
-}
-
-.inlineNumbersIndent {
-    margin-right: 1rem;
 }
