@@ -1,4 +1,4 @@
-# `@byndyusoft-ui/number-view`
+# `@byndyusoft-ui/formatted-number`
 
 ---
 
@@ -11,5 +11,5 @@
 ## Installation
 
 ```
-npm i @byndyusoft-ui/number-view
+npm i @byndyusoft-ui/formatted-number
 ```

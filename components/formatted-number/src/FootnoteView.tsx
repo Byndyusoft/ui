@@ -1,6 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
-import { IFootnote } from './NumberView.types';
+import { IFootnote } from './FormattedNumberView.types';
 import { footnoteTypes, footnoteValueSizeMods } from './footnoteEntities';
 import styles from './FootnoteView.module.css';
 

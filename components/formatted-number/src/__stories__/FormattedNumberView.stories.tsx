@@ -1,12 +1,12 @@
 import React from 'react';
 import { Story } from '@storybook/react';
-import { INumberViewProps } from '../NumberView.types';
-import NumberView, { getMaxFractionalPartOfNumbers } from '..';
-import styles from './NumberView.stories.module.css';
+import { IFormattedNumberViewProps } from '../FormattedNumberView.types';
+import FormattedNumber, { getMaxFractionalPartOfNumbers } from '..';
+import styles from './FormattedNumberView.stories.module.css';
 
-const Template: Story<INumberViewProps> = (args: INumberViewProps) => (
+const Template: Story<IFormattedNumberViewProps> = (args: IFormattedNumberViewProps) => (
     <div className={styles.templateContainer}>
-        <NumberView {...args} />
+        <FormattedNumber {...args} />
     </div>
 );
 
@@ -22,7 +22,7 @@ export const WithSupTextFootnoteViewStory = Template.bind(
     {
         number: 123,
         footnote: {
-            type: NumberView.footnoteTypes.SUP_TEXT,
+            type: FormattedNumber.footnoteTypes.SUP_TEXT,
             value: '*'
         }
     }
@@ -33,9 +33,9 @@ export const WithSmallSupTextFootnoteViewStory = Template.bind(
     {
         number: 1354,
         footnote: {
-            type: NumberView.footnoteTypes.SUP_TEXT,
+            type: FormattedNumber.footnoteTypes.SUP_TEXT,
             value: '+10',
-            valueSizeModifier: NumberView.footnoteValueSizeMods.SMALLER
+            valueSizeModifier: FormattedNumber.footnoteValueSizeMods.SMALLER
         }
     }
 );
@@ -45,7 +45,7 @@ export const WithParenthesesFootnoteViewStory = Template.bind(
     {
         number: 1548927,
         footnote: {
-            type: NumberView.footnoteTypes.PARENTHESES
+            type: FormattedNumber.footnoteTypes.PARENTHESES
         }
     }
 );
@@ -71,7 +71,7 @@ export const WithSameFractionalPartViewStory: Story = () => {
     return (
         <div className={styles.templateContainer}>
             {numbers.map(number => (
-                <NumberView key={number} number={number} formatterOptions={formatterOptions} />
+                <FormattedNumber key={number} number={number} formatterOptions={formatterOptions} />
             ))}
         </div>
     );
@@ -86,9 +86,9 @@ export const WithCustomClassNamesViewStory = Template.bind(
             currency: 'RUB'
         },
         footnote: {
-            type: NumberView.footnoteTypes.SUP_TEXT,
+            type: FormattedNumber.footnoteTypes.SUP_TEXT,
             value: '+10',
-            valueSizeModifier: NumberView.footnoteValueSizeMods.SMALLER
+            valueSizeModifier: FormattedNumber.footnoteValueSizeMods.SMALLER
         },
         classNames: {
             container: styles.customContainer,

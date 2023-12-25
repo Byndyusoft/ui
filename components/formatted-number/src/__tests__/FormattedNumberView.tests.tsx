@@ -1,18 +1,18 @@
 import React from 'react';
 import { render, screen, within } from '@testing-library/react';
-import NumberView, { THIN_INEXTRICABLE_SPACE_LABEL } from '../NumberView';
+import FormattedNumberView, { THIN_INEXTRICABLE_SPACE_LABEL } from '../FormattedNumberView';
 import { PARENTHESIS_FOOTNOTE_LABEL } from '../FootnoteView';
 import { getMaxFractionalPartOfNumbers } from '../index';
 
-describe('components/NumberView', () => {
+describe('components/FormattedNumber', () => {
     test('simple number renders correctly', () => {
-        render(<NumberView number={123.123} />);
+        render(<FormattedNumberView number={123.123} />);
 
         expect(screen.getByText('123,123')).toBeInTheDocument();
     });
 
     test('thin spaces render correctly', () => {
-        render(<NumberView number={56734534321.223} />);
+        render(<FormattedNumberView number={56734534321.223} />);
 
         expect(screen.getByText('56', { exact: false })).toBeInTheDocument();
         expect(screen.getByText('734', { exact: false })).toBeInTheDocument();
@@ -30,10 +30,10 @@ describe('components/NumberView', () => {
     describe('check footnotes', () => {
         test('superscript text should renders correctly', () => {
             render(
-                <NumberView
+                <FormattedNumberView
                     number={123}
                     footnote={{
-                        type: NumberView.footnoteTypes.SUP_TEXT,
+                        type: FormattedNumberView.footnoteTypes.SUP_TEXT,
                         value: '*'
                     }}
                 />
@@ -44,12 +44,12 @@ describe('components/NumberView', () => {
 
         test('small superscript text should renders correctly', () => {
             render(
-                <NumberView
+                <FormattedNumberView
                     number={1354}
                     footnote={{
-                        type: NumberView.footnoteTypes.SUP_TEXT,
+                        type: FormattedNumberView.footnoteTypes.SUP_TEXT,
                         value: '+10',
-                        valueSizeModifier: NumberView.footnoteValueSizeMods.SMALLER
+                        valueSizeModifier: FormattedNumberView.footnoteValueSizeMods.SMALLER
                     }}
                 />
             );
@@ -59,10 +59,10 @@ describe('components/NumberView', () => {
 
         test('parentheses should render correctly', () => {
             render(
-                <NumberView
+                <FormattedNumberView
                     number={927}
                     footnote={{
-                        type: NumberView.footnoteTypes.PARENTHESES
+                        type: FormattedNumberView.footnoteTypes.PARENTHESES
                     }}
                 />
             );
@@ -81,10 +81,10 @@ describe('components/NumberView', () => {
         };
 
         render(
-            <NumberView
+            <FormattedNumberView
                 number={123}
                 footnote={{
-                    type: NumberView.footnoteTypes.SUP_TEXT,
+                    type: FormattedNumberView.footnoteTypes.SUP_TEXT,
                     value: '*'
                 }}
                 formatterOptions={formatterOptions}
@@ -105,7 +105,7 @@ describe('components/NumberView', () => {
         render(
             <div>
                 {numbers.map(number => (
-                    <NumberView key={number} number={number} formatterOptions={formatterOptions} />
+                    <FormattedNumberView key={number} number={number} formatterOptions={formatterOptions} />
                 ))}
             </div>
         );

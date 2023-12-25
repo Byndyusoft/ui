@@ -1,6 +1,6 @@
 import { Meta, Story, Canvas, Source, ArgsTable } from '@storybook/addon-docs';
 import Readme from '../../README.md';
-import NumberView from '../NumberView';
+import FormattedNumberView from '../FormattedNumberView';
 import {
     SimpleNumberViewStory,
     WithSupTextFootnoteViewStory,
@@ -9,9 +9,9 @@ import {
     CustomFormatterOptionsViewStory,
     WithSameFractionalPartViewStory,
     WithCustomClassNamesViewStory
-} from './NumberView.stories';
+} from './FormattedNumberView.stories';
 
-<Meta title="NumberView" component={NumberView} />
+<Meta title="FormattedNumber" component={FormattedNumberView} />
 
 <Readme />
 
@@ -21,7 +21,7 @@ To use the component in your project you must:
 
 1. Import the component where you need it:
 
-<Source language="javascript" code="import NumberView from '@byndyusoft-ui/number-view';" />
+<Source language="javascript" code="import FormattedNumber from '@byndyusoft-ui/formatted-number';" />
 
 2. Call the component and give it the desired props, for example:
 
@@ -69,4 +69,4 @@ To use the component in your project you must:
 
 ## Props
 
-<ArgsTable of={NumberView} />
+<ArgsTable of={FormattedNumberView} />

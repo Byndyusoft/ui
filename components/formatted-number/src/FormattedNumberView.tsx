@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react';
 import cn from 'classnames';
-import { INumberViewProps } from './NumberView.types';
+import { IFormattedNumberViewProps } from './FormattedNumberView.types';
 import { footnoteTypes, footnoteValueSizeMods } from './footnoteEntities';
 import FootnoteView from './FootnoteView';
-import styles from './NumberView.module.css';
+import styles from './FormattedNumberView.module.css';
 
 export const THIN_INEXTRICABLE_SPACE_LABEL = 'Thin inextricable space symbol';
 
-const NumberView = ({ number, footnote, formatterOptions = {}, classNames = {} }: INumberViewProps): JSX.Element => {
+const FormattedNumberView = ({ number, footnote, formatterOptions = {}, classNames = {} }: IFormattedNumberViewProps): JSX.Element => {
     const formatter = new Intl.NumberFormat('ru', formatterOptions);
 
     const formattedNumberParts = formatter.format(number).split(/\s/);
@@ -45,7 +45,7 @@ const NumberView = ({ number, footnote, formatterOptions = {}, classNames = {} }
     );
 };
 
-NumberView.footnoteTypes = footnoteTypes;
-NumberView.footnoteValueSizeMods = footnoteValueSizeMods;
+FormattedNumberView.footnoteTypes = footnoteTypes;
+FormattedNumberView.footnoteValueSizeMods = footnoteValueSizeMods;
 
-export default NumberView;
+export default FormattedNumberView;

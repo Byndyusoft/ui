@@ -1,16 +1,17 @@
 {
-    "name": "@byndyusoft-ui/number-view",
+    "name": "@byndyusoft-ui/formatted-number",
     "version": "0.0.1",
-    "description": "Byndyusoft UI NumberView React Component",
+    "description": "Byndyusoft UI FormattedNumber React Component",
     "keywords": [
         "byndyusoft",
         "byndyusoft-ui",
         "react",
         "component",
-        "number-view"
+        "number",
+        "formatted-number"
     ],
     "author": "Byndyusoft Frontend Developer <frontend@byndyusoft.com>",
-    "homepage": "https://github.com/Byndyusoft/ui/tree/master/components/NumberView#readme",
+    "homepage": "https://github.com/Byndyusoft/ui/tree/master/components/FormattedNumber#readme",
     "license": "Apache-2.0",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -22,7 +23,7 @@
         "build": "rollup --config",
         "clean": "rimraf dist",
         "lint": "eslint src --config ../../eslint.config.js",
-        "test": "jest --config ../../jest.config.js --roots components/number-view/src"
+        "test": "jest --config ../../jest.config.js --roots components/formatted-number/src"
     },
     "bugs": {
         "url": "https://github.com/Byndyusoft/ui/issues"

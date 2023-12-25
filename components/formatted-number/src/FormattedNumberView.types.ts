@@ -8,7 +8,7 @@ export interface IFootnote {
     valueSizeModifier?: TValueOf<typeof footnoteValueSizeMods> | null;
 }
 
-export interface INumberViewProps {
+export interface IFormattedNumberViewProps {
     number: number;
     footnote?: IFootnote;
     formatterOptions?: Intl.NumberFormatOptions;
