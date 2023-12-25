@@ -17,34 +17,26 @@ const FootnoteView = ({
     valueSizeModifier = null,
     className = ''
 }: IFootnoteProps): JSX.Element => {
-    switch (type) {
-        case footnoteTypes.SUP_TEXT: {
-            const supClasses = cn(styles.supFootnote, {
-                [styles.smallerSupFootnoteSize]: valueSizeModifier === footnoteValueSizeMods.SMALLER
-            });
+    const supClasses = cn(styles.supFootnote, {
+        [styles.smallerSupFootnoteSize]: valueSizeModifier === footnoteValueSizeMods.SMALLER
+    });
 
-            return (
-                <span className={cn(styles.footnoteContainer, className)}>
+    return (
+        <span className={cn(styles.footnoteContainer, className)}>
+            {type === footnoteTypes.SUP_TEXT && (
+                <>
                     {children}
                     <sup className={supClasses}>{value}</sup>
-                </span>
-            );
-        }
+                </>
+            )}
 
-        case footnoteTypes.PARENTHESES: {
-            return (
-                <span className={cn(styles.footnoteContainer, className)}>
-                    <span className={styles.parenthesisFootnote} aria-label={PARENTHESIS_FOOTNOTE_LABEL}>
-                        {children}
-                    </span>
+            {type === footnoteTypes.PARENTHESES && (
+                <span className={styles.parenthesisFootnote} aria-label={PARENTHESIS_FOOTNOTE_LABEL}>
+                    {children}
                 </span>
-            );
-        }
-
-        default: {
-            throw new Error(`Unknown footnote type: "${type}"`);
-        }
-    }
+            )}
+        </span>
+    );
 };
 
 export default FootnoteView;
