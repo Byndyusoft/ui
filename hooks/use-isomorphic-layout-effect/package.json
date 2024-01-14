@@ -1,17 +1,15 @@
 {
-  "name": "@byndyusoft-ui/use-latest-ref",
+  "name": "@byndyusoft-ui/use-isomorphic-layout-effect",
   "version": "0.0.0",
   "description": "Byndyusoft UI React Hook",
   "keywords": [
     "byndyusoft",
     "byndyusoft-ui",
     "react",
-    "hook",
-    "ref",
-    "latest-ref"
+    "hook"
   ],
   "author": "Eugene Abrosimov <sadcitizen@yandex.ru>",
-  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-latest-ref#readme",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-isomorphic-layout-effect#readme",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

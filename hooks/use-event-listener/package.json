@@ -1,17 +1,16 @@
 {
-  "name": "@byndyusoft-ui/use-latest-ref",
-  "version": "0.0.0",
+  "name": "@byndyusoft-ui/use-event-listener",
+  "version": "0.1.0",
   "description": "Byndyusoft UI React Hook",
   "keywords": [
     "byndyusoft",
     "byndyusoft-ui",
     "react",
     "hook",
-    "ref",
-    "latest-ref"
+    "event-listener"
   ],
-  "author": "Eugene Abrosimov <sadcitizen@yandex.ru>",
-  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-latest-ref#readme",
+  "author": "Viktor Smorodin <smorodin@byndyusoft.com>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-event-listener#readme",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -30,5 +29,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@byndyusoft-ui/use-latest-ref": "*"
   }
 }

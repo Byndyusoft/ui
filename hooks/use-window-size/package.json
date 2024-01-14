@@ -1,5 +1,5 @@
 {
-  "name": "@byndyusoft-ui/use-latest-ref",
+  "name": "@byndyusoft-ui/use-window-size",
   "version": "0.0.0",
   "description": "Byndyusoft UI React Hook",
   "keywords": [
@@ -7,11 +7,11 @@
     "byndyusoft-ui",
     "react",
     "hook",
-    "ref",
-    "latest-ref"
+    "window",
+    "size"
   ],
-  "author": "Eugene Abrosimov <sadcitizen@yandex.ru>",
-  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-latest-ref#readme",
+  "author": "Nastya Vasenina <vasenina@byndyusoft.com>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-window-size#readme",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -30,5 +30,9 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@byndyusoft-ui/use-event-listener": "*",
+    "@byndyusoft-ui/use-latest-ref": "*"
   }
 }
