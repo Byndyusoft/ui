@@ -2,7 +2,9 @@
   "packages": [
     "components/*",
     "hooks/*",
-    "services/*"
+    "packages/*",
+    "services/*",
+    "styles/*"
   ],
   "useWorkspaces": true,
   "version": "independent",
