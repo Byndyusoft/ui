@@ -1,0 +1,34 @@
+{
+  "name": "@byndyusoft-ui/use-latest-ref",
+  "version": "0.0.0",
+  "description": "Byndyusoft UI React Hook",
+  "keywords": [
+    "byndyusoft",
+    "byndyusoft-ui",
+    "react",
+    "hook",
+    "ref",
+    "latest-ref"
+  ],
+  "author": "Eugene Abrosimov <sadcitizen@yandex.ru>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-latest-ref#readme",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Byndyusoft/ui.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf dist",
+    "lint": "eslint src --config ../../eslint.config.js",
+    "test": "jest --config ../../jest.config.js"
+  },
+  "bugs": {
+    "url": "https://github.com/Byndyusoft/ui/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

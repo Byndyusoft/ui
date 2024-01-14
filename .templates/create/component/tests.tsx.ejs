@@ -1,0 +1,14 @@
+---
+to: "<%= hasTests ? `components/${h.changeCase.paramCase(name)}/src/${name}.tests.tsx` : null %>"
+---
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import <%= name %> from './<%= name %>';
+
+describe('components/<%= name %>', () => {
+    test('renders correctly', () => {
+        render(<<%= name %>>Test</<%= name %>>);
+
+        expect(screen.getByText('Test')).toBeInTheDocument();
+    });
+});
