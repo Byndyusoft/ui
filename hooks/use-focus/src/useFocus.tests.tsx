@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { useFocus } from './useFocus';
+import useFocus from './useFocus';
 
 interface ISetupProps {
     autofocus?: boolean;

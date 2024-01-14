@@ -1,7 +1,10 @@
-import React, { RefObject, useEffect, useState } from 'react';
+import { RefObject, useEffect, useState } from 'react';
 import useEventListener from '@byndyusoft-ui/use-event-listener';
 
-export function useFocus<T extends HTMLElement = HTMLElement>(elementRef: RefObject<T>, defaultState = false): boolean {
+export default function useFocus<T extends HTMLElement = HTMLElement>(
+    elementRef: RefObject<T>,
+    defaultState = false
+): boolean {
     const [isFocused, setIsFocused] = useState(defaultState);
 
     useEffect(() => {

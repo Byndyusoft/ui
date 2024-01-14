@@ -1,4 +1,4 @@
-import useFocus from './useFocus.tsx';
+import useFocus from './useFocus';
 
 export { useFocus };
 export default useFocus;
