@@ -10,9 +10,9 @@ interface ISetupProps {
 const Setup = ({ onClick }: ISetupProps): JSX.Element => {
     const ref = useRef(null);
 
-    const handle = useCallback(() => onClick(), [onClick]);
+    const handle = useCallback(onClick, [onClick]);
 
-    useEventListener('click', handle);
+    useEventListener('click', handle, document);
 
     return (
         <button type="button" ref={ref}>
