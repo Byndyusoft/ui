@@ -1,10 +1,6 @@
 import { RefObject, useState } from 'react';
 import useEventListener from '@byndyusoft-ui/use-event-listener';
 
-export interface IUseHoverResult {
-    isHovered: boolean;
-}
-
 export default function useHover<T extends HTMLElement = HTMLElement>(elementRef: RefObject<T>): boolean {
     const [isHovered, setIsHovered] = useState<boolean>(false);
 
