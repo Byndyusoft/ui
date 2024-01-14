@@ -20,7 +20,7 @@
     "build:storybook": "build-storybook",
     "prettier:check": "prettier --check \"src/**/*.{ts, tsx, css}\"",
     "prettier:write": "prettier --write \"src/**/*.{ts, tsx, css}\"",
-    "start": "start-storybook -p 6009"
+    "start": "start-storybook -p 6009 --no-manager-cache"
   },
   "repository": {
     "type": "git",
@@ -59,7 +59,7 @@
     "@types/classnames": "^2.3.1",
     "@types/jest": "^28.1.8",
     "@types/react": "^17.0.21",
-    "@types/react-dom": "^17.0.2",
+    "@types/react-dom": "^17.0.17",
     "babel-loader": "^8.2.2",
     "classnames": "^2.3.1",
     "eslint": "8.22.0",
