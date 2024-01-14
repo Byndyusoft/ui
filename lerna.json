@@ -2,6 +2,7 @@
   "packages": [
     "components/*",
     "hooks/*",
+    "packages/*",
     "services/*",
     "styles/*"
   ],

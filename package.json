@@ -4,6 +4,7 @@
   "workspaces": [
     "components/*",
     "hooks/*",
+    "packages/*",
     "services/*",
     "styles/*"
   ],

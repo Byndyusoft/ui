@@ -1,5 +1,5 @@
 ---
-to: "<%= hasStories ? `components/${name}/${name}.stories.tsx` : null %>"
+to: "<%= hasStories ? `components/${h.changeCase.paramCase(name)}/src/${name}.stories.tsx` : null %>"
 ---
 import React from 'react';
 import { Story } from '@storybook/react';
@@ -11,9 +11,3 @@ const Template: Story<I<%= name %>Props> = args => <<%= name %> {...args}/>;
 export const <%= name %>Story = Template.bind({});
 
 <%= name %>Story.args = {};
-
-export default {
-    title: '<%= name %>',
-    component: <%= name %>,
-    argTypes: {}
-};

@@ -1,13 +1,13 @@
 ---
-to: components/<%= name %>/<%= name %>.tsx
+to: components/<%= h.changeCase.paramCase(name) %>/src/<%= name %>.tsx
 ---
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 import { I<%= name %>Props } from './<%= name %>.types';
-import './<%= name %>.css'
+import './<%= name %>.css';
 
 const <%= name %>: FC<I<%= name %>Props> = ({ children }): JSX.Element => {
     return (
-        <div>{ children }</div>
+        <div>{children}</div>
     );
 };
 
