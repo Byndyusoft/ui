@@ -15,7 +15,7 @@
     "build": "lerna run build",
     "clean": "lerna run clean",
     "lint": "lerna run lint",
-    "test": "lerna run test",
+    "test": "lerna run test --concurrency=1",
     "postinstall": "(husky install) || true",
     "build:storybook": "build-storybook",
     "prettier:check": "prettier --check \"src/**/*.{ts, tsx, css}\"",
