@@ -13,7 +13,7 @@ npm i @byndyusoft-ui/with-class-names
 ## Method "mergeClassNames"
 Use this method for merge component styles with custom styles 
 ```ts
-    mergeClassNames(targetStyles, sourseStyles, options)
+    mergeClassNames(targetStyles, sourceStyles, options)
 ```
 
 ### Option "withReplace" ("true" by default)
