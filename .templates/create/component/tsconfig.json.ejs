@@ -1,0 +1,16 @@
+---
+to: components/<%= h.changeCase.paramCase(name) %>/tsconfig.json
+---
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "module": "commonjs"
+  },
+  "include": [
+    "../../types.d.ts",
+    "src"
+  ]
+}
