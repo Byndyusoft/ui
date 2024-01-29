@@ -13,8 +13,12 @@ const Setup = (props: { onClick: () => void }): JSX.Element => {
 
     return (
         <div aria-label="container">
-            <button type="button" aria-label="button-1" ref={ref1}>Click_1</button>
-            <button type="button" aria-label="button-2" ref={ref2}>Click_2</button>
+            <button type="button" aria-label="button-1" ref={ref1}>
+                Click_1
+            </button>
+            <button type="button" aria-label="button-2" ref={ref2}>
+                Click_2
+            </button>
         </div>
     );
 };

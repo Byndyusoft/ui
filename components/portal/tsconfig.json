@@ -6,8 +6,5 @@
     "outDir": "dist",
     "module": "commonjs"
   },
-  "include": [
-    "../../types.d.ts",
-    "src"
-  ]
+  "include": ["../../types.d.ts", "src"]
 }

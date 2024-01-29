@@ -18,8 +18,8 @@
     "test": "lerna run test --concurrency=1",
     "postinstall": "(husky install) || true",
     "build-storybook": "storybook build",
-    "prettier:check": "prettier --check \"src/**/*.{ts, tsx, css}\"",
-    "prettier:write": "prettier --write \"src/**/*.{ts, tsx, css}\"",
+    "prettier:check": "prettier --check \"**/*.{ts,tsx,css,json}\"",
+    "prettier:write": "prettier --write \"**/*.{ts,tsx,css,json}\"",
     "start": "storybook dev -p 6009"
   },
   "repository": {
