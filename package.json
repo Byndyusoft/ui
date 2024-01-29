@@ -3,6 +3,7 @@
   "private": true,
   "workspaces": [
     "components/*",
+    "hocs/*",
     "hooks/*",
     "packages/*",
     "services/*",

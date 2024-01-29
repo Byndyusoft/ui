@@ -1,5 +1,5 @@
 module.exports = {
-    roots: ['<rootDir>/components', '<rootDir>/hooks', '<rootDir>/services'],
+    roots: ['<rootDir>/components', '<rootDir>/hocs', '<rootDir>/hooks', '<rootDir>/services'],
     setupFilesAfterEnv: ['<rootDir>/.jest/setup.ts'],
     transform: {
         '^.+\\.tsx?$': 'ts-jest'
