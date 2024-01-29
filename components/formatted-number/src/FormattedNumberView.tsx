@@ -1,15 +1,12 @@
 import React, { Fragment, useMemo } from 'react';
 import cn from 'classnames';
 import { IFormattedNumberViewProps } from './FormattedNumberView.types';
-import { footnoteTypes, footnoteValueSizeMods } from './footnoteEntities';
-import FootnoteView from './FootnoteView';
 import styles from './FormattedNumberView.module.css';
 
 export const THIN_INEXTRICABLE_SPACE_LABEL = 'Thin inextricable space symbol';
 
 const FormattedNumberView = ({
     number,
-    footnote,
     formatterOptions = {},
     classNames = {}
 }: IFormattedNumberViewProps): JSX.Element => {
@@ -17,8 +14,8 @@ const FormattedNumberView = ({
 
     const formattedNumberParts = formatter.format(number).split(/\s/);
 
-    const numberElement = (
-        <span className={classNames.number}>
+    return (
+        <span className={classNames.container}>
             {formattedNumberParts.map((numberPart, numberPartIndex) => {
                 const isLastNumberPart = numberPartIndex === formattedNumberParts.length - 1;
 
@@ -36,21 +33,6 @@ const FormattedNumberView = ({
             })}
         </span>
     );
-
-    return (
-        <span className={cn(styles.container, classNames.container)}>
-            {footnote ? (
-                <FootnoteView {...footnote} className={classNames.footnote}>
-                    {numberElement}
-                </FootnoteView>
-            ) : (
-                numberElement
-            )}
-        </span>
-    );
 };
-
-FormattedNumberView.footnoteTypes = footnoteTypes;
-FormattedNumberView.footnoteValueSizeMods = footnoteValueSizeMods;
 
 export default FormattedNumberView;

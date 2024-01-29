@@ -7,21 +7,9 @@
 }
 
 .customContainer {
-    margin: 1rem 0;
-    padding: 0 1.5rem;
-}
-
-.customNumber {
     color: green;
 }
 
 .customSpace::before {
     content: '\202F\202F\202F';
-}
-
-.customFootnote {
-    padding: 0.125rem 0.25rem;
-
-    background-color: #494949;
-    color: #fff;
 }

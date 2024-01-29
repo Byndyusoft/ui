@@ -17,39 +17,6 @@ export const SimpleNumberViewStory = Template.bind(
     }
 );
 
-export const WithSupTextFootnoteViewStory = Template.bind(
-    {},
-    {
-        number: 123,
-        footnote: {
-            type: FormattedNumber.footnoteTypes.SUP_TEXT,
-            value: '*'
-        }
-    }
-);
-
-export const WithSmallSupTextFootnoteViewStory = Template.bind(
-    {},
-    {
-        number: 1354,
-        footnote: {
-            type: FormattedNumber.footnoteTypes.SUP_TEXT,
-            value: '+10',
-            valueSizeModifier: FormattedNumber.footnoteValueSizeMods.SMALLER
-        }
-    }
-);
-
-export const WithParenthesesFootnoteViewStory = Template.bind(
-    {},
-    {
-        number: 1548927,
-        footnote: {
-            type: FormattedNumber.footnoteTypes.PARENTHESES
-        }
-    }
-);
-
 export const CustomFormatterOptionsViewStory = Template.bind(
     {},
     {
@@ -85,16 +52,14 @@ export const WithCustomClassNamesViewStory = Template.bind(
             style: 'currency',
             currency: 'RUB'
         },
-        footnote: {
-            type: FormattedNumber.footnoteTypes.SUP_TEXT,
-            value: '+10',
-            valueSizeModifier: FormattedNumber.footnoteValueSizeMods.SMALLER
-        },
         classNames: {
             container: styles.customContainer,
-            number: styles.customNumber,
-            space: styles.customSpace,
-            footnote: styles.customFootnote,
+            space: styles.customSpace
         }
     }
 );
+
+export default {
+    title: 'components/FormattedNumber',
+    component: FormattedNumber
+};

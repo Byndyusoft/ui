@@ -1,11 +1,8 @@
-import { Meta, Story, Canvas, Source, ArgsTable } from '@storybook/addon-docs';
+import { Meta, Markdown, Story, Canvas, Source, ArgsTable } from '@storybook/addon-docs';
 import Readme from '../../README.md';
 import FormattedNumberView from '../FormattedNumberView';
 import {
     SimpleNumberViewStory,
-    WithSupTextFootnoteViewStory,
-    WithSmallSupTextFootnoteViewStory,
-    WithParenthesesFootnoteViewStory,
     CustomFormatterOptionsViewStory,
     WithSameFractionalPartViewStory,
     WithCustomClassNamesViewStory
@@ -13,7 +10,7 @@ import {
 
 <Meta title="FormattedNumber" component={FormattedNumberView} />
 
-<Readme />
+<Markdown>{Readme}</Markdown>
 
 ## Usage
 
@@ -27,43 +24,25 @@ To use the component in your project you must:
 
 -   Simple number
 
-<Canvas withSource="open">
+<Canvas sourceState="open">
     <Story story={SimpleNumberViewStory} />
-</Canvas>
-
--   With sup text footnote
-
-<Canvas withSource="open">
-    <Story story={WithSupTextFootnoteViewStory} />
-</Canvas>
-
--   With small sup text footnote
-
-<Canvas withSource="open">
-    <Story story={WithSmallSupTextFootnoteViewStory} />
-</Canvas>
-
--   With parentheses footnote
-
-<Canvas withSource="open">
-    <Story story={WithParenthesesFootnoteViewStory} />
 </Canvas>
 
 -   With custom formatter options
 
-<Canvas withSource="open">
+<Canvas sourceState="open">
     <Story story={CustomFormatterOptionsViewStory} />
 </Canvas>
 
 -   With same fractional part
 
-<Canvas withSource="open">
+<Canvas sourceState="open">
     <Story story={WithSameFractionalPartViewStory} />
 </Canvas>
 
 -   With custom classNames
 
-<Canvas withSource="open">
+<Canvas sourceState="open">
     <Story story={WithCustomClassNamesViewStory} />
 </Canvas>
 

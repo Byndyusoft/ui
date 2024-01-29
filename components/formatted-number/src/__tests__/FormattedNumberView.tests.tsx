@@ -1,7 +1,6 @@
 import React from 'react';
-import { render, screen, within } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import FormattedNumberView, { THIN_INEXTRICABLE_SPACE_LABEL } from '../FormattedNumberView';
-import { PARENTHESIS_FOOTNOTE_LABEL } from '../FootnoteView';
 import { getMaxFractionalPartOfNumbers } from '../index';
 
 describe('components/FormattedNumber', () => {
@@ -27,69 +26,13 @@ describe('components/FormattedNumber', () => {
         });
     });
 
-    describe('check footnotes', () => {
-        test('superscript text should renders correctly', () => {
-            render(
-                <FormattedNumberView
-                    number={123}
-                    footnote={{
-                        type: FormattedNumberView.footnoteTypes.SUP_TEXT,
-                        value: '*'
-                    }}
-                />
-            );
-
-            expect(screen.getByText('*', { exact: false })).toBeInTheDocument();
-        });
-
-        test('small superscript text should renders correctly', () => {
-            render(
-                <FormattedNumberView
-                    number={1354}
-                    footnote={{
-                        type: FormattedNumberView.footnoteTypes.SUP_TEXT,
-                        value: '+10',
-                        valueSizeModifier: FormattedNumberView.footnoteValueSizeMods.SMALLER
-                    }}
-                />
-            );
-
-            expect(screen.getByText('+10', { exact: false })).toBeInTheDocument();
-        });
-
-        test('parentheses should render correctly', () => {
-            render(
-                <FormattedNumberView
-                    number={927}
-                    footnote={{
-                        type: FormattedNumberView.footnoteTypes.PARENTHESES
-                    }}
-                />
-            );
-
-            const parenthesisFootnoteElement = screen.getByLabelText(PARENTHESIS_FOOTNOTE_LABEL);
-
-            expect(parenthesisFootnoteElement).toBeInTheDocument();
-            expect(within(parenthesisFootnoteElement).getByText('927')).toBeInTheDocument();
-        });
-    });
-
     test('custom formatter options render correctly', () => {
         const formatterOptions = {
             style: 'currency',
             currency: 'RUB'
         };
 
-        render(
-            <FormattedNumberView
-                number={123}
-                footnote={{
-                    type: FormattedNumberView.footnoteTypes.SUP_TEXT,
-                    value: '*'
-                }}
-                formatterOptions={formatterOptions}
-            />
-        );
+        render(<FormattedNumberView number={123} formatterOptions={formatterOptions} />);
 
         expect(screen.getByLabelText(THIN_INEXTRICABLE_SPACE_LABEL)).toBeInTheDocument();
         expect(screen.getByText('₽', { exact: false })).toBeInTheDocument();
