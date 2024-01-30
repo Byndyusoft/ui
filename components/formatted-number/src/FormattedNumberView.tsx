@@ -1,37 +1,39 @@
 import React, { Fragment, useMemo } from 'react';
 import cn from 'classnames';
 import { IFormattedNumberViewProps } from './FormattedNumberView.types';
+import getDefaultFormatter from './getDefaultFormatter';
+import parseNumberToPartsByDefault from './parseNumberToPartsByDefault';
 import styles from './FormattedNumberView.module.css';
 
-export const THIN_INEXTRICABLE_SPACE_LABEL = 'Thin inextricable space symbol';
+export const SYMBOL_BETWEEN_FORMATTED_NUMBER_PARTS_LABEL = 'Symbol between formatted number parts';
 
 const FormattedNumberView = ({
     number,
-    formatterOptions = {},
-    classNames = {}
+    defaultFormatterOptions,
+    formatter = getDefaultFormatter(defaultFormatterOptions),
+    parseNumberToParts = parseNumberToPartsByDefault,
+    numberPartsDividerClassName = ''
 }: IFormattedNumberViewProps): JSX.Element => {
-    const formatter = useMemo(() => new Intl.NumberFormat('ru', formatterOptions), [formatterOptions]);
-
-    const formattedNumberParts = formatter.format(number).split(/\s/);
+    const numberParts = useMemo(() => parseNumberToParts(formatter.format(number)), [parseNumberToParts, formatter, number]);
 
     return (
-        <span className={classNames.container}>
-            {formattedNumberParts.map((numberPart, numberPartIndex) => {
-                const isLastNumberPart = numberPartIndex === formattedNumberParts.length - 1;
+        <>
+            {numberParts.map((numberPart, numberPartIndex) => {
+                const isLastNumberPart = numberPartIndex === numberParts.length - 1;
 
                 return (
                     <Fragment key={`${number}_${numberPart}`}>
                         {numberPart}
                         {!isLastNumberPart && (
                             <span
-                                className={cn(styles.thinInextricableSpace, classNames.space)}
-                                aria-label={THIN_INEXTRICABLE_SPACE_LABEL}
+                                className={cn(styles.thinInextricableSpace, numberPartsDividerClassName)}
+                                aria-label={SYMBOL_BETWEEN_FORMATTED_NUMBER_PARTS_LABEL}
                             />
                         )}
                     </Fragment>
                 );
             })}
-        </span>
+        </>
     );
 };
 

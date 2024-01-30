@@ -3,8 +3,10 @@ import Readme from '../../README.md';
 import FormattedNumberView from '../FormattedNumberView';
 import {
     SimpleNumberViewStory,
-    CustomFormatterOptionsViewStory,
+    CustomDefaultFormatterOptionsViewStory,
     WithSameFractionalPartViewStory,
+    WithCustomFormatterViewStory,
+    WithCustomNumberPartsParserViewStory,
     WithCustomClassNamesViewStory
 } from './FormattedNumberView.stories';
 
@@ -24,25 +26,37 @@ To use the component in your project you must:
 
 -   Simple number
 
-<Canvas sourceState="open">
+<Canvas withSource="open" of={SimpleNumberViewStory}>
     <Story story={SimpleNumberViewStory} />
 </Canvas>
 
--   With custom formatter options
+-   With custom default formatter options
 
-<Canvas sourceState="open">
-    <Story story={CustomFormatterOptionsViewStory} />
+<Canvas withSource="open" of={CustomDefaultFormatterOptionsViewStory}>
+    <Story story={CustomDefaultFormatterOptionsViewStory} />
 </Canvas>
 
 -   With same fractional part
 
-<Canvas sourceState="open">
+<Canvas withSource="open" of={WithSameFractionalPartViewStory}>
     <Story story={WithSameFractionalPartViewStory} />
+</Canvas>
+
+-   With custom formatter function
+
+<Canvas withSource="open" of={WithCustomFormatterViewStory}>
+    <Story story={WithCustomFormatterViewStory} />
+</Canvas>
+
+-   With custom number parts parser function
+
+<Canvas withSource="open" of={WithCustomNumberPartsParserViewStory}>
+    <Story story={WithCustomNumberPartsParserViewStory} />
 </Canvas>
 
 -   With custom classNames
 
-<Canvas sourceState="open">
+<Canvas withSource="open" of={WithCustomClassNamesViewStory}>
     <Story story={WithCustomClassNamesViewStory} />
 </Canvas>
 

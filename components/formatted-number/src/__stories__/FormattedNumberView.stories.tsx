@@ -1,12 +1,13 @@
 import React from 'react';
-import { Story } from '@storybook/react';
 import { IFormattedNumberViewProps } from '../FormattedNumberView.types';
 import FormattedNumber, { getMaxFractionalPartOfNumbers } from '..';
 import styles from './FormattedNumberView.stories.module.css';
 
-const Template: Story<IFormattedNumberViewProps> = (args: IFormattedNumberViewProps) => (
+const Template: (args: IFormattedNumberViewProps) => JSX.Element = (args: IFormattedNumberViewProps) => (
     <div className={styles.templateContainer}>
-        <FormattedNumber {...args} />
+        <span>
+            <FormattedNumber {...args} />
+        </span>
     </div>
 );
 
@@ -17,45 +18,70 @@ export const SimpleNumberViewStory = Template.bind(
     }
 );
 
-export const CustomFormatterOptionsViewStory = Template.bind(
+export const CustomDefaultFormatterOptionsViewStory = Template.bind(
     {},
     {
         number: 1548927,
-        formatterOptions: {
+        defaultFormatterOptions: {
             style: 'currency',
             currency: 'RUB'
         }
     }
 );
 
-export const WithSameFractionalPartViewStory: Story = () => {
+export const WithSameFractionalPartViewStory = (): JSX.Element => {
     const numbers = [123, 2317546731354.654, 6488946759912.511, 5990.45, 1123];
 
-    const formatterOptions = {
+    const defaultFormatterOptions = {
         minimumFractionDigits: getMaxFractionalPartOfNumbers(numbers)
     };
 
     return (
         <div className={styles.templateContainer}>
             {numbers.map(number => (
-                <FormattedNumber key={number} number={number} formatterOptions={formatterOptions} />
+                <span key={number}>
+                    <FormattedNumber number={number} defaultFormatterOptions={defaultFormatterOptions} />
+                </span>
             ))}
         </div>
     );
 };
 
+export const WithCustomFormatterViewStory = Template.bind(
+    {},
+    {
+        number: 1548927,
+        formatter: {
+            format: number => [...number.toString()].map(digit => `${digit} `).join('')
+        }
+    }
+);
+
+export const WithCustomNumberPartsParserViewStory = Template.bind(
+    {},
+    {
+        number: 1548927,
+        formatter: {
+            format: number => number.toString()
+        },
+        parseNumberToParts: numberString =>
+            [...numberString].reduce((acc: Array<string>, digit, index, array) => {
+                const numberPart = `${digit}${array[index + 1]}`;
+
+                return index % 2 === 0 ? acc : [...acc, numberPart];
+            }, [])
+    }
+);
+
 export const WithCustomClassNamesViewStory = Template.bind(
     {},
     {
         number: 1548927,
-        formatterOptions: {
+        defaultFormatterOptions: {
             style: 'currency',
             currency: 'RUB'
         },
-        classNames: {
-            container: styles.customContainer,
-            space: styles.customSpace
-        }
+        numberPartsDividerClassName: styles.customSpace
     }
 );
 

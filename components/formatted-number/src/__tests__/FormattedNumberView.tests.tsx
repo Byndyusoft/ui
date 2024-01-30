@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import FormattedNumberView, { THIN_INEXTRICABLE_SPACE_LABEL } from '../FormattedNumberView';
+import FormattedNumberView, { SYMBOL_BETWEEN_FORMATTED_NUMBER_PARTS_LABEL } from '../FormattedNumberView';
 import { getMaxFractionalPartOfNumbers } from '../index';
 
 describe('components/FormattedNumber', () => {
@@ -18,7 +18,7 @@ describe('components/FormattedNumber', () => {
         expect(screen.getByText('534', { exact: false })).toBeInTheDocument();
         expect(screen.getByText('321,223', { exact: false })).toBeInTheDocument();
 
-        const thinSpacesArray = screen.getAllByLabelText(THIN_INEXTRICABLE_SPACE_LABEL);
+        const thinSpacesArray = screen.getAllByLabelText(SYMBOL_BETWEEN_FORMATTED_NUMBER_PARTS_LABEL);
 
         expect(thinSpacesArray).toHaveLength(3);
         thinSpacesArray.forEach(element => {
@@ -27,28 +27,30 @@ describe('components/FormattedNumber', () => {
     });
 
     test('custom formatter options render correctly', () => {
-        const formatterOptions = {
+        const defaultFormatterOptions = {
             style: 'currency',
             currency: 'RUB'
         };
 
-        render(<FormattedNumberView number={123} formatterOptions={formatterOptions} />);
+        render(<FormattedNumberView number={123} defaultFormatterOptions={defaultFormatterOptions} />);
 
-        expect(screen.getByLabelText(THIN_INEXTRICABLE_SPACE_LABEL)).toBeInTheDocument();
+        expect(screen.getByLabelText(SYMBOL_BETWEEN_FORMATTED_NUMBER_PARTS_LABEL)).toBeInTheDocument();
         expect(screen.getByText('₽', { exact: false })).toBeInTheDocument();
     });
 
     test('fractional parts calculates correctly', () => {
         const numbers = [123.123, 789.2, 321];
 
-        const formatterOptions = {
+        const defaultFormatterOptions = {
             minimumFractionDigits: getMaxFractionalPartOfNumbers(numbers)
         };
 
         render(
             <div>
                 {numbers.map(number => (
-                    <FormattedNumberView key={number} number={number} formatterOptions={formatterOptions} />
+                    <span key={number}>
+                        <FormattedNumberView number={number} defaultFormatterOptions={defaultFormatterOptions} />
+                    </span>
                 ))}
             </div>
         );

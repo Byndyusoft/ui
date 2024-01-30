@@ -6,10 +6,6 @@
     width: max-content;
 }
 
-.customContainer {
-    color: green;
-}
-
 .customSpace::before {
     content: '\202F\202F\202F';
 }
