@@ -1,1 +1,1 @@
-export { default } from './useArray';
+export { default, IUseArray } from './useArray';

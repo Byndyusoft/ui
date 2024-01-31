@@ -1,8 +1,6 @@
 import { useCallback, useState } from 'react';
 
-export interface IUseArray {}
-
-export default function useArray<T>(initialValue: T[]): {
+export interface IUseArray<T> {
     list: T[];
     append: (item: T) => void;
     prepend: (item: T) => void;
@@ -10,44 +8,46 @@ export default function useArray<T>(initialValue: T[]): {
     clear: () => void;
     reset: () => void;
     sort: (cb: (a: T, b: T) => number) => void;
-} {
+}
+
+export default function useArray<T>(initialValue: T[]): IUseArray<T> {
     const [list, setList] = useState(initialValue);
 
     const append = useCallback(
         (item: T) => {
-            setList([...list, item]);
+            setList(list => [...list, item]);
         },
-        [list]
+        [setList]
     );
 
     const prepend = useCallback(
         (item: T) => {
-            setList([item, ...list]);
+            setList(list => [item, ...list]);
         },
-        [list]
+        [setList]
     );
 
     const filter = useCallback(
         (cb: (item: T) => boolean) => {
-            setList(list.filter(cb));
+            setList(list => list.filter(cb));
         },
-        [list]
+        [setList]
     );
 
     const sort = useCallback(
         (cb: (a: T, b: T) => number) => {
-            setList([...list].sort(cb));
+            setList(list => [...list].sort(cb));
         },
-        [list]
+        [setList]
     );
 
     const clear = useCallback(() => {
         setList([]);
-    }, [list]);
+    }, [setList]);
 
     const reset = useCallback(() => {
         setList(initialValue);
-    }, [list, initialValue]);
+    }, [setList, initialValue]);
 
     return {
         list,
