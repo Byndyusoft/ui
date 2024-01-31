@@ -3,7 +3,7 @@ import { StoryFn } from '@storybook/react';
 import useArray from './useArray';
 import './useArray.stories.css';
 
-const App = () => {
+const HookStoryComponent = () => {
     const [addValue, setAddValue] = useState(0);
     const [prependValue, setPrependValue] = useState(0);
     const [fromValue, setFromValue] = useState(0);
@@ -64,7 +64,7 @@ const App = () => {
     );
 };
 
-const Template: StoryFn = args => <App />;
+const Template: StoryFn = args => <HookStoryComponent />;
 
 export const HookStory = Template.bind({});
 
