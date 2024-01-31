@@ -1,21 +1,21 @@
-.container { 
-  display: flex; 
-  flex-direction: column; 
-  gap: 8px; 
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .row {
-  display: flex;
-  gap: 8px;
+    display: flex;
+    gap: 8px;
 }
 
 .leftPart {
-  box-sizing: border-box;
-  display: flex;
-  width: 200px;
-  gap: 4px;
+    box-sizing: border-box;
+    display: flex;
+    width: 200px;
+    gap: 4px;
 }
 
 .filterInput {
-  min-width: 0;
+    min-width: 0;
 }
