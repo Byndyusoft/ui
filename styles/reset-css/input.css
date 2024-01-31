@@ -3,6 +3,8 @@ select,
 textarea {
     width: 100%;
 
+    color: inherit;
+
     border: none;
     outline: none;
     background-color: inherit;
