@@ -12,7 +12,7 @@ npm i @byndyusoft-ui/use-array
 import useArray from './useArray';
 
 function MyComponent() {
-    const { list, append, prepend, filter, sort, clear, reset } = useArray<number>([1, 2, 3]);
+    const [list, { append, prepend, update, remove, filter, sort, clear, reset }] = useArray<number>([1, 2, 3]);
 
     const handleAppend = () => append(4);
     const handleFilter = () => filter(item => item % 2 === 0);
@@ -36,6 +36,8 @@ function MyComponent() {
 -   list: The current state of the array.
 -   append(item): Adds an item to the end of the array.
 -   prepend(item): Adds an item to the beginning of the array.
+-   update(index, item): Update an item at a specific index.
+-   remove(index): Update an item at a specific index.
 -   filter(cb): Filters the array based on a provided callback function.
 -   sort(cb): Sorts the array based on a provided callback function.
 -   clear(): Clears all items from the array.

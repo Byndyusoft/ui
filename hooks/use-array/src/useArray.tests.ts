@@ -5,63 +5,89 @@ describe('hooks/useArray', () => {
     it('should return the initial value', () => {
         const initialValue = [1, 2, 3];
         const { result } = renderHook(() => useArray(initialValue));
-        expect(result.current.list).toEqual(initialValue);
+        expect(result.current[0]).toEqual(initialValue);
     });
 
     it('should append an item to the list', () => {
         const initialValue = [1, 2, 3];
         const { result } = renderHook(() => useArray(initialValue));
+        const [, { append }] = result.current;
         const newItem = 4;
         act(() => {
-            result.current.append(newItem);
+            append(newItem);
         });
-        expect(result.current.list).toEqual([1, 2, 3, newItem]);
+        expect(result.current[0]).toEqual([1, 2, 3, newItem]);
     });
 
     it('should prepend an item to the list', () => {
         const initialValue = [1, 2, 3];
         const { result } = renderHook(() => useArray(initialValue));
+        const [, { prepend }] = result.current;
         const newItem = 0;
         act(() => {
-            result.current.prepend(newItem);
+            prepend(newItem);
         });
-        expect(result.current.list).toEqual([newItem, 1, 2, 3]);
+        expect(result.current[0]).toEqual([newItem, 1, 2, 3]);
+    });
+
+    it('should update item in list', () => {
+        const initialValue = [1, 2, 3];
+        const { result } = renderHook(() => useArray<string | number>(initialValue));
+        const [, { update }] = result.current;
+        act(() => {
+            update(1, 'two');
+        });
+        expect(result.current[0]).toEqual([1, 'two', 3]);
+    });
+
+    it('should remove item from list', () => {
+        const initialValue = [1, 2, 3];
+        const { result } = renderHook(() => useArray(initialValue));
+        const [, { remove }] = result.current;
+        act(() => {
+            remove(1);
+        });
+        expect(result.current[0]).toEqual([1, 3]);
     });
 
     it('should filter the list', () => {
         const initialValue = [1, 2, 3, 4, 5];
         const { result } = renderHook(() => useArray(initialValue));
+        const [, { filter }] = result.current;
         act(() => {
-            result.current.filter(item => item % 2 === 0);
+            filter(item => item % 2 === 0);
         });
-        expect(result.current.list).toEqual([2, 4]);
+        expect(result.current[0]).toEqual([2, 4]);
     });
 
     it('should sort the list', () => {
         const initialValue = [3, 1, 5, 2, 4];
         const { result } = renderHook(() => useArray(initialValue));
+        const [, { sort }] = result.current;
         act(() => {
-            result.current.sort((a, b) => a - b);
+            sort((a, b) => a - b);
         });
-        expect(result.current.list).toEqual([1, 2, 3, 4, 5]);
+        expect(result.current[0]).toEqual([1, 2, 3, 4, 5]);
     });
 
     it('should clear the list', () => {
         const initialValue = [1, 2, 3];
         const { result } = renderHook(() => useArray(initialValue));
+        const [, { clear }] = result.current;
         act(() => {
-            result.current.clear();
+            clear();
         });
-        expect(result.current.list).toEqual([]);
+        expect(result.current[0]).toEqual([]);
     });
 
     it('should reset the list to the initial value', () => {
         const initialValue = [1, 2, 3];
         const { result } = renderHook(() => useArray(initialValue));
+        const [, { append, reset }] = result.current;
         act(() => {
-            result.current.append(4);
-            result.current.reset();
+            append(4);
+            reset();
         });
-        expect(result.current.list).toEqual(initialValue);
+        expect(result.current[0]).toEqual(initialValue);
     });
 });

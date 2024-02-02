@@ -8,7 +8,10 @@ const HookStoryComponent = () => {
     const [prependValue, setPrependValue] = useState(0);
     const [fromValue, setFromValue] = useState(0);
     const [lessValue, setLessValue] = useState(0);
-    const { list, append, prepend, filter, clear, reset, sort } = useArray<number>([1, 2, 3, 4, 5]);
+    const [indexUpdateValue, setIndexUpdateValue] = useState(0);
+    const [updateValue, setUpdateValue] = useState(0);
+    const [indexRemoveValue, setIndexRemoveValue] = useState(0);
+    const [list, { append, prepend, update, remove, filter, clear, reset, sort }] = useArray<number>([1, 2, 3, 4, 5]);
 
     return (
         <div>
@@ -52,6 +55,34 @@ const HookStoryComponent = () => {
                         />
                     </div>
                     <button onClick={() => filter(a => a >= fromValue && a <= lessValue)}>Filter</button>
+                </div>
+                <div className="row">
+                    <div className="leftPart">
+                        <span>index</span>
+                        <input
+                            className="filterInput"
+                            value={indexUpdateValue}
+                            type="numeric"
+                            onChange={e => setIndexUpdateValue(+e.target.value)}
+                        />
+                        <span>item</span>
+                        <input
+                            className="filterInput"
+                            value={updateValue}
+                            type="numeric"
+                            onChange={e => setUpdateValue(+e.target.value)}
+                        />
+                    </div>
+                    <button onClick={() => update(indexUpdateValue, updateValue)}>Update</button>
+                </div>
+                <div className="row">
+                    <input
+                        className="leftPart"
+                        value={indexRemoveValue}
+                        type="numeric"
+                        onChange={e => setIndexRemoveValue(+e.target.value)}
+                    />
+                    <button onClick={() => remove(indexRemoveValue)}>Remove</button>
                 </div>
                 <div className="row">
                     <button onClick={() => reset()}>Reset</button>

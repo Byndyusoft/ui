@@ -1,42 +1,66 @@
 import { useCallback, useState } from 'react';
 
-export interface IUseArray<T> {
-    list: T[];
+export type TUseArray<T> = [list: T[], commands: IUseArrayCommands<T>];
+
+interface IUseArrayCommands<T> {
     append: (item: T) => void;
     prepend: (item: T) => void;
+    update: (index: number, item: T) => void;
+    remove: (index: number) => void;
     filter: (cb: (item: T) => boolean) => void;
     clear: () => void;
     reset: () => void;
     sort: (cb: (a: T, b: T) => number) => void;
 }
 
-export default function useArray<T>(initialValue: T[]): IUseArray<T> {
+export default function useArray<T>(initialValue: T[]): TUseArray<T> {
     const [list, setList] = useState(initialValue);
 
     const append = useCallback(
         (item: T) => {
-            setList(list => [...list, item]);
+            setList(previousList => [...previousList, item]);
         },
         [setList]
     );
 
     const prepend = useCallback(
         (item: T) => {
-            setList(list => [item, ...list]);
+            setList(previousList => [item, ...previousList]);
+        },
+        [setList]
+    );
+
+    const update = useCallback(
+        (index, item) => {
+            setList(previousList => [
+                ...previousList.slice(0, index),
+                item,
+                ...previousList.slice(index + 1, previousList.length)
+            ]);
+        },
+        [setList]
+    );
+
+    const remove = useCallback(
+        index => {
+            setList(previousList => [
+                ...previousList.slice(0, index),
+                ...previousList.slice(index + 1, previousList.length)
+            ]);
         },
         [setList]
     );
 
     const filter = useCallback(
         (cb: (item: T) => boolean) => {
-            setList(list => list.filter(cb));
+            setList(previousList => previousList.filter(cb));
         },
         [setList]
     );
 
     const sort = useCallback(
         (cb: (a: T, b: T) => number) => {
-            setList(list => [...list].sort(cb));
+            setList(previousList => [...previousList].sort(cb));
         },
         [setList]
     );
@@ -49,13 +73,7 @@ export default function useArray<T>(initialValue: T[]): IUseArray<T> {
         setList(initialValue);
     }, [setList, initialValue]);
 
-    return {
-        list,
-        append,
-        prepend,
-        filter,
-        sort,
-        clear,
-        reset
-    };
+    const commands = { append, prepend, update, remove, filter, sort, clear, reset };
+
+    return [list, commands];
 }
