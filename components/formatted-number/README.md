@@ -10,6 +10,8 @@
 
 ## Installation
 
-```
+```sh
 npm i @byndyusoft-ui/formatted-number
+# or
+yarn add @byndyusoft-ui/formatted-number
 ```
