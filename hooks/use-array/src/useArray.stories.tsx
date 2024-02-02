@@ -16,12 +16,12 @@ const HookStoryComponent = () => {
     return (
         <div>
             <h1>List</h1>
-            <strong>{list.join(', ')}</strong>
+            <strong>{list.length > 0 ? list.join(', ') : 'Empty'}</strong>
             <hr />
             <div className="container">
-                <div style={{ display: 'flex', gap: '8px', width: '500px' }}>
+                <div className="row">
                     <input
-                        className="leftPart"
+                        className="input"
                         value={addValue}
                         type="numeric"
                         onChange={e => setAddValue(+e.target.value)}
@@ -30,7 +30,7 @@ const HookStoryComponent = () => {
                 </div>
                 <div className="row">
                     <input
-                        className="leftPart"
+                        className="input"
                         value={prependValue}
                         type="numeric"
                         onChange={e => setPrependValue(+e.target.value)}
@@ -38,46 +38,42 @@ const HookStoryComponent = () => {
                     <button onClick={() => prepend(prependValue)}>Prepend</button>
                 </div>
                 <div className="row">
-                    <div className="leftPart">
-                        <span>from</span>
-                        <input
-                            className="filterInput"
-                            value={fromValue}
-                            type="numeric"
-                            onChange={e => setFromValue(+e.target.value)}
-                        />
-                        <span>to</span>
-                        <input
-                            className="filterInput"
-                            value={lessValue}
-                            type="numeric"
-                            onChange={e => setLessValue(+e.target.value)}
-                        />
-                    </div>
+                    <span>from</span>
+                    <input
+                        className="input"
+                        value={fromValue}
+                        type="numeric"
+                        onChange={e => setFromValue(+e.target.value)}
+                    />
+                    <span>to</span>
+                    <input
+                        className="input"
+                        value={lessValue}
+                        type="numeric"
+                        onChange={e => setLessValue(+e.target.value)}
+                    />
                     <button onClick={() => filter(a => a >= fromValue && a <= lessValue)}>Filter</button>
                 </div>
                 <div className="row">
-                    <div className="leftPart">
-                        <span>index</span>
-                        <input
-                            className="filterInput"
-                            value={indexUpdateValue}
-                            type="numeric"
-                            onChange={e => setIndexUpdateValue(+e.target.value)}
-                        />
-                        <span>item</span>
-                        <input
-                            className="filterInput"
-                            value={updateValue}
-                            type="numeric"
-                            onChange={e => setUpdateValue(+e.target.value)}
-                        />
-                    </div>
+                    <span>index</span>
+                    <input
+                        className="input"
+                        value={indexUpdateValue}
+                        type="numeric"
+                        onChange={e => setIndexUpdateValue(+e.target.value)}
+                    />
+                    <span>item</span>
+                    <input
+                        className="input"
+                        value={updateValue}
+                        type="numeric"
+                        onChange={e => setUpdateValue(+e.target.value)}
+                    />
                     <button onClick={() => update(indexUpdateValue, updateValue)}>Update</button>
                 </div>
                 <div className="row">
                     <input
-                        className="leftPart"
+                        className="input"
                         value={indexRemoveValue}
                         type="numeric"
                         onChange={e => setIndexRemoveValue(+e.target.value)}

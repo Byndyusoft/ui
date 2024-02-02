@@ -5,17 +5,17 @@
 }
 
 .row {
+    width: 424px;
     display: flex;
     gap: 8px;
 }
 
-.leftPart {
-    box-sizing: border-box;
-    display: flex;
-    width: 200px;
-    gap: 4px;
+.input {
+    min-width: 0;
+    flex-grow: 1;
 }
 
-.filterInput {
-    min-width: 0;
+button {
+    flex-basis: 100px;
+    flex-shrink: 0;
 }
