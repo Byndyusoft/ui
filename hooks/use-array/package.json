@@ -8,7 +8,7 @@
     "react",
     "use-array"
   ],
-  "author": "Byndyusoft Frontend Developer <frontend@byndyusoft.com>",
+  "author": "Dmitrii Maletskii <maleckij@byndyusoft.com>",
   "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-array#readme",
   "license": "Apache-2.0",
   "main": "dist/index.js",
