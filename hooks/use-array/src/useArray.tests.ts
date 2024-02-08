@@ -2,13 +2,13 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import useArray from './useArray';
 
 describe('hooks/useArray', () => {
-    it('should return the initial value', () => {
+    test('should return the initial value', () => {
         const initialValue = [1, 2, 3];
         const { result } = renderHook(() => useArray(initialValue));
         expect(result.current[0]).toEqual(initialValue);
     });
 
-    it('should append an item to the list', () => {
+    test('should append an item to the list', () => {
         const initialValue = [1, 2, 3];
         const { result } = renderHook(() => useArray(initialValue));
         const [, { append }] = result.current;
@@ -19,7 +19,7 @@ describe('hooks/useArray', () => {
         expect(result.current[0]).toEqual([1, 2, 3, newItem]);
     });
 
-    it('should prepend an item to the list', () => {
+    test('should prepend an item to the list', () => {
         const initialValue = [1, 2, 3];
         const { result } = renderHook(() => useArray(initialValue));
         const [, { prepend }] = result.current;
@@ -30,7 +30,7 @@ describe('hooks/useArray', () => {
         expect(result.current[0]).toEqual([newItem, 1, 2, 3]);
     });
 
-    it('should update item in list', () => {
+    test('should update item in list', () => {
         const initialValue = [1, 2, 3];
         const { result } = renderHook(() => useArray<string | number>(initialValue));
         const [, { update }] = result.current;
@@ -40,7 +40,7 @@ describe('hooks/useArray', () => {
         expect(result.current[0]).toEqual([1, 'two', 3]);
     });
 
-    it('should remove item from list', () => {
+    test('should remove item from list', () => {
         const initialValue = [1, 2, 3];
         const { result } = renderHook(() => useArray(initialValue));
         const [, { remove }] = result.current;
@@ -50,7 +50,7 @@ describe('hooks/useArray', () => {
         expect(result.current[0]).toEqual([1, 3]);
     });
 
-    it('should filter the list', () => {
+    test('should filter the list', () => {
         const initialValue = [1, 2, 3, 4, 5];
         const { result } = renderHook(() => useArray(initialValue));
         const [, { filter }] = result.current;
@@ -60,7 +60,7 @@ describe('hooks/useArray', () => {
         expect(result.current[0]).toEqual([2, 4]);
     });
 
-    it('should sort the list', () => {
+    test('should sort the list', () => {
         const initialValue = [3, 1, 5, 2, 4];
         const { result } = renderHook(() => useArray(initialValue));
         const [, { sort }] = result.current;
@@ -70,7 +70,7 @@ describe('hooks/useArray', () => {
         expect(result.current[0]).toEqual([1, 2, 3, 4, 5]);
     });
 
-    it('should clear the list', () => {
+    test('should clear the list', () => {
         const initialValue = [1, 2, 3];
         const { result } = renderHook(() => useArray(initialValue));
         const [, { clear }] = result.current;
@@ -80,7 +80,7 @@ describe('hooks/useArray', () => {
         expect(result.current[0]).toEqual([]);
     });
 
-    it('should reset the list to the initial value', () => {
+    test('should reset the list to the initial value', () => {
         const initialValue = [1, 2, 3];
         const { result } = renderHook(() => useArray(initialValue));
         const [, { append, reset }] = result.current;

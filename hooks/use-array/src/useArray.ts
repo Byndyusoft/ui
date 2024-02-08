@@ -16,62 +16,42 @@ interface IUseArrayCommands<T> {
 export default function useArray<T>(initialValue: T[]): TUseArray<T> {
     const [list, setList] = useState(initialValue);
 
-    const append = useCallback(
-        (item: T) => {
-            setList(previousList => [...previousList, item]);
-        },
-        [setList]
-    );
+    const append = useCallback((item: T) => setList(previousList => [...previousList, item]), [setList]);
 
-    const prepend = useCallback(
-        (item: T) => {
-            setList(previousList => [item, ...previousList]);
-        },
-        [setList]
-    );
+    const prepend = useCallback((item: T) => setList(previousList => [item, ...previousList]), [setList]);
 
     const update = useCallback(
-        (index, item) => {
+        (index, item) =>
             setList(previousList => [
                 ...previousList.slice(0, index),
                 item,
                 ...previousList.slice(index + 1, previousList.length)
-            ]);
-        },
+            ]),
         [setList]
     );
 
     const remove = useCallback(
-        index => {
+        index =>
             setList(previousList => [
                 ...previousList.slice(0, index),
                 ...previousList.slice(index + 1, previousList.length)
-            ]);
-        },
+            ]),
         [setList]
     );
 
     const filter = useCallback(
-        (cb: (item: T) => boolean) => {
-            setList(previousList => previousList.filter(cb));
-        },
+        (cb: (item: T) => boolean) => setList(previousList => previousList.filter(cb)),
         [setList]
     );
 
     const sort = useCallback(
-        (cb: (a: T, b: T) => number) => {
-            setList(previousList => [...previousList].sort(cb));
-        },
+        (cb: (a: T, b: T) => number) => setList(previousList => [...previousList].sort(cb)),
         [setList]
     );
 
-    const clear = useCallback(() => {
-        setList([]);
-    }, [setList]);
+    const clear = useCallback(() => setList([]), [setList]);
 
-    const reset = useCallback(() => {
-        setList(initialValue);
-    }, [setList, initialValue]);
+    const reset = useCallback(() => setList(initialValue), [setList, initialValue]);
 
     const commands = { append, prepend, update, remove, filter, sort, clear, reset };
 
