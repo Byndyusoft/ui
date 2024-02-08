@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "module": "commonjs",
+    "target": "es6"
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "src/**/*.tests.tsx", "src/**/*.stories.tsx"]
+}

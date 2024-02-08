@@ -1,0 +1,21 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.row {
+    width: 424px;
+    display: flex;
+    gap: 8px;
+}
+
+.input {
+    min-width: 0;
+    flex-grow: 1;
+}
+
+button {
+    flex-basis: 100px;
+    flex-shrink: 0;
+}

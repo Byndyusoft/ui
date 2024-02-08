@@ -45,3 +45,7 @@ const HTMLElementTemplate: Story = () => {
 };
 
 export const HTMLElementEvent = HTMLElementTemplate.bind({});
+
+export default {
+    title: 'useEventListener'
+};
