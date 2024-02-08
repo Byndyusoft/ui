@@ -1,0 +1,65 @@
+import { Meta, Markdown, Story, Canvas, Source, ArgsTable } from '@storybook/addon-docs';
+import Readme from '../../README.md';
+import FormattedNumberView from '../FormattedNumberView';
+import {
+    SimpleNumberViewStory,
+    CustomDefaultFormatterOptionsViewStory,
+    WithSameFractionalPartViewStory,
+    WithCustomFormatterViewStory,
+    WithCustomNumberPartsParserViewStory,
+    WithCustomClassNamesViewStory
+} from './FormattedNumberView.stories';
+
+<Meta title="FormattedNumber" component={FormattedNumberView} />
+
+<Markdown>{Readme}</Markdown>
+
+## Usage
+
+To use the component in your project you must:
+
+1. Import the component where you need it:
+
+<Source language="javascript" code="import FormattedNumber from '@byndyusoft-ui/formatted-number';" />
+
+2. Call the component and give it the desired props, for example:
+
+-   Simple number
+
+<Canvas withSource="open" of={SimpleNumberViewStory}>
+    <Story story={SimpleNumberViewStory} />
+</Canvas>
+
+-   With custom default formatter options
+
+<Canvas withSource="open" of={CustomDefaultFormatterOptionsViewStory}>
+    <Story story={CustomDefaultFormatterOptionsViewStory} />
+</Canvas>
+
+-   With same fractional part
+
+<Canvas withSource="open" of={WithSameFractionalPartViewStory}>
+    <Story story={WithSameFractionalPartViewStory} />
+</Canvas>
+
+-   With custom formatter function
+
+<Canvas withSource="open" of={WithCustomFormatterViewStory}>
+    <Story story={WithCustomFormatterViewStory} />
+</Canvas>
+
+-   With custom number parts parser function
+
+<Canvas withSource="open" of={WithCustomNumberPartsParserViewStory}>
+    <Story story={WithCustomNumberPartsParserViewStory} />
+</Canvas>
+
+-   With custom classNames
+
+<Canvas withSource="open" of={WithCustomClassNamesViewStory}>
+    <Story story={WithCustomClassNamesViewStory} />
+</Canvas>
+
+## Props
+
+<ArgsTable of={FormattedNumberView} />

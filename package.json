@@ -80,6 +80,7 @@
     "rollup-plugin-delete": "^2.0.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "storybook": "^7.6.8",
+    "storybook-css-modules": "^1.0.8",
     "stylelint": "^13.0.0",
     "ts-jest": "^28.0.8",
     "typescript": "^4.8.2"
