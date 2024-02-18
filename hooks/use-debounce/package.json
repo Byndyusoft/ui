@@ -1,5 +1,5 @@
 {
-  "name": "@byndyusoft-ui/use-window-size",
+  "name": "@byndyusoft-ui/use-debounce",
   "version": "0.0.0",
   "description": "Byndyusoft UI React Hook",
   "keywords": [
@@ -7,11 +7,10 @@
     "byndyusoft-ui",
     "react",
     "hook",
-    "window",
-    "size"
+    "debounce"
   ],
   "author": "Anastasia Vasenina <vasenina@byndyusoft.com>",
-  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-window-size#readme",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-debounce#readme",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -30,8 +29,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "dependencies": {
-    "@byndyusoft-ui/use-event-listener": "*"
   }
 }
