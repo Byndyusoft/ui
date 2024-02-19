@@ -1,27 +1,9 @@
 import { Meta, Story, Canvas } from '@storybook/addon-docs';
 import Readme from '../README.md';
 import { MouseEvent, KeyboardEvent, HTMLElementEvent } from './useEventListener.stories';
+import { Markdown } from "@storybook/blocks";
 
 <Meta title="hooks/useEventListener" />
 
-<Readme />
+<Markdown>{Readme}</Markdown>
 
-### Examples
-
-Mouse event
-
-<Canvas withSource="open">
-    <Story story={MouseEvent} />
-</Canvas>
-
-Keyboard event
-
-<Canvas withSource="open">
-    <Story story={KeyboardEvent} />
-</Canvas>
-
-HTML element event
-
-<Canvas withSource="open">
-    <Story story={HTMLElementEvent} />
-</Canvas>
