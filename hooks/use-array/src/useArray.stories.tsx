@@ -3,7 +3,7 @@ import { StoryFn } from '@storybook/react';
 import useArray from './useArray';
 import './useArray.stories.css';
 
-const HookStoryComponent = () => {
+const HookStoryComponent = (): JSX.Element => {
     const [addValue, setAddValue] = useState(0);
     const [prependValue, setPrependValue] = useState(0);
     const [fromValue, setFromValue] = useState(0);
@@ -24,16 +24,18 @@ const HookStoryComponent = () => {
                         className="input"
                         value={addValue}
                         type="numeric"
-                        onChange={e => setAddValue(+e.target.value)}
+                        onChange={e => setAddValue(Number(e.target.value))}
                     />
-                    <button onClick={() => append(addValue)}>Append</button>
+                    <button type="button" onClick={() => append(addValue)}>
+                        Append
+                    </button>
                 </div>
                 <div className="row">
                     <input
                         className="input"
                         value={prependValue}
                         type="numeric"
-                        onChange={e => setPrependValue(+e.target.value)}
+                        onChange={e => setPrependValue(Number(e.target.value))}
                     />
                     <button onClick={() => prepend(prependValue)}>Prepend</button>
                 </div>
@@ -43,14 +45,14 @@ const HookStoryComponent = () => {
                         className="input"
                         value={fromValue}
                         type="numeric"
-                        onChange={e => setFromValue(+e.target.value)}
+                        onChange={e => setFromValue(Number(e.target.value))}
                     />
                     <span>to</span>
                     <input
                         className="input"
                         value={lessValue}
                         type="numeric"
-                        onChange={e => setLessValue(+e.target.value)}
+                        onChange={e => setLessValue(Number(e.target.value))}
                     />
                     <button onClick={() => filter(a => a >= fromValue && a <= lessValue)}>Filter</button>
                 </div>
@@ -60,14 +62,14 @@ const HookStoryComponent = () => {
                         className="input"
                         value={indexUpdateValue}
                         type="numeric"
-                        onChange={e => setIndexUpdateValue(+e.target.value)}
+                        onChange={e => setIndexUpdateValue(Number(e.target.value))}
                     />
                     <span>item</span>
                     <input
                         className="input"
                         value={updateValue}
                         type="numeric"
-                        onChange={e => setUpdateValue(+e.target.value)}
+                        onChange={e => setUpdateValue(Number(e.target.value))}
                     />
                     <button onClick={() => update(indexUpdateValue, updateValue)}>Update</button>
                 </div>
@@ -76,22 +78,30 @@ const HookStoryComponent = () => {
                         className="input"
                         value={indexRemoveValue}
                         type="numeric"
-                        onChange={e => setIndexRemoveValue(+e.target.value)}
+                        onChange={e => setIndexRemoveValue(Number(e.target.value))}
                     />
                     <button onClick={() => remove(indexRemoveValue)}>Remove</button>
                 </div>
                 <div className="row">
-                    <button onClick={() => reset()}>Reset</button>
-                    <button onClick={() => clear()}>Clear</button>
-                    <button onClick={() => sort((a, b) => a - b)}>Sort ASC</button>
-                    <button onClick={() => sort((a, b) => b - a)}>Sort DES</button>
+                    <button type="button" onClick={() => reset()}>
+                        Reset
+                    </button>
+                    <button type="button" onClick={() => clear()}>
+                        Clear
+                    </button>
+                    <button type="button" onClick={() => sort((a, b) => a - b)}>
+                        Sort ASC
+                    </button>
+                    <button type="button" onClick={() => sort((a, b) => b - a)}>
+                        Sort DES
+                    </button>
                 </div>
             </div>
         </div>
     );
 };
 
-const Template: StoryFn = args => <HookStoryComponent />;
+const Template: StoryFn = () => <HookStoryComponent />;
 
 export const HookStory = Template.bind({});
 
