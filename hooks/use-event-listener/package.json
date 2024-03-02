@@ -19,7 +19,7 @@
     "url": "git+https://github.com/Byndyusoft/ui.git"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --project tsconfig.build.json",
     "clean": "rimraf dist",
     "lint": "eslint src --config ../../eslint.config.js",
     "test": "jest --config ../../jest.config.js --roots hooks/use-event-listener/src"
