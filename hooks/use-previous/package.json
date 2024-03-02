@@ -22,7 +22,7 @@
     "build": "tsc",
     "clean": "rimraf dist",
     "lint": "eslint src --config ../../eslint.config.js",
-    "test": "jest --config ../../jest.config.js"
+    "test": "jest --config ../../jest.config.js --roots hooks/use-previous/src"
   },
   "bugs": {
     "url": "https://github.com/Byndyusoft/ui/issues"
