@@ -1,6 +1,6 @@
 {
   "name": "@byndyusoft-ui/use-focus",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Byndyusoft UI React Hook",
   "keywords": [
     "byndyusoft",
@@ -22,7 +22,7 @@
     "build": "tsc",
     "clean": "rimraf dist",
     "lint": "eslint src --config ../../eslint.config.js",
-    "test": "jest --config ../../jest.config.js"
+    "test": "jest --config ../../jest.config.js --roots hooks/use-focus/src"
   },
   "bugs": {
     "url": "https://github.com/Byndyusoft/ui/issues"
@@ -31,6 +31,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@byndyusoft-ui/use-event-listener": "*"
+    "@byndyusoft-ui/use-event-listener": "^0.1.1",
+    "@byndyusoft-ui/use-toggle": "^0.1.0"
   }
 }

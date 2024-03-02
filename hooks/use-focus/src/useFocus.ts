@@ -1,11 +1,12 @@
-import { RefObject, useEffect, useState } from 'react';
+import { RefObject, useEffect } from 'react';
 import useEventListener from '@byndyusoft-ui/use-event-listener';
+import useToggle from '@byndyusoft-ui/use-toggle';
 
 export default function useFocus<T extends HTMLElement = HTMLElement>(
     elementRef: RefObject<T>,
     defaultState = false
 ): boolean {
-    const [isFocused, setIsFocused] = useState(defaultState);
+    const [isFocused, { toLeftValue: focus, toRightValue: blur }] = useToggle(true, false, defaultState);
 
     useEffect(() => {
         if (elementRef.current && defaultState) {
@@ -13,12 +14,8 @@ export default function useFocus<T extends HTMLElement = HTMLElement>(
         }
     }, []);
 
-    const onFocus = () => setIsFocused(true);
-
-    const onBlur = () => setIsFocused(false);
-
-    useEventListener('focus', onFocus, elementRef);
-    useEventListener('blur', onBlur, elementRef);
+    useEventListener('focus', focus, elementRef);
+    useEventListener('blur', blur, elementRef);
 
     return isFocused;
 }
