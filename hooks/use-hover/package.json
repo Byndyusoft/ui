@@ -31,6 +31,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@byndyusoft-ui/use-event-listener": "^0.1.0"
+    "@byndyusoft-ui/use-event-listener": "^0.1.0",
+    "@byndyusoft-ui/use-toggle": "^0.1.0"
   }
 }
