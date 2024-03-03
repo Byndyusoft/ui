@@ -3,9 +3,9 @@ import usePrevious from './usePrevious';
 import type { Meta, StoryObj } from '@storybook/react';
 import './usePrevious.stories.css';
 
-type Story = StoryObj<typeof Template>;
+type TStory = StoryObj<typeof Template>;
 
-const Template = () => {
+const Template = (): JSX.Element => {
     const [counter, setCounter] = useState(0);
     const res = usePrevious(counter);
 
@@ -22,8 +22,8 @@ const Template = () => {
     );
 };
 
-export const HookStory: Story = {
-    decorators: [() => <Template />]
+export const HookStory: TStory = {
+    decorators: [(): JSX.Element => <Template />]
 };
 
 const meta: Meta<typeof Template> = {
