@@ -31,6 +31,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@byndyusoft-ui/use-latest-ref": "*"
+    "@byndyusoft-ui/use-latest-ref": "^0.0.1"
   }
 }
