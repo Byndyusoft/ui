@@ -12,6 +12,7 @@ describe('components/Portal', () => {
 
         expect(screen.getByTestId('content')).toBeInTheDocument();
 
+        // eslint-disable-next-line testing-library/no-node-access
         expect(baseElement.querySelector('[id="portal"]')).toBeInTheDocument();
     });
 });
