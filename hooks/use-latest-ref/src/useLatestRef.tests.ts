@@ -1,10 +1,12 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { Renderer, renderHook, RenderHookResult } from '@testing-library/react-hooks';
 import useLatestRef from './useLatestRef';
+import { MutableRefObject } from 'react';
 
-const setup = (value?: unknown) => renderHook(state => useLatestRef(state), { initialProps: value });
+const setup = <T>(value?: T): RenderHookResult<T, MutableRefObject<T>, Renderer<T>> =>
+    renderHook(state => useLatestRef(state), { initialProps: value });
 
 describe('hooks/useLatestRef', () => {
-    test('persists value between renders', async () => {
+    test('persists value between renders', () => {
         const { result, rerender } = setup(0);
 
         rerender(1);
