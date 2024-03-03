@@ -1,9 +1,14 @@
 import { act, renderHook } from '@testing-library/react-hooks';
-import useWindowSize from '../src/useWindowSize';
+import useWindowSize from './useWindowSize';
 
 describe('use-window-size', () => {
-    const triggerResize = (dimension: 'width' | 'height', value: number) => {
-        dimension === 'width' ? ((window.innerWidth as number) = value) : ((window.innerHeight as number) = value);
+    const triggerResize = (dimension: 'width' | 'height', value: number): void => {
+        if (dimension === 'width') {
+            (window.innerWidth as number) = value;
+        } else {
+            (window.innerHeight as number) = value;
+        }
+
         window.dispatchEvent(new Event('resize'));
     };
 
