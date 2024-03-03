@@ -1,7 +1,8 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { Renderer, renderHook, RenderHookResult } from '@testing-library/react-hooks';
 import useInterval from './useInterval';
 
-const setup = (callback: () => void, delay: number | null) => renderHook(() => useInterval(callback, delay));
+const setup = (callback: () => void, delay: number | null): RenderHookResult<void, () => void, Renderer<void>> =>
+    renderHook(() => useInterval(callback, delay));
 
 describe('hooks/useInterval', () => {
     beforeAll(() => {
