@@ -1,7 +1,8 @@
-import { renderHook } from '@testing-library/react-hooks';
-import useTimeout from './useTimeout';
+import { Renderer, renderHook, RenderHookResult } from '@testing-library/react-hooks';
+import useTimeout, { TCallback } from './useTimeout';
 
-const setup = (callback: () => void, delay: number | null) => renderHook(() => useTimeout(callback, delay));
+const setup = (callback: TCallback, delay: number | null): RenderHookResult<void, TCallback, Renderer<void>> =>
+    renderHook(() => useTimeout(callback, delay));
 
 describe('hooks/useTimeout', () => {
     beforeAll(() => {
