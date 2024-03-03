@@ -1,6 +1,6 @@
 {
   "name": "@byndyusoft-ui/use-hover",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Byndyusoft UI React Hook",
   "keywords": [
     "byndyusoft",
@@ -19,7 +19,7 @@
     "url": "git+https://github.com/Byndyusoft/ui.git"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --project tsconfig.build.json",
     "clean": "rimraf dist",
     "lint": "eslint src --config ../../eslint.config.js",
     "test": "jest --config ../../jest.config.js --roots hooks/use-hover/src"
