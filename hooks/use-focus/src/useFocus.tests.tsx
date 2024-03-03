@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import useFocus from './useFocus';
 
 interface ISetupProps {
@@ -9,14 +9,14 @@ interface ISetupProps {
 
 const Setup = ({ autofocus = false }: ISetupProps): JSX.Element => {
     const elementToFocus = useRef(null);
-    const elementToUnfocus = useRef(null);
+    const elementToBlur = useRef(null);
 
     const isFocused = useFocus(elementToFocus, autofocus);
 
     return (
         <div>
-            <button type="button" ref={elementToUnfocus} aria-label="unfocus-button">
-                Unfocus
+            <button type="button" ref={elementToBlur} aria-label="blur-button">
+                Blur
             </button>
             <button type="button" ref={elementToFocus} aria-label="focus-button">
                 {isFocused ? 'focused' : 'unfocused'}
@@ -32,38 +32,38 @@ describe('hooks/useFocus', () => {
         const button = screen.getByLabelText('focus-button');
         await userEvent.click(button);
 
-        expect(button.textContent).toBe('focused');
+        expect(button).toHaveTextContent('focused');
     });
 
-    test('unfocus works', async () => {
+    test('blur works', async () => {
         render(<Setup />);
 
         const focusButton = screen.getByLabelText('focus-button');
-        const unfocusButton = screen.getByLabelText('unfocus-button');
+        const blurButton = screen.getByLabelText('blur-button');
 
         await userEvent.click(focusButton);
 
-        expect(focusButton.textContent).toBe('focused');
+        expect(focusButton).toHaveTextContent('focused');
 
-        await userEvent.click(unfocusButton);
+        await userEvent.click(blurButton);
 
-        expect(focusButton.textContent).toBe('unfocused');
+        expect(focusButton).toHaveTextContent('unfocused');
     });
 
     test('autofocus works', async () => {
         render(<Setup autofocus />);
 
         const focusButton = screen.getByLabelText('focus-button');
-        const unfocusButton = screen.getByLabelText('unfocus-button');
+        const blurButton = screen.getByLabelText('blur-button');
 
-        expect(focusButton.textContent).toBe('focused');
+        expect(focusButton).toHaveTextContent('focused');
 
-        await userEvent.click(unfocusButton);
+        await userEvent.click(blurButton);
 
-        expect(focusButton.textContent).toBe('unfocused');
+        expect(focusButton).toHaveTextContent('unfocused');
 
         await userEvent.click(focusButton);
 
-        expect(focusButton.textContent).toBe('focused');
+        expect(focusButton).toHaveTextContent('focused');
     });
 });

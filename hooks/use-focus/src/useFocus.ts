@@ -12,7 +12,7 @@ export default function useFocus<T extends HTMLElement = HTMLElement>(
         if (elementRef.current && defaultState) {
             elementRef.current.focus();
         }
-    }, []);
+    }, [elementRef, defaultState]);
 
     useEventListener('focus', focus, elementRef);
     useEventListener('blur', blur, elementRef);
