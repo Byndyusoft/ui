@@ -1,0 +1,32 @@
+{
+  "name": "@byndyusoft-ui/types",
+  "version": "0.0.0",
+  "description": "Byndyusoft UI Utility Types",
+  "keywords": [
+    "byndyusoft",
+    "byndyusoft-ui",
+    "typescript",
+    "types"
+  ],
+  "author": "Eugene Abrosimov <sadcitizen@yandex.ru>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/packages/types#readme",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Byndyusoft/ui.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/Byndyusoft/ui/issues"
+  }
+}
