@@ -12,21 +12,19 @@
   "homepage": "https://github.com/Byndyusoft/ui/tree/master/packages/types#readme",
   "license": "Apache-2.0",
   "main": "dist/index.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
-  "files": [
-    "lib"
-  ],
+  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Byndyusoft/ui.git"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "build": "tsc",
+    "clean": "rimraf dist"
   },
   "bugs": {
     "url": "https://github.com/Byndyusoft/ui/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
