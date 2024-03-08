@@ -1,4 +1,5 @@
 export * from './Brand';
+export * from './Callback';
 export * from './Comparator';
 export * from './InitialState';
 export * from './Nullable';
