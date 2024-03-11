@@ -14,7 +14,7 @@ html {
 }
 
 body {
-    margin: 0; /* unset ?? */
+    margin: initial;
 }
 
 @media (prefers-reduced-motion: reduce) {
