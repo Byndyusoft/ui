@@ -2,6 +2,10 @@ abbr[title] {
     text-decoration: underline dotted;
 }
 
+small {
+    font-size: 80%;
+}
+
 b,
 strong {
     font-weight: bolder;
