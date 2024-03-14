@@ -1,0 +1,30 @@
+{
+  "name": "@byndyusoft-ui/types",
+  "version": "0.0.0",
+  "description": "Byndyusoft UI Utility Types",
+  "keywords": [
+    "byndyusoft",
+    "byndyusoft-ui",
+    "typescript",
+    "types"
+  ],
+  "author": "Eugene Abrosimov <sadcitizen@yandex.ru>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/packages/types#readme",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Byndyusoft/ui.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf dist"
+  },
+  "bugs": {
+    "url": "https://github.com/Byndyusoft/ui/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
