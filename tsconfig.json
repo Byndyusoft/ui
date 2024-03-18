@@ -13,5 +13,5 @@
     "target": "esnext"
   },
   "exclude": ["node_modules"],
-  "include": ["types.d.ts", "components", "hooks", "services"]
+  "include": ["types.d.ts", "components", "hooks", "services", "styles"]
 }

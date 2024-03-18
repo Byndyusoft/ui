@@ -1,0 +1,15 @@
+@import '@byndyusoft-ui/reset-css';
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+}
+
+.listContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    margin-top: 1.75rem;
+}
