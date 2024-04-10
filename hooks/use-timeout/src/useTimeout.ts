@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useRef } from 'react';
 import useLatestRef from '@byndyusoft-ui/use-latest-ref';
 
-export default function useTimeout(callback: () => void, delay: number | null): () => void {
+export type TCallback = () => void;
+
+export default function useTimeout(callback: TCallback, delay: number | null): TCallback {
     const savedCallback = useLatestRef(callback);
     const timer = useRef<ReturnType<typeof setTimeout>>();
 
@@ -19,7 +21,7 @@ export default function useTimeout(callback: () => void, delay: number | null): 
         timer.current = setTimeout(() => savedCallback.current(), delay);
 
         return () => clear();
-    }, [delay]);
+    }, [delay, savedCallback, clear]);
 
     return clear;
 }

@@ -1,15 +1,13 @@
-import useClickOutside from './useClickOutside';
-import React, { useCallback, useRef } from 'react';
+import React, { useRef } from 'react';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
+import useClickOutside from './useClickOutside';
 
 const Setup = (props: { onClick: () => void }): JSX.Element => {
     const ref1 = useRef(null);
     const ref2 = useRef(null);
 
-    const handle = useCallback(props.onClick, [props.onClick]);
-
-    useClickOutside(handle, ref1, ref2);
+    useClickOutside(props.onClick, ref1, ref2);
 
     return (
         <div aria-label="container">
@@ -24,17 +22,20 @@ const Setup = (props: { onClick: () => void }): JSX.Element => {
 };
 
 describe('hooks/useClickOutside', () => {
-    test('add two refs', () => {
+    test('add two refs', async () => {
         const onClick = jest.fn();
         render(<Setup onClick={onClick} />);
 
-        userEvent.click(screen.getByLabelText('button-1'));
+        await userEvent.click(screen.getByLabelText('button-1'));
+
         expect(onClick).toBeCalledTimes(0);
 
-        userEvent.click(screen.getByLabelText('button-2'));
+        await userEvent.click(screen.getByLabelText('button-2'));
+
         expect(onClick).toBeCalledTimes(0);
 
-        userEvent.click(screen.getByLabelText('container'));
+        await userEvent.click(screen.getByLabelText('container'));
+
         expect(onClick).toBeCalledTimes(1);
     });
 });

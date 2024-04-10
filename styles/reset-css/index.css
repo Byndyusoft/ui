@@ -1,5 +1,6 @@
-@import 'document.css';
-@import 'button.css';
 @import 'anchor.css';
+@import 'button.css';
+@import 'document.css';
+@import 'image.css';
 @import 'input.css';
 @import 'table.css';

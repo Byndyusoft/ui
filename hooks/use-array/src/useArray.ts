@@ -1,27 +1,31 @@
 import { useCallback, useState } from 'react';
 
-export type TUseArray<T> = [list: T[], commands: IUseArrayCommands<T>];
+export type TUseArray<T> = [list: Array<T>, commands: IUseArrayCommands<T>];
+
+export type TPredicate<T> = (value: T) => boolean;
+
+export type TComparator<L, R> = (left: L, right: R) => number;
 
 interface IUseArrayCommands<T> {
     append: (item: T) => void;
     prepend: (item: T) => void;
     update: (index: number, item: T) => void;
     remove: (index: number) => void;
-    filter: (cb: (item: T) => boolean) => void;
+    filter: (predicate: TPredicate<T>) => void;
     clear: () => void;
     reset: () => void;
-    sort: (cb: (a: T, b: T) => number) => void;
+    sort: (comparator: TComparator<T, T>) => void;
 }
 
-export default function useArray<T>(initialValue: T[]): TUseArray<T> {
-    const [list, setList] = useState(initialValue);
+export default function useArray<T>(initialValue: Array<T>): TUseArray<T> {
+    const [list, setList] = useState<Array<T>>(initialValue);
 
     const append = useCallback((item: T) => setList(previousList => [...previousList, item]), [setList]);
 
     const prepend = useCallback((item: T) => setList(previousList => [item, ...previousList]), [setList]);
 
     const update = useCallback(
-        (index, item) =>
+        (index: number, item: T) =>
             setList(previousList => [
                 ...previousList.slice(0, index),
                 item,
@@ -31,7 +35,7 @@ export default function useArray<T>(initialValue: T[]): TUseArray<T> {
     );
 
     const remove = useCallback(
-        index =>
+        (index: number) =>
             setList(previousList => [
                 ...previousList.slice(0, index),
                 ...previousList.slice(index + 1, previousList.length)
@@ -40,12 +44,12 @@ export default function useArray<T>(initialValue: T[]): TUseArray<T> {
     );
 
     const filter = useCallback(
-        (cb: (item: T) => boolean) => setList(previousList => previousList.filter(cb)),
+        (predicate: TPredicate<T>) => setList(previousList => previousList.filter(predicate)),
         [setList]
     );
 
     const sort = useCallback(
-        (cb: (a: T, b: T) => number) => setList(previousList => [...previousList].sort(cb)),
+        (comparator: TComparator<T, T>) => setList(previousList => [...previousList].sort(comparator)),
         [setList]
     );
 
