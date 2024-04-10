@@ -1,6 +1,6 @@
 {
   "name": "@byndyusoft-ui/portal",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "description": "Byndyusoft UI Portal React Component",
   "keywords": [
     "byndyusoft",
@@ -30,7 +30,7 @@
     "access": "public"
   },
   "peerDependencies": {
-    "react": ">=17",
-    "react-dom": ">=17"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   }
 }
