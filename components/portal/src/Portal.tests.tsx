@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import Portal from './Portal';
 
 describe('components/Portal', () => {
-    test.skip('renders correctly with children', () => {
+    test('renders correctly with children', () => {
         const { baseElement } = render(
             <Portal id="portal">
                 <div data-testid="content" />

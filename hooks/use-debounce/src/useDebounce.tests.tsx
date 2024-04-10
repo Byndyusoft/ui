@@ -20,7 +20,7 @@ const Setup = (): JSX.Element => {
 };
 
 describe('hooks/useDebounce', () => {
-    test.skip('useDebounce works', async () => {
+    test('useDebounce works', async () => {
         render(<Setup />);
 
         const input = await screen.findByRole('textbox');
