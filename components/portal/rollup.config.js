@@ -6,6 +6,10 @@ export default {
     input: ['src/index.ts'],
     plugins: [
         ...baseConfig.plugins,
-        typescript({ tsconfig: './tsconfig.json', exclude: ['src/*.stories.tsx', 'src/*.tests.tsx', 'node_modules'] })
+        typescript({
+            tsconfig: './tsconfig.json',
+            module: 'ESNext',
+            exclude: ['src/*.stories.tsx', 'src/*.tests.tsx', 'node_modules']
+        })
     ]
 };
