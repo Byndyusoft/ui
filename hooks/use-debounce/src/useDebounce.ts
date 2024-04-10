@@ -1,21 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
+import useDebounceCallback from '@byndyusoft-ui/use-debounce-callback';
 
-export default function useDebounce(value: string, delay = 300): [string, boolean] {
-    const [debouncedValue, setDebouncedValue] = useState(value);
-    const timeout = useRef<NodeJS.Timeout>();
+export default function useDebounce(value: string, delay = 300): [string, (value: string) => void] {
+    const [debouncedValue, setValue] = useState(value);
 
-    useEffect(() => {
-        timeout.current = setTimeout(() => {
-            timeout.current = undefined;
-            setDebouncedValue(value);
-        }, delay);
+    const setDebounceValue = useDebounceCallback(setValue, delay);
 
-        return () => {
-            clearTimeout(timeout.current);
-        };
-    }, [value, delay]);
-
-    const isReady = !timeout.current;
-
-    return [debouncedValue, isReady];
+    return [debouncedValue, setDebounceValue];
 }

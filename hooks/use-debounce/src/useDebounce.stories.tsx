@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import useDebounce from './useDebounce';
 import './useDebounce.stories.css';
 import type { Meta, StoryObj } from '@storybook/react';
@@ -6,18 +6,15 @@ import type { Meta, StoryObj } from '@storybook/react';
 type Story = StoryObj<typeof Template>;
 
 const Template = () => {
-    const [value, setValue] = useState('');
-    const [debouncedValue, isReady] = useDebounce(value, 2000);
-    const isReadyText = 'true';
-    const isNotReadyText = 'false';
+    const [debouncedValue, setDebouncedValue] = useDebounce('', 2000);
 
     return (
         <div className="container">
             <span>
                 Debounced value: <span>{debouncedValue}</span>
             </span>
-            <span>Debounced value is ready: {isReady ? isReadyText : isNotReadyText}</span>
-            <input value={value} onChange={e => setValue(e.target.value)} />
+            <input onChange={e => setDebouncedValue(e.target.value)} />
+            <button onClick={() => setDebouncedValue('10000')}>set debounced value</button>
         </div>
     );
 };

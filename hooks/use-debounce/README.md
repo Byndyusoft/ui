@@ -1,6 +1,6 @@
 # `@byndyusoft-ui/use-debounce`
 ---
-> A React hook that uses for delaying the execution of functions or state updates until a specified time period has passed without any further changes
+> A React hook that uses to delay update state updates until a specified time period has passed without any further changes
 
 ### Installation
 

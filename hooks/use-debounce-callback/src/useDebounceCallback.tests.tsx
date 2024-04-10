@@ -1,49 +1,56 @@
 import React, { useState } from 'react';
 import { render, screen, RenderResult, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-// import useDebounceCallback from './useDebounceCallback';
+import useDebounceCallback from './useDebounceCallback';
 
-const isReadyText = 'true';
-const isNotReadyText = 'false';
-const isReadyLabel = 'is ready';
-const debouncedValueLabel = 'debounced value';
-const inputValue = '1111';
+const oldValue = 'old value';
+const newValue = 'new value';
+const timeout = 2000;
+const debouncedChangeLabel = 'debounced change label';
+const changeLabel = 'change label';
+const resetLabel = 'reset label';
 
 const Setup = (): JSX.Element => {
-    const [value, setValue] = useState('');
-    // const [debouncedValue, isReady] = useDebounce(value, 2000);
+    const [value, setValue] = useState(oldValue);
+    const setDebounceValue = useDebounceCallback(setValue, timeout);
 
     return (
         <div className="container">
-            <span>{/* Debounced value: <span aria-label={debouncedValueLabel}>{debouncedValue}</span> */}</span>
             <span>
-                Debounced value is ready:{' '}
-                {/* <span aria-label={isReadyLabel}>{isReady ? isReadyText : isNotReadyText}</span> */}
+                Value: <span>{value}</span>
             </span>
-            <input value={value} onChange={e => setValue(e.target.value)} />
+            <button aria-label={debouncedChangeLabel} onClick={() => setDebounceValue(newValue)}>
+                debounced change
+            </button>
+            <button aria-label={changeLabel} onClick={() => setValue(newValue)}>
+                change
+            </button>
+            <button aria-label={resetLabel} onClick={() => setValue(oldValue)}>
+                reset
+            </button>
         </div>
     );
 };
 
-describe('hooks/useDebounce', () => {
-    test('useDebounce works', async () => {
+describe('hooks/useDebounceCallback', () => {
+    test('useDebounceCallback works', async () => {
         render(<Setup />);
-        const isReady = await screen.findByLabelText(isReadyLabel);
-        expect(isReady).toHaveTextContent(isReadyText);
-        const input = await screen.findByRole('textbox');
-        userEvent.type(input, inputValue);
+
+        const debouncedChangeButton = await screen.findByLabelText(debouncedChangeLabel);
+        const changeButton = await screen.findByLabelText(changeLabel);
+        const resetButton = await screen.findByLabelText(resetLabel);
+        expect(screen.findByText(oldValue)).toBeInTheDocument();
+        userEvent.click(changeButton);
+        expect(screen.findByText(newValue)).toBeInTheDocument();
+        userEvent.click(resetButton);
+        expect(screen.findByText(oldValue)).toBeInTheDocument();
+        userEvent.click(debouncedChangeButton);
+        expect(screen.findByText(oldValue)).toBeInTheDocument();
         await waitFor(
             () => {
-                expect(isReady).toHaveTextContent(isNotReadyText);
+                expect(screen.findByText(newValue)).toBeInTheDocument();
             },
-            { timeout: 1000 }
-        );
-        await waitFor(
-            () => {
-                expect(screen.getByLabelText(debouncedValueLabel)).toHaveTextContent(inputValue);
-                expect(isReady).toHaveTextContent(isReadyText);
-            },
-            { timeout: 2100 }
+            { timeout: 2500 }
         );
     });
 });
