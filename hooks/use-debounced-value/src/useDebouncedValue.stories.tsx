@@ -1,12 +1,12 @@
 import React from 'react';
-import useDebounce from './useDebounce';
-import './useDebounce.stories.css';
+import useDebouncedValue from './useDebouncedValue';
+import './useDebouncedValue.stories.css';
 import type { Meta, StoryObj } from '@storybook/react';
 
 type Story = StoryObj<typeof Template>;
 
 const Template = () => {
-    const [debouncedValue, setDebouncedValue] = useDebounce('', 2000);
+    const [debouncedValue, setDebouncedValue] = useDebouncedValue('', 2000);
 
     return (
         <div className="container">
@@ -24,7 +24,7 @@ export const HookStory: Story = {
 };
 
 const meta: Meta<typeof Template> = {
-    title: 'hooks/useDebounce',
+    title: 'hooks/useDebouncedValue',
     component: Template
 };
 

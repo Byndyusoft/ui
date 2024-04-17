@@ -1,13 +1,13 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import useDebounce from './useDebounce';
+import useDebouncedValue from './useDebouncedValue';
 
 const debouncedValueLabel = 'debounced value';
 const inputValue = '1111';
 
 const Setup = (): JSX.Element => {
-    const [debouncedValue, setDebouncedValue] = useDebounce('', 2000);
+    const [debouncedValue, setDebouncedValue] = useDebouncedValue('', 2000);
 
     return (
         <div className="container">
@@ -19,8 +19,8 @@ const Setup = (): JSX.Element => {
     );
 };
 
-describe('hooks/useDebounce', () => {
-    test('useDebounce works', async () => {
+describe('hooks/useDebouncedValue', () => {
+    test('useDebouncedValue works', async () => {
         render(<Setup />);
 
         const input = await screen.findByRole('textbox');

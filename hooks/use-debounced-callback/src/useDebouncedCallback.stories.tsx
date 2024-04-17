@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import useDebounceCallback from './useDebounceCallback';
-import './useDebounceCallback.stories.css';
+import useDebouncedCallback from './useDebouncedCallback';
+import './useDebouncedCallback.stories.css';
 import type { Meta, StoryObj } from '@storybook/react';
 
 type Story = StoryObj<typeof Template>;
@@ -11,7 +11,7 @@ const timeout = 2000;
 
 const Template = () => {
     const [value, setValue] = useState(oldValue);
-    const setDebounceValue = useDebounceCallback(setValue, timeout);
+    const setDebounceValue = useDebouncedCallback(setValue, timeout);
 
     return (
         <div className="container">
@@ -28,7 +28,7 @@ export const HookStory: Story = {
 };
 
 const meta: Meta<typeof Template> = {
-    title: 'hooks/useDebounceCallback',
+    title: 'hooks/useDebouncedCallback',
     component: Template
 };
 

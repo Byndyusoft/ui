@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { render, screen, RenderResult, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import useDebounceCallback from './useDebounceCallback';
+import useDebouncedCallback from './useDebouncedCallback';
 
 const oldValue = 'old value';
 const newValue = 'new value';
@@ -12,7 +12,7 @@ const resetLabel = 'reset label';
 
 const Setup = (): JSX.Element => {
     const [value, setValue] = useState(oldValue);
-    const setDebounceValue = useDebounceCallback(setValue, timeout);
+    const setDebounceValue = useDebouncedCallback(setValue, timeout);
 
     return (
         <div className="container">
@@ -32,8 +32,8 @@ const Setup = (): JSX.Element => {
     );
 };
 
-describe('hooks/useDebounceCallback', () => {
-    test('useDebounceCallback works', async () => {
+describe('hooks/useDebouncedCallback', () => {
+    test('useDebouncedCallback works', async () => {
         render(<Setup />);
 
         const debouncedChangeButton = await screen.findByLabelText(debouncedChangeLabel);
