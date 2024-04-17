@@ -10,7 +10,7 @@
     "window",
     "size"
   ],
-  "author": "Anastasia Vasenina <vasenina@byndyusoft.com>",
+  "author": "Nastya Vasenina <vasenina@byndyusoft.com>",
   "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-window-size#readme",
   "license": "Apache-2.0",
   "main": "dist/index.js",
