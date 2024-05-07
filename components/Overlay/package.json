@@ -1,0 +1,36 @@
+{
+  "name": "@byndyusoft-ui/Overlay",
+  "version": "0.1.0",
+  "description": "Byndyusoft UI Portal React Component",
+  "keywords": [
+    "byndyusoft",
+    "byndyusoft-ui",
+    "react",
+    "overlay"
+  ],
+  "author": "Dmitrii Maletskii <maleckij@byndyusoft.com>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/components/overlay#readme",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Byndyusoft/ui.git"
+  },
+  "scripts": {
+    "build": "rollup --config",
+    "clean": "rimraf dist",
+    "lint": "eslint src --config ../../eslint.config.js",
+    "test": "jest --config ../../jest.config.js --roots components/overlay/src"
+  },
+  "bugs": {
+    "url": "https://github.com/Byndyusoft/ui/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "react": ">=17",
+    "react-dom": ">=17"
+  }
+}
