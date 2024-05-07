@@ -1,0 +1,41 @@
+{
+  "name": "@byndyusoft-ui/Modal",
+  "version": "0.1.0",
+  "description": "Byndyusoft UI Portal React Component",
+  "keywords": [
+    "byndyusoft",
+    "byndyusoft-ui",
+    "react",
+    "portal"
+  ],
+  "author": "Dmitrii Maletskii <maleckij@byndyusoft.ru>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/components/portal#readme",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Byndyusoft/ui.git"
+  },
+  "scripts": {
+    "build": "rollup --config",
+    "clean": "rimraf dist",
+    "lint": "eslint src --config ../../eslint.config.js",
+    "test": "jest --config ../../jest.config.js --roots components/portal/src"
+  },
+  "bugs": {
+    "url": "https://github.com/Byndyusoft/ui/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "react": ">=17",
+    "react-dom": ">=17"
+  },
+  "dependencies": {
+    "@byndyusoft-ui/use-is-mounted": "*",
+    "@byndyusoft-ui/ModalsProvider": "*",
+    "@byndyusoft-ui/Overlay": "*"
+  }
+}
