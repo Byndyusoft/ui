@@ -1,15 +1,15 @@
 {
   "name": "@byndyusoft-ui/Modal",
   "version": "0.1.0",
-  "description": "Byndyusoft UI Portal React Component",
+  "description": "Byndyusoft UI Modal React Component",
   "keywords": [
     "byndyusoft",
     "byndyusoft-ui",
     "react",
-    "portal"
+    "modal"
   ],
-  "author": "Dmitrii Maletskii <maleckij@byndyusoft.ru>",
-  "homepage": "https://github.com/Byndyusoft/ui/tree/master/components/portal#readme",
+  "author": "Dmitrii Maletskii <maleckij@byndyusoft.com>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/components/modal#readme",
   "license": "ISC",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -21,7 +21,7 @@
     "build": "rollup --config",
     "clean": "rimraf dist",
     "lint": "eslint src --config ../../eslint.config.js",
-    "test": "jest --config ../../jest.config.js --roots components/portal/src"
+    "test": "jest --config ../../jest.config.js --roots components/modal/src"
   },
   "bugs": {
     "url": "https://github.com/Byndyusoft/ui/issues"
