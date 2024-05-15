@@ -13,18 +13,18 @@ const types = require('types');
 ### TValueOf
 
 ```typescript
-import { TValueOf } from '@byndyusoft-ui/types';
+import { ValueOf } from '@byndyusoft-ui/types';
 
-enum EFruits {
+enum Fruits {
     APPLE = 'apple',
     ORANGE = 'orange'
 }
 
 const fruitsDictionary = {
-    [EFruits.APPLE]: 'Яблоко' as string,
-    [EFruits.ORANGE]: 'Апельсин' as string
+    [Fruits.APPLE]: 'Яблоко' as string,
+    [Fruits.ORANGE]: 'Апельсин' as string
 };
 
-const TFruitsDictionaryValues = TValueOf<typeof fruitsDictionary>;
+const TFruitsDictionaryValues = ValueOf<typeof fruitsDictionary>;
 // TFruitsDictionaryValues = 'Яблоко' | 'Апельсин'
 ```
