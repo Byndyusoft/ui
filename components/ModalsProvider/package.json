@@ -1,12 +1,12 @@
 {
-  "name": "@byndyusoft-ui/ModalsProvider",
+  "name": "@byndyusoft-ui/modals-provider",
   "version": "0.1.0",
-  "description": "Byndyusoft UI ModalsProvider React Component",
+  "description": "Byndyusoft UI Modals Provider React Component",
   "keywords": [
     "byndyusoft",
     "byndyusoft-ui",
     "react",
-    "ModalsProvider"
+    "modals"
   ],
   "author": "Dmitrii Maletskii <maleckij@byndyusoft.ru>",
   "homepage": "https://github.com/Byndyusoft/ui/tree/master/components/ModalsProvider#readme",
@@ -21,7 +21,7 @@
     "build": "rollup --config",
     "clean": "rimraf dist",
     "lint": "eslint src --config ../../eslint.config.js",
-    "test": "jest --config ../../jest.config.js --roots components/ModalsProvider/src"
+    "test": "jest --config ../../jest.config.js --roots components/modals-provider/src"
   },
   "bugs": {
     "url": "https://github.com/Byndyusoft/ui/issues"
