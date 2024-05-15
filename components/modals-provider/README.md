@@ -1,1 +1,1 @@
-# `@byndyusoft-ui/ModalsProvider`
+# `@byndyusoft-ui/modals-provider`
