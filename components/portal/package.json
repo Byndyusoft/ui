@@ -1,6 +1,6 @@
 {
   "name": "@byndyusoft-ui/portal",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Byndyusoft UI Portal React Component",
   "keywords": [
     "byndyusoft",
@@ -21,12 +21,16 @@
     "build": "rollup --config",
     "clean": "rimraf dist",
     "lint": "eslint src --config ../../eslint.config.js",
-    "test": "jest --config ../../jest.config.js"
+    "test": "jest --config ../../jest.config.js --roots components/portal/src"
   },
   "bugs": {
     "url": "https://github.com/Byndyusoft/ui/issues"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "peerDependencies": {
+    "react": ">=17",
+    "react-dom": ">=17"
   }
 }

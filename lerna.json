@@ -1,11 +1,5 @@
 {
-  "packages": [
-    "components/*",
-    "hooks/*",
-    "packages/*",
-    "services/*",
-    "styles/*"
-  ],
+  "packages": ["components/*", "hooks/*", "packages/*", "services/*", "styles/*"],
   "useWorkspaces": true,
   "version": "independent",
   "npmClient": "npm",

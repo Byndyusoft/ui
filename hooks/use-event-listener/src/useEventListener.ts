@@ -39,7 +39,7 @@ function useEventListener<
     handler: (event: WindowEventMap[KW] | HTMLElementEventMap[KH] | MediaQueryListEventMap[KM] | Event) => void,
     target?: RefObject<T>,
     options?: boolean | AddEventListenerOptions
-) {
+): void {
     const savedHandler = useLatestRef(handler);
 
     useEffect(() => {

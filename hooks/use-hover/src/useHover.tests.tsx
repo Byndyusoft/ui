@@ -1,66 +1,39 @@
-import React, { RefObject, useRef } from 'react';
-import { act } from 'react-dom/test-utils';
-import { render, fireEvent, waitFor, screen } from '@testing-library/react';
-import { renderHook } from '@testing-library/react-hooks';
+import React, { useRef } from 'react';
+import { render, screen } from '@testing-library/react';
+import { userEvent } from '@testing-library/user-event';
 import useHover from './useHover';
 
-function TestElement() {
+function Setup(): JSX.Element {
     const ref = useRef(null);
     const isHovered = useHover(ref);
 
     return (
-        <div data-testid="trigger" ref={ref}>
-            {isHovered ? <div>Entered</div> : <div>Leaved</div>}
+        <div aria-label="trigger" ref={ref}>
+            {isHovered ? <div>Hovered</div> : <div>Leaved</div>}
         </div>
     );
 }
 
-function setupHook<T extends HTMLElement = HTMLElement>(ref: RefObject<T>) {
-    return renderHook(() => useHover(ref));
-}
-
-const setupTest = () => {
-    const ref = useRef(null);
-
-    const {
-        result: { current: isHovered }
-    } = setupHook(ref);
-
-    const { container } = render(<TestElement />);
-    return { container, isHovered };
-};
-
 describe('hooks/useHover', () => {
-    test('initial false values', () => {
-        const { isHovered } = setupTest();
+    test('initial state', () => {
+        render(<Setup />);
 
-        expect(isHovered).toBeFalsy();
-        expect(screen.queryByText(/leaved/gi)).toBeInTheDocument();
+        const triggerElement = screen.getByLabelText('trigger');
+
+        expect(triggerElement).toHaveTextContent('Leaved');
     });
 
-    test('mouseHover works', () => {
-        const { container, isHovered } = setupTest();
+    test('hover and leave behavior', async () => {
+        render(<Setup />);
 
-        act(() => {
-            fireEvent.mouseEnter(container);
-        });
+        const triggerElement = screen.getByLabelText('trigger');
 
-        waitFor(() => {
-            expect(isHovered).toBeTruthy();
-            expect(screen.queryByText(/entered/gi)).toBeInTheDocument();
-        });
-    });
+        await userEvent.hover(triggerElement);
 
-    test('mouseLeave works', () => {
-        const { container, isHovered } = setupTest();
+        expect(triggerElement).toHaveTextContent('Hovered');
 
-        act(() => {
-            fireEvent.mouseLeave(container);
-        });
+        await userEvent.unhover(triggerElement);
 
-        waitFor(() => {
-            expect(isHovered).toBeFalsy();
-            expect(screen.queryByText(/leaved/gi)).toBeInTheDocument();
-        });
+        expect(triggerElement).toHaveTextContent('Leaved');
     });
 });

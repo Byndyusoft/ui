@@ -8,9 +8,10 @@ module.exports = {
     },
     overrides: [
         {
-            files: ['src/**/*.tests.@(ts|tsx|js|jsx)'],
+            files: ['src/**/*.tests.@(ts|tsx|js|jsx)', 'src/**/*.stories.@(ts|tsx|js|jsx)'],
             rules: {
-                '@typescript-eslint/no-magic-numbers': 'off'
+                '@typescript-eslint/no-magic-numbers': 'off',
+                'react/button-has-type': 'off'
             }
         }
     ]

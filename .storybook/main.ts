@@ -1,6 +1,10 @@
 import { dirname, join } from 'path';
 module.exports = {
-    stories: ['../components/**/src/**/*.stories.@(js|jsx|ts|tsx|mdx)'],
+    stories: [
+        '../components/**/src/**/*.stories.@(js|jsx|ts|tsx|mdx)',
+        '../hooks/**/src/**/*.stories.@(js|jsx|ts|tsx|mdx)',
+        '../styles/**/*.stories.@(js|jsx|ts|tsx|mdx)'
+    ],
 
     addons: [
         getAbsolutePath('@storybook/addon-links'),
@@ -33,6 +37,6 @@ module.exports = {
     }
 };
 
-function getAbsolutePath(value) {
+function getAbsolutePath(value: string): string {
     return dirname(require.resolve(join(value, 'package.json')));
 }

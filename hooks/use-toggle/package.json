@@ -1,6 +1,6 @@
 {
   "name": "@byndyusoft-ui/use-toggle",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Byndyusoft UI React Hook",
   "keywords": [
     "byndyusoft",
@@ -19,10 +19,10 @@
     "url": "git+https://github.com/Byndyusoft/ui.git"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --project tsconfig.build.json",
     "clean": "rimraf dist",
     "lint": "eslint src --config ../../eslint.config.js",
-    "test": "jest --config ../../jest.config.js"
+    "test": "jest --config ../../jest.config.js --roots hooks/use-toggle/src"
   },
   "bugs": {
     "url": "https://github.com/Byndyusoft/ui/issues"
