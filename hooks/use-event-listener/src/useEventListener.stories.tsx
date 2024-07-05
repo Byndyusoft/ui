@@ -1,13 +1,15 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { Story } from '@storybook/react';
 import useEventListener from './useEventListener';
+import type { Meta, StoryObj } from '@storybook/react';
 
-const MouseEventTemplate: Story = () => {
+type TMouseEventTemplateStory = StoryObj<typeof MouseEventTemplate>;
+
+const MouseEventTemplate = (): JSX.Element => {
     const [coords, setCoords] = useState({ x: 0, y: 0 });
 
-    const handle = useCallback(({ clientX, clientY }) => setCoords({ x: clientX, y: clientY }), [setCoords]);
+    const handler = useCallback((event: MouseEvent) => setCoords({ x: event.clientX, y: event.clientY }), [setCoords]);
 
-    useEventListener('mousemove', handle);
+    useEventListener('mousemove', handler);
 
     return (
         <div>
@@ -15,27 +17,34 @@ const MouseEventTemplate: Story = () => {
         </div>
     );
 };
+export const MouseEvent: TMouseEventTemplateStory = {
+    decorators: [() => <MouseEventTemplate />]
+};
 
-export const MouseEvent = MouseEventTemplate.bind({});
+type TKeyboardEventTemplateStory = StoryObj<typeof KeyboardEventTemplate>;
 
-const KeyboardEventTemplate: Story = () => {
+const KeyboardEventTemplate = (): JSX.Element => {
     const [key, setKey] = useState('none');
 
-    const handle = useCallback(event => setKey(event.key), [setKey]);
+    const handler = useCallback((event: KeyboardEvent) => setKey(event.key), [setKey]);
 
-    useEventListener('keydown', handle);
+    useEventListener('keydown', handler);
 
     return <div>Last key pressed: {key}</div>;
 };
 
-export const KeyboardEvent = KeyboardEventTemplate.bind({});
+export const KeyboardEvent: TKeyboardEventTemplateStory = {
+    decorators: [() => <KeyboardEventTemplate />]
+};
 
-const HTMLElementTemplate: Story = () => {
+type THTMLElementTemplateStory = StoryObj<typeof HTMLElementTemplate>;
+
+const HTMLElementTemplate = (): JSX.Element => {
     const ref = useRef(null);
 
-    const handle = useCallback(() => alert('Button clicked!'), []);
+    const handler = useCallback(() => alert('Button clicked!'), []);
 
-    useEventListener('click', handle);
+    useEventListener('click', handler);
 
     return (
         <button type="button" ref={ref}>
@@ -44,4 +53,11 @@ const HTMLElementTemplate: Story = () => {
     );
 };
 
-export const HTMLElementEvent = HTMLElementTemplate.bind({});
+export const HTMLElement: THTMLElementTemplateStory = {
+    decorators: [() => <HTMLElementTemplate />]
+};
+
+const meta: Meta = {
+    title: 'hooks/useEventListener'
+};
+export default meta;

@@ -1,0 +1,8 @@
+---
+to: hooks/<%= h.changeCase.paramCase(name) %>/src/<%= name %>.ts
+---
+export interface I<%= h.changeCase.pascalCase(name) %> {}
+
+export default function <%= name %>(): I<%= h.changeCase.pascalCase(name) %> {
+    return {};
+}

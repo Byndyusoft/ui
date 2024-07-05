@@ -19,7 +19,7 @@ export default function useInterval(callback: () => void, delay: number | null):
         timer.current = setInterval(() => savedCallback.current(), delay);
 
         return () => clear();
-    }, [delay]);
+    }, [delay, clear, savedCallback]);
 
     return clear;
 }

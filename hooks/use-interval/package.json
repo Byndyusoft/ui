@@ -1,6 +1,6 @@
 {
   "name": "@byndyusoft-ui/use-interval",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "Byndyusoft UI React Hook",
   "keywords": [
     "byndyusoft",
@@ -11,7 +11,7 @@
   ],
   "author": "Eugene Abrosimov <sadcitizen@yandex.ru>",
   "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-interval#readme",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
@@ -19,10 +19,10 @@
     "url": "git+https://github.com/Byndyusoft/ui.git"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --project tsconfig.build.json",
     "clean": "rimraf dist",
     "lint": "eslint src --config ../../eslint.config.js",
-    "test": "jest --config ../../jest.config.js"
+    "test": "jest --config ../../jest.config.js --roots hooks/use-interval/src"
   },
   "bugs": {
     "url": "https://github.com/Byndyusoft/ui/issues"
@@ -31,6 +31,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@byndyusoft-ui/use-latest-ref": "*"
+    "@byndyusoft-ui/use-latest-ref": "^0.0.1"
   }
 }

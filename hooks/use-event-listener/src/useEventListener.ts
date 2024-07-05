@@ -1,53 +1,60 @@
-import { useEffect } from 'react';
+import { RefObject, useEffect } from 'react';
 import useLatestRef from '@byndyusoft-ui/use-latest-ref';
 
-export function useEventListener<K extends keyof HTMLElementEventMap, T extends HTMLElement = HTMLDivElement>(
-    eventName: K,
-    handler: (this: T, event: HTMLElementEventMap[K]) => void,
-    target: T,
+function useEventListener<KM extends keyof MediaQueryListEventMap>(
+    eventName: KM,
+    handler: (event: MediaQueryListEventMap[KM]) => void,
+    target: RefObject<MediaQueryList>,
     options?: boolean | AddEventListenerOptions
 ): void;
 
-export function useEventListener<K extends keyof DocumentEventMap>(
-    eventName: K,
-    handler: (this: Document, event: DocumentEventMap[K]) => void,
-    target: Document,
+function useEventListener<KD extends keyof DocumentEventMap>(
+    eventName: KD,
+    handler: (event: DocumentEventMap[KD]) => void,
+    target: RefObject<Document>,
     options?: boolean | AddEventListenerOptions
 ): void;
 
-export function useEventListener<K extends keyof WindowEventMap>(
-    eventName: K,
-    handler: (this: Window, event: WindowEventMap[K]) => void,
-    target: Window,
+function useEventListener<KW extends keyof WindowEventMap>(
+    eventName: KW,
+    handler: (event: WindowEventMap[KW]) => void,
+    target?: undefined,
     options?: boolean | AddEventListenerOptions
 ): void;
 
-export default function useEventListener<
+function useEventListener<KH extends keyof HTMLElementEventMap, T extends HTMLElement = HTMLDivElement>(
+    eventName: KH,
+    handler: (event: HTMLElementEventMap[KH]) => void,
+    target: RefObject<T>,
+    options?: boolean | AddEventListenerOptions
+): void;
+
+function useEventListener<
+    KW extends keyof WindowEventMap,
     KH extends keyof HTMLElementEventMap,
-    KD extends keyof DocumentEventMap,
-    KW extends keyof WindowEventMap
+    KM extends keyof MediaQueryListEventMap,
+    T extends HTMLElement | MediaQueryList | void = void
 >(
-    eventName: KD | KH | KW | string,
-    handler: (
-        this: typeof target,
-        event: HTMLElementEventMap[KH] | DocumentEventMap[KD] | WindowEventMap[KW] | Event
-    ) => void,
-    target: Window | Document | HTMLElement = window,
+    eventName: KW | KH | KM,
+    handler: (event: WindowEventMap[KW] | HTMLElementEventMap[KH] | MediaQueryListEventMap[KM] | Event) => void,
+    target?: RefObject<T>,
     options?: boolean | AddEventListenerOptions
 ): void {
-    const handlerRef = useLatestRef(handler);
+    const savedHandler = useLatestRef(handler);
 
     useEffect(() => {
-        if (!target.addEventListener) {
-            return;
-        }
+        const targetElement: T | Window = target?.current ?? window;
 
-        const listener: typeof handler = event => handlerRef.current.call(target, event);
+        if (!(targetElement && targetElement.addEventListener)) return;
 
-        target.addEventListener(eventName, listener, options);
+        const listener: typeof handler = event => savedHandler.current(event);
+
+        targetElement.addEventListener(eventName, listener, options);
 
         return () => {
-            target.removeEventListener(eventName, listener, options);
+            targetElement.removeEventListener(eventName, listener, options);
         };
-    }, [eventName, target, options]);
+    }, [eventName, target, options, savedHandler]);
 }
+
+export default useEventListener;

@@ -1,0 +1,25 @@
+{
+  "name": "@byndyusoft-ui/keyframes-css",
+  "version": "0.0.1",
+  "description": "Byndyusoft UI Keyframes CSS",
+  "keywords": [
+    "byndyusoft",
+    "byndyusoft-ui",
+    "css",
+    "keyframes"
+  ],
+  "author": "Eugene Abrosimov <abrosimov@byndyusoft.com>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/styles/keyframes-css#readme",
+  "license": "Apache-2.0",
+  "main": "index.css",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Byndyusoft/ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Byndyusoft/ui/issues"
+  }
+}
