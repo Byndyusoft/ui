@@ -11,6 +11,7 @@ module.exports = {
             files: ['src/**/*.tests.@(ts|tsx|js|jsx)', 'src/**/*.stories.@(ts|tsx|js|jsx)'],
             rules: {
                 '@typescript-eslint/no-magic-numbers': 'off',
+                '@typescript-eslint/explicit-module-boundary-types': 'warn',
                 'react/button-has-type': 'off'
             }
         }
