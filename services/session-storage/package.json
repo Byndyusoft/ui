@@ -29,6 +29,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@byndyusoft-ui/core": "*"
+    "@byndyusoft-ui/types": "*"
   }
 }

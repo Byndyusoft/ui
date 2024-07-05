@@ -1,4 +1,4 @@
-import { IStorageService } from '@byndyusoft-ui/core';
+import { IStorageService } from '@byndyusoft-ui/types';
 
 function defaultSerializer<TValue>(value: TValue): string {
     return JSON.stringify(value);
