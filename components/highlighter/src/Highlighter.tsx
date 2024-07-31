@@ -5,8 +5,8 @@ import { IHighlighterProps } from './Highlighter.types';
  * Default function to render highlighted text in bold style
  * @param str
  */
-function renderBolderHighlight(str: string): JSX.Element {
-    return <strong>{str}</strong>;
+function renderMarkedHighlight(str: string): JSX.Element {
+    return <mark>{str}</mark>;
 }
 
 /**
@@ -17,7 +17,7 @@ const Highlighter = ({
     text,
     ignoreCase,
     ignoreSpaces,
-    customHighlight = renderBolderHighlight
+    customHighlight = renderMarkedHighlight
 }: IHighlighterProps): JSX.Element => {
     // If no highlight pattern is provided, return the original value
     if (!highlight) {

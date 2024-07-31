@@ -22,7 +22,7 @@ Default.args = {
 };
 
 function customHighlight(str: string): JSX.Element {
-    return <mark>{str}</mark>;
+    return <strong>{str}</strong>;
 }
 
 export const CustomHighlight = Template.bind({});
