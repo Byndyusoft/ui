@@ -10,16 +10,16 @@ const setup = (props: IHighlighterProps): RenderResult => {
 describe('Highlighter', () => {
     const defaultProps: IHighlighterProps = {
         text: 'This is a test string',
-        highlight: 'test'
+        searchValue: 'test'
     };
 
     test('renders the value without highlighting if no highlight is provided', () => {
-        const { getByText } = setup({ ...defaultProps, highlight: '' });
+        const { getByText } = setup({ ...defaultProps, searchValue: '' });
         expect(getByText(defaultProps.text)).toBeInTheDocument();
     });
 
     test('renders the value without highlighting if the highlight does not match', () => {
-        const { getByText } = setup({ ...defaultProps, highlight: 'invalid' });
+        const { getByText } = setup({ ...defaultProps, searchValue: 'invalid' });
         expect(getByText(defaultProps.text)).toBeInTheDocument();
     });
 
@@ -53,7 +53,7 @@ describe('Highlighter', () => {
     });
 
     test('renders the value with ignored spaces in the highlight pattern', () => {
-        const { container } = setup({ ...defaultProps, highlight: 't e s t', ignoreSpaces: true });
+        const { container } = setup({ ...defaultProps, searchValue: 't e s t', ignoreSpaces: true });
         const markedText = container.querySelector('mark');
         expect(markedText).toHaveTextContent('test');
     });

@@ -13,19 +13,19 @@ function renderMarkedHighlight(str: string): JSX.Element {
  * The `Highlighter` component is used to display and highlight text that matches the specified pattern
  */
 const Highlighter = ({
-    highlight,
+    searchValue,
     text,
     ignoreCase,
     ignoreSpaces,
     customHighlight = renderMarkedHighlight
 }: IHighlighterProps): JSX.Element => {
     // If no highlight pattern is provided, return the original value
-    if (!highlight) {
+    if (!searchValue) {
         return <>{text}</>;
     }
 
     // Create a regular expression pattern for searching
-    const highlightPattern = ignoreSpaces ? highlight.replace(/\s+/g, '').split('').join('\\s*') : highlight;
+    const highlightPattern = ignoreSpaces ? searchValue.replace(/\s+/g, '').split('').join('\\s*') : searchValue;
 
     const regex = new RegExp(highlightPattern, ignoreCase ? 'gi' : 'g');
 

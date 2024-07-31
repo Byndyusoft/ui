@@ -16,7 +16,7 @@ const Template: Story<IHighlighterProps> = args => <Highlighter {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-    highlight: 're',
+    searchValue: 're',
     text: 'Warehouse',
     ignoreCase: true
 };
@@ -27,7 +27,7 @@ function customHighlight(str: string): JSX.Element {
 
 export const CustomHighlight = Template.bind({});
 CustomHighlight.args = {
-    highlight: 're',
+    searchValue: 're',
     text: 'Warehouse',
     ignoreCase: true,
     customHighlight
@@ -37,13 +37,13 @@ const text =
   'Trado cribro custodia tum amissio aut. \n Ascit ubi vetus depraedor decerno terminatio cicuta caput provident';
 
 const InteractiveTemplate: Story<IHighlighterProps> = args => {
-    const [highlight, setHighlight] = useState(args.highlight);
+    const [highlight, setHighlight] = useState(args.searchValue);
 
     return (
       <>
           <input type="text" value={highlight} onChange={e => setHighlight(e.target.value)} />
           <p>
-              <Highlighter {...args} highlight={highlight} />
+              <Highlighter {...args} searchValue={highlight} />
           </p>
       </>
     );
@@ -51,7 +51,7 @@ const InteractiveTemplate: Story<IHighlighterProps> = args => {
 
 export const InteractiveWithIgnoreSpaces = InteractiveTemplate.bind({});
 InteractiveWithIgnoreSpaces.args = {
-    highlight: 'brocusto',
+    searchValue: 'brocusto',
     text: text,
     ignoreCase: true,
     ignoreSpaces: true

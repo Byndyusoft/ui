@@ -6,7 +6,7 @@ export interface IHighlighterProps {
     /**
      * The search pattern to match in the value
      */
-    highlight: string;
+    searchValue: string;
     /**
      * Flag to indicate if the search should be case-insensitive
      */
