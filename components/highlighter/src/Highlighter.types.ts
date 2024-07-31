@@ -4,9 +4,10 @@ export interface IHighlighterProps {
      */
     text: string;
     /**
-     * The search pattern to match in the value
+     * The search patterns to match in the text.
+     * Longer strings will be prioritized over shorter ones.
      */
-    searchValue: string;
+    searchValues: Array<string>;
     /**
      * Flag to indicate if the search should be case-insensitive
      */

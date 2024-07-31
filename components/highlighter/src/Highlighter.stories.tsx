@@ -16,9 +16,15 @@ const Template: Story<IHighlighterProps> = args => <Highlighter {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-    searchValue: 're',
+    searchValues: ['re'],
     text: 'Warehouse',
     ignoreCase: true
+};
+
+export const HighlightWithOverlappingSearchValues = Template.bind({});
+HighlightWithOverlappingSearchValues.args = {
+    searchValues: ['This', 'is'],
+    text: 'This is a test string',
 };
 
 function customHighlight(str: string): JSX.Element {
@@ -27,7 +33,7 @@ function customHighlight(str: string): JSX.Element {
 
 export const CustomHighlight = Template.bind({});
 CustomHighlight.args = {
-    searchValue: 're',
+    searchValues: ['re'],
     text: 'Warehouse',
     ignoreCase: true,
     customHighlight
@@ -37,13 +43,13 @@ const text =
   'Trado cribro custodia tum amissio aut. \n Ascit ubi vetus depraedor decerno terminatio cicuta caput provident';
 
 const InteractiveTemplate: Story<IHighlighterProps> = args => {
-    const [highlight, setHighlight] = useState(args.searchValue);
+    const [highlight, setHighlight] = useState(args.searchValues[0]);
 
     return (
       <>
           <input type="text" value={highlight} onChange={e => setHighlight(e.target.value)} />
           <p>
-              <Highlighter {...args} searchValue={highlight} />
+              <Highlighter {...args} searchValues={[highlight]} />
           </p>
       </>
     );
@@ -51,7 +57,7 @@ const InteractiveTemplate: Story<IHighlighterProps> = args => {
 
 export const InteractiveWithIgnoreSpaces = InteractiveTemplate.bind({});
 InteractiveWithIgnoreSpaces.args = {
-    searchValue: 'brocusto',
+    searchValues: ['brocusto'],
     text: text,
     ignoreCase: true,
     ignoreSpaces: true

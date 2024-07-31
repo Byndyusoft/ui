@@ -10,29 +10,34 @@ function renderMarkedHighlight(str: string): JSX.Element {
 }
 
 /**
- * The `Highlighter` component is used to display and highlight text that matches the specified pattern
+ * The `Highlighter` component is used to display and highlight text that matches the specified patterns
  */
 const Highlighter = ({
-    searchValue,
+    searchValues,
     text,
     ignoreCase,
     ignoreSpaces,
     customHighlight = renderMarkedHighlight
 }: IHighlighterProps): JSX.Element => {
-    // If no highlight pattern is provided, return the original value
-    if (!searchValue) {
+    // If no highlight patterns are provided, return the original text
+    if (!searchValues || searchValues.length === 0) {
         return <>{text}</>;
     }
 
-    // Create a regular expression pattern for searching
-    const highlightPattern = ignoreSpaces ? searchValue.replace(/\s+/g, '').split('').join('\\s*') : searchValue;
+    // Sort search values by length to prioritize longer strings in the search
+    const sortedSearchValues = [...searchValues].sort((a, b) => b.length - a.length);
 
-    const regex = new RegExp(highlightPattern, ignoreCase ? 'gi' : 'g');
+    // Create regular expression patterns for searching
+    const highlightPattern = sortedSearchValues.map(searchValue =>
+      ignoreSpaces ? searchValue.replace(/\s+/g, '').split('').join('\\s*') : searchValue
+    );
 
-    // Find all matches in the value
+    const regex = new RegExp(highlightPattern.join('|'), ignoreCase ? 'gi' : 'g');
+
+    // Find all matches in the text
     const matches = [...text.matchAll(regex)];
 
-    // If no matches found, return the original value
+    // If no matches found, return the original text
     if (matches.length === 0) {
         return <>{text}</>;
     }
