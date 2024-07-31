@@ -1,4 +1,4 @@
-import React, { Fragment, memo, ReactNode } from 'react';
+import React, { Fragment, ReactNode } from 'react';
 import { IHighlighterProps } from './Highlighter.types';
 
 /**
@@ -12,13 +12,13 @@ function renderBolderHighlight(str: string): JSX.Element {
 /**
  * The `Highlighter` component is used to display and highlight text that matches the specified pattern
  */
-const Highlighter = memo(function Highlighter({
+const Highlighter = ({
     highlight,
     text,
     ignoreCase,
     ignoreSpaces,
     customHighlight = renderBolderHighlight
-}: IHighlighterProps): JSX.Element {
+}: IHighlighterProps): JSX.Element => {
     // If no highlight pattern is provided, return the original value
     if (!highlight) {
         return <>{text}</>;
@@ -73,6 +73,6 @@ const Highlighter = memo(function Highlighter({
             ))}
         </>
     );
-});
+};
 
 export default Highlighter;
