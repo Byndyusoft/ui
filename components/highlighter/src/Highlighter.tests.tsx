@@ -9,18 +9,18 @@ const setup = (props: IHighlighterProps): RenderResult => {
 
 describe('Highlighter', () => {
     const defaultProps: IHighlighterProps = {
-        value: 'This is a test string',
+        text: 'This is a test string',
         highlight: 'test'
     };
 
     test('renders the value without highlighting if no highlight is provided', () => {
         const { getByText } = setup({ ...defaultProps, highlight: '' });
-        expect(getByText(defaultProps.value)).toBeInTheDocument();
+        expect(getByText(defaultProps.text)).toBeInTheDocument();
     });
 
     test('renders the value without highlighting if the highlight does not match', () => {
         const { getByText } = setup({ ...defaultProps, highlight: 'invalid' });
-        expect(getByText(defaultProps.value)).toBeInTheDocument();
+        expect(getByText(defaultProps.text)).toBeInTheDocument();
     });
 
     test('renders the value with highlighted text when there is a match', () => {
@@ -30,13 +30,13 @@ describe('Highlighter', () => {
     });
 
     test('renders the value with multiple highlighted matches', () => {
-        const { container } = setup({ ...defaultProps, value: 'test test test' });
+        const { container } = setup({ ...defaultProps, text: 'test test test' });
         const boldedTexts = container.querySelectorAll('strong');
         expect(boldedTexts.length).toBe(3);
     });
 
     test('renders the value with case-insensitive highlighted matches', () => {
-        const { container } = setup({ ...defaultProps, value: 'Test TEST Test', ignoreCase: true });
+        const { container } = setup({ ...defaultProps, text: 'Test TEST Test', ignoreCase: true });
         const boldedTexts = container.querySelectorAll('strong');
         expect(boldedTexts.length).toBe(3);
     });

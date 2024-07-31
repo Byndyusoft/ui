@@ -14,14 +14,14 @@ function renderBolderHighlight(str: string): JSX.Element {
  */
 const Highlighter = memo(function Highlighter({
     highlight,
-    value,
+    text,
     ignoreCase,
     ignoreSpaces,
     customHighlight = renderBolderHighlight
 }: IHighlighterProps): JSX.Element {
     // If no highlight pattern is provided, return the original value
     if (!highlight) {
-        return <>{value}</>;
+        return <>{text}</>;
     }
 
     // Create a regular expression pattern for searching
@@ -30,11 +30,11 @@ const Highlighter = memo(function Highlighter({
     const regex = new RegExp(highlightPattern, ignoreCase ? 'gi' : 'g');
 
     // Find all matches in the value
-    const matches = [...value.matchAll(regex)];
+    const matches = [...text.matchAll(regex)];
 
     // If no matches found, return the original value
     if (matches.length === 0) {
-        return <>{value}</>;
+        return <>{text}</>;
     }
 
     const result: Array<ReactNode> = [];
@@ -52,18 +52,18 @@ const Highlighter = memo(function Highlighter({
 
         // Add the text before the match to the result
         if (start > lastIndex) {
-            result.push(value.substring(lastIndex, start));
+            result.push(text.substring(lastIndex, start));
         }
 
         // Add the highlighted match to the result
-        result.push(customHighlight(value.substring(start, end)));
+        result.push(customHighlight(text.substring(start, end)));
 
         lastIndex = end;
     });
 
     // Add the remaining text after the last match to the result
-    if (lastIndex < value.length) {
-        result.push(value.substring(lastIndex));
+    if (lastIndex < text.length) {
+        result.push(text.substring(lastIndex));
     }
 
     return (

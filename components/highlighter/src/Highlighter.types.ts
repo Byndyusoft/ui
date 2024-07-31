@@ -2,7 +2,7 @@ export interface IHighlighterProps {
     /**
      * The text where we need to highlight the matched substring
      */
-    value: string;
+    text: string;
     /**
      * The search pattern to match in the value
      */
