@@ -1,6 +1,6 @@
 export interface IHighlighterProps {
     /**
-     * The text where we need to highlight the matched substring
+     * The text where we need to highlight the matched search values
      */
     text: string;
     /**
