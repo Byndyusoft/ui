@@ -24,11 +24,8 @@ const Highlighter = ({
         return <>{text}</>;
     }
 
-    // Sort search values by length to prioritize longer strings in the search
-    const sortedSearchValues = [...searchValues].sort((a, b) => b.length - a.length);
-
     // Create regular expression patterns for searching
-    const highlightPattern = sortedSearchValues.map(searchValue =>
+    const highlightPattern = searchValues.map(searchValue =>
       ignoreSpaces ? searchValue.replace(/\s+/g, '').split('').join('\\s*') : searchValue
     );
 

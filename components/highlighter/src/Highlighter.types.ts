@@ -5,7 +5,6 @@ export interface IHighlighterProps {
     text: string;
     /**
      * The search patterns to match in the text.
-     * Longer strings will be prioritized over shorter ones.
      */
     searchValues: Array<string>;
     /**

@@ -74,14 +74,14 @@ describe('Highlighter', () => {
         expect(markedText[1]).toHaveTextContent('is');
     });
 
-    test('renders the text with overlapping search values, prioritizes longer strings', () => {        const {container} = setup({
+    test('renders the text with overlapping search values, without sorting by string length', () => {        const {container} = setup({
             ...defaultProps,
             text: 'iss is',
             searchValues: ['is', 'iss'],
         });
         const markedText = container.querySelectorAll('mark');
         expect(markedText.length).toBe(2);
-        expect(markedText[0]).toHaveTextContent('iss');
+        expect(markedText[0]).toHaveTextContent('is');
         expect(markedText[1]).toHaveTextContent('is');
     });
 });
