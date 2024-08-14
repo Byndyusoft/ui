@@ -36,7 +36,7 @@ CustomHighlight.args = {
     searchValues: ['re'],
     text: 'Warehouse',
     ignoreCase: true,
-    customHighlight
+    highlighter: customHighlight
 };
 
 const text =

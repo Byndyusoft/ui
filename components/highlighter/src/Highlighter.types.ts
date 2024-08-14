@@ -14,10 +14,10 @@ export interface IHighlighterProps {
     ignoreCase?: boolean;
     /**
      * Function to render the matched highlighted text with custom styles
-     * By default, renders matched text in bold style
+     * By default, renders matched text in mark style
      * @param str
      */
-    customHighlight?: (str: string) => JSX.Element;
+    highlighter?: (str: string) => JSX.Element;
     /**
      * Flag to indicate if spaces should be ignored in the search pattern
      */

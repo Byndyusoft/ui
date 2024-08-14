@@ -17,7 +17,7 @@ const Highlighter = ({
     text,
     ignoreCase,
     ignoreSpaces,
-    customHighlight = renderMarkedHighlight
+    highlighter = renderMarkedHighlight
 }: IHighlighterProps): JSX.Element => {
     // If no highlight patterns are provided, return the original text
     if (!searchValues || searchValues.length === 0) {
@@ -61,7 +61,7 @@ const Highlighter = ({
         }
 
         // Add the highlighted match to the result
-        result.push(customHighlight(text.substring(start, end)));
+        result.push(highlighter(text.substring(start, end)));
 
         lastIndex = end;
     });

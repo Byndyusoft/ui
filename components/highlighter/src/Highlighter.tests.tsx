@@ -43,7 +43,7 @@ describe('Highlighter', () => {
 
     test('renders the text with custom highlight styles', () => {
         const customHighlight = (str: string) => <strong>{str}</strong>;
-        const {container} = setup({...defaultProps, customHighlight});
+        const {container} = setup({...defaultProps, highlighter: customHighlight});
 
         const markedText = container.querySelectorAll('mark');
         expect(markedText.length).toBe(0);
