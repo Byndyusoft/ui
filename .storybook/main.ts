@@ -17,7 +17,15 @@ module.exports = {
                 presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript']
             }
         },
-        getAbsolutePath('@storybook/addon-mdx-gfm')
+        getAbsolutePath('@storybook/addon-mdx-gfm'),
+        {
+            name: '@newhighsco/storybook-addon-svgr',
+            options: {
+                svgrOptions: {
+                    /* config options here */
+                }
+            }
+        }
     ],
 
     framework: {
