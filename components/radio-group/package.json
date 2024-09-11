@@ -1,7 +1,7 @@
 {
   "name": "@byndyusoft-ui/radio",
   "version": "0.0.1",
-  "description": "Byndyusoft UI Radio React Component",
+  "description": "Byndyusoft UI RadioGroup React Component",
   "keywords": [
     "byndyusoft",
     "byndyusoft-ui",
@@ -9,7 +9,7 @@
     "radio"
   ],
   "author": "Denis Timashev <pleasenonaga@gmail.com>",
-  "homepage": "https://github.com/Byndyusoft/ui/tree/master/components/portal#readme",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/components/radio-group#readme",
   "license": "ISC",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -21,7 +21,7 @@
     "build": "rollup --config",
     "clean": "rimraf dist",
     "lint": "eslint src --config ../../eslint.config.js",
-    "test": "jest --config ../../jest.config.js --roots components/portal/src",
+    "test": "jest --config ../../jest.config.js --roots components/radio-group/src",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },

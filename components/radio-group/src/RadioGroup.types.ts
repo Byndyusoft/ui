@@ -1,11 +1,10 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 export type TOnChange = (value: string) => void;
 
 export interface IRadioProps {
     value: string;
-    label?: string;
-    children?: ReactNode;
+    children: ReactNode;
 }
 
 export interface IRadioGroupProps {
@@ -15,13 +14,13 @@ export interface IRadioGroupProps {
     onChange?: TOnChange;
 }
 
-export interface IUseRadioGroupState {
+export interface IUseRadioGroupStateProps {
     name: string;
     value: string;
     onChange?: TOnChange;
 }
 
-export interface IRadioGroupState {
+export interface IUseRadioGroup {
     name: string;
     value: string;
     setValue: (value: string) => void;
@@ -30,6 +29,6 @@ export interface IRadioGroupState {
 export interface IRadioGroupContextProviderProps {
     name: string;
     value: string;
-    children: ReactNode
+    children: ReactNode;
     onChange?: TOnChange;
 }

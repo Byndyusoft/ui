@@ -1,10 +1,10 @@
 import React, { createContext, useContext } from 'react';
-import { IRadioGroupContextProviderProps, IRadioGroupState } from '../Radio.types';
-import useRadioGroup from '../useRadioGroup';
+import { IRadioGroupContextProviderProps, IUseRadioGroup } from '../RadioGroup.types';
+import useRadioGroupState from '../useRadioGroupState';
 
-const RadioGroupContext = createContext<IRadioGroupState>({} as IRadioGroupState);
+const RadioGroupContext = createContext<IUseRadioGroup>({} as IUseRadioGroup);
 
-export function useRadioGroupContext(): IRadioGroupState {
+export function useRadioGroupContext(): IUseRadioGroup {
     const context = useContext(RadioGroupContext);
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -16,7 +16,7 @@ export function useRadioGroupContext(): IRadioGroupState {
 }
 
 export const RadioGroupContextProvider = ({ name, value, onChange, children }: IRadioGroupContextProviderProps) => {
-    const radioGroupState = useRadioGroup({ name, value, onChange });
+    const radioGroupState = useRadioGroupState({ name, value, onChange });
 
-    return <RadioGroupContext.Provider value={{ ...radioGroupState }}>{children}</RadioGroupContext.Provider>;
+    return <RadioGroupContext.Provider value={radioGroupState}>{children}</RadioGroupContext.Provider>;
 };

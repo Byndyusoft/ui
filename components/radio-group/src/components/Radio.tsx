@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
-import { IRadioProps } from '../Radio.types';
+import { IRadioProps } from '../RadioGroup.types';
 import { useRadioGroupContext } from './RadioGroupContext';
 
-const Radio = ({ value, label, children }: IRadioProps): JSX.Element => {
+const Radio = ({ value, children }: IRadioProps): JSX.Element => {
     const { name, value: groupValue, setValue } = useRadioGroupContext();
 
     const onChangeHandler = useCallback(
@@ -11,22 +11,6 @@ const Radio = ({ value, label, children }: IRadioProps): JSX.Element => {
         },
         [setValue]
     );
-
-    if (children) {
-        return (
-            <div>
-                <input
-                    type="radio"
-                    name={name}
-                    id={value}
-                    value={value}
-                    checked={groupValue === value}
-                    onChange={onChangeHandler}
-                />
-                <label htmlFor={value}>{children}</label>
-            </div>
-        );
-    }
 
     return (
         <div>
@@ -38,7 +22,7 @@ const Radio = ({ value, label, children }: IRadioProps): JSX.Element => {
                 checked={groupValue === value}
                 onChange={onChangeHandler}
             />
-            <label htmlFor={value}>{label}</label>
+            <label htmlFor={value}>{children}</label>
         </div>
     );
 };
