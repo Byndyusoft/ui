@@ -6,6 +6,7 @@ import CustomRadioComponent from './CustomRadio';
 
 const DefaultStory: Story = () => (
     <div>
+        <strong>Fruit</strong>
         <RadioGroup value="apple" name="fruit">
             <Radio value="apple">🍎 Apple</Radio>
             <Radio value="banana">🍌 Banana</Radio>
@@ -18,6 +19,7 @@ export const Default = DefaultStory.bind({});
 
 const WithCustomRadioStory: Story = () => (
     <div>
+        <strong>Mood</strong>
         <RadioGroup value="happy" name="mood">
             <CustomRadioComponent value="happy">😊 Happy</CustomRadioComponent>
             <CustomRadioComponent value="neutral">😐 Neutral</CustomRadioComponent>
