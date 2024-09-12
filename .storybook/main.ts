@@ -18,14 +18,7 @@ module.exports = {
             }
         },
         getAbsolutePath('@storybook/addon-mdx-gfm'),
-        {
-            name: '@newhighsco/storybook-addon-svgr',
-            options: {
-                svgrOptions: {
-                    /* config options here */
-                }
-            }
-        }
+        getAbsolutePath('@newhighsco/storybook-addon-svgr')
     ],
 
     framework: {
