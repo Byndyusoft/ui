@@ -10,7 +10,7 @@ const types = require('types');
 // TODO: DEMONSTRATE API
 ```
 
-### TValueOf
+### ValueOf
 
 ```typescript
 import { ValueOf } from '@byndyusoft-ui/types';
@@ -28,3 +28,16 @@ const fruitsDictionary = {
 const TFruitsDictionaryValues = ValueOf<typeof fruitsDictionary>;
 // TFruitsDictionaryValues = 'Яблоко' | 'Апельсин'
 ```
+
+### VoidFunc
+
+```typescript
+import { VoidFunc } from '@byndyusoft-ui/types';
+
+const callback: VoidFunc<number[] | string[]> = (numbers, strings) => {
+    // ...some operations
+};
+
+callback(['a', 'b'], [1, 2, 3, 4]);
+```
+

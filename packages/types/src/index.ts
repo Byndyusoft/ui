@@ -5,3 +5,4 @@ export * from './InitialState';
 export * from './Nullable';
 export * from './Predicate';
 export * from './ValueOf';
+export * from './VoidFunc';
