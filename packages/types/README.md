@@ -4,10 +4,14 @@
 
 ## Usage
 
-```
-const types = require('types');
+### Import library
 
-// TODO: DEMONSTRATE API
+```
+const types = require('@byndyusoft-ui/types');
+
+or
+
+import types from '@byndyusoft-ui/types';
 ```
 
 ### ValueOf
