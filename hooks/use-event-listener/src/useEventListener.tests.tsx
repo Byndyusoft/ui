@@ -1,6 +1,6 @@
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import useEventListener from './useEventListener';
 
 interface ISetupProps {
@@ -40,13 +40,11 @@ const SetupForWindow = (): JSX.Element => {
     return <button type="button">Click on me!</button>;
 };
 
-const getButtonElement = () => screen.getByRole('button', { name: 'Click on me!' });
-
 describe('hooks/useEventListener', () => {
     test('adds event listener to element ref', async () => {
         render(<Setup />);
 
-        await userEvent.click(getButtonElement());
+        await userEvent.click(screen.getByRole('button', { name: 'Click on me!' }));
 
         expect(handler).toBeCalledTimes(1);
     });
@@ -54,7 +52,7 @@ describe('hooks/useEventListener', () => {
     test('adds event listener to document ref', async () => {
         render(<Setup isDocumentListener />);
 
-        await userEvent.click(getButtonElement());
+        await userEvent.click(screen.getByRole('button', { name: 'Click on me!' }));
 
         expect(handler).toBeCalledTimes(1);
     });
@@ -62,7 +60,7 @@ describe('hooks/useEventListener', () => {
     test('adds event listener to window', async () => {
         render(<SetupForWindow />);
 
-        await userEvent.click(getButtonElement());
+        await userEvent.click(screen.getByRole('button', { name: 'Click on me!' }));
 
         expect(handler).toBeCalledTimes(1);
     });
