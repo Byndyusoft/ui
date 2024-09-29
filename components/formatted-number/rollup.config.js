@@ -8,7 +8,7 @@ export default {
         ...baseConfig.plugins,
         typescript({
             tsconfig: './tsconfig.json',
-            include: ['../../types.d.ts'],
+            module: 'ESNext',
             exclude: ['src/**/*.stories.tsx', 'src/**/*.tests.tsx', 'node_modules']
         })
     ]
