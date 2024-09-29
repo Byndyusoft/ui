@@ -4,4 +4,5 @@ export * from './Comparator';
 export * from './InitialState';
 export * from './Nullable';
 export * from './Predicate';
+export * from './Tuple';
 export * from './ValueOf';
