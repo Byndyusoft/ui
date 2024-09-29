@@ -1,9 +1,7 @@
 import React, { Fragment, useMemo } from 'react';
-import cn from 'classnames';
 import { IFormattedNumberViewProps } from './FormattedNumberView.types';
 import getDefaultFormatter from './getDefaultFormatter';
 import parseNumberToPartsByDefault from './parseNumberToPartsByDefault';
-import styles from './FormattedNumberView.module.css';
 
 export const SYMBOL_BETWEEN_FORMATTED_NUMBER_PARTS_LABEL = 'Symbol between formatted number parts';
 
@@ -25,10 +23,15 @@ const FormattedNumberView = ({
                     <Fragment key={`${number}_${numberPart}`}>
                         {numberPart}
                         {!isLastNumberPart && (
+                            /* eslint-disable react/forbid-dom-props */
+                            // eslint-disable-next-line react/self-closing-comp
                             <span
-                                className={cn(styles.thinInextricableSpace, numberPartsDividerClassName)}
+                                style={{ userSelect: 'none' }}
+                                className={numberPartsDividerClassName}
                                 aria-label={SYMBOL_BETWEEN_FORMATTED_NUMBER_PARTS_LABEL}
-                            />
+                            >
+                                &#8239;
+                            </span>
                         )}
                     </Fragment>
                 );
