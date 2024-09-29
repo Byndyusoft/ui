@@ -29,5 +29,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "peerDependencies": {
+    "@byndyusoft-ui/use-debounced-callback": "*"
   }
 }
