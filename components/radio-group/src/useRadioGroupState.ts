@@ -1,9 +1,8 @@
 import { useCallback, useState } from 'react';
 import { IUseRadioGroupStateProps, IUseRadioGroup } from './RadioGroup.types';
 
-const useRadioGroupState = ({ name, value, onChange }: IUseRadioGroupStateProps): IUseRadioGroup => {
-    const [_name] = useState(name);
-    const [_value, setValue] = useState(value);
+const useRadioGroupState = ({ name, initialValue, onChange }: IUseRadioGroupStateProps): IUseRadioGroup => {
+    const [_value, setValue] = useState(initialValue);
 
     const setValueHandler = useCallback(
         (targetValue: string) => {
@@ -17,7 +16,7 @@ const useRadioGroupState = ({ name, value, onChange }: IUseRadioGroupStateProps)
     );
 
     return {
-        name: _name,
+        name,
         value: _value,
         setValue: setValueHandler
     };
