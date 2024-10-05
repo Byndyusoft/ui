@@ -6,6 +6,6 @@ type IsTuple<T> = T extends readonly unknown[]
 
 
 
-type Callback<V, R = void> = IsTuple<V> extends true
+export type Callback<V, R = void> = IsTuple<V> extends true
   ? (...args: V extends unknown[] ? V : []) => R
   : (arg: V) => R;
