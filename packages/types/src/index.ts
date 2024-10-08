@@ -6,3 +6,4 @@ export * from './Nullable';
 export * from './Predicate';
 export * from './Tuple';
 export * from './ValueOf';
+export * from './IsTuple';
