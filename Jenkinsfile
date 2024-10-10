@@ -1,4 +1,4 @@
-@Library(['bs-shared-library']) _
+@Library(['bs-shared-library@feature/refactoring']) _
 
 env.DEBUG=false
 
