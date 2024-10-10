@@ -1,5 +1,5 @@
 clusterName: ["bs-01-stage", "bs-01-prod"]
-project: "bs-itmo"
+project: "bs"
 registryCredentialsId: "artifacts-registry"
 registryUrl: "artifacts-docker.tech.byndyusoft.com"
 defaultValues: "./.helm/values.yaml"
