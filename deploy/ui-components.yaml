@@ -1,0 +1,68 @@
+microservice:
+    kind: "Deployment"
+
+    replicas:
+        default: 1
+        preprod: 1
+        prod: 1
+
+    resourcesLimitsMemory:
+        default: 128Mi
+    resourcesRequestsMemory:
+        default: 64Mi
+    resourcesRequestsCPU:
+        default: 10m
+
+    imagePullSecrets:
+        - name: artifacts-registry
+
+    servicePorts:
+        - port: 8080
+          targetPort: 8080
+          protocol: TCP
+          name: application
+
+    containerPorts:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+
+    livenessProbe:
+        enabled: true
+        path: /_readiness
+        port: 8080
+
+    ingress:
+        enabled: true
+        ingressClassName: nginx
+        labels: {}
+        annotations:
+            default:
+                cert-manager.io/cluster-issuer: letsencrypt
+                nginx.ingress.kubernetes.io/whitelist-source-range: >-
+                    10.241.0.0/20, 10.241.240.0/20, 10.242.0.0/20, 10.243.0.0/20,
+                    87.229.220.78, 5.17.1.84
+            prod:
+                nginx.ingress.kubernetes.io/whitelist-source-range: >-
+                    10.241.0.0/20, 10.241.240.0/20, 10.242.0.0/20, 10.243.0.0/20,
+                    87.229.220.78, 5.17.1.84
+                cert-manager.io/cluster-issuer: letsencrypt
+        hosts:
+            - host:
+                  default: storybook.stage.byndyusoft.com
+                  prod: storybook.prod.byndyusoft.com
+              path: /
+              pathType: ImplementationSpecific
+              servicePorts: 8080
+        tls:
+            - secretName: ui-components-tls
+              hosts:
+                  default: storybook.stage.byndyusoft.com
+                  prod: storybook.prod.byndyusoft.com
+
+    nodeSelector:
+        node-role.kubernetes.io/frontend: ""
+
+makefile:
+    env:
+        docker_file: "Dockerfile"
