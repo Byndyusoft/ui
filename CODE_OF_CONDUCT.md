@@ -43,7 +43,7 @@ component-name // Название компонента в kebab case
 |   ├── hooks // хуки компонента
 |   ├── ComponentName.ts
 |   ├── ComponentName.module.css
-|   ├── ComponentName.utilities.css // логика и методы компонента
+|   ├── ComponentName.utilities.ts // логика и методы компонента
 |   ├── ComponentName.types.ts
 |   ├── ComponentName.tests.tsx
 |   ├── ComponentName.stories.tsx
@@ -65,7 +65,7 @@ use-hook-name // Название хука в kebab case
 ├── src
 |   ├── index.ts
 |   ├── useHookName.ts
-|   ├── useHookName.utilities.css // логика и методы хука
+|   ├── useHookName.utilities.ts // логика и методы хука
 |   ├── useHookName.tests.ts
 |   ├── useHookName.stories.tsx
 |   ├── useHookName.stories.css
