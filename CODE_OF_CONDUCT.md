@@ -15,7 +15,10 @@
 
 Именуем согласно Conventional Commits
 
-Если изменён объект внутри компонента, к примеру. То можно использовать такую форму записи: `fix(Dropdown/Item): change styles names`
+Если изменён объект внутри компонента, к примеру. То можно использовать такую форму записи:
+```
+fix(Dropdown/Item): change styles names
+```
 
 Примеры:
 
@@ -40,10 +43,11 @@ component-name // Название компонента в kebab case
 |   ├── hooks // хуки компонента
 |   ├── ComponentName.ts
 |   ├── ComponentName.module.css
+|   ├── ComponentName.utilities.css // логика компонента
 |   ├── ComponentName.types.ts
 |   ├── ComponentName.tests.tsx
 |   ├── ComponentName.stories.tsx
-|   ├── ComponentName.stories.css
+|   ├── ComponentName.stories.css // стили историй
 |   └── index.ts
 ├── README.md
 ├── package.json
@@ -74,7 +78,7 @@ use-hook-name // Название хука в kebab case
 
 #### use-hook-name/README.md
 
-````
+````markdown
 # `@byndyusoft-ui/use-hook-name`
 
 A React hook that uses hook name. // hook description
