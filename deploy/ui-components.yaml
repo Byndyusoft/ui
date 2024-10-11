@@ -49,7 +49,8 @@ microservice:
                 cert-manager.io/cluster-issuer: letsencrypt
         hosts:
             - host:
-                  default: storybook.stage.byndyusoft.com
+                  test: storybook-test.stage.byndyusoft.com
+                  default: storybook-preprod.stage.byndyusoft.com
                   prod: storybook.prod.byndyusoft.com
               path: /
               pathType: ImplementationSpecific
