@@ -1,4 +1,4 @@
-BUILDER_IMAGE_NODE=node:20.18.0-bullseye
+BUILDER_IMAGE_NODE=node:18.20-bullseye
 
 define docker-inside-node
 	docker run \

@@ -17,7 +17,7 @@
     "lint": "lerna run lint",
     "test": "lerna run test --concurrency=1",
     "postinstall": "(husky install) || true",
-    "build-storybook": "storybook build",
+    "build-storybook": "storybook build --disable-telemetry",
     "prettier:check": "prettier --check \"**/*.{ts,tsx,css,json}\"",
     "prettier:write": "prettier --write \"**/*.{ts,tsx,css,json}\"",
     "start": "storybook dev -p 6009"
