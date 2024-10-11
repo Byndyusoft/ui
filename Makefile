@@ -1,4 +1,4 @@
-BUILDER_IMAGE_NODE=node:18.20-bullseye
+BUILDER_IMAGE_NODE=node:20.18.0-bullseye
 
 define docker-inside-node
 	docker run \
@@ -15,6 +15,7 @@ endef
 .PHONY: build-app
 build-app:
 	$(call docker-inside-node, npm ci)
+	$(call docker-inside-node, npm run build)
 	$(call docker-inside-node, npm run build-storybook)
 ################################################################################
 .PHONY: build-image
