@@ -6,7 +6,6 @@ defaultValues: "./.helm/values.yaml"
 microserviceValues: "./.helm/microservice_values.yaml"
 secretValues: "./.helm/secret_values.yaml"
 serviceAccount: "deploy-agent"
-secret: none
 githubCredentialsId: "bs-01-tech-jenkins-cicd"
 yaml: |-
   spec:
