@@ -39,13 +39,7 @@ microservice:
         annotations:
             default:
                 cert-manager.io/cluster-issuer: letsencrypt
-                nginx.ingress.kubernetes.io/whitelist-source-range: >-
-                    10.241.0.0/20, 10.241.240.0/20, 10.242.0.0/20, 10.243.0.0/20,
-                    87.229.220.78, 5.17.1.84
             prod:
-                nginx.ingress.kubernetes.io/whitelist-source-range: >-
-                    10.241.0.0/20, 10.241.240.0/20, 10.242.0.0/20, 10.243.0.0/20,
-                    87.229.220.78, 5.17.1.84
                 cert-manager.io/cluster-issuer: letsencrypt
         hosts:
             - host:
