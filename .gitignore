@@ -1,9 +1,19 @@
-*.log
-.idea
-.DS_Store
+# dependencies
 node_modules
-.cache
+
+# build
 dist
+
+# testing
+.coverage
+
+# editors
+.idea
+.vscode
+
+# misc
+*.log
+.DS_Store
+.cache
 lib
-coverage
 yarn.lock

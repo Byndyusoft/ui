@@ -1,0 +1,39 @@
+{
+  "name": "@byndyusoft-ui/checkbox",
+  "version": "0.0.1",
+  "description": "Byndyusoft UI CheckBox React Component",
+  "keywords": [
+    "byndyusoft",
+    "byndyusoft-ui",
+    "react",
+    "checkbox"
+  ],
+  "author": "Tolmachev Serega <tolms@yandex.ru>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/components/checkbox#readme",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Byndyusoft/ui.git"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "clean": "rimraf dist",
+    "lint": "eslint src --config ../../eslint.config.js",
+    "test": "jest --config ../../jest.config.js --roots components/checkbox/src"
+  },
+  "bugs": {
+    "url": "https://github.com/Byndyusoft/ui/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "react": ">=17",
+    "react-dom": ">=17"
+  },
+  "devDependencies": {
+    "react-hook-form": "^7.43.9"
+  }
+}

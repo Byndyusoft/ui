@@ -9,10 +9,11 @@ module.exports = {
     moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
     moduleNameMapper: {
         '\\.css$': 'identity-obj-proxy',
-        '\\.(ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|pdf)$':
-            '<rootDir>/.jest/file.ts'
+        '\\.(ico|jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|pdf)$':
+            '<rootDir>/.jest/file.ts',
+        "\\.svg": "<rootDir>.jest/svg.tsx"
     },
     coverageDirectory: '<rootDir>/.coverage',
-    coveragePathIgnorePatterns: ['index.ts'],
+    coveragePathIgnorePatterns: ['.jest', 'index.ts'],
     clearMocks: true
 };
