@@ -55,6 +55,12 @@ import { Callback } from '@byndyusoft-ui/types';
 Usage examples:
 
 ```typescript
+const callback: Callback = () => {};
+
+callback(); // return void
+```
+
+```typescript
 type TArg = string;
 
 const callback: Callback<TArg> = str => {};
