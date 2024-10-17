@@ -55,7 +55,7 @@ import { Callback } from '@byndyusoft-ui/types';
 Usage examples:
 
 ```typescript
-const callback: Callback = () => {};
+const callback: Callback<never> = () => {};
 
 callback(); // return void
 ```
@@ -105,7 +105,7 @@ const callback: Callback<TArgs, TReturn> = (numbers, obj) => {
     return numbers.map(num => String(num * obj.value));
 };
 
-callback([1, 2, 3, 4], 100); // return Array<string>
+callback([1, 2, 3, 4], { value: 100 }); // return Array<string>
 ```
 
 ```typescript
@@ -120,7 +120,7 @@ const callback: Callback<TArgs, TReturn> = (numbers, strings) => {
     return result;
 };
 
-callback(['a', 'b'], [1, 2, 3, 4]); // return string
+callback([1, 2, 3, 4], ['a', 'b']); // return string
 ```
 
 Requires between 1 and 2 type arguments:
