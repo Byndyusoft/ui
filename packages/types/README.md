@@ -55,6 +55,20 @@ import { Callback } from '@byndyusoft-ui/types';
 Usage examples:
 
 ```typescript
+const callback: Callback = () => {};
+
+callback(); // return void
+```
+
+```typescript
+const callback: Callback<never, number> = () => {
+    return 123;
+};
+
+callback(); // return number
+```
+
+```typescript
 type TArg = string;
 
 const callback: Callback<TArg> = str => {};
@@ -99,7 +113,7 @@ const callback: Callback<TArgs, TReturn> = (numbers, obj) => {
     return numbers.map(num => String(num * obj.value));
 };
 
-callback([1, 2, 3, 4], 100); // return Array<string>
+callback([1, 2, 3, 4], { value: 100 }); // return Array<string>
 ```
 
 ```typescript
@@ -114,17 +128,53 @@ const callback: Callback<TArgs, TReturn> = (numbers, strings) => {
     return result;
 };
 
-callback(['a', 'b'], [1, 2, 3, 4]); // return string
+callback([1, 2, 3, 4], ['a', 'b']); // return string
 ```
 
-Requires between 1 and 2 type arguments:
+#### Required arguments count
+
+Requires between 0 and 2 type arguments:
+
+##### Bad:
 
 ```typescript
-// Bad:
 const callback: Callback<number, number, number> = (a, b, c) => {};
 ```
 
+##### Right:
+
+0 arguments:
+
 ```typescript
-// Right:
+const callback: Callback = () => {};
+```
+
+1 argument:
+
+```typescript
+const callback: Callback<number> = (a) => {};
+```
+
+```typescript
 const callback: Callback<[number, number, number]> = (a, b, c) => {};
+```
+
+2 arguments:
+
+```typescript
+const callback: Callback<never, string> = () => {
+    return 'Text';
+};
+```
+
+```typescript
+const callback: Callback<number, string> = (a) => {
+    return 'Text';
+};
+```
+
+```typescript
+const callback: Callback<[number, number, number], string> = (a, b, c) => {
+    return 'Text';
+};
 ```
