@@ -13,12 +13,15 @@
 
 ### Именование коммитов
 
-Именуем согласно Conventional Commits
+Именуем согласно [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary)
 
-Если изменён объект внутри компонента, к примеру. То можно использовать такую форму записи:
-```
-fix(Dropdown/Item): change styles names
-```
+Структура коммита:
+
+`<тип коммита>(область коммита): <описание>`
+
+Типы коммитов:
+
+`feat, fix, style, test, story, docs, refactor, chore, ci и др.`
 
 Примеры:
 
@@ -27,6 +30,12 @@ fix(Dropdown/Item): change styles names
 -   `chore(Input): merge package.json with "master" branch`
 -   `chore: update version in package.json`
 -   `refactor(resetCss/Input): simplify styles`
+
+Если изменён объект внутри компонента, к примеру. То можно использовать такую форму записи:
+
+`fix(Dropdown/Item): change styles names`
+
+
 
 ## Компонент
 
@@ -181,3 +190,8 @@ const { state, mutateFn1, mutateFn2 } = useHookName();
 
 const [state, { mutateFn1, mutateFn2 }] = useHookName();
 ```
+
+### Установка пакетов
+
+Если пакет будет использоваться только в тестах или историях, то устанавливаем в package.json **проекта** в раздел **devDependencies**.\
+Если пакет нужен в самом компоненте, то устанавливаем в package.json **компонента** в раздел **peerDependencies**.
