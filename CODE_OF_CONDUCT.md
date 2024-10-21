@@ -181,3 +181,8 @@ const { state, mutateFn1, mutateFn2 } = useHookName();
 
 const [state, { mutateFn1, mutateFn2 }] = useHookName();
 ```
+
+### Установка пакетов
+
+Если пакет будет использоваться только в тестах или историях, то устанавливаем в package.json **проекта** в раздел **devDependencies**.\
+Если пакет нужен в самом компоненте, то устанавливаем в package.json **компонента** в раздел **peerDependencies**.
