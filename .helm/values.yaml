@@ -1,0 +1,95 @@
+kind: "Deployment"
+
+microservice:
+  name: "Deployment"
+#  image: ""
+#  imageFolder: ""
+  registryUrl: ""
+  tag: "latest"
+
+project: "first"
+environment: "feature"
+gitCommitShort: "hash"
+namespace: "default"
+
+imagePullSecrets: []
+# - name:
+
+labels: {}
+
+annotations: {}
+
+replicas:
+  default: 1
+  preprod: 1
+  prod: 1
+
+initContainers:
+  enable: false
+  workingDir: ""
+  command: [""]
+
+hostAliases: []
+
+prometheus:
+  enabled: false
+
+ingress:
+  enabled: false
+  labels: {}
+  annotations: {}
+#    kubernetes.io/ingress.class: nginx
+#    kubernetes.io/tls-acme: "true"
+#  hosts:
+#    - host:
+#        default: test.example.com
+#      paths: [/]
+#      pathType: ImplementationSpecific
+#      servicePorts: 5000
+#  tls:
+#    - secretName: test.example.com
+#      hosts:
+#        - default: test.example.com
+
+service:
+  labels: {}
+  annotations: {}
+
+# https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+livenessProbe:
+  enabled: false
+
+# https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+readinessProbe:
+  enabled: false
+
+volumes: {}
+
+# https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+nodeSelector: {}
+#  kubernetes.io/hostname: worker-01
+
+# https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+tolerations: []
+#  - key: node-role.kubernetes.io/master
+#    operator: Exists
+#    effect: NoSchedule
+
+resourcesLimitsMemory:
+  default: 128Mi
+resourcesRequestsMemory:
+  default: 128Mi
+resourcesLimitsCPU:
+  default: 0.2
+resourcesRequestsCPU:
+  default: 0.2
+
+# PriorityClasses
+# https://deckhouse.ru/documentation/v1.39/modules/001-priority-class/configuration.html
+#priorityClassName:
+
+# https://kubernetes.io/docs/tasks/run-application/configure-pdb/
+pdb:
+  enabled: false
+#  minAvailable: 1
+#  maxUnavailable: 1
