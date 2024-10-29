@@ -8,8 +8,7 @@ export default {
         format: 'cjs',
         dir: 'dist',
         preserveModules: true,
-        preserveModulesRoot: 'src',
-        assetFileNames: '[name]-[hash][extname]'
+        preserveModulesRoot: 'src'
     },
     plugins: [peerDeps(), resolve(), commonjs()]
 };
