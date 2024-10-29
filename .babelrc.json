@@ -10,7 +10,5 @@
     "@babel/preset-typescript",
     "@babel/preset-react"
   ],
-  "plugins": [
-      "linaria/babel"
-  ]
+  "plugins": []
 }
