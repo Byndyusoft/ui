@@ -1,10 +1,10 @@
 import React from 'react';
-import { Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 import { IOverlayProps } from './Overlay.types';
 import Overlay from './Overlay';
 import './Overlay.stories.css';
 
-const Template: Story<IOverlayProps> = args => (
+const Template: StoryFn<IOverlayProps> = args => (
     <div>
         <p>A lot of text in main app container</p>
         <p>A lot of text in main app container</p>
