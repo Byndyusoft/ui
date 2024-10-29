@@ -1,7 +1,7 @@
 import React, { Fragment, useMemo } from 'react';
 import { IFormattedNumberViewProps } from './FormattedNumberView.types';
-import getDefaultFormatter from './getDefaultFormatter';
-import parseNumberToPartsByDefault from './parseNumberToPartsByDefault';
+import getDefaultFormatter from './getDefaultFormatter.utilities';
+import parseNumberToPartsByDefault from './parseNumberToPartsByDefault.utilities';
 
 export const SYMBOL_BETWEEN_FORMATTED_NUMBER_PARTS_LABEL = 'Symbol between formatted number parts';
 

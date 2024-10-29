@@ -1,5 +1,5 @@
-import getDefaultFormatter from '../getDefaultFormatter';
-import parseNumberToPartsByDefault from '../parseNumberToPartsByDefault';
+import getDefaultFormatter from '../getDefaultFormatter.utilities';
+import parseNumberToPartsByDefault from '../parseNumberToPartsByDefault.utilities';
 
 describe('components/FormattedNumber/parseNumberPartsByDefault', () => {
     test('number should be split correctly', () => {
