@@ -1,0 +1,13 @@
+clusterName: ["bs-01-stage", "bs-01-prod"]
+project: "bs"
+registryCredentialsId: "artifacts-registry"
+registryUrl: "artifacts-docker.tech.byndyusoft.com"
+defaultValues: "./.helm/values.yaml"
+microserviceValues: "./.helm/microservice_values.yaml"
+secretValues: "./.helm/secret_values.yaml"
+serviceAccount: "deploy-agent"
+githubCredentialsId: "bs-01-tech-jenkins-cicd"
+yaml: |-
+  spec:
+    nodeSelector:
+      node-role.kubernetes.io/worker-pt: ""
