@@ -10,7 +10,7 @@
         "number",
         "formatted-number"
     ],
-    "author": "Byndyusoft Frontend Developer <frontend@byndyusoft.com>",
+    "author": "Kartashev Stepan <kartashev@byndyusoft.com>",
     "homepage": "https://github.com/Byndyusoft/ui/tree/master/components/formatted-number#readme",
     "license": "Apache-2.0",
     "main": "dist/index.js",
