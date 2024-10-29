@@ -1,2 +1,2 @@
-export { default } from './FormattedNumberView';
-export { default as getMaxFractionalPartOfNumbers } from './getMaxFractionalPartOfNumbers.utilities';
+export { default } from './FormattedNumber';
+export { getMaxFractionalPartOfNumbers } from './FormattedNumber.utilities';

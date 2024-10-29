@@ -1,17 +1,17 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import FormattedNumberView, { SYMBOL_BETWEEN_FORMATTED_NUMBER_PARTS_LABEL } from '../FormattedNumberView';
+import FormattedNumber, { SYMBOL_BETWEEN_FORMATTED_NUMBER_PARTS_LABEL } from '../FormattedNumber';
 import { getMaxFractionalPartOfNumbers } from '../index';
 
 describe('components/FormattedNumber', () => {
     test('simple number renders correctly', () => {
-        render(<FormattedNumberView number={123.123} />);
+        render(<FormattedNumber number={123.123} />);
 
         expect(screen.getByText('123,123')).toBeInTheDocument();
     });
 
     test('thin spaces render correctly', () => {
-        render(<FormattedNumberView number={56734534321.223} />);
+        render(<FormattedNumber number={56734534321.223} />);
 
         expect(screen.getByText('56', { exact: false })).toBeInTheDocument();
         expect(screen.getByText('734', { exact: false })).toBeInTheDocument();
@@ -32,7 +32,7 @@ describe('components/FormattedNumber', () => {
             currency: 'RUB'
         };
 
-        render(<FormattedNumberView number={123} defaultFormatterOptions={defaultFormatterOptions} />);
+        render(<FormattedNumber number={123} defaultFormatterOptions={defaultFormatterOptions} />);
 
         expect(screen.getByLabelText(SYMBOL_BETWEEN_FORMATTED_NUMBER_PARTS_LABEL)).toBeInTheDocument();
         expect(screen.getByText('₽', { exact: false })).toBeInTheDocument();
@@ -49,7 +49,7 @@ describe('components/FormattedNumber', () => {
             <div>
                 {numbers.map(number => (
                     <span key={number}>
-                        <FormattedNumberView number={number} defaultFormatterOptions={defaultFormatterOptions} />
+                        <FormattedNumber number={number} defaultFormatterOptions={defaultFormatterOptions} />
                     </span>
                 ))}
             </div>

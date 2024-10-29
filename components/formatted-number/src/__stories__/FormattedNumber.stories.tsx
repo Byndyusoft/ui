@@ -1,7 +1,7 @@
 import React from 'react';
-import { IFormattedNumberViewProps } from '../FormattedNumberView.types';
+import { IFormattedNumberViewProps } from '../FormattedNumber.types';
 import FormattedNumber, { getMaxFractionalPartOfNumbers } from '..';
-import styles from './FormattedNumberView.stories.module.css';
+import styles from './FormattedNumber.stories.module.css';
 
 const Template: (args: IFormattedNumberViewProps) => JSX.Element = (args: IFormattedNumberViewProps) => (
     <div className={styles.templateContainer}>
