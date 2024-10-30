@@ -1,6 +1,6 @@
 import React, { Fragment, ReactNode } from 'react';
 import { IHighlighterProps } from './Highlighter.types';
-import { splitTextByMatches } from './splitTextByMatches';
+import { splitTextIntoSegments } from './Highlighter.utilities';
 
 /**
  * Default function to render highlighted text in bold style
@@ -40,8 +40,13 @@ const Highlighter = ({
         return <>{text}</>;
     }
 
-    // Split text into segments and highlight matches
-    const result = splitTextByMatches(text, matches, highlighter);
+    // Split text into segments
+    const segments = splitTextIntoSegments(text, matches);
+
+    // Highlight matches
+    const result: Array<string | ReactNode> = segments.map((part) => {
+        return part.isMatch ? highlighter(part.segment) : part.segment;
+    });
 
     return (
         <>
