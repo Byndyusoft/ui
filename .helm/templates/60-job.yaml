@@ -1,0 +1,80 @@
+{{- if eq .Values.kind "Job" }}
+{{- $envname := .Values.environment }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Values.microservice.name }}-job
+  labels:
+    app: {{ .Values.microservice.name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    microservice: {{ required "microservice is empty" .Values.microservice.name }}
+    project: {{ .Values.project }}
+    {{- include "microservice.labels" . | nindent 4 }}
+  {{- with .Values.annotations }}
+  annotations:
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  backoffLimit: 0
+  activeDeadlineSeconds: 600
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.microservice.name }}
+        release: {{ .Release.Name }}
+      {{- if .Values.gitCommitShort }}
+      annotations:
+        git.commit.short: {{ .Values.gitCommitShort | quote }}
+      {{- end }}
+    spec:
+      restartPolicy: Never
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets: {{ toYaml .Values.imagePullSecrets | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+      {{ toYaml . | indent 2 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+      {{ toYaml . | indent 2 }}
+      {{- end }}
+      containers:
+        - name:  {{ .Values.microservice.name }}-migrator
+          {{- if .Values.microservice.imageFolder }}
+          image: "{{ .Values.microservice.registryUrl }}/{{ .Values.project }}/{{ .Values.microservice.imageFolder }}/{{ .Values.microservice.image }}:{{ .Values.microservice.tag }}"
+          {{- else }}
+          image: "{{ .Values.microservice.registryUrl }}/{{ .Values.project }}/{{ .Values.microservice.image }}:{{ .Values.microservice.tag }}"
+          {{- end }}
+          imagePullPolicy: Always
+          {{- $command := .Values.command | default "" }}
+          {{- if $command }}
+          command: {{ $command }}
+          {{- end }}
+          env:
+            - name: SERVICE_NAME
+              value: {{ .Values.microservice.name }}
+            {{- range $key, $value := .Values.env }}
+            {{- $environmentValue :=  pluck $envname $value | first | default $value.default | toString }}
+            {{- if $environmentValue }}
+            - name: {{ $key | squote }}
+              value: {{ $environmentValue | squote }}
+            {{- end }}
+            {{- end }}
+          {{- if .Values.secret }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.microservice.name }}
+          {{- end }}
+resources:
+  limits:
+    memory: {{ .Values.resourcesLimitsMemory | default "128Mi" | quote }}
+    {{- if .Values.resourcesLimitsCPU }}
+    cpu: {{ .Values.resourcesLimitsCPU | quote }}
+    {{- end }}
+  requests:
+    memory: {{ .Values.resourcesRequestsMemory | default "128Mi" | quote }}
+    cpu: {{ .Values.resourcesRequestsCPU | default "0.2" | quote }}
+{{- end }}
