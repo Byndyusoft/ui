@@ -1,5 +1,6 @@
 import React, { ReactNode, useState } from 'react';
-import { fireEvent, render, screen, within } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import Portal from './Portal';
 
 describe('components/Portal', () => {
@@ -16,8 +17,9 @@ describe('components/Portal', () => {
         expect(baseElement.querySelector('[id="portal"]')).toBeInTheDocument();
     });
 
-    test('renders inside specified node', () => {
+    test('renders inside specified node', async () => {
         const PORTAL_KEY = 'portal-items';
+        userEvent.setup();
 
         const ComponentWithPortal = ({ children }: { children?: ReactNode }) => {
             return (
@@ -57,7 +59,7 @@ describe('components/Portal', () => {
 
         expect(within(portalContainer).queryByRole('listitem')).not.toBeInTheDocument();
 
-        fireEvent.click(button);
+        await userEvent.click(button);
 
         expect(within(portalContainer).queryByRole('listitem')).toBeInTheDocument();
     });
