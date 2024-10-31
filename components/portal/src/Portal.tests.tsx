@@ -19,6 +19,7 @@ describe('components/Portal', () => {
 
     test('renders inside specified node', async () => {
         const PORTAL_KEY = 'portal-items';
+
         userEvent.setup();
 
         const ComponentWithPortal = ({ children }: { children?: ReactNode }) => {
