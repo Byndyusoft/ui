@@ -20,7 +20,7 @@ export class LocalStorageService<TValue> implements IStorageService<TValue> {
             try {
                 return deserialize(raw);
             } catch {
-                throw new Error(`@byndyusoft-ui / Local Storage Service: Failed to deserialize the value`);
+                throw new Error('Local Storage Service: Failed to deserialize the value');
             }
         }
 
