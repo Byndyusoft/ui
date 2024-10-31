@@ -20,7 +20,7 @@ export class SessionStorageService<TValue> implements IStorageService<TValue> {
             try {
                 return deserialize(raw);
             } catch {
-                throw new Error(`@byndyusoft-ui / Session Storage Service: Failed to deserialize the value`);
+                throw new Error('Session Storage Service: Failed to deserialize the value');
             }
         }
 
