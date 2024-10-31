@@ -1,5 +1,5 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
+import React, { ReactNode, useState } from 'react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import Portal from './Portal';
 
 describe('components/Portal', () => {
@@ -14,5 +14,51 @@ describe('components/Portal', () => {
 
         // eslint-disable-next-line testing-library/no-node-access
         expect(baseElement.querySelector('[id="portal"]')).toBeInTheDocument();
+    });
+
+    test('renders inside specified node', () => {
+        const PORTAL_KEY = 'portal-items';
+
+        const ComponentWithPortal = ({ children }: { children?: ReactNode }) => {
+            return (
+                <Portal targetElement={document.getElementById(PORTAL_KEY) as Element}>
+                    <li>{children}</li>
+                </Portal>
+            );
+        };
+
+        const SomeFeature = (): JSX.Element => {
+            const [items, setItems] = useState<string[]>([]);
+
+            return (
+                <>
+                    <div>Other content</div>
+                    <ul id={PORTAL_KEY} />
+                    <button
+                        type="button"
+                        onClick={() => setItems(prevItems => [...prevItems, `Item ${items.length + 1}`])}
+                    >
+                        Add item
+                    </button>
+                    {items.map(item => (
+                        <ComponentWithPortal key={item}>{item}</ComponentWithPortal>
+                    ))}
+                </>
+            );
+        };
+
+        render(<SomeFeature />);
+
+        const portalContainer = document.getElementById(PORTAL_KEY) as HTMLElement;
+        expect(portalContainer).toBeInTheDocument();
+
+        const button = screen.getByRole('button');
+        expect(button).toBeInTheDocument();
+
+        expect(within(portalContainer).queryByRole('listitem')).not.toBeInTheDocument();
+
+        fireEvent.click(button);
+
+        expect(within(portalContainer).queryByRole('listitem')).toBeInTheDocument();
     });
 });
