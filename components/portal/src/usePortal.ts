@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { IPortalProps } from './Portal.types';
 
 export interface IUsePortal {
-    container: Element;
+    container: HTMLElement;
 }
 
 export default function usePortal({ id, targetElement }: IPortalProps): IUsePortal {
-    const [container] = useState<Element>(() => {
+    const [container] = useState<HTMLElement>(() => {
         if (targetElement) {
             return targetElement;
         }

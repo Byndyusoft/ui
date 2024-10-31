@@ -24,7 +24,7 @@ describe('components/Portal', () => {
 
         const ComponentWithPortal = ({ children }: { children?: ReactNode }) => {
             return (
-                <Portal targetElement={document.getElementById(PORTAL_KEY) as Element}>
+                <Portal targetElement={document.getElementById(PORTAL_KEY) as HTMLElement}>
                     <li>{children}</li>
                 </Portal>
             );

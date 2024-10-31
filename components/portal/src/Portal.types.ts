@@ -1,4 +1,4 @@
 export interface IPortalProps {
     id?: string;
-    targetElement?: Element;
+    targetElement?: HTMLElement;
 }
