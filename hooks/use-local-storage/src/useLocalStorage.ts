@@ -1,7 +1,9 @@
 import { LocalStorageService } from '@byndyusoft-ui/local-storage';
 
-export interface IUseLocalStorage {}
+export interface IUseLocalStorageActions {}
 
-export default function useLocalStorage<TValue>(): IUseLocalStorage {
-    return {};
+export type TUseLocalStorage<TValue> = [TValue, IUseLocalStorageActions];
+
+export default function useLocalStorage<TValue>(key: string, initialValue: TValue): TUseLocalStorage<TValue> {
+    return [initialValue, {}];
 }
