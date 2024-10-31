@@ -2,11 +2,15 @@ import { useEffect, useState } from 'react';
 import { IPortalProps } from './Portal.types';
 
 export interface IUsePortal {
-    container: HTMLDivElement;
+    container: Element;
 }
 
-export default function usePortal({ id }: IPortalProps): IUsePortal {
-    const [container] = useState<HTMLDivElement>(() => {
+export default function usePortal({ id, targetElement }: IPortalProps): IUsePortal {
+    const [container] = useState<Element>(() => {
+        if (targetElement) {
+            return targetElement;
+        }
+
         const element = document.createElement('div');
 
         if (id && id.length > 0) {
@@ -17,12 +21,14 @@ export default function usePortal({ id }: IPortalProps): IUsePortal {
     });
 
     useEffect(() => {
-        document.body.appendChild(container);
+        if (!targetElement) {
+            document.body.appendChild(container);
 
-        return () => {
-            document.body.removeChild(container);
-        };
-    }, [container]);
+            return () => {
+                document.body.removeChild(container);
+            };
+        }
+    }, [container, targetElement]);
 
     return { container };
 }

@@ -4,11 +4,7 @@ import usePortal from './usePortal';
 import { IPortalProps } from './Portal.types';
 
 const Portal: FC<PropsWithChildren<IPortalProps>> = ({ children, id, targetElement }) => {
-    if (targetElement) {
-        return createPortal(children, targetElement);
-    }
-
-    const { container } = usePortal({ id });
+    const { container } = usePortal({ id, targetElement });
 
     return createPortal(children, container);
 };
