@@ -1,11 +1,9 @@
-# `session-storage`
+# `@byndyusoft-ui/session-storage`
 
-> TODO: description
+### Installation
 
-## Usage
-
-```
-const sessionStorage = require('session-storage');
-
-// TODO: DEMONSTRATE API
+```sh
+npm i @byndyusoft-ui/session-storage
+# or
+yarn add @byndyusoft-ui/session-storage
 ```
