@@ -1,11 +1,9 @@
-# `local-storage`
+# `@byndyusoft-ui/local-storage`
 
-> TODO: description
+### Installation
 
-## Usage
-
-```
-const localStorage = require('local-storage');
-
-// TODO: DEMONSTRATE API
+```sh
+npm i @byndyusoft-ui/local-storage
+# or
+yarn add @byndyusoft-ui/local-storage
 ```
