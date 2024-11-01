@@ -1,12 +1,10 @@
-import { Callback } from './Callback';
+export type TStorageValueSerializer<T> = (value: T) => string;
 
-export type StorageValueSerializer<T> = Callback<T, string>;
-
-export type StorageValueDeserializer<T> = Callback<string, T>;
+export type TStorageValueDeserializer<T> = (raw: string) => T;
 
 export interface IStorageService<TValue> {
-    getValue(key: string, defaultValue?: TValue, deserialize?: StorageValueDeserializer<TValue>): TValue | null;
-    setValue(key: string, value: TValue, serialize?: StorageValueSerializer<TValue>): void;
+    getValue(key: string, defaultValue?: TValue, deserialize?: TStorageValueDeserializer<TValue>): TValue | null;
+    setValue(key: string, value: TValue, serialize?: TStorageValueSerializer<TValue>): void;
     removeValue(key: string): void;
     hasValue(key: string): boolean;
     clear(): void;
