@@ -1,6 +1,6 @@
 {
   "name": "@byndyusoft-ui/session-storage",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "Byndyusoft UI Session Storage Service",
   "keywords": [
     "byndyusoft",
@@ -29,6 +29,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@byndyusoft-ui/types": "*"
+    "@byndyusoft-ui/types": "0.1.1"
   }
 }
