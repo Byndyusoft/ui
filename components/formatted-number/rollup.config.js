@@ -9,7 +9,7 @@ export default {
         typescript({
             tsconfig: './tsconfig.json',
             module: 'ESNext',
-            exclude: ['src/**/*.stories.tsx', 'src/**/*.tests.tsx', 'node_modules']
+            exclude: ['src/**/*.stories.tsx', 'src/__tests__/*', 'node_modules']
         })
     ]
 };

@@ -1,6 +1,6 @@
 {
     "name": "@byndyusoft-ui/formatted-number",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "description": "Byndyusoft UI FormattedNumber React Component",
     "keywords": [
         "byndyusoft",
@@ -30,5 +30,8 @@
     },
     "publishConfig": {
         "access": "public"
+    },
+    "peerDependencies": {
+        "react": ">=17"
     }
 }
