@@ -22,13 +22,12 @@ describe('components/Portal', () => {
 
         userEvent.setup();
 
-        const ComponentWithPortal = ({ children }: { children?: ReactNode }) => {
-            return (
-                <Portal targetElement={document.getElementById(PORTAL_KEY) as HTMLElement}>
-                    <li>{children}</li>
-                </Portal>
-            );
-        };
+        const ComponentWithPortal = ({ children }: { children?: ReactNode }): JSX.Element => (
+            // eslint-disable-next-line testing-library/no-node-access
+            <Portal targetElement={document.getElementById(PORTAL_KEY) as HTMLElement}>
+                <li>{children}</li>
+            </Portal>
+        );
 
         const SomeFeature = (): JSX.Element => {
             const [items, setItems] = useState<string[]>([]);
@@ -52,6 +51,7 @@ describe('components/Portal', () => {
 
         render(<SomeFeature />);
 
+        // eslint-disable-next-line testing-library/no-node-access
         const portalContainer = document.getElementById(PORTAL_KEY) as HTMLElement;
         expect(portalContainer).toBeInTheDocument();
 
@@ -62,6 +62,8 @@ describe('components/Portal', () => {
 
         await userEvent.click(button);
 
-        expect(within(portalContainer).queryByRole('listitem')).toBeInTheDocument();
+        await userEvent.click(button);
+
+        expect(within(portalContainer).queryAllByRole('listitem')).toHaveLength(2);
     });
 });
