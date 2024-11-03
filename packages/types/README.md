@@ -188,6 +188,8 @@ import { PlainObject } from '@byndyusoft-ui/types';
 
 const date: PlainObject = new Date(); // Type 'Date' is not assignable to type 'PlainObject<unknown>'.
 const rgx: PlainObject = new RegExp('[a-z]'); // Type 'RegExp' is not assignable to type 'PlainObject<unknown>'. 
+
+const a: PlainObject = { a: 'b', c: 'd' }; // ok
 ```
 
 ### ValueOf
