@@ -1,11 +1,9 @@
 import React from 'react';
-import { render, RenderResult } from '@testing-library/react';
+import { render, RenderResult, screen } from '@testing-library/react';
 import Highlighter from './Highlighter';
 import { IHighlighterProps } from './Highlighter.types';
 
-const setup = (props: IHighlighterProps): RenderResult => {
-    return render(<Highlighter {...props} />);
-};
+const setup = (props: IHighlighterProps): RenderResult => render(<Highlighter {...props} />);
 
 describe('Highlighter', () => {
     const defaultProps: IHighlighterProps = {
@@ -14,31 +12,33 @@ describe('Highlighter', () => {
     };
 
     test('renders the text without highlighting if no highlight is provided', () => {
-        const { getByText } = setup({ ...defaultProps, searchValues: [''] });
-        expect(getByText(defaultProps.text)).toBeInTheDocument();
+        setup({ ...defaultProps, searchValues: [''] });
+
+        expect(screen.getByText(defaultProps.text)).toBeInTheDocument();
     });
 
     test('renders the text without highlighting if the highlight does not match', () => {
-        const { getByText } = setup({ ...defaultProps, searchValues: ['invalid'] });
-        expect(getByText(defaultProps.text)).toBeInTheDocument();
+        setup({ ...defaultProps, searchValues: ['invalid'] });
+
+        expect(screen.getByText(defaultProps.text)).toBeInTheDocument();
     });
 
     test('renders the text with highlighted text when there is a match', () => {
         const { container } = setup({ ...defaultProps });
-        const markedText = container.querySelector('mark');
-        expect(markedText).toHaveTextContent('test');
+
+        expect(container.querySelector('mark')).toHaveTextContent('test');
     });
 
     test('renders the text with multiple highlighted matches', () => {
         const { container } = setup({ ...defaultProps, text: 'test test test' });
-        const markedText = container.querySelectorAll('mark');
-        expect(markedText.length).toBe(3);
+
+        expect(container.querySelectorAll('mark')).toHaveLength(3);
     });
 
     test('renders the text with case-insensitive highlighted matches', () => {
         const { container } = setup({ ...defaultProps, text: 'Test TEST Test', ignoreCase: true });
-        const markedText = container.querySelectorAll('mark');
-        expect(markedText.length).toBe(3);
+
+        expect(container.querySelectorAll('mark')).toHaveLength(3);
     });
 
     test('renders the text with custom highlight styles', () => {
@@ -54,8 +54,8 @@ describe('Highlighter', () => {
 
     test('renders the text with ignored spaces in the highlight pattern', () => {
         const { container } = setup({ ...defaultProps, searchValues: ['t e s t'], ignoreSpaces: true });
-        const markedText = container.querySelector('mark');
-        expect(markedText).toHaveTextContent('test');
+
+        expect(container.querySelector('mark')).toHaveTextContent('test');
     });
 
     test('renders the text with multiple search values', () => {
