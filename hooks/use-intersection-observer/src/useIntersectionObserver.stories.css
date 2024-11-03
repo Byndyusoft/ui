@@ -1,0 +1,112 @@
+.wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    text-align: center;
+    height: calc(100vh - 32px);
+    overflow: hidden;
+}
+
+.status-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background: white;
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+}
+
+.status-bar-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.status-bar-warning {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.warning {
+    color: orangered;
+    font-size: 16px;
+}
+
+.status-bar-in-view {
+    margin: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.status-bar-entry {
+    margin: 0 10px;
+}
+
+.status-bar-entry pre {
+    background: #f5f5f5;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    max-width: 400px;
+    overflow-x: auto;
+}
+
+.scroll-container {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 32px - 50px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.scroll-down,
+.scroll-up {
+    height: 1000px;
+    background: lightgray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border: 1px solid #ccc;
+}
+
+.observed-element {
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border: 1px solid #ccc;
+}
+
+.status-label {
+    padding: 1px 8px;
+    border-radius: 4px;
+}
+
+.in-view {
+    background: lightgreen;
+}
+
+.out-of-view {
+    background: lightcoral;
+}
+
+.root-margin-visual {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border: 2px dashed red;
+    background: yellow;
+}
