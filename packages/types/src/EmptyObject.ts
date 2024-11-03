@@ -1,3 +1,3 @@
-import { PropertyKey } from './PropertyKey';
+import { PlainObject } from './PlainObject';
 
-export type EmptyObject = Record<PropertyKey, never>;
+export type EmptyObject = PlainObject<never>;
