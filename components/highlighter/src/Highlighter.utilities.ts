@@ -12,10 +12,7 @@ interface TextSegment {
  * @param matches - Array of regex matches
  * @returns Array of text segments with match information
  */
-export function splitTextIntoSegments(
-  text: string,
-  matches: Array<RegExpMatchArray>
-): Array<TextSegment> {
+export function splitTextIntoSegments(text: string, matches: Array<RegExpMatchArray>): Array<TextSegment> {
     const result: Array<TextSegment> = [];
     let lastIndex = 0;
 

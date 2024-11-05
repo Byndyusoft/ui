@@ -27,7 +27,7 @@ const Highlighter = ({
 
     // Create regular expression patterns for searching
     const highlightPattern = searchValues.map(searchValue =>
-      ignoreSpaces ? searchValue.replace(/\s+/g, '').split('').join('\\s*') : searchValue
+        ignoreSpaces ? searchValue.replace(/\s+/g, '').split('').join('\\s*') : searchValue
     );
 
     const regex = new RegExp(highlightPattern.join('|'), ignoreCase ? 'gi' : 'g');
@@ -44,7 +44,7 @@ const Highlighter = ({
     const segments = splitTextIntoSegments(text, matches);
 
     // Highlight matches
-    const result: Array<string | ReactNode> = segments.map((part) => {
+    const result: Array<string | ReactNode> = segments.map(part => {
         return part.isMatch ? highlighter(part.segment) : part.segment;
     });
 
