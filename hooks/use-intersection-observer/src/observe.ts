@@ -9,7 +9,7 @@ let rootId = 0;
 /**
  * Generate a unique ID for the root element
  */
-function getRootId(root: IntersectionObserverInit['root']) {
+export function getRootId(root: IntersectionObserverInit['root']) {
     if (!root) return '0';
     if (RootIds.has(root)) return RootIds.get(root);
     rootId += 1;
@@ -21,7 +21,7 @@ function getRootId(root: IntersectionObserverInit['root']) {
  * Convert the options to a string Id, based on the values.
  * Ensures we can reuse the same observer when observing elements with the same options.
  */
-function optionsToId(options: IntersectionObserverInit) {
+export function optionsToId(options: IntersectionObserverInit) {
     return Object.keys(options)
         .sort()
         .filter(key => options[key as keyof IntersectionObserverInit] !== undefined)

@@ -3,8 +3,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 import useIntersectionObserver from './useIntersectionObserver';
 import './useIntersectionObserver.stories.css';
 
-type TStory = StoryObj<typeof Template>;
-
 type ITemplateProps = {
     title: string;
     options: any;
@@ -119,6 +117,15 @@ export const TriggerOnce: StoryObj<typeof Template> = {
     }
 };
 
+export const OnChange: StoryObj<typeof Template> = {
+    args: {
+        options: {
+            onChange: (inView: boolean) => alert(`inView: ${inView}`)
+        },
+        title: 'OnChange'
+    }
+};
+
 export const Delay: StoryObj<typeof Template> = {
     args: {
         options: {
@@ -126,15 +133,6 @@ export const Delay: StoryObj<typeof Template> = {
         },
         title: 'Delay',
         isExperimental: true
-    }
-};
-
-export const OnChange: StoryObj<typeof Template> = {
-    args: {
-        options: {
-            onChange: (inView: boolean) => alert(`inView: ${inView}`)
-        },
-        title: 'OnChange'
     }
 };
 
