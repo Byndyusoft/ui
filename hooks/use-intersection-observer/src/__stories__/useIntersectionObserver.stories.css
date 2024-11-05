@@ -63,14 +63,14 @@
 .scroll-container {
     position: relative;
     width: 100%;
-    height: calc(100vh - 32px - 50px);
+    height: calc(100vh - 82px);
     overflow-y: auto;
     overflow-x: hidden;
 }
 
 .scroll-down,
 .scroll-up {
-    height: 1000px;
+    height: 100vh;
     background: lightgray;
     display: flex;
     align-items: center;

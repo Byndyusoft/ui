@@ -1,6 +1,6 @@
-import { optionsToId } from '../observe';
+import { optionsToId } from '../useIntersectionObserver.utilities';
 
-describe('hooks/useIntersectionObserver/utilities', () => {
+describe('hooks/useIntersectionObserver.utilities', () => {
     test('should convert options to id', () => {
         expect(
             optionsToId({

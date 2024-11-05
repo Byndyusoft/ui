@@ -1,11 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { observe } from './observe';
+import { observe } from './useIntersectionObserver.utilities';
 import type { IUseIntersectionObserverReturn, IUseIntersectionObserverOptions } from './useIntersectionObserver.types';
-
-type State = {
-    inView: boolean;
-    entry?: IntersectionObserverEntry;
-};
 
 export default function useIntersectionObserver({
     threshold,
@@ -20,11 +15,11 @@ export default function useIntersectionObserver({
     onChange
 }: IUseIntersectionObserverOptions = {}): IUseIntersectionObserverReturn {
     const [ref, setRef] = useState<Element | null>(null);
+    const [inView, setInView] = useState<boolean>(!!initialInView);
+    const [entry, setEntry] = useState<IntersectionObserverEntry | undefined>(undefined);
+
     const callback = useRef<IUseIntersectionObserverOptions['onChange']>();
-    const [state, setState] = useState<State>({
-        inView: !!initialInView,
-        entry: undefined
-    });
+    const previousEntryTarget = useRef<Element>();
 
     callback.current = onChange;
 
@@ -43,14 +38,11 @@ export default function useIntersectionObserver({
                 delay
             },
             callback: (inView, entry) => {
-                setState({
-                    inView,
-                    entry
-                });
+                setInView(inView);
+                setEntry(entry);
                 if (callback.current) callback.current(inView, entry);
 
                 if (entry.isIntersecting && triggerOnce && unobserve) {
-                    // If it should only trigger once, unobserve the element after it's inView
                     unobserve();
                     unobserve = undefined;
                 }
@@ -59,9 +51,7 @@ export default function useIntersectionObserver({
         });
 
         return () => {
-            if (unobserve) {
-                unobserve();
-            }
+            unobserve?.();
         };
     }, [
         Array.isArray(threshold) ? threshold.toString() : threshold,
@@ -75,17 +65,15 @@ export default function useIntersectionObserver({
         delay
     ]);
 
-    const entryTarget = state.entry?.target;
-    const previousEntryTarget = useRef<Element>();
+    const entryTarget = entry?.target;
+
     if (!ref && entryTarget && !triggerOnce && !skip && previousEntryTarget.current !== entryTarget) {
         previousEntryTarget.current = entryTarget;
-        setState({
-            inView: !!initialInView,
-            entry: undefined
-        });
+        setInView(!!initialInView);
+        setEntry(undefined);
     }
 
-    const result = [setRef, state.inView, state.entry] as IUseIntersectionObserverReturn;
+    const result = [setRef, inView, entry] as IUseIntersectionObserverReturn;
 
     result.ref = result[0];
     result.inView = result[1];

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import useIntersectionObserver from './useIntersectionObserver';
+import useIntersectionObserver from '../useIntersectionObserver';
 import './useIntersectionObserver.stories.css';
 
 type ITemplateProps = {

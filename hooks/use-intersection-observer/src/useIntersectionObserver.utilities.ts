@@ -33,7 +33,7 @@ export function optionsToId(options: IntersectionObserverInit) {
         .toString();
 }
 
-function createObserver(options: IntersectionObserverInit) {
+export function createObserver(options: IntersectionObserverInit) {
     const id = optionsToId(options);
     let instance = observerMap.get(id);
 
@@ -101,17 +101,14 @@ export function observe({ element, callback, options = {}, fallbackInView }: IOb
     observer.observe(element);
 
     return function unobserve() {
-        // Remove the callback from the callback list
         callbacks.splice(callbacks.indexOf(callback), 1);
 
         if (callbacks.length === 0) {
-            // No more callback exists for element, so destroy it
             elements.delete(element);
             observer.unobserve(element);
         }
 
         if (elements.size === 0) {
-            // No more elements are being observer by this instance, so destroy it
             observer.disconnect();
             observerMap.delete(id);
         }
