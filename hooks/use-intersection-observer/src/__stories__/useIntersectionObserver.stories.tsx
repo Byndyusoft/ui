@@ -23,9 +23,9 @@ function convertEntryToString(entry?: IntersectionObserverEntry) {
 }
 
 const Template = ({ title, options, isExperimental }: ITemplateProps): JSX.Element => {
-    const wrapperRef = useRef<HTMLDivElement | null>(null);
+    const scrollContainerRef = useRef<HTMLDivElement | null>(null);
     const { ref, inView, entry } = useIntersectionObserver({
-        root: wrapperRef.current,
+        root: scrollContainerRef.current,
         onChange: (inView, entry) => console.log(inView, entry),
         ...options
     });
@@ -53,7 +53,7 @@ const Template = ({ title, options, isExperimental }: ITemplateProps): JSX.Eleme
                     <button onClick={() => alert(convertEntryToString(entry))}>Show entry</button>
                 </div>
             </div>
-            <div ref={wrapperRef} className="scroll-container">
+            <div ref={scrollContainerRef} className="scroll-container">
                 <div className="scroll-down">Scroll down</div>
                 {!!options?.rootMargin && (
                     <div className="root-margin-visual" style={{ height: options.rootMargin }}>
