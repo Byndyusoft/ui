@@ -1,4 +1,4 @@
-import type { IObserveOptions, IObserverItem, TObserverInstanceCallback } from './useIntersectionObserver.types';
+import type { IObserveOptions, IObserverItem, TObserverInstanceCallback } from '../useIntersectionObserver.types';
 
 const observerMap = new Map<string, IObserverItem>();
 
@@ -77,11 +77,11 @@ export function createObserver(options: IntersectionObserverInit) {
     return instance;
 }
 
-export function observe({ element, callback, options = {}, fallbackIsInView }: IObserveOptions) {
-    if (typeof window.IntersectionObserver === 'undefined' && fallbackIsInView !== undefined) {
+export function observe({ element, callback, options = {}, isIntersectingFallback }: IObserveOptions) {
+    if (typeof window.IntersectionObserver === 'undefined' && isIntersectingFallback !== undefined) {
         const bounds = element.getBoundingClientRect();
-        callback(fallbackIsInView, {
-            isIntersecting: fallbackIsInView,
+        callback(isIntersectingFallback, {
+            isIntersecting: isIntersectingFallback,
             target: element,
             intersectionRatio: typeof options.threshold === 'number' ? options.threshold : 0,
             time: 0,

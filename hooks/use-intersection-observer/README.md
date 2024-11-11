@@ -44,7 +44,6 @@ import { useIntersectionObserver } from "@byndyusoft-ui/use-intersection-observe
 const Component = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-
   const { ref, isIntersecting, entry } = useIntersectionObserver({
     root: scrollContainerRef.current,
     rootMargin: "10px",
@@ -52,10 +51,10 @@ const Component = () => {
     triggerOnce: false,
     skip: false,
     isIntersectingInitial: false,
-    fallbackInView: false,
+    isIntersectingFallback: false,
     trackVisibility: false, // experimental
     delay: 1500, // experimental
-    onChange: (inView, entry) => console.log(inView, entry),
+    onChange: (isIntersecting, entry) => console.log(isIntersecting, entry),
   });
 
   return (

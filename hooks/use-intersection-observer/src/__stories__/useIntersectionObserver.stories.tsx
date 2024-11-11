@@ -26,7 +26,7 @@ const Template = ({ title, options, isExperimental }: ITemplateProps): JSX.Eleme
     const scrollContainerRef = useRef<HTMLDivElement | null>(null);
     const { ref, isIntersecting, entry } = useIntersectionObserver({
         root: scrollContainerRef.current,
-        onChange: (inView, entry) => console.log(inView, entry),
+        onChange: (isIntersecting, entry) => console.log(isIntersecting, entry),
         ...options
     });
 

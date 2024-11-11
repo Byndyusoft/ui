@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { observe } from './useIntersectionObserver.utilities';
+import { observe } from './utilities/useIntersectionObserver.utilities';
 import type { IUseIntersectionObserverReturn, IUseIntersectionObserverOptions } from './useIntersectionObserver.types';
 
 export default function useIntersectionObserver({
@@ -11,7 +11,7 @@ export default function useIntersectionObserver({
     triggerOnce,
     skip,
     isIntersectingInitial,
-    fallbackInView,
+    isIntersectingFallback,
     onChange
 }: IUseIntersectionObserverOptions = {}): IUseIntersectionObserverReturn {
     const [ref, setRef] = useState<Element | null>(null);
@@ -49,7 +49,7 @@ export default function useIntersectionObserver({
                     unobserve = undefined;
                 }
             },
-            fallbackIsInView: fallbackInView
+            isIntersectingFallback
         });
 
         return () => {
@@ -63,7 +63,7 @@ export default function useIntersectionObserver({
         triggerOnce,
         skip,
         trackVisibility,
-        fallbackInView,
+        isIntersectingFallback,
         delay
     ]);
 

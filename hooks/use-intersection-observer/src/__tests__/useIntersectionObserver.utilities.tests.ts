@@ -1,6 +1,38 @@
-import { optionsToId } from '../useIntersectionObserver.utilities';
+import { optionsToId, observe } from '../utilities/useIntersectionObserver.utilities';
+import {
+    intersectionMockInstance,
+    mockIsIntersecting,
+    resetIntersectionMocking,
+    setupIntersectionMocking
+} from '../utilities/useIntersectionObserver.tests.utilities';
 
-describe('hooks/useIntersectionObserver.utilities', () => {
+describe('hooks/useIntersectionObserver/utilities', () => {
+    beforeEach(() => {
+        setupIntersectionMocking(jest.fn);
+    });
+    afterEach(() => {
+        resetIntersectionMocking();
+    });
+
+    test('should be able to use observe', () => {
+        const element = document.createElement('div');
+        const callback = jest.fn();
+        const unmount = observe({
+            element,
+            callback,
+            options: { threshold: 0.1 },
+            isIntersectingFallback: false
+        });
+
+        mockIsIntersecting(element, true);
+        expect(callback).toHaveBeenCalled();
+
+        unmount();
+        expect(() => intersectionMockInstance(element)).toThrow(
+            'Failed to find IntersectionObserver for element. Is it being observed?'
+        );
+    });
+
     test('should convert options to id', () => {
         expect(
             optionsToId({

@@ -1,10 +1,10 @@
-export type TObserverInstanceCallback = (inView: boolean, entry: IntersectionObserverEntry) => void;
+export type TObserverInstanceCallback = (isIntersecting: boolean, entry: IntersectionObserverEntry) => void;
 
 export interface IObserveOptions {
     element: Element;
     callback: TObserverInstanceCallback;
     options: IntersectionObserverInit;
-    fallbackIsInView?: boolean;
+    isIntersectingFallback?: boolean;
 }
 
 export interface IObserverItem {
@@ -20,20 +20,20 @@ export interface IUseIntersectionObserverOptions extends IntersectionObserverIni
     rootMargin?: string;
     /** Number between `0` and `1` indicating the percentage that should be visible before triggering. Can also be an `array` of numbers, to create multiple trigger points. */
     threshold?: number | number[];
-    /** Only trigger the inView callback once */
+    /** Only trigger the isIntersecting callback once */
     triggerOnce?: boolean;
     /** Skip assigning the observer to the `ref` */
     skip?: boolean;
-    /** Set the initial value of the `inView` boolean. This can be used if you expect the element to be in the viewport to start with, and you want to trigger something when it leaves. */
+    /** Set the initial value of the `isIntersecting` boolean. This can be used if you expect the element to be in the viewport to start with, and you want to trigger something when it leaves. */
     isIntersectingInitial?: boolean;
-    /** Fallback to this inView state if the IntersectionObserver is unsupported, and a polyfill wasn't loaded */
-    fallbackInView?: boolean;
+    /** Fallback to this isIntersecting state if the IntersectionObserver is unsupported, and a polyfill wasn't loaded */
+    isIntersectingFallback?: boolean;
     /** IntersectionObserver v2 - Track the actual visibility of the element */
     trackVisibility?: boolean;
     /** IntersectionObserver v2 - Set a minimum delay between notifications */
     delay?: number;
     /** Call this function whenever the in view state changes */
-    onChange?: (inView: boolean, entry: IntersectionObserverEntry) => void;
+    onChange?: (isIntersecting: boolean, entry: IntersectionObserverEntry) => void;
 }
 
 export type IUseIntersectionObserverReturn = [
