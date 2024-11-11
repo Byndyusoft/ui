@@ -2,7 +2,7 @@ import type { IObserveOptions, IObserverItem, TObserverInstanceCallback } from '
 
 const observerMap = new Map<string, IObserverItem>();
 
-const RootIds: WeakMap<Element | Document, string> = new WeakMap();
+const rootIdsWeakMap: WeakMap<Element | Document, string> = new WeakMap();
 
 let rootId = 0;
 
@@ -11,10 +11,13 @@ let rootId = 0;
  */
 export function getRootId(root: IntersectionObserverInit['root']) {
     if (!root) return '0';
-    if (RootIds.has(root)) return RootIds.get(root);
+
+    if (rootIdsWeakMap.has(root)) return rootIdsWeakMap.get(root);
+
     rootId += 1;
-    RootIds.set(root, rootId.toString());
-    return RootIds.get(root);
+    rootIdsWeakMap.set(root, rootId.toString());
+
+    return rootIdsWeakMap.get(root);
 }
 
 /**
@@ -37,48 +40,48 @@ export function createObserver(options: IntersectionObserverInit) {
     const id = optionsToId(options);
     let instance = observerMap.get(id);
 
-    if (!instance) {
-        const elements = new Map<Element, Array<TObserverInstanceCallback>>();
-        let thresholds: number[] | readonly number[];
+    if (instance) return instance;
 
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                const inView =
-                    entry.isIntersecting && thresholds.some(threshold => entry.intersectionRatio >= threshold);
+    const elements = new Map<Element, Array<TObserverInstanceCallback>>();
+    let thresholds: number[] | readonly number[];
 
-                // @ts-ignore support IntersectionObserver v2
-                if (options.trackVisibility && typeof entry.isVisible === 'undefined') {
-                    // The browser doesn't support Intersection Observer v2, falling back to v1 behavior.
-                    // @ts-ignore
-                    entry.isVisible = inView;
-                }
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            const isIntersecting =
+                entry.isIntersecting && thresholds.some(threshold => entry.intersectionRatio >= threshold);
 
-                elements.get(entry.target)?.forEach(callback => {
-                    callback(inView, entry);
-                });
+            // @ts-ignore support IntersectionObserver v2
+            if (options.trackVisibility && typeof entry.isVisible === 'undefined') {
+                // The browser doesn't support Intersection Observer v2, falling back to v1 behavior.
+                // @ts-ignore
+                entry.isVisible = isIntersecting;
+            }
+
+            elements.get(entry.target)?.forEach(callback => {
+                callback(isIntersecting, entry);
             });
-        }, options);
+        });
+    }, options);
 
-        thresholds =
-            observer.thresholds || (Array.isArray(options.threshold) ? options.threshold : [options.threshold || 0]);
+    thresholds =
+        observer.thresholds || (Array.isArray(options.threshold) ? options.threshold : [options.threshold || 0]);
 
-        instance = {
-            id,
-            observer,
-            elements
-        };
+    instance = {
+        id,
+        observer,
+        elements
+    };
 
-        observerMap.set(id, instance);
-    }
+    observerMap.set(id, instance);
 
     return instance;
 }
 
-export function observe({ element, callback, options = {}, fallbackInView }: IObserveOptions) {
-    if (typeof window.IntersectionObserver === 'undefined' && fallbackInView !== undefined) {
+export function observe({ element, callback, options = {}, fallbackIsInView }: IObserveOptions) {
+    if (typeof window.IntersectionObserver === 'undefined' && fallbackIsInView !== undefined) {
         const bounds = element.getBoundingClientRect();
-        callback(fallbackInView, {
-            isIntersecting: fallbackInView,
+        callback(fallbackIsInView, {
+            isIntersecting: fallbackIsInView,
             target: element,
             intersectionRatio: typeof options.threshold === 'number' ? options.threshold : 0,
             time: 0,

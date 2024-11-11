@@ -10,12 +10,12 @@ export default function useIntersectionObserver({
     root,
     triggerOnce,
     skip,
-    initialInView,
+    isIntersectingInitial,
     fallbackInView,
     onChange
 }: IUseIntersectionObserverOptions = {}): IUseIntersectionObserverReturn {
     const [ref, setRef] = useState<Element | null>(null);
-    const [inView, setInView] = useState<boolean>(!!initialInView);
+    const [isIntersecting, setIsIntersecting] = useState<boolean>(!!isIntersectingInitial);
     const [entry, setEntry] = useState<IntersectionObserverEntry | undefined>(undefined);
 
     const callback = useRef<IUseIntersectionObserverOptions['onChange']>();
@@ -27,6 +27,7 @@ export default function useIntersectionObserver({
         if (skip || !ref) return;
 
         let unobserve: (() => void) | undefined;
+
         unobserve = observe({
             element: ref,
             options: {
@@ -37,17 +38,18 @@ export default function useIntersectionObserver({
                 trackVisibility,
                 delay
             },
-            callback: (inView, entry) => {
-                setInView(inView);
+            callback: (isIntersecting, entry) => {
+                setIsIntersecting(isIntersecting);
                 setEntry(entry);
-                if (callback.current) callback.current(inView, entry);
+
+                if (callback.current) callback.current(isIntersecting, entry);
 
                 if (entry.isIntersecting && triggerOnce && unobserve) {
                     unobserve();
                     unobserve = undefined;
                 }
             },
-            fallbackInView
+            fallbackIsInView: fallbackInView
         });
 
         return () => {
@@ -69,14 +71,14 @@ export default function useIntersectionObserver({
 
     if (!ref && entryTarget && !triggerOnce && !skip && previousEntryTarget.current !== entryTarget) {
         previousEntryTarget.current = entryTarget;
-        setInView(!!initialInView);
+        setIsIntersecting(!!isIntersectingInitial);
         setEntry(undefined);
     }
 
-    const result = [setRef, inView, entry] as IUseIntersectionObserverReturn;
+    const result = [setRef, isIntersecting, entry] as IUseIntersectionObserverReturn;
 
     result.ref = result[0];
-    result.inView = result[1];
+    result.isIntersecting = result[1];
     result.entry = result[2];
 
     return result;

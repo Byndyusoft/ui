@@ -12,19 +12,19 @@ type ITemplateProps = {
 function convertEntryToString(entry?: IntersectionObserverEntry) {
     if (!entry) return '';
     return `
-    time: ${entry.time}
-    rootBounds: ${JSON.stringify(entry.rootBounds)}
-    boundingClientRect: ${JSON.stringify(entry.boundingClientRect)}
-    intersectionRect: ${JSON.stringify(entry.intersectionRect)}
-    isIntersecting: ${entry.isIntersecting}
-    intersectionRatio: ${entry.intersectionRatio}
-    target: ${entry.target.outerHTML}
-  `;
+        time: ${entry.time}
+        rootBounds: ${JSON.stringify(entry.rootBounds)}
+        boundingClientRect: ${JSON.stringify(entry.boundingClientRect)}
+        intersectionRect: ${JSON.stringify(entry.intersectionRect)}
+        isIntersecting: ${entry.isIntersecting}
+        intersectionRatio: ${entry.intersectionRatio}
+        target: ${entry.target.outerHTML}
+    `;
 }
 
 const Template = ({ title, options, isExperimental }: ITemplateProps): JSX.Element => {
     const scrollContainerRef = useRef<HTMLDivElement | null>(null);
-    const { ref, inView, entry } = useIntersectionObserver({
+    const { ref, isIntersecting, entry } = useIntersectionObserver({
         root: scrollContainerRef.current,
         onChange: (inView, entry) => console.log(inView, entry),
         ...options
@@ -48,7 +48,9 @@ const Template = ({ title, options, isExperimental }: ITemplateProps): JSX.Eleme
                 )}
                 <div className="status-bar-in-view">
                     <span>In View:</span>
-                    <span className={`status-label ${inView ? 'in-view' : 'out-of-view'}`}>{String(inView)}</span>
+                    <span className={`status-label ${isIntersecting ? 'in-view' : 'out-of-view'}`}>
+                        {String(isIntersecting)}
+                    </span>
                     <span>Entry:</span>
                     <button onClick={() => alert(convertEntryToString(entry))}>Show entry</button>
                 </div>
@@ -60,8 +62,8 @@ const Template = ({ title, options, isExperimental }: ITemplateProps): JSX.Eleme
                         {options.rootMargin}
                     </div>
                 )}
-                <div ref={ref} className={`observed-element ${inView ? 'in-view' : 'out-of-view'}`}>
-                    {inView ? 'In View' : 'Out of View'}
+                <div ref={ref} className={`observed-element ${isIntersecting ? 'in-view' : 'out-of-view'}`}>
+                    {isIntersecting ? 'In View' : 'Out of View'}
                 </div>
                 {!!options?.rootMargin && (
                     <div className="root-margin-visual" style={{ height: options.rootMargin }}>

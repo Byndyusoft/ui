@@ -4,7 +4,7 @@ export interface IObserveOptions {
     element: Element;
     callback: TObserverInstanceCallback;
     options: IntersectionObserverInit;
-    fallbackInView?: boolean;
+    fallbackIsInView?: boolean;
 }
 
 export interface IObserverItem {
@@ -25,7 +25,7 @@ export interface IUseIntersectionObserverOptions extends IntersectionObserverIni
     /** Skip assigning the observer to the `ref` */
     skip?: boolean;
     /** Set the initial value of the `inView` boolean. This can be used if you expect the element to be in the viewport to start with, and you want to trigger something when it leaves. */
-    initialInView?: boolean;
+    isIntersectingInitial?: boolean;
     /** Fallback to this inView state if the IntersectionObserver is unsupported, and a polyfill wasn't loaded */
     fallbackInView?: boolean;
     /** IntersectionObserver v2 - Track the actual visibility of the element */
@@ -42,6 +42,6 @@ export type IUseIntersectionObserverReturn = [
     IntersectionObserverEntry | undefined
 ] & {
     ref: (node?: Element | null) => void;
-    inView: boolean;
+    isIntersecting: boolean;
     entry?: IntersectionObserverEntry;
 };

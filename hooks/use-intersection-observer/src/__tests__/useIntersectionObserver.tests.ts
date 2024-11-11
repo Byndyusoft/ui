@@ -16,9 +16,9 @@ describe('hooks/useIntersectionObserver', () => {
     });
 
     test('should initialize with initialInView', () => {
-        const { result } = setup({ initialInView: true });
+        const { result } = setup({ isIntersectingInitial: true });
 
-        expect(result.current.inView).toBe(true);
+        expect(result.current.isIntersecting).toBe(true);
     });
 
     test('should call useIntersectionObserverUtilities with correct parameters', () => {
@@ -71,7 +71,7 @@ describe('hooks/useIntersectionObserver', () => {
             callback(true, { isIntersecting: true, target: ref });
         });
 
-        expect(result.current.inView).toBe(true);
+        expect(result.current.isIntersecting).toBe(true);
         expect(result.current.entry).toEqual({ isIntersecting: true, target: ref });
         expect(onChange).toHaveBeenCalledWith(true, { isIntersecting: true, target: ref });
     });
