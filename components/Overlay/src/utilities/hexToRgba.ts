@@ -5,4 +5,4 @@ const hexToRgba = (hex: string, opacity?: number) => {
     return `rgba(${r},${g},${b},${opacity || 0.6})`;
 };
 
-export default hexToRgba;
+export { hexToRgba };

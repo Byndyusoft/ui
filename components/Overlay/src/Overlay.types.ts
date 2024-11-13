@@ -7,4 +7,11 @@ export interface IOverlayProps extends HTMLAttributes<HTMLDivElement> {
     zIndex?: number;
     backgroundOpacity?: number;
     center?: boolean;
+    classNames?: IOverlayClassNames;
+}
+
+export interface IOverlayClassNames {
+    container?: string;
+    isVisible?: string;
+    center?: string;
 }

@@ -1,39 +1,47 @@
 import React, { FC, forwardRef, useEffect } from 'react';
+import useBodyScrollLock from '@byndyusoft-ui/use-body-scroll-lock';
 import cn from 'classnames';
+import { getDefaultCheckBoxClassNames, hexToRgba } from './utilities';
 import { IOverlayProps } from './Overlay.types';
-import styles from './Overlay.module.css';
-import hexToRgba from './utilities/hexToRgba';
 
 const Overlay = forwardRef<HTMLDivElement, IOverlayProps>(
     (
-        { children, className, isVisible, color, blur, backgroundOpacity = 0.6, zIndex, center, ...props },
+        {
+            children,
+            className,
+            classNames = getDefaultCheckBoxClassNames(),
+            isVisible,
+            color,
+            blur,
+            backgroundOpacity = 0.6,
+            zIndex,
+            center,
+            ...props
+        },
         ref
     ): JSX.Element => {
-        useEffect(() => {
-            if (isVisible) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = '';
-            }
-        }, [isVisible]);
+        useBodyScrollLock(isVisible);
 
         return (
-            <>
-                <div
-                    className={cn(styles.container, isVisible && styles.isVisible, center && styles.center)}
-                    style={{
-                        zIndex: zIndex ? zIndex : 0,
-                        backgroundColor: color ? hexToRgba(color, backgroundOpacity) : '',
-                        backdropFilter: blur ? `blur(${blur}px)` : ''
-                    }}
-                    role="presentation"
-                    ref={ref}
-                    tabIndex={-1}
-                    {...props}
-                >
-                    {children && <div className={className}>{children}</div>}
-                </div>
-            </>
+            <div
+                className={cn(
+                    classNames.container,
+                    isVisible && classNames.isVisible,
+                    center && classNames.center,
+                    className
+                )}
+                style={{
+                    zIndex: zIndex ? zIndex : 0,
+                    backgroundColor: color ? hexToRgba(color, backgroundOpacity) : '',
+                    backdropFilter: blur ? `blur(${blur}px)` : ''
+                }}
+                role="presentation"
+                ref={ref}
+                tabIndex={-1}
+                {...props}
+            >
+                {children && children}
+            </div>
         );
     }
 );

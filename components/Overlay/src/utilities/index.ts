@@ -1,1 +1,2 @@
-export { default } from './hexToRgba';
+export * from './hexToRgba';
+export * from './getDefaultOverlayClassNames';
