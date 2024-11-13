@@ -1,0 +1,33 @@
+{{- if .Values.pdb.enabled }}
+{{- $envname := .Values.environment }}
+{{- $microservicename := .Values.microservice.name }}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ $microservicename }}
+  labels:
+    app: {{ $microservicename }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    project: {{ .Values.project }}
+    environment: {{ .Values.environment }}
+    {{- with .Values.pdb.labels }}
+    {{ toYaml . }}
+    {{- end }}
+  {{- $annotations := pluck $envname .Values.pdb.annotations | first | default .Values.pdb.annotations.default }}
+  {{- with $annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if .Values.minAvailable }}
+  minAvailable: {{ pluck $envname .Values.minAvailable | first | default .Values.minAvailable.default }}
+  {{- end }}
+  {{- if .Values.maxUnavailable }}
+  maxUnavailable: {{ pluck $envname .Values.maxUnavailable | first | default .Values.maxUnavailable.default }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app: {{ $microservicename }}
+{{- end }}
