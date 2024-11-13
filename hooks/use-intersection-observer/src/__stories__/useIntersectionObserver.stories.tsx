@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { StoryObj } from '@storybook/react';
 import useIntersectionObserver from '../useIntersectionObserver';
 import './useIntersectionObserver.stories.css';
 
@@ -47,7 +47,7 @@ const Template = ({ title, options, isExperimental }: ITemplateProps): JSX.Eleme
                     </div>
                 )}
                 <div className="status-bar-in-view">
-                    <span>In View:</span>
+                    <span>isIntersecting:</span>
                     <span className={`status-label ${isIntersecting ? 'in-view' : 'out-of-view'}`}>
                         {String(isIntersecting)}
                     </span>
@@ -122,7 +122,12 @@ export const TriggerOnce: StoryObj<typeof Template> = {
 export const OnChange: StoryObj<typeof Template> = {
     args: {
         options: {
-            onChange: (inView: boolean) => alert(`inView: ${inView}`)
+            onChange: (isIntersecting: boolean, entry: IntersectionObserverEntry) => {
+                console.log('useIntersectionObserver onChange', isIntersecting, entry);
+                if (isIntersecting) {
+                    alert(`isIntersecting: ${isIntersecting}`);
+                }
+            }
         },
         title: 'OnChange'
     }
@@ -138,7 +143,7 @@ export const Delay: StoryObj<typeof Template> = {
     }
 };
 
-const meta: Meta<typeof Template> = {
+export default {
     title: 'hooks/useIntersectionObserver',
     component: Template,
     argTypes: {
@@ -153,5 +158,3 @@ const meta: Meta<typeof Template> = {
         }
     }
 };
-
-export default meta;

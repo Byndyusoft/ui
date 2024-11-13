@@ -89,12 +89,11 @@ describe('hooks/useIntersectionObserver', () => {
         expect(instance.observe).toHaveBeenCalledWith(wrapper);
     });
 
-    test('should create a hook inView', () => {
+    test('should create a hook isIntersecting', () => {
         const { getByText } = setupHookComponent();
-
         mockAllIsIntersecting(true);
 
-        getByText('true');
+        expect(getByText('true')).toBeInTheDocument();
     });
 
     test('should mock thresholds', () => {
@@ -102,28 +101,31 @@ describe('hooks/useIntersectionObserver', () => {
             options: { threshold: [0.5, 1] }
         });
         mockAllIsIntersecting(0);
-        getByText('false');
+        expect(getByText('false')).toBeInTheDocument();
+
         mockAllIsIntersecting(0.5);
-        getByText('true');
+        expect(getByText('true')).toBeInTheDocument();
+
         mockAllIsIntersecting(1);
-        getByText('true');
+        expect(getByText('true')).toBeInTheDocument();
     });
 
-    test('should create a hook with initialInView', () => {
+    test('should create a hook with isIntersectingInitial', () => {
         const { getByText } = setupHookComponent({
             options: { isIntersectingInitial: true }
         });
+        expect(getByText('true')).toBeInTheDocument();
 
-        getByText('true');
         mockAllIsIntersecting(false);
-        getByText('false');
+        expect(getByText('false')).toBeInTheDocument();
     });
 
     test('should trigger a hook leaving view', () => {
         const { getByText } = setupHookComponent();
         mockAllIsIntersecting(true);
         mockAllIsIntersecting(false);
-        getByText('false');
+
+        expect(getByText('false')).toBeInTheDocument();
     });
 
     test('should respect trigger once', () => {
@@ -133,7 +135,7 @@ describe('hooks/useIntersectionObserver', () => {
         mockAllIsIntersecting(true);
         mockAllIsIntersecting(false);
 
-        getByText('true');
+        expect(getByText('true')).toBeInTheDocument();
     });
 
     test('should trigger onChange', () => {
@@ -156,19 +158,19 @@ describe('hooks/useIntersectionObserver', () => {
     test('should respect skip', () => {
         const { getByText, rerender } = setupHookComponent({ options: { skip: true } });
         mockAllIsIntersecting(false);
-        getByText('false');
+        expect(getByText('false')).toBeInTheDocument();
 
         rerender(<HookComponent options={{ skip: false }} />);
         mockAllIsIntersecting(true);
-        getByText('true');
+        expect(getByText('true')).toBeInTheDocument();
     });
 
     test('should not reset current state if changing skip', () => {
         const { getByText, rerender } = setupHookComponent({ options: { skip: false } });
-
         mockAllIsIntersecting(true);
         rerender(<HookComponent options={{ skip: true }} />);
-        getByText('true');
+
+        expect(getByText('true')).toBeInTheDocument();
     });
 
     test('should unmount the hook', () => {
@@ -176,16 +178,17 @@ describe('hooks/useIntersectionObserver', () => {
         const wrapper = getByTestId('wrapper');
         const instance = intersectionMockInstance(wrapper);
         unmount();
+
         expect(instance.unobserve).toHaveBeenCalledWith(wrapper);
     });
 
-    test('inView should be false when component is unmounted', () => {
+    test('isIntersecting should be false when component is unmounted', () => {
         const { rerender, getByText } = setupHookComponent({ unmount: false });
         mockAllIsIntersecting(true);
+        expect(getByText('true')).toBeInTheDocument();
 
-        getByText('true');
         rerender(<HookComponent unmount />);
-        getByText('false');
+        expect(getByText('false')).toBeInTheDocument();
     });
 
     test('should handle trackVisibility', () => {
@@ -197,9 +200,9 @@ describe('hooks/useIntersectionObserver', () => {
         const { getByTestId, getByText } = setupHookComponentWithEntry({
             options: { threshold: [0, 0.25, 0.5, 0.75, 1] }
         });
-
         const wrapper = getByTestId('wrapper');
         mockIsIntersecting(wrapper, 0.5);
-        getByText(/intersectionRatio: 0.5/);
+
+        expect(getByText(/intersectionRatio: 0.5/)).toBeInTheDocument();
     });
 });
