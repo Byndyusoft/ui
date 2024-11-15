@@ -9,7 +9,7 @@
     "hook",
     "intersection-observer"
   ],
-  "author": "",
+  "author": "Gleb Fomin <gleb.fom28@gmail.com>",
   "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-intersection-observer#readme",
   "license": "Apache-2.0",
   "main": "dist/index.js",

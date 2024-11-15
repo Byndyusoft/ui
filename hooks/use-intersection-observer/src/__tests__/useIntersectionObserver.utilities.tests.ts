@@ -4,7 +4,7 @@ import {
     mockIsIntersecting,
     resetIntersectionMocking,
     setupIntersectionMocking
-} from '../utilities/useIntersectionObserver.tests.utilities';
+} from './useIntersectionObserver.mocks';
 
 describe('hooks/useIntersectionObserver/utilities', () => {
     beforeEach(() => {

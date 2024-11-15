@@ -38,14 +38,12 @@ export interface IUseIntersectionObserverOptions extends IntersectionObserverIni
     onChange?: (isIntersecting: boolean, entry: IntersectionObserverEntry) => void;
 }
 
-export type IUseIntersectionObserverTuple = [
-    Dispatch<SetStateAction<Element | null>>,
-    boolean,
-    IntersectionObserverEntry | undefined
-];
+type TSetRef = Dispatch<SetStateAction<Element | null>>;
+
+export type IUseIntersectionObserverTuple = [TSetRef, boolean, IntersectionObserverEntry | undefined];
 
 export type IUseIntersectionObserverObject = {
-    ref: Dispatch<SetStateAction<Element | null>>;
+    ref: TSetRef;
     isIntersecting: boolean;
     entry?: IntersectionObserverEntry;
 };

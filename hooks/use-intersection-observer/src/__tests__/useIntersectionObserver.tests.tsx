@@ -7,7 +7,7 @@ import {
     mockIsIntersecting,
     resetIntersectionMocking,
     setupIntersectionMocking
-} from '../utilities/useIntersectionObserver.tests.utilities';
+} from './useIntersectionObserver.mocks';
 import useIntersectionObserver from '../useIntersectionObserver';
 
 interface IComponentProps {
