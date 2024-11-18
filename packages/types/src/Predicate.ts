@@ -1,1 +1,3 @@
-export type Predicate<T> = (value: T) => boolean;
+import type { Callback } from './Callback';
+
+export type Predicate<T> = Callback<T, boolean>;
