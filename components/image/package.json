@@ -1,0 +1,37 @@
+{
+  "name": "@byndyusoft-ui/image",
+  "version": "0.0.1",
+  "description": "Byndyusoft UI Image React Component",
+  "keywords": [
+    "byndyusoft",
+    "byndyusoft-ui",
+    "react",
+    "component",
+    "image"
+  ],
+  "author": "Gleb Fomin <gleb.fom28@gmail.com>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/components/image#readme",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Byndyusoft/ui.git"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "clean": "rimraf dist",
+    "lint": "eslint src --config ../../eslint.config.js",
+    "test": "jest --config ../../jest.config.js --roots components/image/src"
+  },
+  "bugs": {
+    "url": "https://github.com/Byndyusoft/ui/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "react": ">=17",
+    "@byndyusoft-ui/use-intersection-observer": "^0.0.1"
+  }
+}
