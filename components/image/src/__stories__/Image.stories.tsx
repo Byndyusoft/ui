@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import type { StoryObj } from '@storybook/react';
 import Image from '../Image';
-import { ImageProps } from '../Image.types';
-import ImagePlaceholder from './image-placeholder.png';
+import { IImageProps } from '../Image.types';
+import imagePlaceholder from './image-placeholder.png';
 import cls from './Image.stories.module.css';
 
 interface ISkeletonProps {
@@ -12,7 +12,7 @@ interface ISkeletonProps {
 
 interface ITemplateProps {
     mockImageIds: Array<number>;
-    imageProps: Partial<ImageProps>;
+    imageProps: Partial<IImageProps>;
 }
 
 const generateRandomArray = (maxNumber: number, length: number): number[] => {
@@ -37,18 +37,12 @@ const ErrorFallbackComponent = ({ width, height }: ISkeletonProps) => {
 };
 
 const Template = ({ mockImageIds, imageProps }: ITemplateProps): JSX.Element => {
-    const ref = useRef<null | HTMLImageElement>(null);
-
-    useEffect(() => {
-        console.log('Template ref', ref.current);
-    }, []);
     return (
         <div className={cls.wrapper}>
             {mockImageIds?.map((id, index) => (
                 <Image
                     {...imageProps}
-                    ref={ref}
-                    key={index}
+                    key={`${id}_${index}`}
                     src={`https://rickandmortyapi.com/api/character/avatar/${id}.jpeg`}
                 />
             ))}
@@ -61,19 +55,20 @@ export const LazyFallbackSkeleton: StoryObj<typeof Template> = {
         mockImageIds: generateRandomArray(826, 100),
         imageProps: {
             width: 300,
+            height: 300,
             fallback: <FallbackSkeleton width={300} height={300} />,
             errorFallback: <ErrorFallbackComponent width={300} height={300} />
         }
     }
 };
 
-export const LazyFallbackUrl: StoryObj<typeof Template> = {
+export const LazyFallbackSrc: StoryObj<typeof Template> = {
     args: {
         mockImageIds: generateRandomArray(826, 100),
         imageProps: {
             width: 300,
             height: 300,
-            fallbackUrl: ImagePlaceholder,
+            fallbackSrc: imagePlaceholder,
             errorFallback: <ErrorFallbackComponent width={300} height={300} />
         }
     }
@@ -92,14 +87,14 @@ export const PreloadFallbackSkeleton: StoryObj<typeof Template> = {
     }
 };
 
-export const PreloadFallbackUrl: StoryObj<typeof Template> = {
+export const PreloadFallbackSrc: StoryObj<typeof Template> = {
     args: {
         mockImageIds: generateRandomArray(826, 30),
         imageProps: {
             width: 300,
             height: 300,
             lazy: false,
-            fallbackUrl: ImagePlaceholder,
+            fallbackSrc: imagePlaceholder,
             errorFallback: <ErrorFallbackComponent width={300} height={300} />
         }
     }
@@ -110,8 +105,21 @@ export const ErrorFallback: StoryObj<typeof Template> = {
         mockImageIds: [-1, -1, -1, -1, -1, -1],
         imageProps: {
             width: 300,
+            height: 300,
             fallback: <FallbackSkeleton width={300} height={300} />,
             errorFallback: <ErrorFallbackComponent width={300} height={300} />
+        }
+    }
+};
+
+export const ErrorFallbackSrc: StoryObj<typeof Template> = {
+    args: {
+        mockImageIds: [-1, -1, -1, -1, -1, -1],
+        imageProps: {
+            width: 300,
+            height: 300,
+            fallback: <FallbackSkeleton width={300} height={300} />,
+            errorFallbackSrc: imagePlaceholder
         }
     }
 };

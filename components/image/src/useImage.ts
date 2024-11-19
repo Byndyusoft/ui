@@ -1,12 +1,8 @@
 import { useLayoutEffect, useState } from 'react';
 import useIntersectionObserver from '@byndyusoft-ui/use-intersection-observer';
+import { IUseImageProps, IUseImageReturn, TLoadImageFunction } from './Image.types';
 
-interface IUseImageProps {
-    src: string;
-    lazy?: boolean;
-}
-
-const loadImage = (src: string, setIsLoading: (loading: boolean) => void, setIsError: (error: boolean) => void) => {
+const loadImage: TLoadImageFunction = (src, setIsLoading, setIsError) => {
     const img = new Image();
     img.src = src;
     img.onload = () => {
@@ -18,17 +14,15 @@ const loadImage = (src: string, setIsLoading: (loading: boolean) => void, setIsE
     };
 };
 
-export default function useImage({ src, lazy }: IUseImageProps) {
+export const useImage = ({ src, lazy }: IUseImageProps): IUseImageReturn => {
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
 
     const [setObserverTargetRef] = useIntersectionObserver({
         skip: !lazy,
         triggerOnce: true,
-        rootMargin: '20px',
-        threshold: 0,
         onChange: isIntersecting => {
-            if (lazy && isIntersecting) {
+            if (isIntersecting) {
                 loadImage(src, setIsLoading, setIsError);
             }
         }
@@ -45,4 +39,4 @@ export default function useImage({ src, lazy }: IUseImageProps) {
         isLoading,
         isError
     };
-}
+};

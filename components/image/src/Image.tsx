@@ -1,9 +1,20 @@
 import React, { forwardRef, useImperativeHandle, useRef } from 'react';
-import useImage from './useImage';
-import { ImageProps } from './Image.types';
+import { useImage } from './useImage';
+import type { IImageProps } from './Image.types';
 
-const Image = forwardRef<HTMLImageElement, ImageProps>((props, forwardedRef) => {
-    const { className, src, alt = '', lazy = true, errorFallback, fallback, fallbackUrl, ...otherProps } = props;
+const Image = forwardRef<HTMLImageElement, IImageProps>((props, forwardedRef) => {
+    const {
+        src,
+        alt = '',
+        lazy = true,
+        fallback,
+        fallbackSrc,
+        errorFallback,
+        errorFallbackSrc,
+        className,
+        fallbackClassName,
+        ...otherProps
+    } = props;
 
     const internalRef = useRef<HTMLImageElement | null>(null);
 
@@ -17,15 +28,27 @@ const Image = forwardRef<HTMLImageElement, ImageProps>((props, forwardedRef) => 
     };
 
     if (fallback && isLoading) {
-        return <div ref={setRefs}>{fallback}</div>;
+        return (
+            <div ref={setRefs} className={fallbackClassName}>
+                {fallback}
+            </div>
+        );
     }
 
-    if (fallbackUrl && isLoading) {
-        return <img ref={setRefs} className={className} src={fallbackUrl} alt={alt} {...otherProps} />;
+    if (fallbackSrc && isLoading) {
+        return <img ref={setRefs} className={className} src={fallbackSrc} alt={alt} {...otherProps} />;
     }
 
     if (errorFallback && isError) {
-        return <div ref={setRefs}>{errorFallback}</div>;
+        return (
+            <div ref={setRefs} className={fallbackClassName}>
+                {errorFallback}
+            </div>
+        );
+    }
+
+    if (errorFallbackSrc && isError) {
+        return <img ref={setRefs} className={className} src={errorFallbackSrc} alt={alt} {...otherProps} />;
     }
 
     return <img ref={setRefs} className={className} src={src} alt={alt} {...otherProps} />;
