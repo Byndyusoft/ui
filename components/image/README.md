@@ -27,7 +27,7 @@ const App = () => {
 export default App;
 ```
 
-#### With fallback component 
+#### Fallback components
 ```jsx
 <Image
   src="https://example.com/image.jpg"
@@ -37,7 +37,7 @@ export default App;
 />
 ```
 
-#### With fallback src images
+#### Fallback src images
 ```jsx
 <Image
   src="https://example.com/image.jpg"
@@ -47,7 +47,7 @@ export default App;
 />
 ```
 
-#### With custom class names
+#### Custom class names
 The fallbackClassName parameter applies a class to the container that will display the fallback or errorFallback elements.
 ```jsx
  <Image
@@ -58,4 +58,14 @@ The fallbackClassName parameter applies a class to the container that will displ
   fallback={<div>Loading...</div>}
   errorFallback={<div>Error loading image</div>}
 />
+```
+
+#### Lazy loading
+By default, `lazy` is set to `true`, which means the image will only be loaded when it enters the viewport. 
+This is achieved using the Intersection Observer pattern. If `lazy` is set to `false`, the image will be loaded immediately.
+```jsx
+<Image
+  src="https://example.com/image.jpg"
+  alt="Example Image"
+  lazy={false}
 ```
