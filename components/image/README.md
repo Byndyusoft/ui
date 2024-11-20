@@ -27,7 +27,7 @@ const App = () => {
 export default App;
 ```
 
-#### With fallback content
+#### With fallback component 
 ```jsx
 <Image
   src="https://example.com/image.jpg"
@@ -37,7 +37,7 @@ export default App;
 />
 ```
 
-#### With fallback placeholder images
+#### With fallback src images
 ```jsx
 <Image
   src="https://example.com/image.jpg"
@@ -48,11 +48,14 @@ export default App;
 ```
 
 #### With custom class names
+The fallbackClassName parameter applies a class to the container that will display the fallback or errorFallback elements.
 ```jsx
  <Image
   src="https://example.com/image.jpg"
   alt="Example Image"
   className="custom-image-class"
   fallbackClassName="custom-fallback-class"
+  fallback={<div>Loading...</div>}
+  errorFallback={<div>Error loading image</div>}
 />
 ```

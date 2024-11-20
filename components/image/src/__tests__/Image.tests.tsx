@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, RenderResult, screen } from '@testing-library/react';
-import Image from '../Image';
-import { IImageProps, IUseImageReturn } from '../Image.types';
 import {
     resetIntersectionMocking,
     setupIntersectionMocking
 } from '@byndyusoft-ui/use-intersection-observer/dist/__tests__/useIntersectionObserver.mocks';
+import Image from '../Image';
+import { IImageProps, IUseImageReturn } from '../Image.types';
 import { useImage } from '../useImage';
 
 jest.mock('../useImage');
