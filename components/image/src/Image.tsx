@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle, useRef } from 'react';
+import React, { forwardRef, ReactElement, useImperativeHandle, useRef } from 'react';
 import { useImage } from './useImage';
 import type { IImageProps } from './Image.types';
 
@@ -27,31 +27,25 @@ const Image = forwardRef<HTMLImageElement, IImageProps>((props, forwardedRef) =>
         setObserverTargetRef(node);
     };
 
-    if (fallback && isLoading) {
-        return (
-            <div ref={setRefs} className={fallbackClassName}>
-                {fallback}
-            </div>
-        );
-    }
+    const renderImage = (src: string): JSX.Element => (
+        <img ref={setRefs} className={className} src={src} alt={alt} {...otherProps} />
+    );
 
-    if (fallbackSrc && isLoading) {
-        return <img ref={setRefs} className={className} src={fallbackSrc} alt={alt} {...otherProps} />;
-    }
+    const renderFallback = (content: ReactElement): JSX.Element => (
+        <div ref={setRefs} className={fallbackClassName}>
+            {content}
+        </div>
+    );
 
-    if (errorFallback && isError) {
-        return (
-            <div ref={setRefs} className={fallbackClassName}>
-                {errorFallback}
-            </div>
-        );
-    }
+    if (fallback && isLoading) return renderFallback(fallback);
 
-    if (errorFallbackSrc && isError) {
-        return <img ref={setRefs} className={className} src={errorFallbackSrc} alt={alt} {...otherProps} />;
-    }
+    if (fallbackSrc && isLoading) return renderImage(fallbackSrc);
 
-    return <img ref={setRefs} className={className} src={src} alt={alt} {...otherProps} />;
+    if (errorFallback && isError) return renderFallback(errorFallback);
+
+    if (errorFallbackSrc && isError) return renderImage(errorFallbackSrc);
+
+    return renderImage(src);
 });
 
 export default Image;
