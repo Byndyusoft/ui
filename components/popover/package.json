@@ -1,0 +1,35 @@
+{
+  "name": "@byndyusoft-ui/popover",
+  "version": "0.0.1",
+  "description": "Byndyusoft UI popover React Component",
+  "keywords": [
+    "byndyusoft",
+    "byndyusoft-ui",
+    "react",
+    "popover"
+  ],
+  "author": "Byndyusoft Frontend Developer <frontend@byndyusoft.com>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/components/popover#readme",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Byndyusoft/ui.git"
+  },
+  "scripts": {
+    "build": "rollup --config",
+    "clean": "rimraf dist",
+    "lint": "eslint src --config ../../eslint.config.js",
+    "test": "jest --config ../../jest.config.js --roots components/popover/src"
+  },
+  "bugs": {
+    "url": "https://github.com/Byndyusoft/ui/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@floating-ui/react": "^0.26.26"
+  }
+}
