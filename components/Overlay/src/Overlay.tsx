@@ -1,7 +1,7 @@
-import React, { FC, forwardRef, useEffect } from 'react';
-import useBodyScrollLock from '@byndyusoft-ui/use-body-scroll-lock';
+import React, { forwardRef } from 'react';
 import cn from 'classnames';
-import { getDefaultCheckBoxClassNames, hexToRgba } from './utilities';
+import useBodyScrollLock from '@byndyusoft-ui/use-body-scroll-lock';
+import { getDefaultOverlayClassNames, hexToRgba } from './utilities';
 import { IOverlayProps } from './Overlay.types';
 
 const Overlay = forwardRef<HTMLDivElement, IOverlayProps>(
@@ -9,7 +9,7 @@ const Overlay = forwardRef<HTMLDivElement, IOverlayProps>(
         {
             children,
             className,
-            classNames = getDefaultCheckBoxClassNames(),
+            classNames = getDefaultOverlayClassNames(),
             isVisible,
             color,
             blur,
@@ -31,7 +31,7 @@ const Overlay = forwardRef<HTMLDivElement, IOverlayProps>(
                     className
                 )}
                 style={{
-                    zIndex: zIndex ? zIndex : 0,
+                    zIndex: zIndex ? zIndex : 100,
                     backgroundColor: color ? hexToRgba(color, backgroundOpacity) : '',
                     backdropFilter: blur ? `blur(${blur}px)` : ''
                 }}
@@ -40,7 +40,7 @@ const Overlay = forwardRef<HTMLDivElement, IOverlayProps>(
                 tabIndex={-1}
                 {...props}
             >
-                {children && children}
+                {children && isVisible && children}
             </div>
         );
     }

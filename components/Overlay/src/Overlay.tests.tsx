@@ -7,14 +7,14 @@ describe('components/Overlay', () => {
     test('renders visible correctly', () => {
         render(<Overlay isVisible>Test</Overlay>);
 
-        expect(screen.getByRole('presentation')).toHaveClass('is-visible');
+        expect(screen.getByRole('presentation')).toHaveClass('isVisible');
         expect(screen.getByText('Test')).toBeInTheDocument();
     });
 
     test('renders invisible', () => {
         render(<Overlay isVisible={false}>Test</Overlay>);
 
-        expect(screen.getByRole('presentation')).not.toHaveClass('is-visible');
+        expect(screen.getByRole('presentation')).not.toHaveClass('isVisible');
         expect(screen.queryByText('Test')).not.toBeInTheDocument();
     });
 
@@ -30,5 +30,25 @@ describe('components/Overlay', () => {
         await userEvent.click(screen.getByRole('presentation'));
 
         expect(onClick).toBeCalledTimes(1);
+    });
+
+    test('renders with custom className', () => {
+        render(
+            <Overlay isVisible className="custom-class">
+                Test
+            </Overlay>
+        );
+
+        expect(screen.getByRole('presentation')).toHaveClass('custom-class');
+    });
+
+    test('renders with custom data-testid', () => {
+        render(
+            <Overlay isVisible data-testid="custom-overlay">
+                Test
+            </Overlay>
+        );
+
+        expect(screen.getByTestId('custom-overlay')).toBeInTheDocument();
     });
 });

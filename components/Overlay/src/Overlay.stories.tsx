@@ -5,39 +5,8 @@ import Overlay from './Overlay';
 import './Overlay.stories.css';
 
 const Template: StoryFn<IOverlayProps> = args => (
-    <div>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
-        <p>A lot of text in main app container</p>
+    <div className="content">
+        <p>Long content to demonstrate scrolling...</p>
         <Overlay {...args}>
             <div className="box">
                 <h1>Overlay</h1>
