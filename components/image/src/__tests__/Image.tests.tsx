@@ -1,9 +1,6 @@
 import React from 'react';
 import { render, RenderResult, screen } from '@testing-library/react';
-import {
-    resetIntersectionMocking,
-    setupIntersectionMocking
-} from '@byndyusoft-ui/use-intersection-observer/dist/__tests__/useIntersectionObserver.mocks';
+import { resetIntersectionMocking, setupIntersectionMocking } from './image.mocks';
 import Image from '../Image';
 import { IImageProps, IUseImageReturn } from '../Image.types';
 import { useImage } from '../useImage';
