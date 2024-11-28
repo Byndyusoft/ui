@@ -9,7 +9,7 @@ let rootId = 0;
 /**
  * Generate a unique ID for the root element
  */
-export function getRootId(root: IntersectionObserverInit['root']) {
+export function getRootId(root: IntersectionObserverInit['root']): string | undefined {
     if (!root) return '0';
 
     if (rootIdsWeakMap.has(root)) return rootIdsWeakMap.get(root);
@@ -24,7 +24,7 @@ export function getRootId(root: IntersectionObserverInit['root']) {
  * Convert the options to a string Id, based on the values.
  * Ensures we can reuse the same observer when observing elements with the same options.
  */
-export function optionsToId(options: IntersectionObserverInit) {
+export function optionsToId(options: IntersectionObserverInit): string {
     return Object.keys(options)
         .sort()
         .filter(key => options[key as keyof IntersectionObserverInit] !== undefined)
@@ -36,7 +36,7 @@ export function optionsToId(options: IntersectionObserverInit) {
         .toString();
 }
 
-export function createObserver(options: IntersectionObserverInit) {
+export function createObserver(options: IntersectionObserverInit): IObserverItem {
     const id = optionsToId(options);
     let instance = observerMap.get(id);
 
@@ -50,10 +50,10 @@ export function createObserver(options: IntersectionObserverInit) {
             const isIntersecting =
                 entry.isIntersecting && thresholds.some(threshold => entry.intersectionRatio >= threshold);
 
-            // @ts-ignore support IntersectionObserver v2
+            // @ts-expect-error support IntersectionObserver v2
             if (options.trackVisibility && typeof entry.isVisible === 'undefined') {
                 // The browser doesn't support Intersection Observer v2, falling back to v1 behavior.
-                // @ts-ignore
+                // @ts-expect-error
                 entry.isVisible = isIntersecting;
             }
 
@@ -77,7 +77,7 @@ export function createObserver(options: IntersectionObserverInit) {
     return instance;
 }
 
-export function observe({ element, callback, options = {}, isIntersectingFallback }: IObserveOptions) {
+export function observe({ element, callback, options = {}, isIntersectingFallback }: IObserveOptions): () => void {
     if (typeof window.IntersectionObserver === 'undefined' && isIntersectingFallback !== undefined) {
         const bounds = element.getBoundingClientRect();
         callback(isIntersectingFallback, {
@@ -103,7 +103,7 @@ export function observe({ element, callback, options = {}, isIntersectingFallbac
     callbacks.push(callback);
     observer.observe(element);
 
-    return function unobserve() {
+    return function unobserve(): void {
         callbacks.splice(callbacks.indexOf(callback), 1);
 
         if (callbacks.length === 0) {

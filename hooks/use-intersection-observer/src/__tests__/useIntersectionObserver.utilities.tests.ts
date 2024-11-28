@@ -53,7 +53,7 @@ describe('hooks/useIntersectionObserver/utilities', () => {
         expect(
             optionsToId({
                 threshold: 0,
-                // @ts-ignore
+                // @ts-expect-error
                 trackVisibility: true,
                 delay: 500
             })

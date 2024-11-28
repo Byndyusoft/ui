@@ -39,7 +39,7 @@ export default function useIntersectionObserver({
                 root,
                 rootMargin,
                 threshold,
-                // @ts-ignore experimental v2 api
+                // @ts-expect-error experimental v2 api
                 trackVisibility,
                 delay
             },
