@@ -4,7 +4,7 @@ import { Callback } from '@byndyusoft-ui/types';
 export interface IImageProps extends ImgHTMLAttributes<HTMLImageElement> {
     src: string;
     className?: string;
-    fallbackClassName?: string;
+    rootFallbackClassName?: string;
     fallback?: ReactElement;
     fallbackSrc?: string;
     errorFallback?: ReactElement;

@@ -12,11 +12,11 @@ interface ISetupProps {
     useImageReturn?: Partial<IUseImageReturn>;
 }
 
-const useImageReturnMock = ({
+const hookImageReturnMock = ({
     isLoading = false,
     isError = false,
     setObserverTargetRef = jest.fn()
-}: Partial<IUseImageReturn> = {}) => {
+}: Partial<IUseImageReturn> = {}): void => {
     (useImage as jest.Mock).mockReturnValue({
         isLoading,
         isError,
@@ -31,7 +31,7 @@ const setup = (props: ISetupProps = {}): RenderResult => {
         alt: 'Test Image'
     };
 
-    useImageReturnMock(useImageReturn);
+    hookImageReturnMock(useImageReturn);
 
     return render(<Image {...requiredProps} {...imageProps} />);
 };

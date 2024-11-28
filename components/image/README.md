@@ -48,13 +48,13 @@ export default App;
 ```
 
 #### Custom class names
-The fallbackClassName parameter applies a class to the container that will display the fallback or errorFallback elements.
+The rootFallbackClassName parameter applies a class to the container that will display the fallback or errorFallback elements.
 ```jsx
  <Image
   src="https://example.com/image.jpg"
   alt="Example Image"
   className="custom-image-class"
-  fallbackClassName="custom-fallback-class"
+  rootFallbackClassName="custom-root-fallback-class"
   fallback={<div>Loading...</div>}
   errorFallback={<div>Error loading image</div>}
 />

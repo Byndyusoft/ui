@@ -24,31 +24,27 @@ const generateRandomArray = (maxNumber: number, length: number): number[] => {
     return randomArray;
 };
 
-const FallbackSkeleton = ({ width, height }: ISkeletonProps) => {
-    return <div className={cls.skeleton} style={{ width, height }}></div>;
-};
+const FallbackSkeleton = ({ width, height }: ISkeletonProps): JSX.Element => (
+    <div className={cls.skeleton} style={{ width, height }} />
+);
 
-const ErrorFallbackComponent = ({ width, height }: ISkeletonProps) => {
-    return (
-        <div className={cls.errorFallback} style={{ width, height }}>
-            Error Fallback
-        </div>
-    );
-};
+const ErrorFallbackComponent = ({ width, height }: ISkeletonProps): JSX.Element => (
+    <div className={cls.errorFallback} style={{ width, height }}>
+        Error Fallback
+    </div>
+);
 
-const Template = ({ mockImageIds, imageProps }: ITemplateProps): JSX.Element => {
-    return (
-        <div className={cls.wrapper}>
-            {mockImageIds?.map((id, index) => (
-                <Image
-                    {...imageProps}
-                    key={`${id}_${index}`}
-                    src={`https://rickandmortyapi.com/api/character/avatar/${id}.jpeg`}
-                />
-            ))}
-        </div>
-    );
-};
+const Template = ({ mockImageIds, imageProps }: ITemplateProps): JSX.Element => (
+    <div className={cls.wrapper}>
+        {mockImageIds?.map((id, index) => (
+            <Image
+                {...imageProps}
+                key={`${id}_${index + 1}`}
+                src={`https://rickandmortyapi.com/api/character/avatar/${id}.jpeg`}
+            />
+        ))}
+    </div>
+);
 
 export const LazyFallbackSkeleton: StoryObj<typeof Template> = {
     args: {
@@ -102,7 +98,7 @@ export const PreloadFallbackSrc: StoryObj<typeof Template> = {
 
 export const ErrorFallback: StoryObj<typeof Template> = {
     args: {
-        mockImageIds: [-1, -1, -1, -1, -1, -1],
+        mockImageIds: [-1, -2, -3, -4, -5, -6],
         imageProps: {
             width: 300,
             height: 300,
@@ -114,7 +110,7 @@ export const ErrorFallback: StoryObj<typeof Template> = {
 
 export const ErrorFallbackSrc: StoryObj<typeof Template> = {
     args: {
-        mockImageIds: [-1, -1, -1, -1, -1, -1],
+        mockImageIds: [-1, -2, -3, -4, -5, -6],
         imageProps: {
             width: 300,
             height: 300,

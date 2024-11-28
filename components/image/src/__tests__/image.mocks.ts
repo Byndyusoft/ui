@@ -6,7 +6,7 @@ interface IObserverData {
 
 const observersMap = new Map<IntersectionObserver, IObserverData>();
 
-export function setupIntersectionMocking(mockFn: typeof jest.fn) {
+export function setupIntersectionMocking(mockFn: typeof jest.fn): void {
     global.IntersectionObserver = mockFn((cb, options = {}) => {
         const observerData: IObserverData = {
             callback: cb,
@@ -35,7 +35,7 @@ export function setupIntersectionMocking(mockFn: typeof jest.fn) {
     });
 }
 
-export function resetIntersectionMocking() {
+export function resetIntersectionMocking(): void {
     if (
         global.IntersectionObserver &&
         'mockClear' in global.IntersectionObserver &&
