@@ -43,13 +43,13 @@ export default function useIntersectionObserver({
                 trackVisibility,
                 delay
             },
-            callback: (isIntersecting, entry) => {
-                setIsIntersecting(isIntersecting);
-                setEntry(entry);
+            callback: (isIntersectingValue, entryValue) => {
+                setIsIntersecting(isIntersectingValue);
+                setEntry(entryValue);
 
-                if (callback.current) callback.current(isIntersecting, entry);
+                if (callback.current) callback.current(isIntersectingValue, entryValue);
 
-                if (entry.isIntersecting && triggerOnce && unobserve) {
+                if (entryValue.isIntersecting && triggerOnce && unobserve) {
                     unobserve();
                     unobserve = undefined;
                 }

@@ -29,9 +29,8 @@ export function optionsToId(options: IntersectionObserverInit): string {
         .sort()
         .filter(key => options[key as keyof IntersectionObserverInit] !== undefined)
         .map(key => {
-            return `${key}_${
-                key === 'root' ? getRootId(options.root) : options[key as keyof IntersectionObserverInit]
-            }`;
+            const value = key === 'root' ? getRootId(options.root) : options[key as keyof IntersectionObserverInit];
+            return `${key}_${value}`;
         })
         .toString();
 }
@@ -43,7 +42,7 @@ export function createObserver(options: IntersectionObserverInit): IObserverItem
     if (instance) return instance;
 
     const elements = new Map<Element, Array<TObserverInstanceCallback>>();
-    let thresholds: number[] | readonly number[];
+    let thresholds: number[] | readonly number[] = [];
 
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {

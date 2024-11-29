@@ -6,7 +6,7 @@ interface IObserverData {
     created: number;
 }
 
-let isMocking: boolean = false;
+let isMocking = false;
 
 const observersMap = new Map<IntersectionObserver, IObserverData>();
 
