@@ -1,10 +1,14 @@
 import { useState } from 'react';
 import useDebouncedCallback from '@byndyusoft-ui/use-debounced-callback';
 
-export default function useDebouncedValue(value: string, delay = 300): [string, (value: string) => void] {
+type THookReturn<T> = [T, (arg: T) => void];
+
+const useDebouncedValue = <T>(value: T, delay = 300): THookReturn<T> => {
     const [debouncedValue, setValue] = useState(value);
 
-    const setDebounceValue = useDebouncedCallback(setValue, delay);
+    const setDebouncedValue = useDebouncedCallback(setValue, delay);
 
-    return [debouncedValue, setDebounceValue];
-}
+    return [debouncedValue, setDebouncedValue];
+};
+
+export default useDebouncedValue;
