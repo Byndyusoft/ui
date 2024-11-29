@@ -2,9 +2,11 @@
 
 ## Development
 
-1. Choose main development branch - `next`
+1. Choose main development branch - `master`
 2. Install npm packages by running `npm install`
 3. Initiate some tools for development by command `npx postinstall`
+4. Build dependencies for packages `npm run build`
+5. Launch storybook `npm start`
 
 ### Npm commands
 

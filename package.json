@@ -17,7 +17,7 @@
     "lint": "lerna run lint",
     "test": "lerna run test --concurrency=1",
     "postinstall": "(husky install) || true",
-    "build-storybook": "storybook build",
+    "build-storybook": "storybook build --disable-telemetry",
     "prettier:check": "prettier --check \"**/*.{ts,tsx,css,json}\"",
     "prettier:write": "prettier --write \"**/*.{ts,tsx,css,json}\"",
     "start": "storybook dev -p 6009"
@@ -47,6 +47,7 @@
     "@byndyusoft/stylelint-config": "^0.3.0",
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
+    "@newhighsco/storybook-addon-svgr": "^1.0.22",
     "@rollup/plugin-commonjs": "^20.0.0",
     "@rollup/plugin-node-resolve": "^13.0.4",
     "@rollup/plugin-typescript": "^8.2.5",
@@ -55,8 +56,8 @@
     "@storybook/addon-essentials": "7.6.8",
     "@storybook/addon-links": "7.6.8",
     "@storybook/addon-mdx-gfm": "^7.6.8",
-    "@storybook/react": "7.6.8",
-    "@storybook/react-webpack5": "^7.6.8",
+    "@storybook/react": "^7.6.8",
+    "@storybook/react-webpack5": "^7.6.17",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.0",
     "@testing-library/react-hooks": "^8.0.1",
@@ -80,10 +81,11 @@
     "rollup": "^2.79.0",
     "rollup-plugin-delete": "^2.0.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
-    "storybook": "^7.6.8",
+    "storybook": "^7.6.17",
+    "storybook-css-modules": "^1.0.8",
     "stylelint": "^13.0.0",
     "ts-jest": "^28.0.8",
-    "typescript": "^4.8.2"
+    "typescript": "^4.9.5"
   },
   "peerDependencies": {
     "classnames": "^2.3.1",
@@ -91,6 +93,7 @@
     "react-dom": "^17.0.2"
   },
   "dependencies": {
+    "react-frame-component": "^5.2.6",
     "save-dev": "^0.0.1-security"
   }
 }

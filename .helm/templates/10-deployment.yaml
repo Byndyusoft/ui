@@ -1,0 +1,171 @@
+{{- if eq .Values.kind "Deployment" }}
+  {{- $envname := .Values.environment }}
+  {{- $microservicename := .Values.microservice.name }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $microservicename }}
+  labels:
+    app: {{ $microservicename }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    project: {{ .Values.project }}
+    environment: {{ .Values.environment }}
+    {{- include "microservice.labels" . | nindent 4 }}
+  {{- with .Values.annotations }}
+  annotations:
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  replicas: {{ pluck $envname .Values.replicas | first | default 1 }}
+  selector:
+    matchLabels:
+      app: {{ $microservicename }}
+      release: {{ .Release.Name }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: {{ $microservicename }}
+        release: {{ .Release.Name }}
+      {{- if .Values.gitCommitShort }}
+      annotations:
+        git.commit.short: {{ .Values.gitCommitShort | quote }}
+      {{- end }}
+    spec:
+      {{- if .Values.initContainers.enable }}
+      initContainers:
+        - name: {{ $microservicename }}-migrator
+          {{- if .Values.microservice.imageFolder }}
+          image: "{{ .Values.microservice.registryUrl }}/{{ .Values.project }}/{{ .Values.microservice.imageFolder }}/{{ .Values.microservice.image }}:{{ .Values.microservice.tag }}"
+          {{- else }}
+          image: "{{ .Values.microservice.registryUrl }}/{{ .Values.project }}/{{ .Values.microservice.image }}:{{ .Values.microservice.tag }}"
+          {{- end }}
+          {{- if .Values.initContainers.workingDir }}
+          workingDir: {{ .Values.initContainers.workingDir }}
+          {{- end }}
+          {{- if .Values.initContainers.command }}
+          command: {{ .Values.initContainers.command }}
+          {{- end }}
+          env:
+            - name: SERVICE_NAME
+              value: {{ $microservicename }}
+            {{- range $key, $value := .Values.env }}
+            {{- $environmentValue :=  pluck $envname $value | first | default $value.default | toString }}
+            {{- if $environmentValue }}
+            - name: {{ $key | squote }}
+              value: {{ $environmentValue | squote }}
+            {{- end }}
+            {{- end }}
+          {{- if .Values.secret }}
+          envFrom:
+            - secretRef:
+                name: {{ $microservicename }}
+          {{- end }}
+      {{- end }}
+      {{- if .Values.hostAliases }}
+      hostAliases: {{ toYaml .Values.hostAliases | nindent 8 }}
+      {{- end }}
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets: {{ toYaml .Values.imagePullSecrets | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+      {{ toYaml . | indent 2 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.priorityClassName }}
+      priorityClassName: {{ pluck $envname .Values.priorityClassName | first | default .Values.priorityClassName.default }}
+      {{- end }}
+      containers:
+        - name: {{ $microservicename }}
+          {{- if .Values.microservice.imageFolder }}
+          image: "{{ .Values.microservice.registryUrl }}/{{ .Values.project }}/{{ .Values.microservice.imageFolder }}/{{ .Values.microservice.image }}:{{ .Values.microservice.tag }}"
+          {{- else }}
+          image: "{{ .Values.microservice.registryUrl }}/{{ .Values.project }}/{{ .Values.microservice.image }}:{{ .Values.microservice.tag }}"
+          {{- end }}
+          imagePullPolicy: IfNotPresent
+          {{- if .Values.containerPorts }}
+          ports: {{ toYaml .Values.containerPorts | nindent 10 }}
+          {{- end }}
+          env:
+            - name: SERVICE_NAME
+              value: {{ $microservicename }}
+            {{- range $key, $value := .Values.env }}
+            {{- $environmentValue :=  pluck $envname $value | first | default $value.default | toString }}
+            {{- if $environmentValue }}
+            - name: {{ $key | squote }}
+              value: {{ $environmentValue | squote }}
+            {{- end }}
+            {{- end }}
+          {{- if .Values.secret }}
+          envFrom:
+            - secretRef:
+                name: {{ $microservicename }}
+          {{- end }}
+          resources:
+            limits:
+              memory: {{ pluck $envname .Values.resourcesLimitsMemory | first | default .Values.resourcesLimitsMemory.default | quote }}
+              {{- if .Values.resourcesLimitsCPU }}
+              cpu: {{ pluck $envname .Values.resourcesLimitsCPU | first | default .Values.resourcesLimitsCPU.default | quote }}
+              {{- end }}
+            requests:
+              memory: {{ pluck $envname .Values.resourcesRequestsMemory | first | default .Values.resourcesRequestsMemory.default | quote }}
+              cpu: {{ pluck $envname .Values.resourcesRequestsCPU | first | default .Values.resourcesRequestsCPU.default | quote }}
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - sh
+                  - '-c'
+                  - sleep 30
+          {{- if .Values.livenessProbe.enabled }}
+          livenessProbe:
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds | default 10 }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds | default 10 }}
+            successThreshold: 1
+            timeoutSeconds: 1
+            httpGet:
+              path: {{ .Values.livenessProbe.path | default "/_healthz" }}
+              port: {{ .Values.livenessProbe.port | default 8080 }}
+              scheme: HTTP
+          {{- end }}
+          {{- if .Values.readinessProbe.enabled }}
+          readinessProbe:
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds | default 10 }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds | default 10 }}
+            successThreshold: 1
+            timeoutSeconds: 1
+            httpGet:
+              path: {{ .Values.readinessProbe.path | default "/_readyness" }}
+              port: {{ .Values.readinessProbe.port | default 8080 }}
+              scheme: HTTP
+          {{ end }}
+          {{- $volumes := pluck $envname .Values.volumes | first | default .Values.volumes.default }}
+          {{- if $volumes }}
+          volumeMounts:
+            {{- range $key, $value := $volumes }}
+            - mountPath: {{ $value.mountPath }}
+              name: {{ $key }}
+            {{- end }}
+          {{- end }}
+      terminationGracePeriodSeconds: 60
+      {{- $volumes := pluck $envname .Values.volumes | first | default .Values.volumes.default }}
+      {{- if $volumes }}
+      volumes:
+        {{- range $key, $value := $volumes }}
+        - name: {{ $key }}
+          {{- range $configName, $configYaml := $value.config }}
+          {{ $configName }}:{{ toYaml $configYaml | nindent 12 }}
+          {{- end }}
+        {{- end }}
+      {{- end }}
+  {{- end }}
