@@ -1,6 +1,6 @@
 # `@byndyusoft-ui/use-focus`
 ---
-> A React hook that uses the useRef hook internally for storing the focus value.
+> A custom hook that tracks whether the element is being focused.
 
 ### Installation
 
