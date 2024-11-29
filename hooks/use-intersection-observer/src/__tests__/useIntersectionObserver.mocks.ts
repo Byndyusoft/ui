@@ -6,7 +6,7 @@ interface IObserverData {
     created: number;
 }
 
-let isMocking: boolean = false;
+let isMocking = false;
 
 const observersMap = new Map<IntersectionObserver, IObserverData>();
 
@@ -15,7 +15,7 @@ function warnOnMissingSetup() {
     console.error('Intersection Observer was not configured to handle mocking');
 }
 
-export function setupIntersectionMocking(mockFn: typeof jest.fn) {
+export function setupIntersectionMocking(mockFn: typeof jest.fn): void {
     global.IntersectionObserver = mockFn((cb, options = {}) => {
         const observerData: IObserverData = {
             callback: cb,
@@ -46,7 +46,7 @@ export function setupIntersectionMocking(mockFn: typeof jest.fn) {
     isMocking = true;
 }
 
-export function resetIntersectionMocking() {
+export function resetIntersectionMocking(): void {
     if (
         global.IntersectionObserver &&
         'mockClear' in global.IntersectionObserver &&
@@ -62,7 +62,7 @@ function triggerIntersection(
     trigger: boolean | number,
     observer: IntersectionObserver,
     observerData: IObserverData
-) {
+): void {
     const entries: IntersectionObserverEntry[] = [];
 
     const isIntersecting =
@@ -103,7 +103,7 @@ function triggerIntersection(
     act(() => observerData.callback(entries, observer));
 }
 
-export function mockAllIsIntersecting(isIntersecting: boolean | number) {
+export function mockAllIsIntersecting(isIntersecting: boolean | number): void {
     warnOnMissingSetup();
     for (const [observer, observerData] of observersMap) {
         triggerIntersection(Array.from(observerData.elements), isIntersecting, observer, observerData);
@@ -121,7 +121,7 @@ export function intersectionMockInstance(element: Element): IntersectionObserver
     throw new Error('Failed to find IntersectionObserver for element. Is it being observed?');
 }
 
-export function mockIsIntersecting(element: Element, isIntersecting: boolean | number) {
+export function mockIsIntersecting(element: Element, isIntersecting: boolean | number): void {
     warnOnMissingSetup();
     const observer = intersectionMockInstance(element);
     if (!observer) {
