@@ -25,9 +25,9 @@ function Modal({ isOpen }) {
 ## API
 
 ```typescript
- useBodyScrollLock(isLocked: boolean): void
+ useBodyScrollLock(isLocked?: boolean): void
 ```
 
 #### Parameters
 
--   `isLocked` (boolean) - When `true`, body scroll will be locked. When `false`, scroll will be unlocked.
+-   `isLocked` (boolean) - When `true`, body scroll will be locked. When `false` or `undefined`, scroll will be unlocked.
