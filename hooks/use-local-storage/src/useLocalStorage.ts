@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 import * as localStorage from '@byndyusoft-ui/local-storage';
+import useEventListener from '@byndyusoft-ui/use-event-listener';
 
 export interface IUseLocalStorageActions<TValue> {
     setValue: (value: TValue) => void;
@@ -34,6 +35,18 @@ export default function useLocalStorage<TValue>(
         localStorage.removeValue(key);
         setStoredValue(defaultValue);
     }, [key, defaultValue]);
+
+    const handleEvent = useCallback(
+        (event: StorageEvent) => {
+            if (event.key === key) {
+                debugger;
+                setStoredValue(event.newValue as TValue);
+            }
+        },
+        [key]
+    );
+
+    useEventListener('storage', handleEvent);
 
     return [storedValue, { setValue, removeValue }];
 }
