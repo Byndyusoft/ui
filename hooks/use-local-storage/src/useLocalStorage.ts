@@ -38,9 +38,8 @@ export default function useLocalStorage<TValue>(
 
     const handleEvent = useCallback(
         (event: StorageEvent) => {
-            if (event.key === key) {
-                debugger;
-                setStoredValue(event.newValue as TValue);
+            if (window.localStorage === event.storageArea && event.key === key) {
+                setStoredValue((event.newValue as TValue) ?? defaultValue);
             }
         },
         [key]
