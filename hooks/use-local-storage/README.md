@@ -1,11 +1,11 @@
-# `use-local-storage`
+# `byndyusoft-ui/use-local-storage`
 
-> TODO: description
+> A custom hook that uses Local Storage API to persist state.
 
-## Usage
+## Installation
 
-```
-const useLocalStorage = require('use-local-storage');
-
-// TODO: DEMONSTRATE API
+```sh
+npm i @byndyusoft-ui/use-local-storage
+# or
+yarn add @byndyusoft-ui/use-local-storage
 ```

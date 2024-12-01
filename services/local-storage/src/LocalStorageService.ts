@@ -11,7 +11,7 @@ export class LocalStorageService<TValue> {
         this.deserializer = deserialize;
     }
 
-    getValue(defaultValue?: TValue): TValue | null {
+    getValue(defaultValue: TValue): TValue {
         return getValue(this.key, defaultValue, this.deserializer);
     }
 

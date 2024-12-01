@@ -1,9 +1,35 @@
-import { LocalStorageService } from '@byndyusoft-ui/local-storage';
+import { useState } from 'react';
+import * as localStorage from '@byndyusoft-ui/local-storage';
 
-export interface IUseLocalStorageActions {}
+export interface IUseLocalStorageActions<TValue> {
+    setValue: (value: TValue) => void;
+    removeValue: () => boolean;
+}
 
-export type TUseLocalStorage<TValue> = [TValue, IUseLocalStorageActions];
+export interface IUseLocalStorageOptions<TValue> {
+    serialize: (value: TValue) => string;
+    deserialize: (raw: string) => TValue;
+}
 
-export default function useLocalStorage<TValue>(key: string, initialValue: TValue): TUseLocalStorage<TValue> {
-    return [initialValue, {}];
+export type TUseLocalStorage<TValue> = [TValue, IUseLocalStorageActions<TValue>];
+
+export default function useLocalStorage<TValue>(
+    key: string,
+    defaultValue: TValue,
+    options?: IUseLocalStorageOptions<TValue>
+): TUseLocalStorage<TValue> {
+    const [storedValue, setStoredValue] = useState<TValue>(() =>
+        localStorage.getValue(key, defaultValue, options?.deserialize)
+    );
+
+    const setValue = (nextValue: TValue): void => {
+        localStorage.setValue(key, nextValue, options?.serialize);
+        setStoredValue(nextValue);
+    };
+
+    const removeValue = (): boolean => {
+        return true;
+    };
+
+    return [storedValue, { setValue, removeValue }];
 }

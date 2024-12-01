@@ -1,10 +1,6 @@
 import { defaultDeserializer } from './defaultDeserializer';
 
-export function getValue<TValue>(
-    key: string,
-    defaultValue: TValue | null = null,
-    deserialize = defaultDeserializer<TValue>
-): TValue | null {
+export function getValue<TValue>(key: string, defaultValue: TValue, deserialize = defaultDeserializer<TValue>): TValue {
     const raw = window.localStorage.getItem(key);
 
     if (raw !== null) {

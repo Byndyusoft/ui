@@ -1,11 +1,12 @@
-# `use-session-storage`
+# `byndyusoft-ui/use-session-storage`
 
-> TODO: description
+> A custom hook that uses Session Storage API to persist state.
 
-## Usage
+## Installation
 
+```sh
+npm i @byndyusoft-ui/use-session-storage
+# or
+yarn add @byndyusoft-ui/use-session-storage
 ```
-const useSessionStorage = require('use-session-storage');
 
-// TODO: DEMONSTRATE API
-```
