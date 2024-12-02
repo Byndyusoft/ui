@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import useDebouncedCallback from '@byndyusoft-ui/use-debounced-callback';
 
 type THookReturn<T> = [T, (arg: T) => void];
@@ -8,5 +8,5 @@ export default function useDebouncedValue<T>(value: T, delay = 300): THookReturn
 
     const setDebouncedValue = useDebouncedCallback(setValue, delay);
 
-    return [debouncedValue, setDebouncedValue];
+    return useMemo(() => ([debouncedValue, setDebouncedValue]), [debouncedValue, setDebouncedValue]);
 };

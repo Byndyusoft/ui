@@ -1,27 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useDebouncedValue from './useDebouncedValue';
 import './useDebouncedValue.stories.css';
-import type { Meta, StoryObj } from '@storybook/react';
+// import type { StoryObj } from '@storybook/react';
+import {Meta} from '@storybook/react';
 
-type Story = StoryObj<typeof Template>;
+// type Story = StoryObj<typeof Template>;
 
 const Template = () => {
-    const [debouncedValue, setDebouncedValue] = useDebouncedValue('', 2000);
+    const [delay, setDelay] = useState(1000)
+    const [debouncedValue, setDebouncedValue] = useDebouncedValue('', delay);
 
     return (
         <div className="container">
-            <span>
-                Debounced value: <span>{debouncedValue}</span>
-            </span>
-            <input onChange={e => setDebouncedValue(e.target.value)} />
-            <button onClick={() => setDebouncedValue('10000')}>set debounced value</button>
+            <div className="block">
+                <span className="title">Delay:</span>
+                <button
+                    className="button"
+                    type="button"
+                    disabled={delay <= 0}
+                    onClick={() => setDelay(delay - 100)}
+                >-</button>
+
+                <span>{`${delay} ms`}</span>
+
+                <button
+                    className="button"
+                    type="button"
+                    onClick={() => setDelay(delay + 100)}
+                >+</button>
+            </div>
+
+            <div className="block">
+                <span className="title">Type anything:</span>
+                <input className="input" onChange={e => setDebouncedValue(e.target.value)} />
+            </div>
+
+            <div className="divider" />
+
+            <div className="block">
+                <span className="title">Debounced result:</span>
+                <span>{debouncedValue}</span>
+            </div>
         </div>
     );
 };
 
-export const HookStory: Story = {
-    decorators: [() => <Template />]
-};
+export const TestStory = Template.bind({});
+
+// export const HookStory: Story = {
+//     decorators: [() => <Template />],
+// };
 
 const meta: Meta<typeof Template> = {
     title: 'hooks/useDebouncedValue',
