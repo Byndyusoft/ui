@@ -1,10 +1,10 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import useThrottle, { IThrottleOptions } from './useThrottle';
+import useThrottledCallback, { IThrottledCallbackOptions } from '../useThrottledCallback';
 
 const DELAY_THROTTLE = 500;
 
-const setup = (callback: jest.Mock, delay: number, options?: IThrottleOptions) => {
-    const { result } = renderHook(() => useThrottle(callback, delay, options));
+const setup = (callback: jest.Mock, delay: number, options?: IThrottledCallbackOptions) => {
+    const { result } = renderHook(() => useThrottledCallback(callback, delay, options));
     return result;
 };
 
@@ -14,30 +14,26 @@ const multipleCalls = (callback: () => void, delay: number): void => {
         callback();
         callback();
         callback();
+        jest.advanceTimersByTime(delay + 100);
+
+        callback();
+        jest.advanceTimersByTime(Math.max(0, delay - 100));
+
+        callback();
+        callback();
+        jest.advanceTimersByTime(delay + 100);
+
+        callback();
+        callback();
+        jest.advanceTimersByTime(Math.max(0, delay - 100));
+
+        callback();
+        callback();
+        jest.advanceTimersByTime(delay + 100);
     });
-    jest.advanceTimersByTime(delay + 100);
-    act(() => {
-        callback();
-    });
-    jest.advanceTimersByTime(Math.max(0, delay - 100));
-    act(() => {
-        callback();
-        callback();
-    });
-    jest.advanceTimersByTime(delay + 100);
-    act(() => {
-        callback();
-        callback();
-    });
-    jest.advanceTimersByTime(Math.max(0, delay - 100));
-    act(() => {
-        callback();
-        callback();
-    });
-    jest.advanceTimersByTime(delay + 100);
 };
 
-describe('hook/useThrottle', () => {
+describe('hook/useThrottledCallback', () => {
     beforeEach(() => {
         jest.useFakeTimers();
     });

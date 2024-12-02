@@ -1,5 +1,5 @@
-import useThrottle from './useThrottle';
+import useThrottledCallback from './useThrottledCallback';
+import useThrottledValue from './useThrottledValue';
 
-export type { IThrottleOptions, TThrottleCallback } from './useThrottle';
-export { useThrottle };
-export default useThrottle;
+export type { IThrottledCallbackOptions, TThrottledCallback } from './useThrottledCallback';
+export { useThrottledCallback, useThrottledValue };

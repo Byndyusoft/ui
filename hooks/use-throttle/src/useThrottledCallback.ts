@@ -1,17 +1,17 @@
 import { useCallback, useEffect, useRef } from 'react';
 
-export type TThrottleCallback<T = never> = (...args: T[]) => void;
+export type TThrottledCallback<T = never> = (...args: T[]) => void;
 
-export interface IThrottleOptions {
+export interface IThrottledCallbackOptions {
     leading?: boolean;
     trailing?: boolean;
 }
 
-const useThrottle = <T>(
-    callback: TThrottleCallback<T>,
+const useThrottledCallback = <T>(
+    callback: TThrottledCallback<T>,
     delay: number,
-    { leading = true, trailing = true }: IThrottleOptions = {}
-): TThrottleCallback<T> => {
+    { leading = true, trailing = true }: IThrottledCallbackOptions = {}
+): TThrottledCallback<T> => {
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const argsRef = useRef<T[] | null>(null);
 
@@ -50,4 +50,4 @@ const useThrottle = <T>(
     );
 };
 
-export default useThrottle;
+export default useThrottledCallback;

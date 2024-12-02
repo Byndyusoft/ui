@@ -8,15 +8,15 @@
 npm i @byndyusoft-ui/use-throttle
 ```
 ### Usage
-
+#### useThrottledCallback
 ```jsx
 import React, { useState } from 'react';
-import useThrottle from '@byndyusoft-ui/use-throttle';
+import { useThrottledCallback } from '@byndyusoft-ui/use-throttle';
 
 const App = () => {
     const [count, setCount] = useState(0);
 
-    const throttledHandleClick = useThrottle(() => {
+    const throttledHandleClick = useThrottledCallback(() => {
         setCount(prevCount => prevCount + 1);
     }, 1500);
 
@@ -31,20 +31,52 @@ const App = () => {
 
 export default App;
 ```
-### Options
 
-The `useThrottle` hook accepts an optional third parameter, which is an options object. The options object can have the following properties:
+#### useThrottledValue
+
+```jsx
+import { useMemo, useState } from "react";
+import { useThrottledValue } from "./useThrottledValue";
+
+const performHeavyCalculation = (value) => {
+  console.log("Heavy calculation for value:", value);
+  return value;
+};
+
+export default function App() {
+  const [value, setValue] = useState(0);
+  const throttledValue = useThrottledValue({ value, throttleMs: 5000 });
+
+  const memoizedValue = useMemo(() => {
+    return performHeavyCalculation(throttledValue);
+  }, [throttledValue]);
+
+  return (
+    <div>
+      <button onClick={() => setValue(value + 1)}>Increment value</button>
+      <p>Calculates a new value every fifth second.</p>
+      <p>Value: {value}</p>
+      <p>Last caculated result: {memoizedValue}</p>
+    </div>
+  );
+}
+```
+
+### Options
+The useThrottledCallback and useThrottledValue hooks accept an optional third parameter, which is an options object. The options object can have the following properties:
 - `leading`: A boolean that specifies whether the function should be called on the leading edge of the timeout. Default is `true`.
 - `trailing`: A boolean that specifies whether the function should be called on the trailing edge of the timeout. Default is `true`.
 
-
 ```jsx
-useThrottle(() => {}, 1500, { leading: false });
+useThrottledCallback(() => {}, 1500, { leading: false });
+useThrottledValue(() => {}, 1500, { leading: false });
 
-useThrottle(() => {}, 1500, { trailing: false });
+useThrottledCallback(() => {}, 1500, { trailing: false });
+useThrottledValue(value, 1500, { trailing: false })
 
 // callback will not be called
-useThrottle(() => {}, 1500, { leading: false, trailing: false });
+useThrottledCallback(() => {}, 1500, { leading: false, trailing: false });
+useThrottledValue(value, 1500, { leading: false, trailing: false });
 ```
 
 
