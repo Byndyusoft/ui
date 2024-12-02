@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { StoryFn } from '@storybook/react';
+import { StoryObj } from '@storybook/react';
 import useBodyScrollLock from './useBodyScrollLock';
 import './useBodyScrollLock.stories.css';
 
-const HookStoryComponent = (): JSX.Element => {
+const Template = (): JSX.Element => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useBodyScrollLock(isModalOpen);
@@ -25,11 +25,11 @@ const HookStoryComponent = (): JSX.Element => {
     );
 };
 
-const Template: StoryFn = () => <HookStoryComponent />;
+type TStory = StoryObj<typeof Template>;
 
-export const HookStory = Template.bind({});
-
-HookStory.args = {};
+export const HookStory: TStory = {
+    decorators: [(): JSX.Element => <Template />]
+};
 
 export default {
     title: 'hooks/useBodyScrollLock'
