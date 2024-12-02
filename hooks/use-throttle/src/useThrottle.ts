@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 
-type TThrottleCallback<T> = (...args: T[]) => void;
+export type TThrottleCallback<T = never> = (...args: T[]) => void;
 
 export interface IThrottleOptions {
     leading?: boolean;
@@ -15,12 +15,12 @@ const useThrottle = <T>(
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const argsRef = useRef<T[] | null>(null);
 
-    const cleanup = (): void => {
+    const cleanup = useCallback((): void => {
         if (timeoutRef.current) {
             clearTimeout(timeoutRef.current);
             timeoutRef.current = null;
         }
-    };
+    }, []);
 
     const waitFunc = useCallback((): void => {
         if (trailing && argsRef.current) {
@@ -32,9 +32,7 @@ const useThrottle = <T>(
         }
     }, [callback, delay, trailing]);
 
-    useEffect(() => {
-        return cleanup;
-    }, []);
+    useEffect(() => cleanup, [cleanup]);
 
     return useCallback(
         (...args: T[]) => {

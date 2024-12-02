@@ -25,10 +25,11 @@
     border: 1px solid black;
     background: orange;
     border-radius: 4px;
+    cursor: pointer;
 }
 
 .code-block {
-    padding: 10px;
+    padding: 0 20px;
     width: 350px;
     height: auto;
     background-color: #e5e2e2;

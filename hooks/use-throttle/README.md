@@ -48,4 +48,4 @@ useThrottle(() => {}, 1500, { leading: false, trailing: false });
 ```
 
 
->If both leading and trailing are set to false, the function will not be called at all. This configuration effectively disables the throttling mechanism, as the function will never be executed.
+>If both `leading` and `trailing` are set to `false`, the function will not be called at all. This configuration effectively disables the throttling mechanism, as the function will never be executed.

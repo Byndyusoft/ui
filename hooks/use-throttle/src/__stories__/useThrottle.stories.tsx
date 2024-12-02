@@ -1,20 +1,20 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import type { StoryObj } from '@storybook/react';
-import useThrottle from '../useThrottle';
+import useThrottle, { TThrottleCallback } from '../useThrottle';
 import './useThrottle.stories.css';
 
 const DELAY_THROTTLE = 1500;
 
 const ThrottleClickStory = (): JSX.Element => {
-    const [leadingCount, setLeadingCount] = useState<number>(0);
+    const [count, setCount] = useState<number>(0);
     const [noLeadingCount, setNoLeadingCount] = useState<number>(0);
     const [noTrailingCount, setNoTrailingCount] = useState<number>(0);
 
-    const throttledHandleClickLeading = useThrottle(() => {
-        setLeadingCount(prevCount => prevCount + 1);
+    const throttledHandleClickLeading: TThrottleCallback = useThrottle(() => {
+        setCount(prevCount => prevCount + 1);
     }, DELAY_THROTTLE);
 
-    const throttledHandleClickNoLeading = useThrottle(
+    const throttledHandleClickNoLeading: TThrottleCallback = useThrottle(
         () => {
             setNoLeadingCount(prevCount => prevCount + 1);
         },
@@ -22,7 +22,7 @@ const ThrottleClickStory = (): JSX.Element => {
         { leading: false }
     );
 
-    const throttledHandleClickNoTrailing = useThrottle(
+    const throttledHandleClickNoTrailing: TThrottleCallback = useThrottle(
         () => {
             setNoTrailingCount(prevCount => prevCount + 1);
         },
@@ -36,7 +36,7 @@ const ThrottleClickStory = (): JSX.Element => {
             <div className="row">
                 <hr className="hr" />
                 <div className="column card">
-                    <h3>useThrottle default</h3>
+                    <h3>Default</h3>
                     <code className="code-block">
                         {`
 const handleClick = useThrottle(() => {
@@ -45,14 +45,14 @@ const handleClick = useThrottle(() => {
                         `}
                     </code>
                     <div className="row">
-                        <p>Count: {leadingCount}</p>
+                        <p>Count: {count}</p>
                         <button className="btn" onClick={throttledHandleClickLeading}>
                             Click me
                         </button>
                     </div>
                 </div>
                 <div className="card">
-                    <h3>useThrottle No Leading</h3>
+                    <h3>Off leading</h3>
                     <ul>
                         <li>The function will not be called immediately on the first call</li>
                         <li>The function will be called only after the delay is completed</li>
@@ -74,7 +74,7 @@ const handleClick = useThrottle(() => {
                     </div>
                 </div>
                 <div className="card">
-                    <h3>useThrottle No Trailing</h3>
+                    <h3>Off trailing</h3>
                     <ul>
                         <li>The function will not be called after the delay is completed</li>
                         <li>The function will be called only on the first call if the leading option is set to true</li>
@@ -104,15 +104,15 @@ function ThrottleInputStory(): JSX.Element {
     const [inputValue, setInputValue] = useState<string>('');
     const [throttledValue, setThrottledValue] = useState<string>('');
 
-    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
         setInputValue(event.target.value);
     };
 
-    const throttledHandleInputChange = useThrottle<string>(value => {
+    const throttledHandleInputChange: TThrottleCallback<string> = useThrottle<string>(value => {
         setThrottledValue(value);
     }, DELAY_THROTTLE);
 
-    React.useEffect(() => {
+    React.useEffect((): void => {
         throttledHandleInputChange(inputValue);
     }, [inputValue, throttledHandleInputChange]);
 
@@ -131,12 +131,13 @@ const ThrottleMouseMoveStory = (): JSX.Element => {
     const [rawMousePosition, setRawMousePosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
     const [throttledMousePosition, setThrottledMousePosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
-    const handleMouseMove = (event: MouseEvent) => {
+    const handleMouseMove = (event: MouseEvent): void => {
         setRawMousePosition({ x: event.clientX, y: event.clientY });
     };
 
-    const throttledHandleMouseMove = useThrottle<MouseEvent>(event => {
+    const throttledHandleMouseMove: TThrottleCallback<MouseEvent> = useThrottle<MouseEvent>(event => {
         setThrottledMousePosition({ x: event.clientX, y: event.clientY });
+        console.log('callback');
     }, DELAY_THROTTLE);
 
     useEffect(() => {
