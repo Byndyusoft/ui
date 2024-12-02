@@ -4,20 +4,31 @@ import useDebouncedValue from './useDebouncedValue';
 
 const oldValue = 'old value';
 const newValue = 'new value';
-const timeout = 2000;
 
 describe('hooks/useDebouncedValue', () => {
-    test('useDebouncedValue works', () => {
-        const { result } = renderHook(() => useDebouncedValue(oldValue, timeout));
-        const [debouncedValue, setDebouncedValue] = result.current;
-        expect(debouncedValue).toEqual(oldValue);
+    test('works correctly', async () => {
+        const { result } = renderHook(() => useDebouncedValue(oldValue, 2000));
+        const getCurrentDebouncedValue = () => result.current[0];
+        const setDebouncedValue = result.current[1];
+
+        expect(getCurrentDebouncedValue()).toEqual(oldValue);
+
         act(() => {
             setDebouncedValue(newValue);
         });
-        expect(debouncedValue).toEqual(oldValue);
-        waitFor(
+
+        expect(getCurrentDebouncedValue()).toEqual(oldValue);
+
+        await waitFor(
             () => {
-                expect(debouncedValue).toEqual(newValue);
+                expect(getCurrentDebouncedValue()).toEqual(oldValue);
+            },
+            { timeout: 1500 }
+        );
+
+        await waitFor(
+            () => {
+                expect(getCurrentDebouncedValue()).toEqual(newValue);
             },
             { timeout: 2500 }
         );
