@@ -12,7 +12,7 @@ const PopoverTrigger = forwardRef<HTMLElement, IPopoverTriggerProps>(
         const context = usePopoverContext();
 
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment
-        const childrenRef = (children as any).ref;
+        const childrenRef = (children as any)?.ref;
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         const ref = useMergeRefs([context.refs.setReference, propRef, childrenRef]);
 
