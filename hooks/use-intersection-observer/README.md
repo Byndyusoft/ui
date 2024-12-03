@@ -1,6 +1,6 @@
 # `@byndyusoft-ui/use-intersection-observer`
 ---
-> A React hook that ...
+> A React hook that provides a simple and flexible way to use the Intersection Observer API, allowing you to track the visibility of DOM elements and react to their intersection with a specified root element or the viewport.
 
 ### Installation
 
