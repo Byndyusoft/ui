@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
+import { StoryObj } from '@storybook/react';
 import useDebouncedValue from './useDebouncedValue';
 import './useDebouncedValue.stories.css';
-// import type { StoryObj } from '@storybook/react';
-import {Meta} from '@storybook/react';
 
-// type Story = StoryObj<typeof Template>;
-
-const Template = () => {
-    const [delay, setDelay] = useState(1000)
+const DebouncedInput = () => {
+    const [delay, setDelay] = useState(1000);
     const [debouncedValue, setDebouncedValue] = useDebouncedValue('', delay);
 
     return (
@@ -45,15 +42,11 @@ const Template = () => {
     );
 };
 
-export const TestStory = Template.bind({});
-
-// export const HookStory: Story = {
-//     decorators: [() => <Template />],
-// };
-
-const meta: Meta<typeof Template> = {
-    title: 'hooks/useDebouncedValue',
-    component: Template
+export const DebouncedInputStory : StoryObj<typeof DebouncedInput> = {
+    name: 'Debounced input',
+    render: DebouncedInput
 };
 
-export default meta;
+export default {
+    title: 'hooks/useDebouncedValue'
+};

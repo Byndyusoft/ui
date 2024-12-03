@@ -1,0 +1,21 @@
+import { Markdown, Source, Canvas, Meta, Story } from '@storybook/blocks';
+import * as useDebouncedValueStories from './useDebouncedValue.stories';
+import Readme from '../README.md';
+
+<Meta title="hooks/useDebouncedValue" of={useDebouncedValueStories} />
+
+<Markdown>{Readme}</Markdown>
+
+## Usage
+
+To use the hook in your project you must:
+
+1. Import the hook where you need it:
+
+<Source language="javascript" code="import useDebouncedValue from '@byndyusoft-ui/use-debounced-value';" />
+
+2. Give start value and delay props:
+
+<Canvas sourceState="shown" story={useDebouncedValueStories.DebouncedInputStory} />
+
+<Story of={useDebouncedValueStories.DebouncedInputStory} />
