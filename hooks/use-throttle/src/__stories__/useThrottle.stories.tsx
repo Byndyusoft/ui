@@ -113,8 +113,8 @@ function ThrottleEventStory(): JSX.Element {
         setMousePosition({ x: event.clientX, y: event.clientY });
     };
 
-    const inputThrottledValue = useThrottledValue(inputValue, 1500);
-    const mousePositionThrottledValue = useThrottledValue(mousePosition, 1500);
+    const inputThrottledValue = useThrottledValue(inputValue, DELAY_THROTTLE);
+    const mousePositionThrottledValue = useThrottledValue(mousePosition, DELAY_THROTTLE);
 
     useEffect(() => {
         window.addEventListener('mousemove', handleMouseMove);
@@ -154,44 +154,6 @@ function ThrottleEventStory(): JSX.Element {
         </div>
     );
 }
-
-const ThrottleMouseMoveStory = (): JSX.Element => {
-    const [rawMousePosition, setRawMousePosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
-
-    const handleMouseMove = (event: MouseEvent): void => {
-        setRawMousePosition({ x: event.clientX, y: event.clientY });
-    };
-
-    const throttledValue = useThrottledValue(rawMousePosition, 1500);
-
-    useEffect(() => {
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-        };
-    }, []);
-
-    return (
-        <div>
-            <h2>Throttle mouse position</h2>
-            <hr className="hr" />
-            <div>
-                <h3>Mouse Position</h3>
-                <div className="row">
-                    <p>X: {rawMousePosition.x}</p>
-                    <p>Y: {rawMousePosition.y}</p>
-                </div>
-            </div>
-            <div>
-                <h3>Throttled Mouse Position</h3>
-                <div className="row">
-                    <p>X: {throttledValue.x}</p>
-                    <p>Y: {throttledValue.y}</p>
-                </div>
-            </div>
-        </div>
-    );
-};
 
 export const ThrottleClick: StoryObj<typeof ThrottleClickStory> = {
     name: 'useThrottledCallback',

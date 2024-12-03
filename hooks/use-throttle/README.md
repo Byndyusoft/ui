@@ -8,6 +8,7 @@
 npm i @byndyusoft-ui/use-throttle
 ```
 ### Usage
+
 #### useThrottledCallback
 ```jsx
 import React, { useState } from 'react';
@@ -33,10 +34,9 @@ export default App;
 ```
 
 #### useThrottledValue
-
 ```jsx
 import { useMemo, useState } from "react";
-import { useThrottledValue } from "./useThrottledValue";
+import { useThrottledValue } from '@byndyusoft-ui/use-throttle'
 
 const performHeavyCalculation = (value) => {
   console.log("Heavy calculation for value:", value);
@@ -45,7 +45,7 @@ const performHeavyCalculation = (value) => {
 
 export default function App() {
   const [value, setValue] = useState(0);
-  const throttledValue = useThrottledValue({ value, throttleMs: 5000 });
+  const throttledValue = useThrottledValue(value, 5000);
 
   const memoizedValue = useMemo(() => {
     return performHeavyCalculation(throttledValue);
@@ -62,22 +62,18 @@ export default function App() {
 }
 ```
 
-### Options
-The useThrottledCallback and useThrottledValue hooks accept an optional third parameter, which is an options object. The options object can have the following properties:
+### Options  `useThrottledCallback`
+The useThrottledCallback accept an optional third parameter, which is an options object. The options object can have the following properties:
 - `leading`: A boolean that specifies whether the function should be called on the leading edge of the timeout. Default is `true`.
 - `trailing`: A boolean that specifies whether the function should be called on the trailing edge of the timeout. Default is `true`.
 
 ```jsx
-useThrottledCallback(() => {}, 1500, { leading: false });
-useThrottledValue(() => {}, 1500, { leading: false });
+const throttleCallback = useThrottledCallback(() => {}, 1500, { leading: false });
 
-useThrottledCallback(() => {}, 1500, { trailing: false });
-useThrottledValue(value, 1500, { trailing: false })
+const throttleCallback = useThrottledCallback(() => {}, 1500, { trailing: false });
 
-// callback will not be called
-useThrottledCallback(() => {}, 1500, { leading: false, trailing: false });
-useThrottledValue(value, 1500, { leading: false, trailing: false });
+// Callback will not be called!
+const throttleCallback = useThrottledCallback(() => {}, 1500, { leading: false, trailing: false });
 ```
-
 
 >If both `leading` and `trailing` are set to `false`, the function will not be called at all. This configuration effectively disables the throttling mechanism, as the function will never be executed.

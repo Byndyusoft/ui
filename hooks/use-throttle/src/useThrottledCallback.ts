@@ -23,14 +23,14 @@ const useThrottledCallback = <T>(
     }, []);
 
     const waitFunc = useCallback((): void => {
+        cleanup();
+
         if (trailing && argsRef.current) {
             callback(...argsRef.current);
             argsRef.current = null;
             timeoutRef.current = setTimeout(waitFunc, delay);
-        } else {
-            timeoutRef.current = null;
         }
-    }, [callback, delay, trailing]);
+    }, [callback, delay, trailing, cleanup]);
 
     useEffect(() => cleanup, [cleanup]);
 
