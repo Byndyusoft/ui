@@ -6,19 +6,25 @@ const Image = forwardRef<HTMLImageElement, IImageProps>((props, forwardedRef) =>
     const {
         src,
         alt = '',
-        lazy = true,
+        lazy = false,
         fallback,
         fallbackSrc,
         errorFallback,
         errorFallbackSrc,
         className,
         rootFallbackClassName,
+        rootErrorFallbackClassName,
+        intersectionObserverSettings,
         ...otherProps
     } = props;
 
     const internalRef = useRef<HTMLImageElement | null>(null);
 
-    const { isLoading, isError, setObserverTargetRef } = useImage({ src, lazy });
+    const { isLoading, isError, setObserverTargetRef } = useImage({
+        src,
+        lazy,
+        intersectionObserverSettings
+    });
 
     const setRefs = (node: HTMLImageElement | null): void => {
         internalRef.current = node;
@@ -29,17 +35,21 @@ const Image = forwardRef<HTMLImageElement, IImageProps>((props, forwardedRef) =>
         <img ref={setRefs} className={className} src={imageSrc} alt={alt} {...otherProps} />
     );
 
-    const renderFallback = (content: ReactElement): JSX.Element => (
-        <div ref={setRefs} className={rootFallbackClassName}>
+    const renderFallback = (content: ReactElement, rootClassName?: string): JSX.Element => (
+        <div ref={setRefs} className={rootClassName}>
             {content}
         </div>
     );
 
     useImperativeHandle(forwardedRef, () => internalRef.current as HTMLImageElement);
 
-    if (fallback && isLoading) return renderFallback(fallback);
+    if (fallback && isLoading) {
+        return renderFallback(fallback, rootFallbackClassName);
+    }
 
-    if (errorFallback && isError) return renderFallback(errorFallback);
+    if (errorFallback && isError) {
+        return renderFallback(errorFallback, rootErrorFallbackClassName);
+    }
 
     if (fallbackSrc && isLoading) return renderImage(fallbackSrc);
 

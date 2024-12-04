@@ -14,7 +14,7 @@ const loadImage: TLoadImageFunction = (src, setIsLoading, setIsError) => {
     };
 };
 
-export const useImage = ({ src, lazy }: IUseImageProps): IUseImageReturn => {
+export const useImage = ({ src, lazy, intersectionObserverSettings }: IUseImageProps): IUseImageReturn => {
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
 
@@ -25,7 +25,8 @@ export const useImage = ({ src, lazy }: IUseImageProps): IUseImageReturn => {
             if (isIntersecting) {
                 loadImage(src, setIsLoading, setIsError);
             }
-        }
+        },
+        ...intersectionObserverSettings
     });
 
     useLayoutEffect(() => {

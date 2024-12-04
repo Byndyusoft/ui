@@ -1,9 +1,10 @@
 .wrapper {
     margin: auto;
-    width: 800px;
     display: flex;
+    gap: 12px;
     flex-wrap: wrap;
-    gap: 20px;
+    width: 612px;
+    max-height: 600px;
 }
 
 .skeleton {
@@ -23,6 +24,29 @@
     align-items: center;
     flex-direction: column;
     justify-content: center;
+}
+
+.refresh_btn {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 999;
+    cursor: pointer;
+    background: yellowgreen;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    border: none;
+    box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.38);
+}
+
+.refresh_btn:hover {
+    scale: 1.03;
+}
+
+.refresh_btn:active {
+    scale: 1.09;
+    opacity: 0.5;
 }
 
 @keyframes shimmer {
