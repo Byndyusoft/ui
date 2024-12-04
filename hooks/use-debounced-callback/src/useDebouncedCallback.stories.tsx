@@ -1,35 +1,51 @@
 import React, { useState } from 'react';
+import type { StoryObj } from '@storybook/react';
 import useDebouncedCallback from './useDebouncedCallback';
 import './useDebouncedCallback.stories.css';
-import type { Meta, StoryObj } from '@storybook/react';
 
-type Story = StoryObj<typeof Template>;
+const COLORS = ['red', 'green', 'yellow'];
 
-const oldValue = 'old value';
-const newValue = 'new value';
-const timeout = 2000;
-
-const Template = () => {
-    const [value, setValue] = useState(oldValue);
-    const setDebounceValue = useDebouncedCallback(setValue, timeout);
+const DebouncedColorChange = () => {
+    const [colorIndexOne, setColorIndexOne] = useState(0);
+    const [colorIndexTwo, setColorIndexTwo] = useState(0);
+    const setDebouncedColorIndexTwo = useDebouncedCallback(setColorIndexTwo, 1000);
 
     return (
-        <div className="container">
-            <span>Value: {value}</span>
-            <button onClick={() => setDebounceValue(newValue)}>debounced change</button>
-            <button onClick={() => setValue(newValue)}>change</button>
-            <button onClick={() => setValue(oldValue)}>reset</button>
+        <div className="use-debounced-callback__container">
+            <div className="use-debounced-callback__block">
+                <button
+                    type="button"
+                    onClick={() => setColorIndexOne((colorIndexOne + 1) % 3)}
+                >
+                    Click for color change
+                </button>
+                <div
+                    className="use-debounced-callback__rectangle"
+                    style={{ backgroundColor: COLORS[colorIndexOne] }}
+                />
+            </div>
+
+            <div className="use-debounced-callback__block">
+                <button
+                    type="button"
+                    onClick={() => setDebouncedColorIndexTwo((colorIndexTwo + 1) % 3)}
+                >
+                    Click for debounced color change (delay: 1000 ms)
+                </button>
+                <div
+                    className="use-debounced-callback__rectangle"
+                    style={{ backgroundColor: COLORS[colorIndexTwo] }}
+                />
+            </div>
         </div>
     );
 };
 
-export const HookStory: Story = {
-    decorators: [() => <Template />]
+export const DebouncedColorChangeStory: StoryObj<typeof DebouncedColorChange> = {
+    name: 'Debounced color change',
+    render: DebouncedColorChange
 };
 
-const meta: Meta<typeof Template> = {
-    title: 'hooks/useDebouncedCallback',
-    component: Template
+export default {
+    title: 'hooks/useDebouncedCallback'
 };
-
-export default meta;
