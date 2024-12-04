@@ -1,0 +1,31 @@
+---
+to: "<%= hasDocs ? `hooks/${h.changeCase.paramCase(name)}/src/${name}.docs.mdx` : null %>"
+---
+import {
+Markdown,
+Source,
+Canvas,
+Meta,
+ArgsTable
+} from '@storybook/blocks';
+import Readme from '../README.md';
+import * as <%= name %>Stories from './<%= name %>.stories';
+
+<Meta title="hooks/<%= name %>" of={<%= name %>Stories} />
+
+<Markdown><Readme /></Markdown>
+
+## Usage
+
+To use the hook in your project you must:
+
+1. Import the component where you need it:
+
+<Source
+        language="javascript"
+        code="import <%= name %> from '@byndyusoft-ui/<%= h.changeCase.paramCase(name) %>';"
+/>
+
+2. Call the hook and give it the desired args.
+
+<Canvas sourceState="shown" story={<%= name %>Stories.HookStory} />
