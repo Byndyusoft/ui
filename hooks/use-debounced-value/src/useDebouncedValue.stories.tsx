@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { StoryObj } from '@storybook/react';
 import useDebouncedValue from './useDebouncedValue';
-import './useDebouncedValue.stories.css';
+import styles from './useDebouncedValue.stories.module.css';
 
 const DebouncedInput = () => {
     const [delay, setDelay] = useState(1000);
     const [debouncedValue, setDebouncedValue] = useDebouncedValue('', delay);
 
     return (
-        <div className="container">
-            <div className="block">
-                <span className="title">Delay:</span>
+        <div className={styles.container}>
+            <div className={styles.block}>
+                <span className={styles.title}>Delay:</span>
                 <button
-                    className="button"
+                    className={styles.button}
                     type="button"
                     disabled={delay <= 0}
                     onClick={() => setDelay(delay - 100)}
@@ -21,21 +21,21 @@ const DebouncedInput = () => {
                 <span>{`${delay} ms`}</span>
 
                 <button
-                    className="button"
+                    className={styles.button}
                     type="button"
                     onClick={() => setDelay(delay + 100)}
                 >+</button>
             </div>
 
-            <div className="block">
-                <span className="title">Type anything:</span>
-                <input className="input" onChange={e => setDebouncedValue(e.target.value)} />
+            <div className={styles.block}>
+                <span className={styles.title}>Type anything:</span>
+                <input className={styles.input} onChange={e => setDebouncedValue(e.target.value)} />
             </div>
 
-            <div className="divider" />
+            <div className={styles.divider} />
 
-            <div className="block">
-                <span className="title">Debounced result:</span>
+            <div className={styles.block}>
+                <span className={styles.title}>Debounced result:</span>
                 <span>{debouncedValue}</span>
             </div>
         </div>
