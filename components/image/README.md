@@ -55,7 +55,9 @@ export default App;
 
 #### Custom class names
 
-The rootFallbackClassName parameter applies a class to the container that will display the fallback or errorFallback elements.
+
+The `rootFallbackClassName` parameter adds a class to the root element that displays the `fallback` content, 
+while the `rootErrorFallbackClassName` parameter adds a class to the root element that displays the `errorFallback` content.
 
 ```jsx
  <Image
@@ -74,6 +76,10 @@ The rootFallbackClassName parameter applies a class to the container that will d
 By default, `lazy` is set to `false`, which means the image will be loaded immediately. If `lazy` is set to `true`, 
 the image will only be loaded when it enters the viewport. This is achieved using the Intersection Observer pattern. 
 For correct lazy loading, it is also necessary to pass the `fallback` attribute, which will be placeholder as a placeholder until the image is loaded.
+
+By default, `lazy` is set to `false`, which means the image will be loaded immediately. If `lazy` is set to `true`,
+the image will only be loaded when it enters the viewport. This is achieved using the Intersection Observer pattern. 
+For correct lazy loading, it is also necessary to pass the `fallback` attribute, which will serve as a placeholder until the image is loaded.
 
 ```jsx
 <Image
