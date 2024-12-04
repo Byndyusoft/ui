@@ -57,6 +57,7 @@ component-name // Название компонента в kebab case
 |   ├── ComponentName.tests.tsx
 |   ├── ComponentName.stories.tsx
 |   ├── ComponentName.stories.css // стили историй
+|   ├── ComponentName.docs.mdx // документация компонента
 |   └── index.ts
 ├── README.md
 ├── package.json
@@ -78,7 +79,7 @@ use-hook-name // Название хука в kebab case
 |   ├── useHookName.tests.ts
 |   ├── useHookName.stories.tsx
 |   ├── useHookName.stories.css
-|   └── useHookName.stories.mdx
+|   └── useHookName.docs.mdx // документация хука
 ├── README.md
 ├── package.json
 ├── .npmignore
