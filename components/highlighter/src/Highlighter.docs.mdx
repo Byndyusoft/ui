@@ -1,0 +1,38 @@
+import { Meta, Markdown, Canvas, Source, ArgsTable } from '@storybook/blocks';
+import Readme from '../README.md';
+import Highlighter from './Highlighter';
+import * as HighlighterStories from './Highlighter.stories';
+
+<Meta title="components/Highlighter" of={HighlighterStories} />
+
+<Markdown>{Readme}</Markdown>
+
+## Usage
+
+To use the component in your project you must:
+
+1. Import the component where you need it:
+
+<Source language="javascript" code="import Highlighter from '@byndyusoft-ui/highlighter';" />
+
+2. Call the component and give it the desired props, for example:
+
+-   Simple example
+
+<Canvas sourceState="shown" of={HighlighterStories.BaseStory} />
+
+-   Highlight with overlapping search values
+
+<Canvas sourceState="shown" of={HighlighterStories.HighlightWithOverlappingSearchValuesStory} />
+
+-   With custom highlight
+
+<Canvas sourceState="shown" of={HighlighterStories.CustomHighlightStory} />
+
+-   Interactive with ignore spaces
+
+<Canvas sourceState="shown" of={HighlighterStories.InteractiveWithIgnoreSpacesStory} />
+
+## Props
+
+<ArgsTable of={Highlighter} />
