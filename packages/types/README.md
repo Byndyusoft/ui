@@ -210,3 +210,15 @@ const fruitsDictionary = {
 const TFruitsDictionaryValues = ValueOf<typeof fruitsDictionary>;
 // TFruitsDictionaryValues = 'Яблоко' | 'Апельсин'
 ```
+
+### TimeoutId
+
+```typescript
+import { TimeoutId } from '@byndyusoft-ui/types';
+
+const timeoutIdRef = useRef<TimeoutId | null>(null);
+
+timeoutIdRef.current = setTimeout(() => {
+    timeoutIdRef.current = null;
+}, 1000);
+```

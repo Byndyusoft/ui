@@ -7,6 +7,7 @@ export * from './Nullable';
 export * from './PlainObject';
 export * from './Predicate';
 export * from './PropertyKey';
+export * from './TimeoutId';
 export * from './Tuple';
 export * from './ValueOf';
 export * from './IsTuple';
