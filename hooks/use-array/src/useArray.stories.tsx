@@ -18,81 +18,121 @@ const Template = (): JSX.Element => {
             <h1>List</h1>
             <strong>{list.length > 0 ? list.join(', ') : 'Empty'}</strong>
             <hr />
-            <div className="container">
-                <div className="row">
+            <div className="use-array__container">
+                <div className="use-array__row">
                     <input
-                        className="input"
+                        className="use-array__input"
                         value={addValue}
                         type="numeric"
                         onChange={e => setAddValue(Number(e.target.value))}
                     />
-                    <button type="button" onClick={() => append(addValue)}>
+                    <button
+                        className="use-array__button"
+                        type="button"
+                        onClick={() => append(addValue)}
+                    >
                         Append
                     </button>
                 </div>
-                <div className="row">
+                <div className="use-array__row">
                     <input
-                        className="input"
+                        className="use-array__input"
                         value={prependValue}
                         type="numeric"
                         onChange={e => setPrependValue(Number(e.target.value))}
                     />
-                    <button onClick={() => prepend(prependValue)}>Prepend</button>
+                    <button
+                        className="use-array__button"
+                        onClick={() => prepend(prependValue)}
+                    >
+                        Prepend
+                    </button>
                 </div>
-                <div className="row">
+                <div className="use-array__row">
                     <span>from</span>
                     <input
-                        className="input"
+                        className="use-array__input"
                         value={fromValue}
                         type="numeric"
                         onChange={e => setFromValue(Number(e.target.value))}
                     />
                     <span>to</span>
                     <input
-                        className="input"
+                        className="use-array__input"
                         value={lessValue}
                         type="numeric"
                         onChange={e => setLessValue(Number(e.target.value))}
                     />
-                    <button onClick={() => filter(a => a >= fromValue && a <= lessValue)}>Filter</button>
+                    <button
+                        className="use-array__button"
+                        onClick={() => filter(a => a >= fromValue && a <= lessValue)}
+                    >
+                        Filter
+                    </button>
                 </div>
-                <div className="row">
+                <div className="use-array__row">
                     <span>index</span>
                     <input
-                        className="input"
+                        className="use-array__input"
                         value={indexUpdateValue}
                         type="numeric"
                         onChange={e => setIndexUpdateValue(Number(e.target.value))}
                     />
                     <span>item</span>
                     <input
-                        className="input"
+                        className="use-array__input"
                         value={updateValue}
                         type="numeric"
                         onChange={e => setUpdateValue(Number(e.target.value))}
                     />
-                    <button onClick={() => update(indexUpdateValue, updateValue)}>Update</button>
+                    <button
+                        className="use-array__button"
+                        onClick={() => update(indexUpdateValue, updateValue)}
+                    >
+                        Update
+                    </button>
                 </div>
-                <div className="row">
+                <div className="use-array__row">
                     <input
-                        className="input"
+                        className="use-array__input"
                         value={indexRemoveValue}
                         type="numeric"
                         onChange={e => setIndexRemoveValue(Number(e.target.value))}
                     />
-                    <button onClick={() => remove(indexRemoveValue)}>Remove</button>
+                    <button
+                        className="use-array__button"
+                        onClick={() => remove(indexRemoveValue)}
+                    >
+                        Remove
+                    </button>
                 </div>
-                <div className="row">
-                    <button type="button" onClick={() => reset()}>
+                <div className="use-array__row">
+                    <button
+                        className="use-array__button"
+                        type="button"
+                        onClick={() => reset()}
+                    >
                         Reset
                     </button>
-                    <button type="button" onClick={() => clear()}>
+                    <button
+                        className="use-array__button"
+                        type="button"
+                        onClick={() => clear()}
+                    >
                         Clear
                     </button>
-                    <button type="button" onClick={() => sort((a, b) => a - b)}>
+                    <button
+                        className="use-array__button"
+                        type="button"
+                        onClick={() => sort((a, b) => a - b)}
+                    >
                         Sort ASC
                     </button>
-                    <button type="button" onClick={() => sort((a, b) => b - a)}>
+                    <button
+                        className="use-array__button"
+                        type="button"
+                        onClick={() => sort((a, b) => b - a)}
+                    >
                         Sort DES
                     </button>
                 </div>
