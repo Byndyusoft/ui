@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { IUseIntersectionObserverOptions } from '../useIntersectionObserver.types';
 import {
     intersectionMockInstance,
@@ -16,36 +16,41 @@ interface IComponentProps {
 }
 
 const HookComponent = ({ options, unmount }: IComponentProps) => {
-    const { ref, isIntersecting } = useIntersectionObserver(options);
+    const [ref, setRef] = useState<Element | null>(null);
+    const [isIntersecting] = useIntersectionObserver({ current: ref }, options);
     return (
-        <div data-testid="wrapper" ref={!unmount ? ref : undefined}>
+        <div data-testid="wrapper" ref={!unmount ? setRef : undefined}>
             {isIntersecting.toString()}
         </div>
     );
 };
 
 const LazyHookComponent = ({ options, unmount }: IComponentProps) => {
+    const [ref, setRef] = useState<Element | null>(null);
+
     const [isLoading, setIsLoading] = React.useState(true);
 
-    React.useEffect(() => {
+    const [isIntersecting] = useIntersectionObserver({ current: ref }, options);
+
+    useEffect(() => {
         setIsLoading(false);
     }, []);
-
-    const { ref, isIntersecting } = useIntersectionObserver(options);
 
     if (isLoading) return <div>Loading</div>;
 
     return (
-        <div data-testid="wrapper" ref={!unmount ? ref : undefined}>
+        <div data-testid="wrapper" ref={!unmount ? setRef : undefined}>
             {isIntersecting.toString()}
         </div>
     );
 };
 
 const HookComponentWithEntry = ({ options, unmount }: IComponentProps) => {
-    const { ref, entry } = useIntersectionObserver(options);
+    const [ref, setRef] = useState<Element | null>(null);
+
+    const { entry } = useIntersectionObserver({ current: ref }, options);
     return (
-        <div data-testid="wrapper" ref={!unmount ? ref : undefined}>
+        <div data-testid="wrapper" ref={!unmount ? setRef : undefined}>
             {entry && Object.entries(entry).map(([key, value]) => `${key}: ${value}`)}
         </div>
     );

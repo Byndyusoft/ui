@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
-
 export type TObserverInstanceCallback = (isIntersecting: boolean, entry: IntersectionObserverEntry) => void;
 
 export interface IObserveOptions {
@@ -38,12 +36,9 @@ export interface IUseIntersectionObserverOptions extends IntersectionObserverIni
     onChange?: (isIntersecting: boolean, entry: IntersectionObserverEntry) => void;
 }
 
-type TSetRef = Dispatch<SetStateAction<Element | null>>;
-
-export type IUseIntersectionObserverTuple = [TSetRef, boolean, IntersectionObserverEntry | undefined];
+export type IUseIntersectionObserverTuple = [boolean, IntersectionObserverEntry | undefined];
 
 export type IUseIntersectionObserverObject = {
-    ref: TSetRef;
     isIntersecting: boolean;
     entry?: IntersectionObserverEntry;
 };

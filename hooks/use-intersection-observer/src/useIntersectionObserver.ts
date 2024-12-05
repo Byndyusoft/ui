@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { observe } from './utilities/useIntersectionObserver.utilities';
 import type {
     IUseIntersectionObserverReturn,
@@ -7,19 +7,21 @@ import type {
     IUseIntersectionObserverObject
 } from './useIntersectionObserver.types';
 
-export default function useIntersectionObserver({
-    threshold,
-    delay,
-    trackVisibility,
-    rootMargin,
-    root,
-    triggerOnce,
-    skip,
-    isIntersectingInitial,
-    isIntersectingFallback,
-    onChange
-}: IUseIntersectionObserverOptions = {}): IUseIntersectionObserverReturn {
-    const [ref, setRef] = useState<Element | null>(null);
+export default function useIntersectionObserver(
+    ref: MutableRefObject<Element | null>,
+    {
+        threshold,
+        delay,
+        trackVisibility,
+        rootMargin,
+        root,
+        triggerOnce,
+        skip,
+        isIntersectingInitial,
+        isIntersectingFallback,
+        onChange
+    }: IUseIntersectionObserverOptions = {}
+): IUseIntersectionObserverReturn {
     const [isIntersecting, setIsIntersecting] = useState<boolean>(Boolean(isIntersectingInitial));
     const [entry, setEntry] = useState<IntersectionObserverEntry | undefined>(undefined);
 
@@ -29,12 +31,12 @@ export default function useIntersectionObserver({
     callback.current = onChange;
 
     useEffect(() => {
-        if (skip || !ref) return;
+        if (skip || !ref?.current) return;
 
         let unobserve: (() => void) | undefined;
 
         unobserve = observe({
-            element: ref,
+            element: ref.current,
             options: {
                 root,
                 rootMargin,
@@ -62,7 +64,7 @@ export default function useIntersectionObserver({
         };
     }, [
         Array.isArray(threshold) ? threshold.toString() : threshold,
-        ref,
+        ref?.current,
         root,
         rootMargin,
         triggerOnce,
@@ -74,15 +76,14 @@ export default function useIntersectionObserver({
 
     const entryTarget = entry?.target;
 
-    if (!ref && entryTarget && !triggerOnce && !skip && previousEntryTarget.current !== entryTarget) {
+    if (!ref?.current && entryTarget && !triggerOnce && !skip && previousEntryTarget.current !== entryTarget) {
         previousEntryTarget.current = entryTarget;
         setIsIntersecting(Boolean(isIntersectingInitial));
         setEntry(undefined);
     }
 
-    const tupleReturn: IUseIntersectionObserverTuple = [setRef, isIntersecting, entry];
+    const tupleReturn: IUseIntersectionObserverTuple = [isIntersecting, entry];
     const objectReturn: IUseIntersectionObserverObject = {
-        ref: setRef,
         isIntersecting,
         entry
     };

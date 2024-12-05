@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import type { StoryObj } from '@storybook/react';
 import useIntersectionObserver from '../useIntersectionObserver';
 import './useIntersectionObserver.stories.css';
@@ -23,15 +23,23 @@ function convertEntryToString(entry?: IntersectionObserverEntry) {
 }
 
 const Template = ({ title, options, isExperimental }: ITemplateProps): JSX.Element => {
+    // const targetRef = useRef<HTMLDivElement | null>(null);
+    const [targetRef, setTargetRef] = useState<HTMLDivElement | null>(null);
     const scrollContainerRef = useRef<HTMLDivElement | null>(null);
-    const { ref, isIntersecting, entry } = useIntersectionObserver({
-        root: scrollContainerRef.current,
-        onChange: (isIntersecting, entry) => console.log(isIntersecting, entry),
-        ...options
-    });
+
+    const [visible, setVisible] = useState(true);
+
+    const [isIntersecting, entry] = useIntersectionObserver(
+        { current: targetRef },
+        {
+            root: scrollContainerRef.current,
+            ...options
+        }
+    );
 
     return (
         <div className="wrapper">
+            <button onClick={() => setVisible(p => !p)}>hide</button>
             <div className="status-bar">
                 <h2 className="status-bar-title">{title}</h2>
                 {isExperimental && (
@@ -62,9 +70,15 @@ const Template = ({ title, options, isExperimental }: ITemplateProps): JSX.Eleme
                         {options.rootMargin}
                     </div>
                 )}
-                <div ref={ref} className={`observed-element ${isIntersecting ? 'in-view' : 'out-of-view'}`}>
-                    {isIntersecting ? 'In View' : 'Out of View'}
-                </div>
+                {visible && (
+                    <div
+                        ref={setTargetRef}
+                        className={`observed-element ${isIntersecting ? 'in-view' : 'out-of-view'}`}
+                    >
+                        {isIntersecting ? 'In View' : 'Out of View'}
+                    </div>
+                )}
+
                 {!!options?.rootMargin && (
                     <div className="root-margin-visual" style={{ height: options.rootMargin }}>
                         {options.rootMargin}
