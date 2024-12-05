@@ -1,0 +1,12 @@
+import { Meta, Canvas } from '@storybook/addon-docs';
+import { Markdown } from "@storybook/blocks";
+import Readme from '../../README.md';
+import {ThrottledCallbackStory} from './useThrottledCallback.stories';
+
+<Meta title="hooks/useThrottledCallback"/>
+
+<Markdown>{Readme}</Markdown>
+
+## Example
+
+<Canvas of={ThrottledCallbackStory} />

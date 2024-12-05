@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import useThrottledValue from '../useThrottledValue';
+import useThrottledValue from './useThrottledValue';
 
 const DELAY_THROTTLE = 500;
 

@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import useThrottledCallback, { IThrottledCallbackOptions } from '../useThrottledCallback';
+import useThrottledCallback, { IThrottledCallbackOptions } from './useThrottledCallback';
 
 const DELAY_THROTTLE = 500;
 

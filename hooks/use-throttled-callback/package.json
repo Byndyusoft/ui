@@ -1,5 +1,5 @@
 {
-  "name": "@byndyusoft-ui/use-throttle",
+  "name": "@byndyusoft-ui/use-throttled-callback",
   "version": "0.0.1",
   "description": "Byndyusoft UI React Hook",
   "keywords": [
@@ -8,10 +8,11 @@
     "react",
     "hook",
     "throttle",
-    "use-throttle"
+    "use-throttle",
+    "use-throttled-callback"
   ],
   "author": "Fomin Gleb <gleb.fom28@gmail.com>",
-  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-throttle#readme",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-throttled-callback#readme",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -23,7 +24,7 @@
     "build": "tsc --project tsconfig.build.json",
     "clean": "rimraf dist",
     "lint": "eslint src --config ../../eslint.config.js",
-    "test": "jest --config ../../jest.config.js --roots hooks/use-throttle/src"
+    "test": "jest --config ../../jest.config.js --roots hooks/use-throttled-callback/src"
   },
   "bugs": {
     "url": "https://github.com/Byndyusoft/ui/issues"

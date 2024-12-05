@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import useThrottledCallback from './useThrottledCallback';
+import useThrottledCallback from '@byndyusoft-ui/use-throttled-callback';
 
 const useThrottledValue = <T>(value: T, delay: number): T => {
     const [throttledValue, setThrottledValue] = useState<T>(value);
