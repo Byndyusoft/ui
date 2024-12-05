@@ -11,6 +11,24 @@ npm i @byndyusoft-ui/use-debounced-value
 yarn add @byndyusoft-ui/use-debounced-value
 ```
 
+### Usage
+
+```tsx
+() => {
+    const initalValue = '';
+    const delay = 1000;
+
+    const [debouncedValue, setDebouncedValue] = useDebouncedValue(initalValue, delay);
+    
+    return (
+        <div>
+            <input onChange={e => setDebouncedValue(e.target.value)} />
+            <span>Debounced result: {debouncedValue}</span>
+        </div>
+    );
+}
+```
+
 ### License
 
 Apache-2.0

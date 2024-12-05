@@ -9,7 +9,7 @@ describe('hooks/useDebouncedCallback', () => {
     test('works correctly with one handler call', async () => {
         let value = oldValue;
         const handle = () => (value = newValue);
-        const { result } = renderHook(() => useDebouncedCallback(handle, 2000));
+        const { result } = renderHook(() => useDebouncedCallback(handle, 1000));
         const setDebounceValue = result.current;
 
         act(setDebounceValue);
@@ -20,40 +20,45 @@ describe('hooks/useDebouncedCallback', () => {
             () => {
                 expect(value).toEqual(oldValue);
             },
-            { timeout: 1000 }
+            { timeout: 500 }
         );
 
         await waitFor(
             () => {
                 expect(value).toEqual(newValue);
             },
-            { timeout: 2500 }
+            { timeout: 1500 }
         );
     });
 
     test('works correctly with several handler calls', async () => {
         const handle = jest.fn();
-        const { result } = renderHook(() => useDebouncedCallback(handle, 2000));
+        const { result } = renderHook(() => useDebouncedCallback(handle, 500));
         const setDebounceValue = result.current;
 
-        act(setDebounceValue);
-        act(setDebounceValue);
+        act(() => {
+            setDebounceValue();
+            setDebounceValue();
+        });
 
         await waitFor(
             () => {
                 expect(handle).toBeCalledTimes(1);
             },
-            { timeout: 2500 }
+            { timeout: 1000 }
         );
 
-        act(setDebounceValue);
-        act(setDebounceValue);
+        act(() => {
+            setDebounceValue();
+            setDebounceValue();
+            setDebounceValue();
+        });
 
         await waitFor(
             () => {
                 expect(handle).toBeCalledTimes(2);
             },
-            { timeout: 2500 }
+            { timeout: 1000 }
         );
     });
 });
