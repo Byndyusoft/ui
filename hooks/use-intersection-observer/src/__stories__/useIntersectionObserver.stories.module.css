@@ -11,7 +11,7 @@
     overflow: hidden;
 }
 
-.status-bar {
+.status_bar {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -22,13 +22,13 @@
     padding: 10px;
 }
 
-.status-bar-title {
+.status_bar_title {
     margin: 0;
     font-size: 24px;
     font-weight: bold;
 }
 
-.status-bar-warning {
+.status_bar_warning {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -40,18 +40,18 @@
     font-size: 16px;
 }
 
-.status-bar-in-view {
+.status_bar_in_view {
     margin: 8px;
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
-.status-bar-entry {
+.status_bar_entry {
     margin: 0 10px;
 }
 
-.status-bar-entry pre {
+.status_bar_entry pre {
     background: #f5f5f5;
     border: 1px solid #ccc;
     padding: 10px;
@@ -60,7 +60,7 @@
     overflow-x: auto;
 }
 
-.scroll-container {
+.scroll_container {
     position: relative;
     width: 100%;
     height: calc(100vh - 82px);
@@ -68,8 +68,8 @@
     overflow-x: hidden;
 }
 
-.scroll-down,
-.scroll-up {
+.scroll_down,
+.scroll_up {
     height: 100vh;
     background: lightgray;
     display: flex;
@@ -79,7 +79,7 @@
     border: 1px solid #ccc;
 }
 
-.observed-element {
+.observed_element {
     height: 400px;
     display: flex;
     align-items: center;
@@ -88,20 +88,20 @@
     border: 1px solid #ccc;
 }
 
-.status-label {
+.status_label {
     padding: 1px 8px;
     border-radius: 4px;
 }
 
-.in-view {
+.in_view {
     background: lightgreen;
 }
 
-.out-of-view {
+.out_of_view {
     background: lightcoral;
 }
 
-.root-margin-visual {
+.root_margin_visual {
     box-sizing: border-box;
     display: flex;
     align-items: center;

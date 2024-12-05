@@ -11,25 +11,53 @@ npm i @byndyusoft-ui/use-intersection-observer
 ### Usage `useIntersectionObserver` hook
 ```js
 // Use object destructuring, so you don't need to remember the exact order
-const { ref, isIntersecting, entry } = useIntersectionObserver(options);
+const { isIntersecting, entry } = useIntersectionObserver(ref, options);
 
 // Or array destructuring, making it easy to customize the field names
-const [ref, isIntersecting, entry] = useIntersectionObserver(options);
+const [isIntersecting, entry] = useIntersectionObserver(ref, options);
 ```
 
 #### Default
+
 ```jsx
-import React from "react";
-import { useIntersectionObserver } from "@byndyusoft-ui/use-intersection-observer";
+import React, { useRef } from "react";
+import {useIntersectionObserver} from "@byndyusoft-ui/use-intersection-observer";
 
 const Component = () => {
-  const { ref, isIntersecting, entry } = useIntersectionObserver();
+  const ref = useRef<HTMLDivElement | null>(null);
+  const { isIntersecting, entry } = useIntersectionObserver(ref);
 
   return (
     <div class="scroll-container">
       <div ref={ref}>
         {`isIntersecting: ${isIntersecting}`}
       </div>
+    </div>
+  );
+};
+```
+
+### Usage of `useIntersectionObserver` for Unmounted or Lazy-Loaded Components
+
+import React, { useState } from "react";
+```jsx
+import React, { useState } from "react";
+import { useIntersectionObserver } from "@byndyusoft-ui/use-intersection-observer";
+
+const Component = () => {
+  const [ref, setRef] = useState<HTMLDivElement | null>(null);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  
+  const { isIntersecting, entry } = useIntersectionObserver({ current: ref });
+
+  return (
+    <div class="scroll-container">
+      <button onClick={() => setIsVisible(p => !p)}>Toggle visible</button>
+      {isVisible && (
+          <div ref={setRef}>
+            {`isIntersecting: ${isIntersecting}`}
+          </div>
+      )}
     </div>
   );
 };
@@ -42,9 +70,10 @@ import React from "react";
 import { useIntersectionObserver } from "@byndyusoft-ui/use-intersection-observer";
 
 const Component = () => {
+  const tergetRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const { ref, isIntersecting, entry } = useIntersectionObserver({
+  const { isIntersecting, entry } = useIntersectionObserver(tergetRef, {
     root: scrollContainerRef.current,
     rootMargin: "10px",
     threshold: 0.5,
@@ -59,7 +88,7 @@ const Component = () => {
 
   return (
     <div ref={containerRef} class="scroll-container">
-      <div ref={ref}>
+      <div ref={tergetRef}>
         {`isIntersecting: ${isIntersecting}`}
       </div>
     </div>
