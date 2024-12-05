@@ -1,41 +1,51 @@
 # `@byndyusoft-ui/use-throttle`
 ---
-> A React hook that throttles the execution of a function to ensure it is called at most once every specified delay.
+> A React hook that throttles value updates to a specified delay.
 
 ### Installation
 
 ```
-npm i @byndyusoft-ui/use-throttle
+npm i @byndyusoft-ui/use-throttled-value
 ```
 ### Usage
 
-
 #### useThrottledValue
 ```jsx
-import { useMemo, useState } from "react";
-import { useThrottledValue } from '@byndyusoft-ui/use-throttle'
+import React, { useState, useMemo } from "react";
+import { useThrottledValue } from '@byndyusoft-ui/use-throttled-value';
 
-const performHeavyCalculation = (value) => {
-  console.log("Heavy calculation for value:", value);
-  return value;
-};
+const initValue = 0;
 
 export default function App() {
-  const [value, setValue] = useState(0);
-  const throttledValue = useThrottledValue(value, 5000);
+  const [throttledValue, setThrottledValue] = useThrottledValue(initValue, 1500);
 
-  const memoizedValue = useMemo(() => {
-    return performHeavyCalculation(throttledValue);
-  }, [throttledValue]);
-
+  const performHeavyCalculation = () => {
+    setThrottledValue(Math.floor(Math.random() * 10000));
+  };
+  
   return (
     <div>
-      <button onClick={() => setValue(value + 1)}>Increment value</button>
-      <p>Calculates a new value every fifth second.</p>
-      <p>Value: {value}</p>
-      <p>Last caculated result: {memoizedValue}</p>
+      <button onClick={performHeavyCalculation}>Calculate</button>
+      <p>Throttled value: {throttledValue}</p>
     </div>
   );
 }
 ```
 
+### Options for useThrottledValue
+
+The `useThrottledValue` hook accepts an optional third parameter, which is an options object. The options object can have the following properties:
+
+- `leading`: Specifies whether the function should be called on the leading edge of the timeout. Default is `true`.
+- `trailing`: Specifies whether the function should be called on the trailing edge of the timeout. Default is `true`.
+
+```jsx
+const [throttledValue, setThrottledValue] = useThrottledValue(0, 1500, { leading: false });
+
+const [throttledValue, setThrottledValue] = useThrottledValue(0, 1500, { trailing: false });
+
+// Callback will not be called!
+const [throttledValue, setThrottledValue] = useThrottledValue(0, 1500, { leading: false, trailing: false });
+```
+
+>If both `leading` and `trailing` are set to `false`, the function will not be called at all. This configuration effectively disables the throttling mechanism, as the function will never be executed.

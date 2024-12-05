@@ -12,7 +12,7 @@ const useThrottledCallback = <T>(
     delay: number,
     { leading = true, trailing = true }: IThrottledCallbackOptions = {}
 ): TThrottledCallback<T> => {
-    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const argsRef = useRef<T[] | null>(null);
 
     const cleanup = useCallback((): void => {

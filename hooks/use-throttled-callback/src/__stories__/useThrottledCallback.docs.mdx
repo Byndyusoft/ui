@@ -1,4 +1,4 @@
-import { Meta, Canvas } from '@storybook/addon-docs';
+import { Meta, Canvas, Source } from '@storybook/addon-docs';
 import { Markdown } from "@storybook/blocks";
 import Readme from '../../README.md';
 import {ThrottledCallbackStory} from './useThrottledCallback.stories';
@@ -7,6 +7,14 @@ import {ThrottledCallbackStory} from './useThrottledCallback.stories';
 
 <Markdown>{Readme}</Markdown>
 
-## Example
+
+## Usage
+
+To use the hook in your project you must:
+
+1. Import the hook where you need it:
+
+<Source language="javascript" code="import useThrottledCallback from '@byndyusoft-ui/use-throttled-callback';" />
+
 
 <Canvas of={ThrottledCallbackStory} />

@@ -7,6 +7,7 @@
 ```
 npm i @byndyusoft-ui/use-throttled-callback
 ```
+
 ### Usage
 
 #### useThrottledCallback
@@ -34,9 +35,10 @@ export default App;
 ```
 
 ### Options  `useThrottledCallback`
+
 The useThrottledCallback accept an optional third parameter, which is an options object. The options object can have the following properties:
-- `leading`: A boolean that specifies whether the function should be called on the leading edge of the timeout. Default is `true`.
-- `trailing`: A boolean that specifies whether the function should be called on the trailing edge of the timeout. Default is `true`.
+- `leading`: Specifies whether the function should be called on the leading edge of the timeout. Default is `true`.
+- `trailing`: Specifies whether the function should be called on the trailing edge of the timeout. Default is `true`.
 
 ```jsx
 const throttleCallback = useThrottledCallback(() => {}, 1500, { leading: false });
