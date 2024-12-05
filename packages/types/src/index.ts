@@ -3,6 +3,7 @@ export * from './Callback';
 export * from './Comparator';
 export * from './EmptyObject';
 export * from './InitialState';
+export * from './IntervalId';
 export * from './Nullable';
 export * from './PlainObject';
 export * from './Predicate';
