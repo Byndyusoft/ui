@@ -2,14 +2,16 @@
 to: "<%= hasStories ? `hooks/${h.changeCase.paramCase(name)}/src/${name}.stories.tsx` : null %>"
 ---
 import React from 'react';
-import { Story } from '@storybook/react';
+import { StoryObj } from '@storybook/react';
 import <%= name %> from './<%= name %>';
 
-const Template: Story = args => <>Hook story</>;
+const Template = (...args): JSX.Element => <HookStory {...args} />;
 
-export const HookStory = Template.bind({});
-
-HookStory.args = {};
+export const <%= name %>Story: StoryObj<\typeof Template> = {
+    name: 'Story name',
+    render: Template,
+    args: {}
+};
 
 export default {
     title: 'hooks/<%= name %>',

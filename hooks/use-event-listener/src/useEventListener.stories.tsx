@@ -1,23 +1,26 @@
 import React, { useCallback, useRef, useState } from 'react';
 import useEventListener from './useEventListener';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { StoryObj } from '@storybook/react';
 
 type TMouseEventTemplateStory = StoryObj<typeof MouseEventTemplate>;
 
 const MouseEventTemplate = (): JSX.Element => {
     const [coords, setCoords] = useState({ x: 0, y: 0 });
+    const ref = useRef(null);
 
     const handler = useCallback((event: MouseEvent) => setCoords({ x: event.clientX, y: event.clientY }), [setCoords]);
 
-    useEventListener('mousemove', handler);
+    useEventListener('mousemove', handler, ref);
 
     return (
-        <div>
+        <div ref={ref}>
             Mouse coordinates: {coords.x}, {coords.y}
         </div>
     );
 };
-export const MouseEvent: TMouseEventTemplateStory = {
+
+export const MouseEventStory: TMouseEventTemplateStory = {
+    name: 'Mouse event',
     decorators: [() => <MouseEventTemplate />]
 };
 
@@ -33,7 +36,8 @@ const KeyboardEventTemplate = (): JSX.Element => {
     return <div>Last key pressed: {key}</div>;
 };
 
-export const KeyboardEvent: TKeyboardEventTemplateStory = {
+export const KeyboardEventStory: TKeyboardEventTemplateStory = {
+    name: 'Keyboard event',
     decorators: [() => <KeyboardEventTemplate />]
 };
 
@@ -44,7 +48,7 @@ const HTMLElementTemplate = (): JSX.Element => {
 
     const handler = useCallback(() => alert('Button clicked!'), []);
 
-    useEventListener('click', handler);
+    useEventListener('click', handler, ref);
 
     return (
         <button type="button" ref={ref}>
@@ -53,11 +57,11 @@ const HTMLElementTemplate = (): JSX.Element => {
     );
 };
 
-export const HTMLElement: THTMLElementTemplateStory = {
+export const HTMLElementStory: THTMLElementTemplateStory = {
+    name: 'HTML element',
     decorators: [() => <HTMLElementTemplate />]
 };
 
-const meta: Meta = {
+export default {
     title: 'hooks/useEventListener'
 };
-export default meta;

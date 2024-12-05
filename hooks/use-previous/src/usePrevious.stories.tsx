@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import usePrevious from './usePrevious';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { StoryObj } from '@storybook/react';
 import './usePrevious.stories.css';
 
 type TStory = StoryObj<typeof Template>;
@@ -23,12 +23,10 @@ const Template = (): JSX.Element => {
 };
 
 export const HookStory: TStory = {
-    decorators: [(): JSX.Element => <Template />]
+    name: 'Hook story',
+    render: Template
 };
 
-const meta: Meta<typeof Template> = {
+export default {
     title: 'hooks/usePrevious'
-    // component: Template
 };
-
-export default meta;
