@@ -176,7 +176,7 @@ src
         "module": "commonjs",
         "target": "es6"
     },
-    "include": ["src"]
+    "include": ["src", "src/*.stories.tsx"]
 }
 ```
 

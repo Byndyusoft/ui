@@ -1,16 +1,16 @@
-.use-debounced-value__container {
+.container {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 }
 
-.use-debounced-value__block {
+.block {
     display: flex;
     align-items: center;
     gap: 1rem;
 }
 
-.use-debounced-value__button {
+.button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,16 +18,16 @@
     width: 2rem;
 }
 
-.use-debounced-value__title {
+.title {
    width: 8rem;
 }
 
-.use-debounced-value__input {
+.input {
     max-height: 3.5rem;
     width: 12rem;
 }
 
-.use-debounced-value__divider {
+.divider {
     width: 100%;
     height: 1px;
     margin: 0.5rem 0;

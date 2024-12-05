@@ -10,12 +10,5 @@ to: hooks/<%= h.changeCase.paramCase(name) %>/tsconfig.json
     "module": "commonjs",
     "target": "es6"
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules",
-    "src/**/*.tests.tsx",
-    "src/**/*.stories.tsx"
-  ]
+  "include": ["src", "src/*.stories.tsx"]
 }

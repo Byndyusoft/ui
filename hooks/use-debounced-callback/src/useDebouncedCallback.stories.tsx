@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import type { StoryObj } from '@storybook/react';
 import useDebouncedCallback from './useDebouncedCallback';
-import './useDebouncedCallback.stories.css';
+import styles from './useDebouncedCallback.stories.module.css';
 
 const COLORS = ['red', 'green', 'yellow'];
 
@@ -11,31 +11,31 @@ const DebouncedColorChange = () => {
     const setDebouncedSecondColorIndex = useDebouncedCallback(setSecondColorIndex, 1000);
 
     return (
-        <div className="use-debounced-callback__container">
-            <div className="use-debounced-callback__block">
+        <div className={styles.container}>
+            <div className={styles.block}>
                 <button
-                    className="use-debounced-callback__button"
+                    className={styles.button}
                     type="button"
                     onClick={() => setFirstColorIndex((firstColorIndex + 1) % 3)}
                 >
                     Click for color change
                 </button>
                 <div
-                    className="use-debounced-callback__rectangle"
+                    className={styles.rectangle}
                     style={{ backgroundColor: COLORS[firstColorIndex] }}
                 />
             </div>
 
-            <div className="use-debounced-callback__block">
+            <div className={styles.block}>
                 <button
-                    className="use-debounced-callback__button"
+                    className={styles.button}
                     type="button"
                     onClick={() => setDebouncedSecondColorIndex((secondColorIndex + 1) % 3)}
                 >
                     Click for debounced color change (delay: 1000 ms)
                 </button>
                 <div
-                    className="use-debounced-callback__rectangle"
+                    className={styles.rectangle}
                     style={{ backgroundColor: COLORS[secondColorIndex] }}
                 />
             </div>
