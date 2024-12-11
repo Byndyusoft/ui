@@ -1,6 +1,6 @@
 # `@byndyusoft-ui/use-timeout`
----
-> A React hook that ...
+
+> A custom hook that executes a function after a specified number of milliseconds.
 
 ### Installation
 
