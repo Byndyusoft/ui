@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import type { StoryObj } from '@storybook/react';
 import useIntersectionObserver from '../useIntersectionObserver';
-import cls from './useIntersectionObserver.stories.module.css';
+import styles from './useIntersectionObserver.stories.module.css';
 
 type ITemplateProps = {
     title: string;
@@ -23,26 +23,23 @@ function convertEntryToString(entry?: IntersectionObserverEntry) {
 }
 
 const Template = ({ title, options, isExperimental }: ITemplateProps): JSX.Element => {
-    const [targetRef, setTargetRef] = useState<HTMLDivElement | null>(null);
+    const targetRef = useRef<HTMLDivElement | null>(null);
     const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
-    const [isIntersecting, entry] = useIntersectionObserver(
-        { current: targetRef },
-        {
-            root: scrollContainerRef.current,
-            ...options
-        }
-    );
+    const [isIntersecting, entry] = useIntersectionObserver(targetRef, {
+        root: scrollContainerRef.current,
+        ...options
+    });
 
     return (
-        <div className={cls.wrapper}>
-            <div className={cls.status_bar}>
-                <h2 className={cls.status_bar_title}>{title}</h2>
+        <div className={styles.wrapper}>
+            <div className={styles.status_bar}>
+                <h2 className={styles.status_bar_title}>{title}</h2>
                 {isExperimental && (
-                    <div className={cls.status_bar_warning}>
-                        <p className={cls.warning}>Warning: The {title} feature may not work in all browsers.</p>
+                    <div className={styles.status_bar_warning}>
+                        <p className={styles.warning}>Warning: The {title} feature may not work in all browsers.</p>
                         <a
-                            className={cls.warning}
+                            className={styles.warning}
                             href="https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver"
                             target="_blank"
                         >
@@ -50,35 +47,35 @@ const Template = ({ title, options, isExperimental }: ITemplateProps): JSX.Eleme
                         </a>
                     </div>
                 )}
-                <div className={cls.status_bar_in_view}>
+                <div className={styles.status_bar_in_view}>
                     <span>isIntersecting:</span>
-                    <span className={`${cls.status_label} ${isIntersecting ? cls.in_view : cls.out_of_view}`}>
+                    <span className={`${styles.status_label} ${isIntersecting ? styles.in_view : styles.out_of_view}`}>
                         {String(isIntersecting)}
                     </span>
                     <span>Entry:</span>
                     <button onClick={() => alert(convertEntryToString(entry))}>Show entry</button>
                 </div>
             </div>
-            <div ref={scrollContainerRef} className={cls.scroll_container}>
-                <div className={cls.scroll_down}>Scroll down</div>
+            <div ref={scrollContainerRef} className={styles.scroll_container}>
+                <div className={styles.scroll_down}>Scroll down</div>
                 {!!options?.rootMargin && (
-                    <div className={cls.root_margin_visual} style={{ height: options.rootMargin }}>
+                    <div className={styles.root_margin_visual} style={{ height: options.rootMargin }}>
                         {options.rootMargin}
                     </div>
                 )}
                 <div
-                    ref={setTargetRef}
-                    className={`${cls.observed_element} ${isIntersecting ? cls.in_view : cls.out_of_view}`}
+                    ref={targetRef}
+                    className={`${styles.observed_element} ${isIntersecting ? styles.in_view : styles.out_of_view}`}
                 >
                     {isIntersecting ? 'In View' : 'Out of View'}
                 </div>
 
                 {!!options?.rootMargin && (
-                    <div className={cls.root_margin_visual} style={{ height: options.rootMargin }}>
+                    <div className={styles.root_margin_visual} style={{ height: options.rootMargin }}>
                         {options.rootMargin}
                     </div>
                 )}
-                <div className={cls.scroll_up}>Scroll up</div>
+                <div className={styles.scroll_up}>Scroll up</div>
             </div>
         </div>
     );
