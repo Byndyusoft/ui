@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { StoryObj } from '@storybook/react';
 import useThrottledValue from '../useThrottledValue';
-import cls from './useThrottledValue.stories.module.css';
+import styles from './useThrottledValue.stories.module.css';
 
 const DELAY_THROTTLE = 1500;
 
@@ -39,7 +39,7 @@ function TemplateUseThrottledValueStory(): JSX.Element {
         <div>
             <div>
                 <h3>1. Throttle value input</h3>
-                <div className={cls.row}>
+                <div className={styles.row}>
                     <button onClick={() => setLeading(p => !p)}>Toggle Leading</button>
                     <button onClick={() => setTrailing(p => !p)}>Toggle Trailing</button>
                 </div>
@@ -48,19 +48,19 @@ function TemplateUseThrottledValueStory(): JSX.Element {
                 <p>Input Value: {inputValue}</p>
                 <p>Throttled Value: {inputThrottledValue}</p>
             </div>
-            <hr className={cls.hr} />
+            <hr className={styles.hr} />
             <div>
                 <h3>2. Throttle value mouse position</h3>
-                <div className={cls.row}>
+                <div className={styles.row}>
                     <strong>Mouse Position: </strong>
-                    <div className={cls.row}>
+                    <div className={styles.row}>
                         <p>X: {mousePosition.x}</p>
                         <p>Y: {mousePosition.y}</p>
                     </div>
                 </div>
-                <div className={cls.row}>
+                <div className={styles.row}>
                     <strong>Throttled Mouse Position: </strong>
-                    <div className={cls.row}>
+                    <div className={styles.row}>
                         <p>X: {mousePositionThrottled.x}</p>
                         <p>Y: {mousePositionThrottled.y}</p>
                     </div>
