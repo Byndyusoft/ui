@@ -210,3 +210,29 @@ const fruitsDictionary = {
 const TFruitsDictionaryValues = ValueOf<typeof fruitsDictionary>;
 // TFruitsDictionaryValues = 'Яблоко' | 'Апельсин'
 ```
+
+### TimeoutId
+
+```typescript
+import { TimeoutId } from '@byndyusoft-ui/types';
+
+const timeoutIdRef = useRef<TimeoutId | null>(null);
+
+timeoutIdRef.current = setTimeout(() => {}, 1000);
+
+clearTimeout(timeoutIdRef.current);
+timeoutIdRef.current = null;
+```
+
+### IntervalId
+
+```typescript
+import { IntervalId } from '@byndyusoft-ui/types';
+
+const intervalIdRef = useRef<IntervalId | null>(null);
+
+intervalIdRef.current = setInterval(() => {}, 1000);
+
+clearInterval(intervalIdRef.current);
+intervalIdRef.current = null;
+```

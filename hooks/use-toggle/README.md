@@ -1,6 +1,6 @@
 # `@byndyusoft-ui/use-toggle`
----
-> A React hook that ...
+
+> A custom hook used to manage two values using `toLeftValue`, `toRightValue` and `toggle` functions.
 
 ### Installation
 

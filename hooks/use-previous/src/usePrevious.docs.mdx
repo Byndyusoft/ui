@@ -1,0 +1,19 @@
+import { Markdown, Meta, Canvas, Source } from '@storybook/blocks';
+import Readme from '../README.md';
+import * as usePreviousStories from './usePrevious.stories';
+
+<Meta title="hooks/usePrevious" of={usePreviousStories} />
+
+<Markdown>{Readme}</Markdown>
+
+## Usage
+
+To use the hook in your project you must:
+
+1. Import the hook where you need it:
+
+<Source language="javascript" code="import usePrevious from '@byndyusoft-ui/use-previous';" />
+
+2. Call the hook and give it the desired args.
+
+<Canvas sourceState="shown" of={usePreviousStories.HookStory} />

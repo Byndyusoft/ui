@@ -1,0 +1,46 @@
+import { Meta, Markdown, Canvas, Source, ArgsTable } from '@storybook/blocks';
+import Readme from '../../README.md';
+import FormattedNumber from '../FormattedNumber';
+import * as FormattedNumberStories from './FormattedNumber.stories';
+
+<Meta title="components/FormattedNumber" of={FormattedNumberStories} />
+
+<Markdown>{Readme}</Markdown>
+
+## Usage
+
+To use the component in your project you must:
+
+1. Import the component where you need it:
+
+<Source language="javascript" code="import FormattedNumber from '@byndyusoft-ui/formatted-number';" />
+
+2. Call the component and give it the desired props, for example:
+
+-   Simple number
+
+<Canvas sourceState="shown" of={FormattedNumberStories.SimpleNumberViewStory} />
+
+-   With custom default formatter options
+
+<Canvas sourceState="shown" of={FormattedNumberStories.CustomDefaultFormatterOptionsViewStory} />
+
+-   With same fractional part
+
+<Canvas sourceState="shown" of={FormattedNumberStories.WithSameFractionalPartViewStory} />
+
+-   With custom formatter function
+
+<Canvas sourceState="shown" of={FormattedNumberStories.WithCustomFormatterViewStory} />
+
+-   With custom number parts parser function
+
+<Canvas sourceState="shown" of={FormattedNumberStories.WithCustomNumberPartsParserViewStory} />
+
+-   With custom classNames
+
+<Canvas sourceState="shown" of={FormattedNumberStories.WithCustomClassNamesViewStory} />
+
+## Props
+
+<ArgsTable of={FormattedNumber} />

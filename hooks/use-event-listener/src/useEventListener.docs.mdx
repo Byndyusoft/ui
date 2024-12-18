@@ -1,0 +1,29 @@
+import { Markdown, Meta, Canvas, Source } from "@storybook/blocks";
+import Readme from '../README.md';
+import * as useEventListenerStories from './useEventListener.stories';
+
+<Meta title="hooks/useEventListener" of={useEventListenerStories} />
+
+<Markdown>{Readme}</Markdown>
+
+## Usage
+
+To use the hook in your project you must:
+
+1. Import the hook where you need it:
+
+<Source language="javascript" code="import useEventListener from '@byndyusoft-ui/use-event-listener';" />
+
+2. Call the hook and give it the desired args.
+
+- mouse event
+
+<Canvas sourceState="shown" of={useEventListenerStories.MouseEventStory} />
+
+- keyboard event
+
+<Canvas sourceState="shown" of={useEventListenerStories.KeyboardEventStory} />
+
+- element event
+
+<Canvas sourceState="shown" of={useEventListenerStories.HTMLElementStory} />
