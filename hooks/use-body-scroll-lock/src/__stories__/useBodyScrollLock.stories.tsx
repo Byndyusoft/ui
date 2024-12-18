@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StoryObj } from '@storybook/react';
-import useBodyScrollLock from './useBodyScrollLock';
+import useBodyScrollLock from '../useBodyScrollLock';
 import './useBodyScrollLock.stories.css';
 
 const Template = (): JSX.Element => {
@@ -25,10 +25,9 @@ const Template = (): JSX.Element => {
     );
 };
 
-type TStory = StoryObj<typeof Template>;
-
-export const HookStory: TStory = {
-    decorators: [(): JSX.Element => <Template />]
+export const GeneralUseBodyScrollLockStory: StoryObj<typeof Template> = {
+    name: 'General useBodyScrollLock story',
+    render: Template
 };
 
 export default {
