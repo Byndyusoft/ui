@@ -10,12 +10,12 @@ const Overlay = forwardRef<HTMLDivElement, IOverlayProps>(
             children,
             className,
             classNames = getDefaultOverlayClassNames(),
-            isVisible,
+            isVisible = false,
             color,
-            blur,
+            blur = 0,
             backgroundOpacity = 0.6,
-            zIndex,
-            center,
+            zIndex = 100,
+            center = false,
             ...props
         },
         ref
@@ -31,7 +31,7 @@ const Overlay = forwardRef<HTMLDivElement, IOverlayProps>(
                     className
                 )}
                 style={{
-                    zIndex: zIndex ? zIndex : 100,
+                    zIndex: zIndex,
                     backgroundColor: color ? hexToRgba(color, backgroundOpacity) : '',
                     backdropFilter: blur ? `blur(${blur}px)` : ''
                 }}

@@ -6,7 +6,12 @@
   height: 200px;
 }
 
+.container {
+  height: 500px;
+}
+
 .content {
     height: 200vh;
     padding: 20px;
+    position: relative;
 }
