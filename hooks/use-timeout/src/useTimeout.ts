@@ -11,12 +11,6 @@ export default function useTimeout(callback: Callback, delay: number): IUseTimeo
     const savedCallback = useLatestRef(callback);
     const timer = useRef<TimeoutId>();
 
-    useEffect(() => {
-        return () => {
-            stop();
-        };
-    }, []);
-
     const stop = (): void => {
         if (timer.current) {
             clearTimeout(timer.current);
@@ -29,6 +23,8 @@ export default function useTimeout(callback: Callback, delay: number): IUseTimeo
             savedCallback.current();
         }, delay);
     };
+
+    useEffect(() => stop, []);
 
     return {
         start,
