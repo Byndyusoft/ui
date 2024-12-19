@@ -8,7 +8,7 @@ export const Template: StoryFn = args => {
 
     return (
         <div style={{ maxWidth: 400, margin: 'auto' }}>
-            <h3>Пример использования useRequestTimeout</h3>
+            <h3>Пример использования useTimeout</h3>
             <p>{message}</p>
             <button
                 onClick={() => {
