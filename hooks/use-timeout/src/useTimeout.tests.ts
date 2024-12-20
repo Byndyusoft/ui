@@ -55,4 +55,20 @@ describe('hooks/useTimeout', () => {
         expect(callback).toHaveBeenCalledTimes(0);
         expect(clearTimeout).toHaveBeenCalledTimes(1);
     });
+
+    test('uses the latest callback when state changes', () => {
+        const callback = jest.fn();
+
+        const { result, rerender } = renderHook(({ count }) => useTimeout(() => callback(count), 100), {
+            initialProps: { count: 0 }
+        });
+
+        result.current.start();
+
+        rerender({ count: 1 });
+
+        jest.advanceTimersByTime(100);
+
+        expect(callback).toHaveBeenCalledWith(1);
+    });
 });
