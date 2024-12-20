@@ -3,29 +3,20 @@ import { StoryFn } from '@storybook/react';
 import useTimeout from './useTimeout';
 
 export const Template: StoryFn = args => {
-    const [message, setMessage] = useState('Нажмите "Start" для запуска таймера');
-    const { start, stop } = useTimeout(args.callback ?? (() => setMessage('Таймаут завершён!')), args.delay ?? 3000);
+    const [count, setCount] = useState(0);
+    const [message, setMessage] = useState('');
+
+    const { start } = useTimeout(() => {
+        setMessage(`The timer is completed with a value of ${count}`);
+    }, args.delay);
 
     return (
-        <div style={{ maxWidth: 400, margin: 'auto' }}>
-            <h3>Пример использования useTimeout</h3>
-            <p>{message}</p>
-            <button
-                onClick={() => {
-                    setMessage('Таймер запущен');
-                    start();
-                }}
-            >
-                Start
-            </button>
-            <button
-                onClick={() => {
-                    setMessage('Таймер остановлен');
-                    stop();
-                }}
-            >
-                Stop
-            </button>
+        <div>
+            <h1>Пример использования useTimeout</h1>
+            <h2>Count: {count}</h2>
+            <button onClick={() => setCount(prev => prev + 1)}>Increment</button>
+            <button onClick={start}>Start Timer</button>
+            <h3>{message}</h3>
         </div>
     );
 };
@@ -44,11 +35,11 @@ export default {
         delay: {
             description: 'The delay in milliseconds before invoking the callback (required).',
             table: {
-                type: { summary: 'number', value: 200 }
+                type: { summary: 'number' }
             },
-            control: { type: 'number' },
+            control: { type: 'number', value: 2000 },
             required: true,
-            defaultValue: 200
+            defaultValue: 2000
         }
     }
 };
