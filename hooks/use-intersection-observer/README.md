@@ -39,7 +39,6 @@ const Component = () => {
 
 ### Usage of `useIntersectionObserver` for Unmounted or Lazy-Loaded Components
 
-import React, { useState } from "react";
 ```jsx
 import React, { useState } from "react";
 import { useIntersectionObserver } from "@byndyusoft-ui/use-intersection-observer";
