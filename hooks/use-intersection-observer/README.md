@@ -39,6 +39,8 @@ const Component = () => {
 
 ### Usage of `useIntersectionObserver` for Unmounted or Lazy-Loaded Components
 
+
+
 ```jsx
 import React, { useState } from "react";
 import { useIntersectionObserver } from "@byndyusoft-ui/use-intersection-observer";
@@ -61,6 +63,11 @@ const Component = () => {
   );
 };
 ```
+
+> The example below demonstrates a non-standard approach to using `useIntersectionObserver` with components that can be
+> unmounted or lazy-loaded. This method involves using `useState` to manage the reference to the target element, 
+> which ensures that the intersection observer works correctly even when the target element is dynamically mounted or unmounted.
+
 
 ### Usage `useIntersectionObserver` with options
 
