@@ -7,6 +7,9 @@ type ITemplateProps = {
     title: string;
     options: any;
     isExperimental?: boolean;
+    isDynamic?: boolean;
+    isSplitScreen?: boolean;
+    isToggleVisible?: boolean;
 };
 
 function convertEntryToString(entry?: IntersectionObserverEntry) {
@@ -22,14 +25,57 @@ function convertEntryToString(entry?: IntersectionObserverEntry) {
     `;
 }
 
-const Template = ({ title, options, isExperimental }: ITemplateProps): JSX.Element => {
+const Template = ({
+    title,
+    options,
+    isExperimental,
+    isDynamic,
+    isSplitScreen,
+    isToggleVisible
+}: ITemplateProps): JSX.Element => {
+    const [isVisibleTarget, setIsVisibleTarget] = useState(true);
+    const [targetRefState, setTargetRefState] = useState<HTMLDivElement | null>(null);
+
     const targetRef = useRef<HTMLDivElement | null>(null);
     const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
-    const [isIntersecting, entry] = useIntersectionObserver(targetRef, {
+    const ref = isDynamic ? { current: targetRefState } : targetRef;
+
+    const [isIntersecting, entry] = useIntersectionObserver(ref, {
         root: scrollContainerRef.current,
         ...options
     });
+
+    // if (isSplitScreen) {
+    //     return (
+    //         <div className={styles.column}>
+    //             <h1>Dynamic</h1>
+    //             <p>
+    //                 When a target can be mounted or unmounted, using useRef may cause isIntersecting to behave
+    //                 incorrectly. For such cases, consider using useState to manage the target reference. This approach
+    //                 ensures that the intersection observer works correctly even when the target element is dynamically
+    //                 mounted or unmounted.
+    //             </p>
+    //             {/*<div className={styles.row}>*/}
+    //             {/*    <div className={styles.column}>*/}
+    //             {/*        <code>{'const targetRef = useRef(null);'}</code>*/}
+    //             {/*        <code>{'const {isIntersecting} = useIntersectionObserver(targetRef);'}</code>*/}
+    //             {/*        <code>{'<div ref={targetRef}>Target</div>'}</code>*/}
+    //             {/*    </div>*/}
+    //             {/*    <div className={styles.column}>*/}
+    //             {/*        <code>{`const [targetRefState, setTargetRefState] = useState(null);`}</code>*/}
+    //             {/*        <code>{'const {isIntersecting} = useIntersectionObserver({ current: targetRefState });'}</code>*/}
+    //             {/*        <code>{`<div ref={setTargetRefState}>Target</div>`}</code>*/}
+    //             {/*    </div>*/}
+    //             {/*</div>*/}
+    //
+    //             <div className={styles.row}>
+    //                 <Template title="Usege useRef" isToggleVisible options={{}} />
+    //                 <Template title="Usege useState" isDynamic isToggleVisible options={{}} />
+    //             </div>
+    //         </div>
+    //     );
+    // }
 
     return (
         <div className={styles.wrapper}>
@@ -55,6 +101,20 @@ const Template = ({ title, options, isExperimental }: ITemplateProps): JSX.Eleme
                     <span>Entry:</span>
                     <button onClick={() => alert(convertEntryToString(entry))}>Show entry</button>
                 </div>
+
+                {isToggleVisible && (
+                    <div className={styles.status_bar_in_view}>
+                        <span>isVisibleTarget:</span>
+                        <span
+                            className={`${styles.status_label} ${
+                                isVisibleTarget ? styles.in_view : styles.out_of_view
+                            }`}
+                        >
+                            {String(isVisibleTarget)}
+                        </span>
+                        <button onClick={() => setIsVisibleTarget(p => !p)}>Toggle visible</button>
+                    </div>
+                )}
             </div>
             <div ref={scrollContainerRef} className={styles.scroll_container}>
                 <div className={styles.scroll_down}>Scroll down</div>
@@ -63,12 +123,25 @@ const Template = ({ title, options, isExperimental }: ITemplateProps): JSX.Eleme
                         {options.rootMargin}
                     </div>
                 )}
+
+                {/*{isVisibleTarget &&*/}
+                {/*    (isDynamic ? (*/}
+                {/*        <div*/}
+                {/*            ref={setTargetRefState}*/}
+                {/*            className={`${styles.observed_element} ${*/}
+                {/*                isIntersecting ? styles.in_view : styles.out_of_view*/}
+                {/*            }`}*/}
+                {/*        >*/}
+                {/*            {isIntersecting ? 'In View' : 'Out of View'}*/}
+                {/*        </div>*/}
+                {/*    ) : (*/}
                 <div
                     ref={targetRef}
                     className={`${styles.observed_element} ${isIntersecting ? styles.in_view : styles.out_of_view}`}
                 >
                     {isIntersecting ? 'In View' : 'Out of View'}
                 </div>
+                {/*))}*/}
 
                 {!!options?.rootMargin && (
                     <div className={styles.root_margin_visual} style={{ height: options.rootMargin }}>
@@ -145,6 +218,13 @@ export const Delay: StoryObj<typeof Template> = {
         },
         title: 'Delay',
         isExperimental: true
+    }
+};
+
+export const Dynamic: StoryObj<typeof Template> = {
+    args: {
+        title: 'Dynamic',
+        isSplitScreen: true
     }
 };
 
