@@ -1,7 +1,8 @@
+import { Callback } from '@byndyusoft-ui/types';
 import { Renderer, renderHook, RenderHookResult } from '@testing-library/react-hooks';
-import useTimeout, { TCallback } from './useTimeout';
+import useTimeout, { IUseTimeout } from './useTimeout';
 
-const setup = (callback: TCallback, delay: number | null): RenderHookResult<void, TCallback, Renderer<void>> =>
+const setup = (callback: Callback, delay: number): RenderHookResult<void, IUseTimeout, Renderer<void>> =>
     renderHook(() => useTimeout(callback, delay));
 
 describe('hooks/useTimeout', () => {
@@ -13,7 +14,9 @@ describe('hooks/useTimeout', () => {
     test('calls callback', () => {
         const callback = jest.fn();
 
-        setup(callback, 100);
+        const { result } = setup(callback, 100);
+
+        result.current.start();
 
         expect(callback).not.toBeCalled();
 
@@ -22,10 +25,10 @@ describe('hooks/useTimeout', () => {
         expect(callback).toHaveBeenCalledTimes(1);
     });
 
-    test('does not call callback if delay is null', () => {
+    test('should not call the callback if start is not called', () => {
         const callback = jest.fn();
 
-        setup(callback, null);
+        setup(callback, 100);
 
         expect(callback).not.toBeCalled();
 
@@ -34,19 +37,38 @@ describe('hooks/useTimeout', () => {
         expect(callback).not.toBeCalled();
     });
 
-    test('clears timeout', () => {
+    test('should clear the timer and not call the callback when stop is called after start', () => {
         const callback = jest.fn();
 
         const { result } = setup(callback, 100);
+
+        result.current.start();
+
         expect(clearTimeout).toHaveBeenCalledTimes(0);
 
         expect(callback).not.toBeCalled();
 
-        result.current();
+        result.current.stop();
 
         jest.advanceTimersByTime(150);
 
         expect(callback).toHaveBeenCalledTimes(0);
         expect(clearTimeout).toHaveBeenCalledTimes(1);
+    });
+
+    test('uses the latest callback when state changes', () => {
+        const callback = jest.fn();
+
+        const { result, rerender } = renderHook(({ count }) => useTimeout(() => callback(count), 100), {
+            initialProps: { count: 0 }
+        });
+
+        result.current.start();
+
+        rerender({ count: 1 });
+
+        jest.advanceTimersByTime(100);
+
+        expect(callback).toHaveBeenCalledWith(1);
     });
 });
