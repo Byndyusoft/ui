@@ -29,5 +29,11 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@byndyusoft-ui/use-timeout": "*"
+  },
+  "peerDependencies": {
+    "@byndyusoft-ui/types": "*"
   }
 }

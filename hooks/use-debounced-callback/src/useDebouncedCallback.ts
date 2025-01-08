@@ -1,20 +1,19 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useCallback, useRef } from 'react';
+import { Nullable } from '@byndyusoft-ui/types';
+import useTimeout from '@byndyusoft-ui/use-timeout';
 
-export function useDebouncedCallback<A extends any[]>(
+export function useDebouncedCallback<A extends unknown[]>(
     callback: (...args: A) => void,
     delay: number
 ): (...args: A) => void {
-    const timeoutIdRef = useRef<ReturnType<typeof setTimeout>>();
+    const argsRef = useRef<Nullable<A>>(null);
 
-    const cleanup = () => clearTimeout(timeoutIdRef.current);
-
-    useEffect(() => cleanup(), []);
+    const { start } = useTimeout(() => argsRef.current && callback(...argsRef.current), delay);
 
     return useCallback((...args: A): void => {
-        cleanup();
-
-        timeoutIdRef.current = setTimeout(() => callback(...args), delay);
-    }, [delay]);
+        argsRef.current = args;
+        start();
+    }, []);
 }
 
 export default useDebouncedCallback;
