@@ -61,4 +61,152 @@ describe('hooks/useDebouncedCallback', () => {
             { timeout: 1000 }
         );
     });
+
+    test('cleans up timer on unmount', async () => {
+        const handle = jest.fn();
+        const { result, unmount } = renderHook(() => useDebouncedCallback(handle, 500));
+        const setDebounceValue = result.current;
+
+        act(() => {
+            setDebounceValue();
+        });
+
+        unmount();
+
+        await waitFor(
+            () => {
+                expect(handle).not.toBeCalled();
+            },
+            { timeout: 600 }
+        );
+    });
+
+    test('uses the latest callback after it changes', async () => {
+        let value = '';
+
+        const { result, rerender } = renderHook(({ callback }) => useDebouncedCallback(callback, 500), {
+            initialProps: { callback: () => (value = oldValue) }
+        });
+
+        const setDebounceValue = result.current;
+
+        act(() => {
+            setDebounceValue();
+        });
+
+        rerender({ callback: () => (value = newValue) });
+
+        await waitFor(
+            () => {
+                expect(value).toEqual(newValue);
+            },
+            { timeout: 600 }
+        );
+    });
+
+    test('executes callback immediately with delay = 0', async () => {
+        const handle = jest.fn();
+        const { result } = renderHook(() => useDebouncedCallback(handle, 0));
+        const setDebounceValue = result.current;
+
+        act(() => {
+            setDebounceValue();
+        });
+
+        await waitFor(
+            () => {
+                expect(handle).toBeCalledTimes(1);
+            },
+            { timeout: 100 }
+        );
+    });
+
+    test('cancels previous timer before starting a new one', async () => {
+        const handle = jest.fn();
+        const { result } = renderHook(() => useDebouncedCallback(handle, 500));
+        const setDebounceValue = result.current;
+
+        act(() => {
+            setDebounceValue();
+        });
+
+        await waitFor(
+            () => {
+                expect(handle).not.toBeCalled();
+            },
+            { timeout: 300 }
+        );
+
+        act(() => {
+            setDebounceValue();
+        });
+
+        await waitFor(
+            () => {
+                expect(handle).toBeCalledTimes(1);
+            },
+            { timeout: 600 }
+        );
+    });
+
+    test('adjusts to updated delay value', async () => {
+        const handle = jest.fn();
+        const { result, rerender } = renderHook(({ delay }) => useDebouncedCallback(handle, delay), {
+            initialProps: { delay: 500 }
+        });
+        const setDebounceValue = result.current;
+
+        act(() => {
+            setDebounceValue();
+        });
+
+        rerender({ delay: 1000 });
+
+        act(() => {
+            setDebounceValue();
+        });
+
+        await waitFor(
+            () => {
+                expect(handle).not.toBeCalled();
+            },
+            { timeout: 750 }
+        );
+
+        await waitFor(
+            () => {
+                expect(handle).toBeCalledTimes(1);
+            },
+            { timeout: 750 }
+        );
+    });
+
+    test('ensure no unnecessary rerenders when dependency is omitted', async () => {
+        const handle = jest.fn();
+        const { result } = renderHook(() => useDebouncedCallback(handle, 500));
+
+        act(() => {
+            result.current(oldValue);
+        });
+
+        await waitFor(
+            () => {
+                expect(handle).toHaveBeenCalledWith(oldValue);
+                expect(handle).toHaveBeenCalledTimes(1);
+            },
+            { timeout: 600 }
+        );
+
+        act(() => {
+            result.current(newValue);
+        });
+
+        await waitFor(
+            () => {
+                expect(handle).toHaveBeenCalledWith(newValue);
+                expect(handle).toHaveBeenCalledTimes(2);
+            },
+            { timeout: 600 }
+        );
+    });
 });
