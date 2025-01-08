@@ -1,2 +1,1 @@
-import useDebouncedCallback from './useDebouncedCallback';
-export default useDebouncedCallback;
+export { default } from './useDebouncedCallback';
