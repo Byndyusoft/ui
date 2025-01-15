@@ -1,3 +1,8 @@
+.container {
+  height: 500px;
+  overflow: auto;
+}
+
 .modal {
   position: fixed;
   top: 50%;
