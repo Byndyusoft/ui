@@ -33,6 +33,7 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@byndyusoft-ui/use-throttled-callback": "0.0.1"
+    "@byndyusoft-ui/use-throttled-callback": "0.0.1",
+    "@byndyusoft-ui/types": "0.1.0"
   }
 }
