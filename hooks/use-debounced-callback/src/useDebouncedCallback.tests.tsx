@@ -63,6 +63,8 @@ describe('hooks/useDebouncedCallback', () => {
     });
 
     test('cleans up timer on unmount', async () => {
+        jest.spyOn(global, 'clearTimeout');
+
         const handle = jest.fn();
         const { result, unmount } = renderHook(() => useDebouncedCallback(handle, 500));
         const setDebounceValue = result.current;
@@ -79,6 +81,7 @@ describe('hooks/useDebouncedCallback', () => {
             },
             { timeout: 600 }
         );
+        expect(clearTimeout).toHaveBeenCalled();
     });
 
     test('uses the latest callback after it changes', async () => {
