@@ -13,7 +13,7 @@ export function useDebouncedCallback<A extends unknown[]>(
     return useCallback((...args: A): void => {
         argsRef.current = args;
         start();
-    }, []);
+    }, [callback, delay]);
 }
 
 export default useDebouncedCallback;
