@@ -8,5 +8,5 @@ export default function useDebouncedValue<T>(value: T, delay = 300): THookReturn
 
     const setDebouncedValue = useDebouncedCallback(setValue, delay);
 
-    return useMemo(() => ([debouncedValue, setDebouncedValue]), [debouncedValue, setDebouncedValue]);
-};
+    return useMemo(() => [debouncedValue, setDebouncedValue], [debouncedValue, setDebouncedValue]);
+}

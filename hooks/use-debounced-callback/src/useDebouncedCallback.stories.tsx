@@ -20,10 +20,7 @@ const DebouncedColorChange = () => {
                 >
                     Click for color change
                 </button>
-                <div
-                    className={styles.rectangle}
-                    style={{ backgroundColor: COLORS[firstColorIndex] }}
-                />
+                <div className={styles.rectangle} style={{ backgroundColor: COLORS[firstColorIndex] }} />
             </div>
 
             <div className={styles.block}>
@@ -34,10 +31,7 @@ const DebouncedColorChange = () => {
                 >
                     Click for debounced color change (delay: 1000 ms)
                 </button>
-                <div
-                    className={styles.rectangle}
-                    style={{ backgroundColor: COLORS[secondColorIndex] }}
-                />
+                <div className={styles.rectangle} style={{ backgroundColor: COLORS[secondColorIndex] }} />
             </div>
         </div>
     );

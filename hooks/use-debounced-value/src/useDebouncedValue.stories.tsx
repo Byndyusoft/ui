@@ -16,15 +16,15 @@ const DebouncedInput = () => {
                     type="button"
                     disabled={delay <= 0}
                     onClick={() => setDelay(delay - 100)}
-                >-</button>
+                >
+                    -
+                </button>
 
                 <span>{`${delay} ms`}</span>
 
-                <button
-                    className={styles.button}
-                    type="button"
-                    onClick={() => setDelay(delay + 100)}
-                >+</button>
+                <button className={styles.button} type="button" onClick={() => setDelay(delay + 100)}>
+                    +
+                </button>
             </div>
 
             <div className={styles.block}>
@@ -42,7 +42,7 @@ const DebouncedInput = () => {
     );
 };
 
-export const DebouncedInputStory : StoryObj<typeof DebouncedInput> = {
+export const DebouncedInputStory: StoryObj<typeof DebouncedInput> = {
     name: 'Debounced input',
     render: DebouncedInput
 };

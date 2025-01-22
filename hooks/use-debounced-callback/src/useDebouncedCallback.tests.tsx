@@ -212,18 +212,14 @@ describe('hooks/useDebouncedCallback', () => {
 
     test('should update the debounced function when delay changes', async () => {
         const handle = jest.fn();
-        const { result, rerender } = renderHook(
-          ({ callback, delay }) => useDebouncedCallback(callback, delay),
-          {
-              initialProps: { callback: handle, delay: 1000 },
-          }
-        );
+        const { result, rerender } = renderHook(({ callback, delay }) => useDebouncedCallback(callback, delay), {
+            initialProps: { callback: handle, delay: 1000 }
+        });
 
-        rerender({ delay: 500 , callback: handle});
+        rerender({ delay: 500, callback: handle });
 
         act(() => {
             result.current(oldValue);
-
         });
 
         expect(handle).not.toHaveBeenCalled();
@@ -233,11 +229,11 @@ describe('hooks/useDebouncedCallback', () => {
         });
 
         await waitFor(
-          () => {
-              expect(handle).toHaveBeenCalledWith(newValue);
-              expect(handle).toHaveBeenCalledTimes(1);
-          },
-          { timeout: 600 }
+            () => {
+                expect(handle).toHaveBeenCalledWith(newValue);
+                expect(handle).toHaveBeenCalledTimes(1);
+            },
+            { timeout: 600 }
         );
     });
 
@@ -245,10 +241,9 @@ describe('hooks/useDebouncedCallback', () => {
         const oldHandle = jest.fn();
         const newHandle = jest.fn();
 
-        const { result, rerender } = renderHook(
-          ({ callback, delay }) => useDebouncedCallback(callback, delay),
-          { initialProps: { callback: oldHandle, delay: 500 } }
-        );
+        const { result, rerender } = renderHook(({ callback, delay }) => useDebouncedCallback(callback, delay), {
+            initialProps: { callback: oldHandle, delay: 500 }
+        });
 
         rerender({ delay: 500, callback: newHandle });
 
@@ -263,12 +258,12 @@ describe('hooks/useDebouncedCallback', () => {
         });
 
         await waitFor(
-          () => {
-              expect(newHandle).toHaveBeenCalledWith(newValue);
-              expect(newHandle).toHaveBeenCalledTimes(1);
-              expect(oldHandle).not.toBeCalled();
-          },
-          { timeout: 600 }
+            () => {
+                expect(newHandle).toHaveBeenCalledWith(newValue);
+                expect(newHandle).toHaveBeenCalledTimes(1);
+                expect(oldHandle).not.toBeCalled();
+            },
+            { timeout: 600 }
         );
     });
 });

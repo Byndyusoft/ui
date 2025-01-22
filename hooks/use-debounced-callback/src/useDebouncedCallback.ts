@@ -10,10 +10,13 @@ export function useDebouncedCallback<A extends unknown[]>(
 
     const { start } = useTimeout(() => argsRef.current && callback(...argsRef.current), delay);
 
-    return useCallback((...args: A): void => {
-        argsRef.current = args;
-        start();
-    }, [callback, delay]);
+    return useCallback(
+        (...args: A): void => {
+            argsRef.current = args;
+            start();
+        },
+        [callback, delay]
+    );
 }
 
 export default useDebouncedCallback;

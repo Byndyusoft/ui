@@ -8,8 +8,8 @@ const newValue = 'new value';
 describe('hooks/useDebouncedValue', () => {
     test('works correctly', async () => {
         const { result } = renderHook(() => useDebouncedValue(oldValue, 2000));
-        const getCurrentDebouncedValue = () => result.current[0];
-        const setDebouncedValue = result.current[1];
+        const getCurrentDebouncedValue = (): string => result.current[0];
+        const [, setDebouncedValue] = result.current;
 
         expect(getCurrentDebouncedValue()).toEqual(oldValue);
 
