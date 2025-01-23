@@ -1,21 +1,21 @@
-.use-array__container {
+.container {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-.use-array__row {
+.row {
     width: 424px;
     display: flex;
     gap: 8px;
 }
 
-.use-array__input {
+.input {
     min-width: 0;
     flex-grow: 1;
 }
 
-.use-array__button {
+.button {
     flex-basis: 100px;
     flex-shrink: 0;
 }
