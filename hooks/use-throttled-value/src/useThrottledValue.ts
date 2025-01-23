@@ -11,7 +11,7 @@ const useThrottledValue = <T>(
 ): TUseThrottledValueReturn<T> => {
     const [throttledValue, setValue] = useState<T>(value);
 
-    const setThrottledValue = useThrottledCallback<T>(setValue, delay, option);
+    const setThrottledValue = useThrottledCallback<[T]>(setValue, delay, option);
 
     return useMemo(() => [throttledValue, setThrottledValue], [throttledValue, setThrottledValue]);
 };

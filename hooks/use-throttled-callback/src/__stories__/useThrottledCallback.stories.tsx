@@ -22,10 +22,6 @@ const UseThrottledCallbackStory = (): JSX.Element => {
         { leading: false }
     );
 
-    const throttledFn = useThrottledCallback((value1: string, value2: number) => {
-        console.log(value1, value2);
-    }, 1000);
-
     const throttledHandleClickNoTrailing = useThrottledCallback(
         () => {
             setNoTrailingCount(prevCount => prevCount + 1);
