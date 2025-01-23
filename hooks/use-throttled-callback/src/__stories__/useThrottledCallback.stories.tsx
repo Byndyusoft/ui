@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StoryObj } from '@storybook/react';
-import useThrottledCallback, { TThrottledCallback } from '../useThrottledCallback';
+import useThrottledCallback from '../useThrottledCallback';
 import styles from './useThrottledCallback.stories.module.css';
 
 const DELAY_THROTTLE = 1500;
@@ -10,11 +10,11 @@ const UseThrottledCallbackStory = (): JSX.Element => {
     const [noLeadingCount, setNoLeadingCount] = useState<number>(0);
     const [noTrailingCount, setNoTrailingCount] = useState<number>(0);
 
-    const throttledHandleClickLeading: TThrottledCallback = useThrottledCallback(() => {
+    const throttledHandleClickLeading = useThrottledCallback(() => {
         setCount(prevCount => prevCount + 1);
     }, DELAY_THROTTLE);
 
-    const throttledHandleClickNoLeading: TThrottledCallback = useThrottledCallback(
+    const throttledHandleClickNoLeading = useThrottledCallback(
         () => {
             setNoLeadingCount(prevCount => prevCount + 1);
         },
@@ -22,7 +22,11 @@ const UseThrottledCallbackStory = (): JSX.Element => {
         { leading: false }
     );
 
-    const throttledHandleClickNoTrailing: TThrottledCallback = useThrottledCallback(
+    const throttledFn = useThrottledCallback((value1: string, value2: number) => {
+        console.log(value1, value2);
+    }, 1000);
+
+    const throttledHandleClickNoTrailing = useThrottledCallback(
         () => {
             setNoTrailingCount(prevCount => prevCount + 1);
         },

@@ -1,3 +1,1 @@
-import useThrottledValue from './useThrottledValue';
-
-export default useThrottledValue;
+export { default } from './useThrottledValue';

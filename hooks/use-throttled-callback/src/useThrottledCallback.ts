@@ -1,20 +1,18 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { TimeoutId } from '@byndyusoft-ui/types';
-
-export type TThrottledCallback<T = never> = (...args: T[]) => void;
+import { TimeoutId, Nullable } from '@byndyusoft-ui/types';
 
 export interface IThrottledCallbackOptions {
     leading?: boolean;
     trailing?: boolean;
 }
 
-const useThrottledCallback = <T>(
-    callback: TThrottledCallback<T>,
+function useThrottledCallback<A extends unknown[]>(
+    callback: (...args: A) => void,
     delay: number,
     { leading = true, trailing = true }: IThrottledCallbackOptions = {}
-): TThrottledCallback<T> => {
+): (...args: A) => void {
     const timeoutRef = useRef<TimeoutId | null>(null);
-    const argsRef = useRef<T[] | null>(null);
+    const argsRef = useRef<Nullable<A>>(null);
 
     const cleanup = useCallback((): void => {
         if (timeoutRef.current) {
@@ -36,7 +34,7 @@ const useThrottledCallback = <T>(
     useEffect(() => cleanup, [cleanup]);
 
     return useCallback(
-        (...args: T[]) => {
+        (...args: A) => {
             if (!timeoutRef.current && leading) {
                 callback(...args);
             } else {
@@ -49,6 +47,6 @@ const useThrottledCallback = <T>(
         },
         [callback, delay, waitFunc, leading]
     );
-};
+}
 
 export default useThrottledCallback;
