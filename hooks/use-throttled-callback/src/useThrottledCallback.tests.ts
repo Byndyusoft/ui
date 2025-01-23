@@ -4,8 +4,7 @@ import useThrottledCallback, { IThrottledCallbackOptions } from './useThrottledC
 const DELAY_THROTTLE = 500;
 
 const setup = (callback: jest.Mock, delay: number, options?: IThrottledCallbackOptions) => {
-    const { result } = renderHook(() => useThrottledCallback(callback, delay, options));
-    return result;
+    return renderHook(() => useThrottledCallback(callback, delay, options));
 };
 
 const multipleCalls = (callback: () => void, delay: number): void => {
@@ -44,16 +43,16 @@ describe('hook/useThrottledCallback', () => {
 
     test('should be called correctly', () => {
         const callback = jest.fn();
-        const result = setup(callback, DELAY_THROTTLE);
+        const { result } = setup(callback, DELAY_THROTTLE);
 
         multipleCalls(result.current, DELAY_THROTTLE);
 
         expect(callback).toHaveBeenCalledTimes(6);
     });
 
-    test('should not call the callback immediately with leading: false', () => {
+    test('does not call callback immediately on multiple calls with leading: false', () => {
         const callback = jest.fn();
-        const result = setup(callback, DELAY_THROTTLE, { leading: false });
+        const { result } = setup(callback, DELAY_THROTTLE, { leading: false });
 
         act(() => {
             result.current();
@@ -68,9 +67,24 @@ describe('hook/useThrottledCallback', () => {
         expect(callback).toHaveBeenCalledTimes(1);
     });
 
-    test('should not call the callback after the delay with trailing: false', () => {
+    test('does not call callback immediately on single call with leading: false', () => {
         const callback = jest.fn();
-        const result = setup(callback, DELAY_THROTTLE, { trailing: false });
+        const { result } = setup(callback, DELAY_THROTTLE, { leading: false });
+
+        act(() => {
+            result.current();
+        });
+
+        expect(callback).not.toHaveBeenCalled();
+
+        jest.advanceTimersByTime(DELAY_THROTTLE);
+
+        expect(callback).toHaveBeenCalledTimes(1);
+    });
+
+    test('calls callback immediately on multiple calls with trailing: false', () => {
+        const callback = jest.fn();
+        const { result } = setup(callback, DELAY_THROTTLE, { trailing: false });
 
         act(() => {
             result.current();
@@ -85,9 +99,24 @@ describe('hook/useThrottledCallback', () => {
         expect(callback).toHaveBeenCalledTimes(1);
     });
 
+    test('calls callback immediately on single call with trailing: false', () => {
+        const callback = jest.fn();
+        const { result } = setup(callback, DELAY_THROTTLE, { trailing: false });
+
+        act(() => {
+            result.current();
+        });
+
+        expect(callback).toHaveBeenCalled();
+
+        jest.advanceTimersByTime(DELAY_THROTTLE);
+
+        expect(callback).toHaveBeenCalledTimes(1);
+    });
+
     test('should not call the callback at all with leading: false and trailing: false', () => {
         const callback = jest.fn();
-        const result = setup(callback, DELAY_THROTTLE, { leading: false, trailing: false });
+        const { result } = setup(callback, DELAY_THROTTLE, { leading: false, trailing: false });
 
         multipleCalls(result.current, DELAY_THROTTLE);
 
@@ -96,7 +125,7 @@ describe('hook/useThrottledCallback', () => {
 
     test('should call the callback with the latest arguments after the delay', () => {
         const callback = jest.fn();
-        const result = setup(callback, DELAY_THROTTLE);
+        const { result } = setup(callback, DELAY_THROTTLE);
 
         act(() => {
             result.current('arg-1');
@@ -109,5 +138,27 @@ describe('hook/useThrottledCallback', () => {
         jest.advanceTimersByTime(DELAY_THROTTLE);
 
         expect(callback).toHaveBeenCalledWith('arg-2');
+    });
+
+    test('should clean up timer on unmount', () => {
+        jest.spyOn(global, 'clearTimeout');
+
+        const callback = jest.fn();
+        const { result, unmount } = setup(callback, DELAY_THROTTLE);
+
+        act(() => {
+            result.current();
+            result.current();
+            result.current();
+        });
+
+        expect(callback).toHaveBeenCalled();
+
+        unmount();
+
+        jest.advanceTimersByTime(DELAY_THROTTLE);
+
+        expect(callback).toHaveBeenCalledTimes(1);
+        expect(clearTimeout).toHaveBeenCalled();
     });
 });
