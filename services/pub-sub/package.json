@@ -1,0 +1,34 @@
+{
+  "name": "@byndyusoft-ui/pub-sub",
+  "version": "0.0.1",
+  "description": "Byndyusoft UI Service",
+  "keywords": [
+    "byndyusoft",
+    "byndyusoft-ui",
+    "channels",
+    "publish",
+    "subscribe",
+    "Pub/Sub"
+  ],
+  "author": "Gleb Fomin <gleb.fom28@gmail.com>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/services/pub-sub#readme",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Byndyusoft/ui.git"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "clean": "rimraf dist",
+    "lint": "eslint src --config ../../eslint.config.js",
+    "test": "jest --config ../../jest.config.js --roots services/pub-sub/src"
+  },
+  "bugs": {
+    "url": "https://github.com/Byndyusoft/ui/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
