@@ -137,6 +137,7 @@ describe('hook/useThrottledCallback', () => {
 
         jest.advanceTimersByTime(DELAY_THROTTLE);
 
+        expect(callback).toHaveBeenCalledWith('arg-1');
         expect(callback).toHaveBeenCalledWith('arg-2');
     });
 
