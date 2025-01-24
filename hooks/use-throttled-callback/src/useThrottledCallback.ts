@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useRef } from 'react';
-import { TimeoutId, Nullable } from '@byndyusoft-ui/types';
+import { Nullable } from '@byndyusoft-ui/types';
+import { useCallback, useRef } from 'react';
+import useTimeout from '@byndyusoft-ui/use-timeout';
 
 export interface IThrottledCallbackOptions {
     leading?: boolean;
@@ -11,41 +12,32 @@ function useThrottledCallback<A extends unknown[]>(
     delay: number,
     { leading = true, trailing = true }: IThrottledCallbackOptions = {}
 ): (...args: A) => void {
-    const timeoutRef = useRef<TimeoutId | null>(null);
     const argsRef = useRef<Nullable<A>>(null);
+    const isThrottling = useRef(false);
 
-    const cleanup = useCallback((): void => {
-        if (timeoutRef.current) {
-            clearTimeout(timeoutRef.current);
-            timeoutRef.current = null;
-        }
-    }, []);
-
-    const waitFunc = useCallback((): void => {
-        cleanup();
-
+    const execute = useCallback(() => {
         if (trailing && argsRef.current) {
             callback(...argsRef.current);
             argsRef.current = null;
-            timeoutRef.current = setTimeout(waitFunc, delay);
         }
-    }, [callback, delay, trailing, cleanup]);
+        isThrottling.current = false;
+    }, [callback, trailing]);
 
-    useEffect(() => cleanup, [cleanup]);
+    const { start } = useTimeout(execute, delay);
 
     return useCallback(
         (...args: A) => {
-            if (!timeoutRef.current && leading) {
+            if (!isThrottling.current && leading) {
                 callback(...args);
             } else {
                 argsRef.current = args;
             }
-
-            if (!timeoutRef.current) {
-                timeoutRef.current = setTimeout(waitFunc, delay);
+            if (!isThrottling.current) {
+                isThrottling.current = true;
+                start();
             }
         },
-        [callback, delay, waitFunc, leading]
+        [callback, delay, leading, trailing]
     );
 }
 

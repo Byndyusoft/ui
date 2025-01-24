@@ -33,6 +33,7 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@byndyusoft-ui/types": "0.1.0"
+    "@byndyusoft-ui/types": "0.1.0",
+    "@byndyusoft-ui/use-timeout": "1.0.0"
   }
 }
