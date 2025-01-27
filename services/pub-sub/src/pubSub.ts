@@ -1,17 +1,4 @@
-type TDefaultChannels = Record<string, (data?: any) => void>;
-
-type TChannelMap<ChannelsRecord extends TDefaultChannels> = Map<
-    keyof ChannelsRecord,
-    Set<ChannelsRecord[keyof ChannelsRecord]>
->;
-
-type TPubSubInstances = Map<string, unknown>;
-
-type TChannelData<ChannelsRecord extends TDefaultChannels, ChannelKey extends keyof ChannelsRecord> = Parameters<
-    ChannelsRecord[ChannelKey]
->[0];
-
-type ChannelsRecordAdapter<T> = { [K in keyof T]: T[K] };
+import { TChannelData, TChannelMap, TDefaultChannels, TPubSubInstances } from './pubSub.types';
 
 const DEFAULT_NAME_INSTANCE = '_default';
 
@@ -104,5 +91,4 @@ class PubSub<ChannelsRecord extends TDefaultChannels> {
     }
 }
 
-export type { ChannelsRecordAdapter };
 export default PubSub;
