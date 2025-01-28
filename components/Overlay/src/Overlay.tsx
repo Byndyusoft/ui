@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import cn from 'classnames';
-import useBodyScrollLock from '@byndyusoft-ui/use-body-scroll-lock';
+import useScrollLock from '@byndyusoft-ui/use-scroll-lock';
 import { getDefaultOverlayClassNames, hexToRgba } from './utilities';
 import { IOverlayProps } from './Overlay.types';
 
@@ -20,7 +20,7 @@ const Overlay = forwardRef<HTMLDivElement, IOverlayProps>(
         },
         ref
     ): JSX.Element => {
-        useBodyScrollLock(isVisible);
+        useScrollLock(isVisible);
 
         return (
             <div

@@ -30,7 +30,7 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@byndyusoft-ui/use-body-scroll-lock": "^0.1.0",
+    "@byndyusoft-ui/use-scroll-lock": "^0.1.0",
     "react": ">=17",
     "react-dom": ">=17"
   }
