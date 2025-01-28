@@ -7,13 +7,13 @@ This hook manages the scrollability of either the body element or a specified ta
 ## Installation
 
 ```
-npm install @byndyusoft-ui/use-body-scroll-lock
+npm install @byndyusoft-ui/use-scroll-lock
 ```
 
 ## Usage
 
 ```typescript
-import useScrollLock from '@byndyusoft-ui/use-body-scroll-lock';
+import useScrollLock from '@byndyusoft-ui/use-scroll-lock';
 
 // Basic usage
 function Modal({ isOpen }) {
@@ -43,5 +43,5 @@ useScrollLock(isLocked?: boolean, target?: HTMLElement | null): void
 
 #### Parameters
 
--   `isLocked` (boolean) - When `true`, body scroll will be locked. When `false` or `undefined`, scroll will be unlocked.
+-   `isLocked` (boolean) - When `true`, element scroll will be locked. When `false` or `undefined`, scroll will be unlocked.
 -   `target` (HTMLElement | null) - Optional. The HTML element to lock scrolling on. If not provided or null, defaults to document.body.

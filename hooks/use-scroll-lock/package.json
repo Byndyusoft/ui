@@ -1,5 +1,5 @@
 {
-  "name": "@byndyusoft-ui/use-body-scroll-lock",
+  "name": "@byndyusoft-ui/use-scroll-lock",
   "version": "0.1.0",
   "description": "Byndyusoft UI React Hook",
   "keywords": [
@@ -10,7 +10,7 @@
     "body-scroll-lock"
   ],
   "author": "Dmitrii Maletskii <maleckij@byndyusoft.com>",
-  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-body-scroll-lock#readme",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-scroll-lock#readme",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -22,7 +22,7 @@
     "build": "tsc --project tsconfig.build.json",
     "clean": "rimraf dist",
     "lint": "eslint src --config ../../eslint.config.js",
-    "test": "jest --config ../../jest.config.js --roots hooks/use-body-scroll-lock/src"
+    "test": "jest --config ../../jest.config.js --roots hooks/use-scroll-lock/src"
   },
   "bugs": {
     "url": "https://github.com/Byndyusoft/ui/issues"
