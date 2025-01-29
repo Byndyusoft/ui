@@ -1,0 +1,78 @@
+.notifications {
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-mobile);
+    width: calc(100% - var(--offset-mobile) * 2);
+    list-style-type: none;
+}
+
+.notifications__top-left,
+.notifications__top-right,
+.notifications__top-center {
+    top: var(--offset-mobile);
+    left: var(--offset-mobile);
+    right: var(--offset-mobile);
+    transform: none;
+}
+
+.notifications__bottom-left,
+.notifications__bottom-right,
+.notifications__bottom-center {
+    bottom: var(--offset-mobile);
+    left: var(--offset-mobile);
+    right: var(--offset-mobile);
+    transform: none;
+}
+
+@media (min-width: 768px) {
+    .notifications {
+        width: var(--width);
+        gap: var(--gap);
+    }
+
+    .notifications__top-left {
+        top: var(--offset);
+        left: var(--offset);
+        right: auto;
+        transform: none;
+    }
+
+    .notifications__top-right {
+        top: var(--offset);
+        right: var(--offset);
+        left: auto;
+        transform: none;
+    }
+
+    .notifications__bottom-left {
+        bottom: var(--offset);
+        left: var(--offset);
+        right: auto;
+        transform: none;
+    }
+
+    .notifications__bottom-right {
+        bottom: var(--offset);
+        right: var(--offset);
+        left: auto;
+        transform: none;
+    }
+
+    .notifications__top-center {
+        top: var(--offset);
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+    }
+
+    .notifications__bottom-center {
+        bottom: var(--offset);
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+    }
+}
