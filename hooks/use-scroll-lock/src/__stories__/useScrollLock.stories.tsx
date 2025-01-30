@@ -38,7 +38,7 @@ const TemplateWithTarget = (): JSX.Element => {
             {isModalOpen && (
                 <div className={styles.modal}>
                     <h3>Modal window</h3>
-                    <p>When this window is opened, the scrolling of the body is blocked</p>
+                    <p>When this window is opened, the scrolling of the element is blocked</p>
                     <button onClick={() => setIsModalOpen(false)}>Close</button>
                 </div>
             )}

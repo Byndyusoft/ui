@@ -7,7 +7,7 @@
     "byndyusoft-ui",
     "react",
     "hook",
-    "body-scroll-lock"
+    "use-scroll-lock"
   ],
   "author": "Dmitrii Maletskii <maleckij@byndyusoft.com>",
   "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-scroll-lock#readme",
