@@ -2,7 +2,6 @@
     position: fixed;
     inset: 0;
     background-color: #00000050;
-    backdrop-filter: blur(10px);
     opacity: 0;
     transition: opacity 0.4s ease;
     z-index: 200;

@@ -12,7 +12,7 @@ const Overlay = forwardRef<HTMLDivElement, IOverlayProps>(
             classNames = getDefaultOverlayClassNames(),
             isVisible = false,
             color,
-            blur = 0,
+            blur = 10,
             backgroundOpacity = 0.6,
             zIndex = 100,
             center = false,
