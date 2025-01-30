@@ -1,36 +1,35 @@
-.notifications__item {
+.notification_item {
     overflow: hidden;
     position: relative;
     opacity: 1;
     height: auto;
 }
 
-.notifications__item--clickable {
+.notification_item.pointer {
     cursor: pointer;
 }
 
-/* Мобильная версия (по умолчанию) */
-.notifications__animation--bottom-left,
-.notifications__animation--bottom-right,
-.notifications__animation--bottom-center {
+.animation_bottom_left,
+.animation_bottom_right,
+.animation_bottom_center {
     animation: slideInTop 0.3s ease-out forwards;
 }
 
-.notifications__animation--bottom-left.notifications__item--hidden,
-.notifications__animation--bottom-right.notifications__item--hidden,
-.notifications__animation--bottom-center.notifications__item--hidden {
+.animation_bottom_left.hidden,
+.animation_bottom_right.hidden,
+.animation_bottom_center.hidden {
     animation: slideOutBottom 0.2s ease-out forwards, collapseHeight 0.2s ease-out 0.1s forwards;
 }
 
-.notifications__animation--top-left,
-.notifications__animation--top-right,
-.notifications__animation--top-center {
+.animation_top_left,
+.animation_top_right,
+.animation_top_center {
     animation: slideInBottom 0.2s ease-out forwards;
 }
 
-.notifications__animation--top-left.notifications__item--hidden,
-.notifications__animation--top-right.notifications__item--hidden,
-.notifications__animation--top-center.notifications__item--hidden {
+.animation_top_left.hidden,
+.animation_top_right.hidden,
+.animation_top_center.hidden {
     animation: slideOutTop 0.2s ease-out forwards, collapseHeight 0.2s ease-out 0.1s forwards;
 }
 
@@ -132,39 +131,39 @@
 }
 
 @media (min-width: 768px) {
-    .notifications__animation--bottom-left,
-    .notifications__animation--top-left {
+    .animation_bottom_left,
+    .animation_top_left {
         animation: slideInRight 0.3s ease-out forwards;
     }
 
-    .notifications__animation--bottom-left.notifications__item--hidden,
-    .notifications__animation--top-left.notifications__item--hidden {
+    .animation_bottom_left.hidden,
+    .animation_top_left.hidden {
         animation: slideOutLeft 0.2s ease-in forwards, collapseHeight 0.2s ease-out 0.1s forwards;
     }
 
-    .notifications__animation--bottom-right,
-    .notifications__animation--top-right {
+    .animation_bottom_right,
+    .animation_top_right {
         animation: slideInLeft 0.3s ease-out forwards;
     }
 
-    .notifications__animation--bottom-right.notifications__item--hidden,
-    .notifications__animation--top-right.notifications__item--hidden {
+    .animation_bottom_right.hidden,
+    .animation_top_right.hidden {
         animation: slideOutRight 0.2s ease-out forwards, collapseHeight 0.2s ease-out 0.1s forwards;
     }
 
-    .notifications__animation--top-center {
+    .animation_top_center {
         animation: slideInBottom 0.2s ease-out forwards;
     }
 
-    .notifications__animation--top-center.notifications__item--hidden {
+    .animation_top_center.hidden {
         animation: slideOutTop 0.2s ease-out forwards, collapseHeight 0.2s ease-out 0.1s forwards;
     }
 
-    .notifications__animation--bottom-center {
+    .animation_bottom_center {
         animation: slideInTop 0.3s ease-out forwards;
     }
 
-    .notifications__animation--bottom-center.notifications__item--hidden {
+    .animation_bottom_center.hidden {
         animation: slideOutBottom 0.2s ease-out forwards, collapseHeight 0.2s ease-out 0.1s forwards;
     }
 }

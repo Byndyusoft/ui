@@ -3,7 +3,7 @@ import { StoryObj } from '@storybook/react';
 import NotificationsManager, { useNotifications, INotificationData } from '..';
 import { TNotificationPosition, TNotificationTheme } from '../Notifications.types';
 import styles from './Notifications.stories.module.css';
-import { NotificationsItem } from '../components/NotificationsItem';
+import { NotificationsItem } from '../partials/NotificationsItem';
 
 const positions: TNotificationPosition[] = [
     'top-right',
@@ -240,17 +240,6 @@ custom(({data}) => <div>{data.id} | Custom notification</div>,
                     <hr />
                     <div className={styles.row}>
                         <button onClick={onShowNotification}>Show notification</button>
-                        <button
-                            onClick={() => {
-                                create({
-                                    theme: 'success',
-                                    position: 'top-center',
-                                    title: 'top-center'
-                                });
-                            }}
-                        >
-                            create
-                        </button>
                         <button onClick={dismissAll}>Close all</button>
                     </div>
                 </div>

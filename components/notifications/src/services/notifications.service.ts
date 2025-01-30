@@ -6,7 +6,7 @@ import {
     TNotificationRender,
     TThemedNotificationParams
 } from '../Notifications.types';
-import { notificationsPubSub } from './notificationsPubSub.service';
+import { publisher } from './notificationsPubSub.service';
 
 let notificationCounter = 1;
 
@@ -83,6 +83,12 @@ class NotificationsService {
         this.notify();
     };
 
+    removeAll = (): void => {
+        this.notifications = [];
+
+        this.notify();
+    };
+
     dismiss = (id: TNotificationItemId): void => {
         this.notifications = this.notifications.map(notification => {
             if (id === notification.id) {
@@ -102,9 +108,5 @@ class NotificationsService {
         this.notify();
     };
 }
-
-const publisher = (dataItems: Array<INotificationsItem>): void => {
-    notificationsPubSub.publish('updateState', dataItems);
-};
 
 export const notificationService = new NotificationsService(publisher);

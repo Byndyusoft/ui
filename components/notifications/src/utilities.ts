@@ -1,6 +1,6 @@
 import { TPlatformValue } from './Notifications.types';
 
-export function cn(...classes: Array<string | undefined>) {
+export function cn(...classes: Array<string | undefined>): string {
     return classes.filter(Boolean).join(' ');
 }
 

@@ -10,18 +10,18 @@
     list-style-type: none;
 }
 
-.notifications__top-left,
-.notifications__top-right,
-.notifications__top-center {
+.top-left,
+.top-right,
+.top-center {
     top: var(--offset-mobile);
     left: var(--offset-mobile);
     right: var(--offset-mobile);
     transform: none;
 }
 
-.notifications__bottom-left,
-.notifications__bottom-right,
-.notifications__bottom-center {
+.bottom-left,
+.bottom-right,
+.bottom-center {
     bottom: var(--offset-mobile);
     left: var(--offset-mobile);
     right: var(--offset-mobile);
@@ -34,42 +34,42 @@
         gap: var(--gap);
     }
 
-    .notifications__top-left {
+    .top-left {
         top: var(--offset);
         left: var(--offset);
         right: auto;
         transform: none;
     }
 
-    .notifications__top-right {
+    .top-right {
         top: var(--offset);
         right: var(--offset);
         left: auto;
         transform: none;
     }
 
-    .notifications__bottom-left {
+    .bottom-left {
         bottom: var(--offset);
         left: var(--offset);
         right: auto;
         transform: none;
     }
 
-    .notifications__bottom-right {
+    .bottom-right {
         bottom: var(--offset);
         right: var(--offset);
         left: auto;
         transform: none;
     }
 
-    .notifications__top-center {
+    .top-center {
         top: var(--offset);
         left: 50%;
         right: auto;
         transform: translateX(-50%);
     }
 
-    .notifications__bottom-center {
+    .bottom-center {
         bottom: var(--offset);
         left: 50%;
         right: auto;

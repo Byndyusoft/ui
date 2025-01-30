@@ -9,6 +9,8 @@ export const useNotificationsActions = () => ({
     warning: notificationService.warning,
     ordinary: notificationService.ordinary,
     custom: notificationService.custom,
+    remove: notificationService.remove,
+    removeAll: notificationService.removeAll,
     dismiss: notificationService.dismiss,
     dismissAll: notificationService.dismissAll
 });

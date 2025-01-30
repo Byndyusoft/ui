@@ -7,7 +7,7 @@ import {
     IUseNotificationsStateParams,
     TNotificationRender
 } from '../Notifications.types';
-import { notificationsPubSub } from '../services/notificationsPubSub.service';
+import { subscriber } from '../services/notificationsPubSub.service';
 import { notificationService } from '../services/notifications.service';
 
 export const useNotificationsManager = (params: IUseNotificationsStateParams) => {
@@ -90,14 +90,13 @@ export const useNotificationsManager = (params: IUseNotificationsStateParams) =>
         return null;
     };
 
-    const getNotificationsByPosition = useCallback(
-        (positionItem: TNotificationPosition, positionIndex: number): Array<INotificationsItem> =>
-            notifications.filter(
-                notification =>
-                    (!notification.position && positionIndex === 0) || notification.position === positionItem
-            ),
-        [notifications]
-    );
+    const getNotificationsByPosition = (
+        positionItem: TNotificationPosition,
+        positionIndex: number
+    ): Array<INotificationsItem> =>
+        notifications.filter(
+            notification => (!notification.position && positionIndex === 0) || notification.position === positionItem
+        );
 
     const prepareNotifications = (
         position: TNotificationPosition,
@@ -116,11 +115,7 @@ export const useNotificationsManager = (params: IUseNotificationsStateParams) =>
             setNotifications([...newNotifications]);
         };
 
-        notificationsPubSub.subscribe('updateState', listener);
-
-        return () => {
-            notificationsPubSub.unsubscribe('updateState', listener);
-        };
+        return subscriber(listener);
     }, [setNotifications]);
 
     return {

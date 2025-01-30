@@ -1,8 +1,9 @@
 .container {
-    height: 100vh;
     display: flex;
+    align-items: center;
     flex-direction: column;
     justify-content: center;
+    height: 100vh;
 }
 
 .row {
@@ -37,7 +38,7 @@
     color: white;
 }
 
-.notification{
+.notification {
     box-sizing: border-box;
     position: relative;
     width: 100%;
@@ -83,11 +84,12 @@
 }
 
 .code {
-    background-color: #f0eded;
-    color: #333;
     padding: 10px;
+    height: 230px;
     border-radius: 5px;
     overflow-x: auto;
     font-family: 'Courier New, Courier, monospace', serif;
-    font-size: 14px;
+    font-size: 16px;
+    background-color: #e6e6e6;
+    color: #333;
 }

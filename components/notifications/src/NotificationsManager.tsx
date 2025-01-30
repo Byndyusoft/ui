@@ -1,13 +1,13 @@
 import React, { CSSProperties, useState } from 'react';
 import Portal from '@byndyusoft-ui/portal';
 import { normalizeCssValue, normalizePlatformValue } from './utilities';
-import { NotificationsItem } from './components/NotificationsItem';
+import { NotificationsItem } from './partials/NotificationsItem';
 import { useIsDocumentHidden } from './hooks/use-document-visibility';
 import { INotificationsManagerProps, TNotificationPosition } from './Notifications.types';
 import { useNotificationsManager } from './hooks/useNotificationsManager';
 import { cn } from './utilities';
 import { NOTIFICATION_LIFETIME, OFFSET, POSITION, NOTIFICATION_WIDTH, GAP } from './constants';
-import './NotificationsManager.css';
+import styles from './NotificationsManager.module.css';
 
 const NotificationsManager = (props: INotificationsManagerProps) => {
     const {
@@ -64,7 +64,7 @@ const NotificationsManager = (props: INotificationsManagerProps) => {
                 return (
                     <ul
                         key={`notifications-position-${position}`}
-                        className={cn('notifications', `notifications__${position}`, className)}
+                        className={cn(styles.notifications, styles[position], className)}
                         style={
                             {
                                 '--offset': normalizePlatformValue('web', OFFSET, offset),
@@ -85,6 +85,7 @@ const NotificationsManager = (props: INotificationsManagerProps) => {
                                 style={styleItem}
                                 duration={item?.duration ?? duration}
                                 position={item?.position || position}
+                                theme={item.theme}
                                 dismiss={item.dismiss}
                                 isAutoClosable={item.isAutoClosable ?? isAutoClosable}
                                 isPauseToRemove={
