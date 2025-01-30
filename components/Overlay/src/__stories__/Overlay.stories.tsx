@@ -1,11 +1,11 @@
 import React from 'react';
-import { StoryFn, StoryObj } from '@storybook/react';
+import { StoryObj } from '@storybook/react';
 import { IOverlayProps } from '../Overlay.types';
 import Overlay from '../Overlay';
 import './Overlay.stories.css';
 
-const Template: (args: IOverlayProps) => JSX.Element = (args: IOverlayProps) => (
-    <div className='container'>
+const GeneralTemplate: (args: IOverlayProps) => JSX.Element = (args: IOverlayProps) => (
+    <div className="container">
         <div className="content">
             <p>Long content to demonstrate scrolling...</p>
             <Overlay {...args}>
@@ -18,9 +18,9 @@ const Template: (args: IOverlayProps) => JSX.Element = (args: IOverlayProps) => 
     </div>
 );
 
-export const GeneralOverlayStory: StoryObj<typeof Template> = {
+export const GeneralOverlayStory: StoryObj<typeof GeneralTemplate> = {
     name: 'General overlay view',
-    render: Template,
+    render: GeneralTemplate,
     args: {
         isVisible: false,
         center: true

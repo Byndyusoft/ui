@@ -34,7 +34,7 @@ function Example() {
 | className         | string             | -                  | Additional CSS class for the overlay container |
 | classNames        | IOverlayClassNames | Overlay.module.css | Object with class names for overlay elements   |
 | color             | string             | -                  | Overlay background color (hex format)          |
-| blur              | number             | -                  | Blur effect value in pixels                    |
+| blur              | number             | 10                 | Blur effect value in pixels                    |
 | backgroundOpacity | number             | 0.6                | Background opacity (from 0 to 1)               |
 | zIndex            | number             | 100                | Overlay z-index                                |
 | center            | boolean            | false              | Centers the content inside overlay             |
