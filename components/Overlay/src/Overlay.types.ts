@@ -2,6 +2,7 @@ import { HTMLAttributes } from 'react';
 
 export interface IOverlayProps extends HTMLAttributes<HTMLDivElement> {
     classNames?: IOverlayClassNames;
+    refElement?: HTMLElement | null;
     color?: string;
     backgroundOpacity?: number;
     blur?: number;

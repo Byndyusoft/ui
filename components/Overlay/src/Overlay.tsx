@@ -10,6 +10,7 @@ const Overlay = forwardRef<HTMLDivElement, IOverlayProps>(
             children,
             className,
             classNames = getDefaultOverlayClassNames(),
+            refElement,
             color = '#000000',
             backgroundOpacity = 0.6,
             blur = 10,
@@ -21,7 +22,7 @@ const Overlay = forwardRef<HTMLDivElement, IOverlayProps>(
         },
         ref
     ): JSX.Element => {
-        useScrollLock(isVisible);
+        useScrollLock(isVisible, refElement);
         const mergedClassNames = Object.assign(getDefaultOverlayClassNames(), classNames);
 
         return (
