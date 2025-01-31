@@ -21,13 +21,14 @@ const Overlay = forwardRef<HTMLDivElement, IOverlayProps>(
         ref
     ): JSX.Element => {
         useScrollLock(isVisible);
+        const mergedClassNames = Object.assign(getDefaultOverlayClassNames(), classNames);
 
         return (
             <div
                 className={cn(
-                    classNames.container,
-                    isVisible ? classNames.fadeIn : classNames.fadeOut,
-                    center && classNames.center,
+                    mergedClassNames.container,
+                    isVisible ? mergedClassNames.fadeIn : mergedClassNames.fadeOut,
+                    center && mergedClassNames.center,
                     className
                 )}
                 style={{
