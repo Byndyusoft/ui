@@ -1,0 +1,11 @@
+import { Meta, Markdown, Canvas, Source, ArgsTable } from '@storybook/blocks';
+import Readme from '../../README.md';
+import * as NotificationsStories from './Notifications.stories';
+
+<Meta title="components/Notifications" of={NotificationsStories} />
+
+<Markdown>{Readme}</Markdown>
+
+# Story
+
+<Canvas of={NotificationsStories.NotificationsStory} />

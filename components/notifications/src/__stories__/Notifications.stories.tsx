@@ -3,7 +3,6 @@ import { StoryObj } from '@storybook/react';
 import NotificationsManager, { useNotifications, INotificationData } from '..';
 import { TNotificationPosition, TNotificationTheme } from '../Notifications.types';
 import styles from './Notifications.stories.module.css';
-import { NotificationsItem } from '../partials/NotificationsItem';
 
 const positions: TNotificationPosition[] = [
     'top-right',
@@ -76,7 +75,8 @@ const Template = (): JSX.Element => {
     };
 
     const renderEmitterCode = () => {
-        const baseCode = (type?: string) => `
+        const baseCode = (type?: string) => `const { ${type} } = useNotifications();
+
 ${type}({
     title: \`🔔 Notification ${activeTheme}\`,
     message: 'Notification message',
@@ -89,7 +89,8 @@ ${type}({
 });`;
 
         if (activeTheme === 'custom') {
-            return `
+            return `const { custom } = useNotifications();
+
 custom(({data}) => <div>{data.id} | Custom notification</div>,
     {
         position: ${activePosition},

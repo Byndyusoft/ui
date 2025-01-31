@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { Callback } from '@byndyusoft-ui/types';
 import {
     INotificationsItem,
@@ -44,7 +44,7 @@ export const useNotificationsManager = (params: IUseNotificationsStateParams) =>
         return () => notificationService.dismiss(itemId);
     };
 
-    const removeNotification = (itemId: TNotificationItemId) => () => {
+    const removeNotification = (itemId: TNotificationItemId) => (): void => {
         notificationService.remove(itemId);
     };
 

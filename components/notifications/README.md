@@ -1,6 +1,5 @@
 # `@byndyusoft-ui/notifications`
 
-The `Nptofications` component is a ...
 
 ## Installation
 
@@ -156,7 +155,7 @@ import NotificationsManager from '@byndyusoft-ui/notifications';
 
 ### Usages
 
-```ts
+```js
 import { useNotifications } from '@byndyusoft-ui/notifications';
 
 
@@ -178,11 +177,21 @@ const options = {
 
 const notifications = useNotifications()
 
-notifications.success(options)
-notifications.danger(options)
-notifications.info(options)
-notifications.warning(options)
-notifications.ordinary(options)
+// create new
+notifications.success(options);
+notifications.danger(options);
+notifications.info(options);
+notifications.warning(options);
+notifications.ordinary(options);
+notifications.custom(({ data, index }) => <div>{data.title}</div>, { /* ...options */ });
+// update by id
+notifications.update('id', options);
+// deleting with animation
+notifications.dismiss('id');
+notifications.dismissAll();
+// deleting without animation
+notifications.remove('id');
+notifications.removeAll();
 ```
 
 ### Types

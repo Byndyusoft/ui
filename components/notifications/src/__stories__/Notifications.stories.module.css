@@ -2,8 +2,6 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    justify-content: center;
-    height: 100vh;
 }
 
 .row {
@@ -15,7 +13,7 @@
 .col {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
 }
 
 .row > button {
@@ -85,7 +83,7 @@
 
 .code {
     padding: 10px;
-    height: 230px;
+    height: 250px;
     border-radius: 5px;
     overflow-x: auto;
     font-family: 'Courier New, Courier, monospace', serif;
