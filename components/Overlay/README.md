@@ -32,6 +32,7 @@ function Example() {
 | children          | ReactNode          | -                  | Content to be rendered inside the overlay                                 |
 | className         | string             | -                  | Additional CSS class for the overlay container                            |
 | classNames        | IOverlayClassNames | Overlay.module.css | Object with class names for overlay elements                              |
+| refElement        | HTMLElement        | -                  | Reference to the element that will be used lock scroll                    |
 | color             | string             | #000000            | Overlay background color (hex format)                                     |
 | backgroundOpacity | number             | 0.6                | Background opacity (from 0 to 1)                                          |
 | blur              | number             | 10                 | Blur effect value in pixels                                               |
@@ -44,3 +45,4 @@ function Example() {
 
 -   Component uses `useBodyScrollLock` hook to prevent body scrolling when overlay is visible
 -   The color prop expects a hex color value (e.g., "#000000")
+-   The refElement prop is used to lock scroll of the element when overlay is visible
