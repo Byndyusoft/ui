@@ -12,6 +12,7 @@ export interface IOverlayProps extends HTMLAttributes<HTMLDivElement> {
 
 export interface IOverlayClassNames {
     container?: string;
-    isVisible?: string;
+    fadeIn?: string;
+    fadeOut?: string;
     center?: string;
 }

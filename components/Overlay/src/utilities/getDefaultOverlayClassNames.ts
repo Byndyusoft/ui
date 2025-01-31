@@ -3,7 +3,8 @@ import styles from '../Overlay.module.css';
 
 const getDefaultOverlayClassNames = (): IOverlayClassNames => ({
     container: styles.container,
-    isVisible: styles.isVisible,
+    fadeIn: styles.fadeIn,
+    fadeOut: styles.fadeOut,
     center: styles.center
 });
 

@@ -1,15 +1,6 @@
 .container {
     position: fixed;
     inset: 0;
-    background-color: #00000050;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    z-index: 200;
-}
-
-.isVisible {
-    opacity: 1;
-    transition: opacity 0.4s ease;
 }
 
 .center > * {
@@ -18,3 +9,34 @@
     left: 50vw;
     transform: translate(-50%, -50%);
 }
+
+.container.fadeIn {
+    animation: fadeIn 0.4s ease forwards;
+}
+  
+.container.fadeOut {
+    animation: fadeOut 0.4s ease forwards;
+}
+  
+@keyframes fadeIn {
+    0% {
+        display: block; 
+        opacity: 0;
+    }
+    100% {
+        display: block; 
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        display: block;
+        opacity: 1;
+    }
+    100% {
+        display: none;
+        opacity: 0;
+    }
+}
+  

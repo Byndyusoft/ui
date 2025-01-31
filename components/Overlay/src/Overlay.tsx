@@ -11,7 +11,7 @@ const Overlay = forwardRef<HTMLDivElement, IOverlayProps>(
             className,
             classNames = getDefaultOverlayClassNames(),
             isVisible = false,
-            color,
+            color = '#000000',
             blur = 10,
             backgroundOpacity = 0.6,
             zIndex = 100,
@@ -26,14 +26,14 @@ const Overlay = forwardRef<HTMLDivElement, IOverlayProps>(
             <div
                 className={cn(
                     classNames.container,
-                    isVisible && classNames.isVisible,
+                    isVisible ? classNames.fadeIn : classNames.fadeOut,
                     center && classNames.center,
                     className
                 )}
                 style={{
                     zIndex: zIndex,
-                    backgroundColor: color ? hexToRgba(color, backgroundOpacity) : '',
-                    backdropFilter: blur ? `blur(${blur}px)` : ''
+                    backgroundColor: hexToRgba(color, backgroundOpacity),
+                    backdropFilter: `blur(${blur}px)`
                 }}
                 role="presentation"
                 ref={ref}
