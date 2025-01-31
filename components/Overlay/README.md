@@ -27,20 +27,20 @@ function Example() {
 
 ## Props
 
-| Prop              | Type               | Default            | Description                                    |
-| ----------------- | ------------------ | ------------------ | ---------------------------------------------- |
-| children          | ReactNode          | -                  | Content to be rendered inside the overlay      |
-| className         | string             | -                  | Additional CSS class for the overlay container |
-| classNames        | IOverlayClassNames | Overlay.module.css | Object with class names for overlay elements   |
-| isVisible         | boolean            | false              | Controls overlay visibility                    |
-| color             | string             | #000000            | Overlay background color (hex format)          |
-| blur              | number             | 10                 | Blur effect value in pixels                    |
-| backgroundOpacity | number             | 0.6                | Background opacity (from 0 to 1)               |
-| zIndex            | number             | 100                | Overlay z-index                                |
-| center            | boolean            | false              | Centers the content inside overlay             |
+| Prop              | Type               | Default            | Description                                                               |
+| ----------------- | ------------------ | ------------------ | ------------------------------------------------------------------------- |
+| children          | ReactNode          | -                  | Content to be rendered inside the overlay                                 |
+| className         | string             | -                  | Additional CSS class for the overlay container                            |
+| classNames        | IOverlayClassNames | Overlay.module.css | Object with class names for overlay elements                              |
+| color             | string             | #000000            | Overlay background color (hex format)                                     |
+| backgroundOpacity | number             | 0.6                | Background opacity (from 0 to 1)                                          |
+| blur              | number             | 10                 | Blur effect value in pixels                                               |
+| zIndex            | number             | 100                | Overlay z-index                                                           |
+| isVisible         | boolean            | false              | Controls overlay visibility                                               |
+| center            | boolean            | false              | Centers the content inside overlay                                        |
+| fixed             | boolean            | false              | Determines whether overlay should have fixed position instead of absolute |
 
 # Notes
 
 -   Component uses `useBodyScrollLock` hook to prevent body scrolling when overlay is visible
 -   The color prop expects a hex color value (e.g., "#000000")
--   Overlay takes 100% width and height of the screen

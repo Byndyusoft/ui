@@ -1,13 +1,14 @@
 import { HTMLAttributes } from 'react';
 
 export interface IOverlayProps extends HTMLAttributes<HTMLDivElement> {
-    isVisible?: boolean;
+    classNames?: IOverlayClassNames;
     color?: string;
+    backgroundOpacity?: number;
     blur?: number;
     zIndex?: number;
-    backgroundOpacity?: number;
+    isVisible?: boolean;
     center?: boolean;
-    classNames?: IOverlayClassNames;
+    fixed?: boolean;
 }
 
 export interface IOverlayClassNames {
