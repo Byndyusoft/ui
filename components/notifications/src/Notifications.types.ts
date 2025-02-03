@@ -99,6 +99,7 @@ export interface INotificationsItemProps {
     duration: number;
     position: TNotificationPosition;
     removeNotification: () => void;
+    dismissNotification: () => void;
     theme?: TNotificationTheme;
     isAutoClosable?: boolean;
     dismiss?: boolean;

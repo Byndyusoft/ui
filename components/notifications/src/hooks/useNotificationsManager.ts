@@ -44,6 +44,10 @@ export const useNotificationsManager = (params: IUseNotificationsStateParams) =>
         return () => notificationService.dismiss(itemId);
     };
 
+    const dismissNotification = (itemId: TNotificationItemId) => (): void => {
+        notificationService.dismiss(itemId);
+    };
+
     const removeNotification = (itemId: TNotificationItemId) => (): void => {
         notificationService.remove(itemId);
     };
@@ -121,6 +125,7 @@ export const useNotificationsManager = (params: IUseNotificationsStateParams) =>
         possiblePositions,
         notifications,
         onClickAndClose,
+        dismissNotification,
         removeNotification,
         renderNotificationItem,
         prepareNotifications

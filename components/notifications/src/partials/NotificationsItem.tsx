@@ -24,6 +24,7 @@ export const NotificationsItem = (props: INotificationsItemProps) => {
         duration,
         isAutoClosable,
         isPauseToRemove,
+        dismissNotification,
         removeNotification,
         className,
         style,
@@ -66,7 +67,7 @@ export const NotificationsItem = (props: INotificationsItemProps) => {
 
             timerStartRef.current = new Date().getTime();
 
-            timeoutId = setTimeout(closeNotification, remainingTime.current);
+            timeoutId = setTimeout(dismissNotification, remainingTime.current);
         };
 
         if (isPauseToRemove) {

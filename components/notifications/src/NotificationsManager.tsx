@@ -37,6 +37,7 @@ const NotificationsManager = (props: INotificationsManagerProps) => {
         notifications,
         possiblePositions,
         onClickAndClose,
+        dismissNotification,
         removeNotification,
         renderNotificationItem,
         prepareNotifications
@@ -80,7 +81,7 @@ const NotificationsManager = (props: INotificationsManagerProps) => {
                     >
                         {preparedNotifications?.map((item, itemIndex) => (
                             <NotificationsItem
-                                key={`notifications-item-${item.id}}`}
+                                key={`notifications-item-${item.id}`}
                                 className={item?.classNameItem || classNameItem}
                                 style={item?.styleItem || styleItem}
                                 duration={item?.duration ?? duration}
@@ -92,6 +93,7 @@ const NotificationsManager = (props: INotificationsManagerProps) => {
                                     (isPauseOnHover && focusedPosition === position) ||
                                     (isPauseWhenPageHidden && isDocumentHidden)
                                 }
+                                dismissNotification={dismissNotification(item.id)}
                                 removeNotification={removeNotification(item.id)}
                                 onClick={onClickAndClose(item.id, item.isCloseOnClick)}
                                 afterClose={item?.afterClose}
