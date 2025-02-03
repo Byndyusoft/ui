@@ -1,0 +1,36 @@
+{{- if .Values.containerPorts }}
+{{- $microservicename := .Values.microservice.name }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $microservicename }}
+  labels:
+    app: {{ $microservicename }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    project: {{ .Values.project }}
+    environment: {{ .Values.environment }}
+    {{ if .Values.prometheus.enabled }}
+    prometheus.deckhouse.io/custom-target: {{ $microservicename }}
+    {{ end }}
+    {{- with .Values.service.labels }}
+    {{ toYaml . }}
+    {{- end }}
+  {{ if or (.Values.prometheus.enabled) (.Values.service.annotations) }}
+  annotations:
+    {{ if .Values.prometheus.enabled }}
+    prometheus.deckhouse.io/path: {{ .Values.prometheus.metricsPath | quote }}
+    prometheus.deckhouse.io/allow-unready-pod: "true"
+    prometheus.deckhouse.io/sample-limit: {{ .Values.prometheus.sampleLimit | quote }}
+    {{ end }}
+  {{- with .Values.service.annotations }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- end }}
+spec:
+  ports: {{ toYaml .Values.servicePorts | nindent 2 }}
+  selector:
+    app: {{ $microservicename }}
+    release: {{ .Release.Name }}
+{{- end }}

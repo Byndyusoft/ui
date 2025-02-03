@@ -1,11 +1,12 @@
 {
   "name": "@byndyusoft-ui/use-is-mounted",
   "version": "0.0.1",
-  "description": "Byndyusoft UI use-is-mounted React Hook",
+  "description": "Byndyusoft UI React Hook",
   "keywords": [
     "byndyusoft",
     "byndyusoft-ui",
     "react",
+    "hook",
     "use-is-mounted"
   ],
   "author": "Dmitrii Maletskii <maleckij@byndyusoft.com>",
@@ -27,5 +28,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "peerDependencies": {
+    "react": ">=17"
   }
 }

@@ -1,8 +1,12 @@
 import { dirname, join } from 'path';
 module.exports = {
     stories: [
-        '../components/**/src/**/*.stories.@(js|jsx|ts|tsx|mdx)',
-        '../hooks/**/src/**/*.stories.@(js|jsx|ts|tsx|mdx)'
+        '../components/**/src/**/*.stories.@(js|jsx|ts|tsx)',
+        '../components/**/src/**/*.docs.mdx',
+        '../hooks/**/src/**/*.stories.@(js|jsx|ts|tsx)',
+        '../hooks/**/src/**/*.docs.mdx',
+        '../styles/**/*.stories.@(js|jsx|ts|tsx)',
+        '../styles/**/*.docs.mdx'
     ],
 
     addons: [
@@ -16,7 +20,8 @@ module.exports = {
                 presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript']
             }
         },
-        getAbsolutePath('@storybook/addon-mdx-gfm')
+        getAbsolutePath('@storybook/addon-mdx-gfm'),
+        getAbsolutePath('@newhighsco/storybook-addon-svgr')
     ],
 
     framework: {

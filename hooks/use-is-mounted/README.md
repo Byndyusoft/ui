@@ -1,6 +1,4 @@
 # `@byndyusoft-ui/use-is-mounted`
----
-> Add description
 
 ### Installation
 

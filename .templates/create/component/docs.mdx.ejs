@@ -1,20 +1,20 @@
 ---
-to: "<%= hasDocs ? `components/${h.changeCase.paramCase(name)}/src/${name}.stories.mdx` : null %>"
+to: "<%= hasDocs ? `components/${h.changeCase.paramCase(name)}/src/${name}.docs.mdx` : null %>"
 ---
 import {
-    Meta,
-    Story,
-    Canvas,
+    Markdown,
     Source,
+    Canvas,
+    Meta,
     ArgsTable
-} from '@storybook/addon-docs';
+} from '@storybook/blocks';
 import Readme from '../README.md';
 import <%= name %> from './<%= name %>';
-import { <%= name %>Story } from './<%= name %>.stories';
+import * as <%= name %>Stories from './<%= name %>.stories';
 
-<Meta title="components/<%= name %>" component={<%= name %>} />
+<Meta title="components/<%= name %>" of={<%= name %>Stories} />
 
-<Readme />
+<Markdown><Readme /></Markdown>
 
 ## Usage
 
@@ -29,10 +29,7 @@ To use the component in your project you must:
 
 2. Call the component and give it the desired props, for example:
 
-<Canvas withSource="open">
-    <Story story={<%= name %>Story} />
-</Canvas>
-
+<Canvas sourceState="shown" of={<%= name %>Stories.ComponentStory} />
 
 ## Props
 

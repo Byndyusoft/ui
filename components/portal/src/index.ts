@@ -1,5 +1,5 @@
 import Portal from './Portal';
 
-export { default as usePortal, IUsePortal } from './usePortal';
+export { default as usePortalContainer, IUsePortalContainer } from './usePortalContainer';
 export { IPortalProps } from './Portal.types';
 export default Portal;
