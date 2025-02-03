@@ -20,7 +20,6 @@ export interface INotification {
     footer?: ReactNode;
     isClosable?: boolean;
     onClose?: Callback;
-    afterClose?: Callback;
     className?: string;
     style?: CSSProperties;
 }
@@ -43,6 +42,9 @@ export interface INotificationsItem extends INotification {
     dismiss?: boolean;
     isCloseOnClick?: boolean;
     render?: TNotificationRender;
+    afterClose?: Callback;
+    classNameItem?: string;
+    styleItem?: CSSProperties;
 }
 
 export type TCreateNotificationParams = Partial<Omit<INotificationsItem, 'onClose' | 'dismiss'>>;
@@ -102,6 +104,7 @@ export interface INotificationsItemProps {
     dismiss?: boolean;
     isPauseToRemove?: boolean;
     onClick?: () => void;
+    afterClose?: () => void;
     className?: string;
     style?: CSSProperties;
 }

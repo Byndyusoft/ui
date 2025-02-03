@@ -20,7 +20,7 @@ import NotificationsManager, {useNotifications, INotificationData} from '@byndyu
 const SomeComponent = () => {
   const {success} = useNotifications();
 
-  const onShowSuccess = () => {
+  const onShowSuccessNotification = () => {
     success({
       title: 'Some string',
       message: 'Some ReactNode...',
@@ -29,7 +29,7 @@ const SomeComponent = () => {
   }
 
   return (
-    <button onClick={data?.onClose}>
+    <button onClick={onShowSuccessNotification}>
       Show success
     </button>
   )
@@ -115,7 +115,7 @@ import NotificationsManager from '@byndyusoft-ui/notifications';
     isPauseWhenPageHidden
     isCloseOnClick={false}
     isPauseOnHover
-    renderNotification={Notification} // or ({ data, index }) => JSX
+    renderNotification={Notification} // or ({ data, index }) => <Notification/>
     renderNotificationComponents={{
         success: SuccessNotification,
         danger: DangerNotification,
@@ -130,7 +130,7 @@ import NotificationsManager from '@byndyusoft-ui/notifications';
 > - `renderNotificationComponents` allows you to set a component personally for each `theme` of notification (e.g., `success`, `danger`, `info`, `warning`, `ordinary`).
 > - If you use `renderNotification`, then `renderNotificationComponents` will override the components for all notification themes.
 
-## Emitter (useNotifications)
+## Emitter (actions from useNotifications)
 
 ### Params create
 
@@ -150,8 +150,10 @@ import NotificationsManager from '@byndyusoft-ui/notifications';
 | render         | `TNotificationRender`   | Component for rendering the notification.                           |
 | theme          | `TNotificationTheme`    | Theme of the notification.                                          |
 | afterClose     | () => void              | Callback function to be executed after the notification is closed.  |
-| className      | string                  | Class for the notification container.                               |
-| style          | CSSProperties           | Style object for the notification container.                        |
+| className      | string                  | Class name for the notifications component.                                    |
+| classNameItem  | CSSProperties           | Class for the notification container.                               |
+| style          | CSSProperties           | Style object for the notifications component.                                                                   |
+| styleItem      | CSSProperties           | Style object for the notification container.                        |
 
 ### Usages
 
@@ -168,10 +170,10 @@ const options = {
   isClosable: true,
   isAutoClosable: true,
   isCloseOnClick: false,
-  className: 'some-class',
-  style: {
-    // ...styles
-  },
+  className: 'notification',
+  style: {/* ...styles notification */  },
+  classNameItem: 'contaider-item',
+  styleItem: {/* ...styles contaider*/  },
   afterClose: () => console.log("afterClose"),
 };
 

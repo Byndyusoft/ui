@@ -250,14 +250,11 @@ custom(({data}) => <div>{data.id} | Custom notification</div>,
 };
 
 export const NotificationsStory: StoryObj<typeof Template> = {
-    name: 'Notifications tory',
+    name: 'Notifications story',
     render: Template,
     args: {}
 };
 
 export default {
     title: 'components/Notifications'
-    // parameters: {
-    //     layout: 'fullscreen'
-    // }
 };

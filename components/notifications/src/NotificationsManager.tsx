@@ -81,8 +81,8 @@ const NotificationsManager = (props: INotificationsManagerProps) => {
                         {preparedNotifications?.map((item, itemIndex) => (
                             <NotificationsItem
                                 key={`notifications-item-${item.id}}`}
-                                className={classNameItem}
-                                style={styleItem}
+                                className={item?.classNameItem || classNameItem}
+                                style={item?.styleItem || styleItem}
                                 duration={item?.duration ?? duration}
                                 position={item?.position || position}
                                 theme={item.theme}
@@ -94,6 +94,7 @@ const NotificationsManager = (props: INotificationsManagerProps) => {
                                 }
                                 removeNotification={removeNotification(item.id)}
                                 onClick={onClickAndClose(item.id, item.isCloseOnClick)}
+                                afterClose={item?.afterClose}
                             >
                                 {renderNotificationItem(item, itemIndex)}
                             </NotificationsItem>

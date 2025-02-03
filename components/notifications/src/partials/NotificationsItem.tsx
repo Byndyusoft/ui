@@ -25,9 +25,10 @@ export const NotificationsItem = (props: INotificationsItemProps) => {
         isAutoClosable,
         isPauseToRemove,
         removeNotification,
-        onClick,
         className,
-        style
+        style,
+        onClick,
+        afterClose
     } = props;
 
     const timerStartRef = useRef(0);
@@ -35,6 +36,7 @@ export const NotificationsItem = (props: INotificationsItemProps) => {
 
     const closeNotification = useCallback(() => {
         setIsFadingOut(true);
+        afterClose?.();
 
         setTimeout(() => {
             removeNotification();

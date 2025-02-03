@@ -62,7 +62,6 @@ export const useNotificationsManager = (params: IUseNotificationsStateParams) =>
             isClosable: item?.isClosable || isClosable,
             onClose: () => {
                 notificationService.dismiss(item.id);
-                item?.afterClose?.();
             }
         };
     };
