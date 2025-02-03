@@ -14,5 +14,6 @@ module.exports = {
     },
     coverageDirectory: '<rootDir>/.coverage',
     coveragePathIgnorePatterns: ['index.ts'],
-    clearMocks: true
+    clearMocks: true,
+    passWithNoTests: true
 };
