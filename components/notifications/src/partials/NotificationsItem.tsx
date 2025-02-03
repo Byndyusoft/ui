@@ -31,7 +31,6 @@ export const NotificationsItem = (props: INotificationsItemProps) => {
     } = props;
 
     const timerStartRef = useRef(0);
-    const lastStartRef = useRef(0);
     const remainingTime = useRef(duration);
 
     const closeNotification = useCallback(() => {
@@ -48,7 +47,7 @@ export const NotificationsItem = (props: INotificationsItemProps) => {
     }, [isAutoClosable, duration]);
 
     useEffect(() => {
-        if (!isAutoClosable || duration === Infinity) return;
+        if (!isAutoClosable || duration === Infinity || duration < 0) return;
 
         let timeoutId: ReturnType<typeof setTimeout>;
 
@@ -58,8 +57,6 @@ export const NotificationsItem = (props: INotificationsItemProps) => {
 
                 remainingTime.current -= elapsedTime;
             }
-
-            lastStartRef.current = new Date().getTime();
         };
 
         const startTimer = () => {
@@ -96,7 +93,7 @@ export const NotificationsItem = (props: INotificationsItemProps) => {
     const containerRole = theme === 'danger' ? 'alert' : 'status';
 
     return (
-        <li className={classes} onClick={onClick} style={style} role={containerRole}>
+        <li className={classes} style={style} role={containerRole} onClick={onClick}>
             {children}
         </li>
     );

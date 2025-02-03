@@ -10,28 +10,41 @@
 }
 
 .animation_bottom_left,
-.animation_bottom_right,
-.animation_bottom_center {
-    animation: slideInTop 0.3s ease-out forwards;
+.animation_top_left {
+    animation: slideInRight 0.3s ease-out forwards;
 }
 
 .animation_bottom_left.hidden,
-.animation_bottom_right.hidden,
-.animation_bottom_center.hidden {
-    animation: slideOutBottom 0.2s ease-out forwards, collapseHeight 0.2s ease-out 0.1s forwards;
+.animation_top_left.hidden {
+    animation: slideOutLeft 0.2s ease-in forwards, collapseHeight 0.2s ease-out 0.1s forwards;
 }
 
-.animation_top_left,
-.animation_top_right,
+.animation_bottom_right,
+.animation_top_right {
+    animation: slideInLeft 0.3s ease-out forwards;
+}
+
+.animation_bottom_right.hidden,
+.animation_top_right.hidden {
+    animation: slideOutRight 0.2s ease-out forwards, collapseHeight 0.2s ease-out 0.1s forwards;
+}
+
 .animation_top_center {
     animation: slideInBottom 0.2s ease-out forwards;
 }
 
-.animation_top_left.hidden,
-.animation_top_right.hidden,
 .animation_top_center.hidden {
     animation: slideOutTop 0.2s ease-out forwards, collapseHeight 0.2s ease-out 0.1s forwards;
 }
+
+.animation_bottom_center {
+    animation: slideInTop 0.3s ease-out forwards;
+}
+
+.animation_bottom_center.hidden {
+    animation: slideOutBottom 0.2s ease-out forwards, collapseHeight 0.2s ease-out 0.1s forwards;
+}
+
 
 @keyframes collapseHeight {
     0% {
@@ -127,43 +140,5 @@
     100% {
         transform: translateY(100%);
         opacity: 0;
-    }
-}
-
-@media (min-width: 768px) {
-    .animation_bottom_left,
-    .animation_top_left {
-        animation: slideInRight 0.3s ease-out forwards;
-    }
-
-    .animation_bottom_left.hidden,
-    .animation_top_left.hidden {
-        animation: slideOutLeft 0.2s ease-in forwards, collapseHeight 0.2s ease-out 0.1s forwards;
-    }
-
-    .animation_bottom_right,
-    .animation_top_right {
-        animation: slideInLeft 0.3s ease-out forwards;
-    }
-
-    .animation_bottom_right.hidden,
-    .animation_top_right.hidden {
-        animation: slideOutRight 0.2s ease-out forwards, collapseHeight 0.2s ease-out 0.1s forwards;
-    }
-
-    .animation_top_center {
-        animation: slideInBottom 0.2s ease-out forwards;
-    }
-
-    .animation_top_center.hidden {
-        animation: slideOutTop 0.2s ease-out forwards, collapseHeight 0.2s ease-out 0.1s forwards;
-    }
-
-    .animation_bottom_center {
-        animation: slideInTop 0.3s ease-out forwards;
-    }
-
-    .animation_bottom_center.hidden {
-        animation: slideOutBottom 0.2s ease-out forwards, collapseHeight 0.2s ease-out 0.1s forwards;
     }
 }

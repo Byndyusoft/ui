@@ -24,8 +24,9 @@ const NotificationComponent = ({ data }: INotificationData) => (
     <div data-testid="notification-item" className={`notification-item ${data.theme}`}>
         <h3>{data.title}</h3>
         {data?.message && <div>{data.message}</div>}
+        {data?.footer && <div>{data.footer}</div>}
         {data?.isClosable && (
-            <button data-testid="close-button" onClick={data?.onClose}>
+            <button onClick={data?.onClose} aria-label="close-notification">
                 ✖️
             </button>
         )}
@@ -81,165 +82,209 @@ describe('NotificationsManager', () => {
         jest.clearAllTimers();
     });
 
-    describe('actions', () => {
-        test('create notification', async () => {
-            const { getByRole, getByTestId } = setup();
+    test('create notification', async () => {
+        const { getByRole, getByTestId } = setup();
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.CREATE }));
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.CREATE }));
 
-            expect(getByTestId('notification-item')).toBeInTheDocument();
-            expect(getByRole('status')).toBeInTheDocument();
+        expect(getByTestId('notification-item')).toBeInTheDocument();
+        expect(getByRole('status')).toBeInTheDocument();
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE_ALL }));
-        });
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE_ALL }));
+    });
 
-        test('updates notification', async () => {
-            const { getByRole } = setup();
+    test('updates notification', async () => {
+        const { getByRole } = setup();
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.CREATE }));
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.CREATE }));
 
-            expect(getByRole('heading', { level: 3 })).toHaveTextContent('Title');
+        expect(getByRole('heading', { level: 3 })).toHaveTextContent('Title');
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.UPDATE }));
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.UPDATE }));
 
-            expect(getByRole('heading', { level: 3 })).toHaveTextContent('New title');
+        expect(getByRole('heading', { level: 3 })).toHaveTextContent('New title');
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE_ALL }));
-        });
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE_ALL }));
+    });
 
-        test('adds `success` notification', async () => {
-            const { getByRole } = setup();
+    test('adds `success` notification', async () => {
+        const { getByRole } = setup();
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.SUCCESS }));
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.SUCCESS }));
 
-            expect(getByRole('status')).toBeInTheDocument();
-            expect(getByRole('heading')).toHaveTextContent('Success');
+        expect(getByRole('status')).toBeInTheDocument();
+        expect(getByRole('heading')).toHaveTextContent('Success');
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE_ALL }));
-        });
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE_ALL }));
+    });
 
-        test('adds `info` notification', async () => {
-            const { getByRole } = setup();
+    test('adds `info` notification', async () => {
+        const { getByRole } = setup();
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.INFO }));
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.INFO }));
 
-            expect(getByRole('status')).toBeInTheDocument();
-            expect(getByRole('heading')).toHaveTextContent('Info');
+        expect(getByRole('status')).toBeInTheDocument();
+        expect(getByRole('heading')).toHaveTextContent('Info');
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE_ALL }));
-        });
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE_ALL }));
+    });
 
-        test('adds `warning` notification', async () => {
-            const { getByRole } = setup();
+    test('adds `warning` notification', async () => {
+        const { getByRole } = setup();
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.WARNING }));
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.WARNING }));
 
-            expect(getByRole('status')).toBeInTheDocument();
-            expect(getByRole('heading')).toHaveTextContent('Warning');
+        expect(getByRole('status')).toBeInTheDocument();
+        expect(getByRole('heading')).toHaveTextContent('Warning');
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE_ALL }));
-        });
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE_ALL }));
+    });
 
-        test('adds `ordinary` notification', async () => {
-            const { getByRole } = setup();
+    test('adds `ordinary` notification', async () => {
+        const { getByRole } = setup();
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.ORDINARY }));
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.ORDINARY }));
 
-            expect(getByRole('status')).toBeInTheDocument();
-            expect(getByRole('heading')).toHaveTextContent('Ordinary');
+        expect(getByRole('status')).toBeInTheDocument();
+        expect(getByRole('heading')).toHaveTextContent('Ordinary');
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE_ALL }));
-        });
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE_ALL }));
+    });
 
-        test('adds `danger` notification', async () => {
-            const { getByRole } = setup();
+    test('adds `danger` notification', async () => {
+        const { getByRole } = setup();
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.DANGER }));
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.DANGER }));
 
-            expect(getByRole('alert')).toBeInTheDocument();
-            expect(getByRole('heading')).toHaveTextContent('Danger');
+        expect(getByRole('alert')).toBeInTheDocument();
+        expect(getByRole('heading')).toHaveTextContent('Danger');
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE_ALL }));
-        });
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE_ALL }));
+    });
 
-        test('adds `custom` notification', async () => {
-            const { getByRole, getByText, queryByTestId } = setup();
+    test('adds `custom` notification', async () => {
+        const { getByRole, getByText, queryByTestId } = setup();
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.CUSTOM }));
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.CUSTOM }));
 
-            expect(getByText('Custom')).toBeInTheDocument();
-            expect(queryByTestId('notification-item')).not.toBeInTheDocument();
+        expect(getByText('Custom')).toBeInTheDocument();
+        expect(queryByTestId('notification-item')).not.toBeInTheDocument();
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE_ALL }));
-        });
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE_ALL }));
+    });
 
-        test('dismiss notification', async () => {
-            const { getByRole, queryByRole } = setup();
+    test('dismiss notification', async () => {
+        const { getByRole, queryByRole } = setup();
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.CREATE }));
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.CREATE }));
 
-            expect(getByRole('status')).toBeInTheDocument();
+        expect(getByRole('status')).toBeInTheDocument();
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.DISMISS }));
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.DISMISS }));
 
-            await waitFor(
-                () => {
-                    expect(queryByRole('status')).not.toBeInTheDocument();
-                },
-                { timeout: TIME_BEFORE_UNMOUNT + 1 }
-            );
+        await waitFor(
+            () => {
+                expect(queryByRole('status')).not.toBeInTheDocument();
+            },
+            { timeout: TIME_BEFORE_UNMOUNT + 1 }
+        );
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE_ALL }));
-        });
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE_ALL }));
+    });
 
-        test('dismiss all notifications', async () => {
-            const { getByRole, getAllByRole, queryAllByRole } = setup();
+    test('dismiss all notifications', async () => {
+        const { getByRole, getAllByRole, queryAllByRole } = setup();
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.DANGER }));
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.SUCCESS }));
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.WARNING }));
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.DANGER }));
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.DANGER }));
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.DANGER }));
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.SUCCESS }));
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.WARNING }));
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.DANGER }));
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.DANGER }));
 
-            expect(getAllByRole('status')).toHaveLength(2);
-            expect(getAllByRole('alert')).toHaveLength(3);
+        expect(getAllByRole('status')).toHaveLength(2);
+        expect(getAllByRole('alert')).toHaveLength(3);
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.DISMISS_ALL }));
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.DISMISS_ALL }));
 
-            await waitFor(
-                () => {
-                    expect(queryAllByRole('status')).toHaveLength(0);
-                    expect(queryAllByRole('alert')).toHaveLength(0);
-                },
-                { timeout: TIME_BEFORE_UNMOUNT + 1 }
-            );
+        await waitFor(
+            () => {
+                expect(queryAllByRole('status')).toHaveLength(0);
+                expect(queryAllByRole('alert')).toHaveLength(0);
+            },
+            { timeout: TIME_BEFORE_UNMOUNT + 1 }
+        );
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE_ALL }));
-        });
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE_ALL }));
+    });
 
-        test('remove notification', async () => {
-            const { getByRole, queryByRole } = setup();
+    test('remove notification', async () => {
+        const { getByRole, queryByRole } = setup();
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.CREATE }));
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.CREATE }));
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE }));
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE }));
 
+        expect(queryByRole('status')).not.toBeInTheDocument();
+
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE_ALL }));
+    });
+
+    test('remove all notifications', async () => {
+        const { getByRole, getAllByRole, queryAllByRole } = setup();
+
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.SUCCESS }));
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.WARNING }));
+
+        expect(getAllByRole('status')).toHaveLength(2);
+
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE_ALL }));
+
+        expect(queryAllByRole('status')).toHaveLength(0);
+    });
+
+    test('creates and closes custom notification', async () => {
+        const { getByRole, getByText, queryByRole, getByLabelText } = setup(
+            {},
+            {
+                title: 'test-title',
+                message: 'test-message',
+                footer: 'test-footer',
+                isClosable: true
+            }
+        );
+
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.SUCCESS }));
+
+        expect(getByRole('status')).toBeInTheDocument();
+        expect(getByText('test-title')).toBeInTheDocument();
+        expect(getByText('test-message')).toBeInTheDocument();
+        expect(getByText('test-footer')).toBeInTheDocument();
+        expect(getByLabelText('close-notification')).toBeInTheDocument();
+
+        await userEvent.click(getByRole('button', { name: 'close-notification' }));
+
+        await waitFor(() => {
             expect(queryByRole('status')).not.toBeInTheDocument();
-
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE_ALL }));
         });
+    });
+    test('limits the number of notifications displayed', async () => {
+        const limit = 2;
+        const { getByRole, getAllByRole, queryByRole } = setup({ limit });
 
-        test('remove all notifications', async () => {
-            const { getByRole, getAllByRole, queryAllByRole } = setup();
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.CREATE }));
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.ORDINARY }));
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.SUCCESS }));
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.WARNING }));
+        expect(getAllByRole('status')).toHaveLength(2);
 
-            expect(getAllByRole('status')).toHaveLength(2);
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.DANGER }));
 
-            await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE_ALL }));
+        expect(getAllByRole('status')).toHaveLength(2);
+        expect(queryByRole('alert')).not.toBeInTheDocument();
 
-            expect(queryAllByRole('status')).toHaveLength(0);
-        });
+        await userEvent.click(getByRole('button', { name: BUTTON_NAMES.REMOVE }));
+
+        expect(getAllByRole('status')).toHaveLength(1);
+        expect(getAllByRole('alert')).toHaveLength(1);
+        expect(queryByRole('alert')).toBeInTheDocument();
     });
 });
