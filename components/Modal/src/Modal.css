@@ -23,7 +23,7 @@
     max-width: 328px;
     max-height: calc(100dvh - 2rem);
     margin: 1rem;
-    color: #ffffff;
+    color: #FFFFFF;
     background: #252528;
     opacity: 0;
     transform: translateY(-25%);
@@ -70,7 +70,7 @@
     flex-shrink: 0;
     height: 1rem;
     width: 1rem;
-    background: transparent url('./CrossIcon.svg') no-repeat center center;
+    background: transparent url('./partials/assets/CrossIcon.svg') no-repeat center center;
     border: none;
     background-size: 0.75rem;
 }

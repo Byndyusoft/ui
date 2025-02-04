@@ -1,11 +1,10 @@
 import React from 'react';
-import { Story } from '@storybook/react';
+import { StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import ModalsProvider, { useModals } from '@byndyusoft-ui/modals-provider';
-import { ModalBody, ModalFooter, ModalHeader, ModalHeading, ModalTitle } from './partials';
-import Modal from './Modal';
+import Modal, { ModalBody, ModalFooter, ModalHeader, ModalHeading, ModalTitle } from '../index';
 
-const ShortBodyTemplate: Story = () => {
+const ShortBodyTemplate = () => {
     const { open } = useModals();
 
     return (
@@ -31,17 +30,18 @@ const ShortBodyTemplate: Story = () => {
     );
 };
 
-export const ShortBody = ShortBodyTemplate.bind({});
+const ShortBodyTemplateProvider = () => (
+    <ModalsProvider>
+        <ShortBodyTemplate />
+    </ModalsProvider>
+);
 
-ShortBody.decorators = [
-    StoryComponent => (
-        <ModalsProvider>
-            <StoryComponent />
-        </ModalsProvider>
-    )
-];
+export const ShortBodyStory: StoryObj<typeof ShortBodyTemplateProvider> = {
+    name: 'Short body modal',
+    render: ShortBodyTemplateProvider
+};
 
-const LongBodyTemplate: Story = () => {
+const LongBodyTemplate = () => {
     const { open } = useModals();
 
     return (
@@ -109,15 +109,16 @@ const LongBodyTemplate: Story = () => {
     );
 };
 
-export const LongBody = LongBodyTemplate.bind({});
+const LongBodyTemplateProvider = () => (
+    <ModalsProvider>
+        <LongBodyTemplate />
+    </ModalsProvider>
+);
 
-LongBody.decorators = [
-    StoryComponent => (
-        <ModalsProvider>
-            <StoryComponent />
-        </ModalsProvider>
-    )
-];
+export const LongBodyStory: StoryObj<typeof LongBodyTemplateProvider> = {
+    name: 'Long body modal',
+    render: LongBodyTemplateProvider
+};
 
 export default {
     title: 'components/Modal',
