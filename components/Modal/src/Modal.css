@@ -21,7 +21,7 @@
     display: flex;
     flex-direction: column;
     max-width: 328px;
-    max-height: 100dvh;
+    max-height: calc(100dvh - 2rem);
     margin: 1rem;
     color: #ffffff;
     background: #252528;
@@ -119,5 +119,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 2rem 1.5rem;
+    padding: 1.5rem;
+    padding-top: 1rem;
 }
