@@ -3,7 +3,7 @@ import cn from 'classnames';
 import useIsMounted from '@byndyusoft-ui/use-is-mounted';
 import Portal from '@byndyusoft-ui/portal';
 import Overlay from '@byndyusoft-ui/Overlay';
-import { useModals, useModalsState } from '@byndyusoft-ui/ModalsProvider';
+import { useModals, useModalsState } from '@byndyusoft-ui/modals-provider';
 import { IModalContainerProps } from '../Modal.types';
 
 const ModalContainer: FC<IModalContainerProps> = ({ children, id, onOpen, onClose, ...props }): JSX.Element => {
@@ -42,7 +42,7 @@ const ModalContainer: FC<IModalContainerProps> = ({ children, id, onOpen, onClos
                     {isOpen && children}
                 </div>
             </div>
-            <Overlay isVisible={isOpen} onClick={handleClick} />
+            <Overlay isVisible={isOpen} fixed={true} onClick={handleClick} />
         </Portal>
     );
 };

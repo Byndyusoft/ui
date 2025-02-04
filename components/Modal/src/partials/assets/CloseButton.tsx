@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import cn from 'classnames';
-import { useModals } from '@byndyusoft-ui/ModalsProvider';
+import { useModals } from '@byndyusoft-ui/modals-provider';
 import { IModalCloseButtonProps } from '../../Modal.types';
 
 const ModalCloseButton = ({ className, id, title = 'Close', ...props }: IModalCloseButtonProps): JSX.Element => {

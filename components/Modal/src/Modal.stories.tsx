@@ -1,7 +1,7 @@
 import React from 'react';
 import { Story } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import ModalsProvider, { useModals } from '@byndyusoft-ui/ModalsProvider';
+import ModalsProvider, { useModals } from '@byndyusoft-ui/modals-provider';
 import { ModalBody, ModalFooter, ModalHeader, ModalHeading, ModalTitle } from './partials';
 import Modal from './Modal';
 

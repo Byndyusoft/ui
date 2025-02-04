@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import ModalsProvider, { useModals } from '@byndyusoft-ui/ModalsProvider';
+import ModalsProvider, { useModals } from '@byndyusoft-ui/modals-provider';
 import Modal from './Modal';
 
 interface ISceneProps {

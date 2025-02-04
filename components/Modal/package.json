@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@byndyusoft-ui/use-is-mounted": "*",
-    "@byndyusoft-ui/ModalsProvider": "*",
+    "@byndyusoft-ui/modals-provider": "*",
     "@byndyusoft-ui/Overlay": "*"
   }
 }
