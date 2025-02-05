@@ -1,18 +1,16 @@
 {
-  "name": "@byndyusoft-ui/use-throttled-callback",
-  "version": "0.0.1",
+  "name": "@byndyusoft-ui/use-scroll-lock",
+  "version": "0.1.0",
   "description": "Byndyusoft UI React Hook",
   "keywords": [
     "byndyusoft",
     "byndyusoft-ui",
     "react",
     "hook",
-    "throttle",
-    "use-throttle",
-    "use-throttled-callback"
+    "use-scroll-lock"
   ],
-  "author": "Fomin Gleb <gleb.fom28@gmail.com>",
-  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-throttled-callback#readme",
+  "author": "Dmitrii Maletskii <maleckij@byndyusoft.com>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-scroll-lock#readme",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -24,16 +22,12 @@
     "build": "tsc --project tsconfig.build.json",
     "clean": "rimraf dist",
     "lint": "eslint src --config ../../eslint.config.js",
-    "test": "jest --config ../../jest.config.js --roots hooks/use-throttled-callback/src"
+    "test": "jest --config ../../jest.config.js --roots hooks/use-scroll-lock/src"
   },
   "bugs": {
     "url": "https://github.com/Byndyusoft/ui/issues"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "peerDependencies": {
-    "@byndyusoft-ui/types": "*",
-    "@byndyusoft-ui/use-timeout": "*"
   }
 }
