@@ -3,6 +3,7 @@ import { StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import ModalsProvider, { useModals } from '@byndyusoft-ui/modals-provider';
 import Modal, { ModalBody, ModalFooter, ModalHeader, ModalHeading, ModalTitle } from '../index';
+import styles from './ModalCustom.module.css';
 
 const ShortBodyTemplate = () => {
     const { open } = useModals();
@@ -118,6 +119,53 @@ const LongBodyTemplateProvider = () => (
 export const LongBodyStory: StoryObj<typeof LongBodyTemplateProvider> = {
     name: 'Long body modal',
     render: LongBodyTemplateProvider
+};
+
+const ModalWithCustomClassNamesTemplate = () => {
+    const { open } = useModals();
+
+    return (
+        <>
+            <button onClick={() => open('shortBodyModal')}>Open modal</button>
+            <Modal
+                id="shortBodyModal"
+                classNames={{
+                    container: styles.container,
+                    dialog: styles.dialog,
+                    overlay: styles.overlay,
+                    isOpen: styles.isOpen
+                }}
+                onOpen={action('Open')}
+                onClose={action('Close')}
+            >
+                <ModalHeader>
+                    <ModalTitle>Modal title</ModalTitle>
+                </ModalHeader>
+                <ModalBody>
+                    <ModalHeading>Modal heading</ModalHeading>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla fermentum erat odio, et lacinia
+                        magna blandit ut. Nullam sagittis tristique magna, vel congue lorem convallis eu. Aenean vitae
+                        pulvinar mi. Morbi nisi enim, tincidunt et sapien at, viverra facilisis nisi.
+                    </p>
+                </ModalBody>
+                <ModalFooter>
+                    <button>Action button</button>
+                </ModalFooter>
+            </Modal>
+        </>
+    );
+};
+
+const ModalWithCustomClassNamesTemplateProvider = () => (
+    <ModalsProvider>
+        <ModalWithCustomClassNamesTemplate />
+    </ModalsProvider>
+);
+
+export const ModalWithCustomClassNamesStory: StoryObj<typeof ModalWithCustomClassNamesTemplateProvider> = {
+    name: 'Modal with custom class names',
+    render: ModalWithCustomClassNamesTemplateProvider
 };
 
 export default {

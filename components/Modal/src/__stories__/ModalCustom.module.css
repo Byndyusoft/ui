@@ -1,0 +1,45 @@
+.container {
+  z-index: 1999999999;
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  overflow-x: hidden;
+  overflow-y: auto;
+  pointer-events: none;
+}
+
+.overlay {
+  cursor: not-allowed;
+}
+
+.dialog {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 328px;
+  max-height: calc(100dvh - 2rem);
+  margin: 1rem;
+  color: #FFFFFF;
+  background: #06266F;
+  border: 1px solid #1240AB;
+  opacity: 0;
+  transform: translateY(-25%);
+  transition:
+      visibility 0s linear 1s,
+      transform 1s ease,
+      opacity 1s ease;
+  visibility: hidden;
+}
+
+.dialog.isOpen {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+  transition:
+      visibility 0s linear 0s,
+      transform 1s ease,
+      opacity 1s ease;
+  visibility: visible;
+}
