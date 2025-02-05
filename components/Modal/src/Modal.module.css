@@ -1,0 +1,121 @@
+.container {
+    z-index: 1999999999;
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+    pointer-events: none;
+}
+
+.overlay {
+    cursor: pointer;
+}
+
+.dialog {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    max-width: 328px;
+    max-height: calc(100dvh - 2rem);
+    margin: 1rem;
+    color: #FFFFFF;
+    background: #252528;
+    opacity: 0;
+    transform: translateY(-25%);
+    transition:
+        visibility 0s linear 0.4s,
+        transform 0.4s ease,
+        opacity 0.4s ease;
+    visibility: hidden;
+}
+
+.dialog.isOpen {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+    transition:
+        visibility 0s linear 0s,
+        transform 0.4s ease,
+        opacity 0.4s ease;
+    visibility: visible;
+}
+
+.header {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding: 0.75rem 0.75rem 0.75rem 1rem;
+}
+
+.title {
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.close {
+    cursor: pointer;
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    flex-shrink: 0;
+    height: 1rem;
+    width: 1rem;
+    background: transparent url('./partials/assets/CrossIcon.svg') no-repeat center center;
+    border: none;
+    background-size: 0.75rem;
+}
+
+.closeText {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+    visibility: visible;
+    white-space: nowrap;
+}
+
+.close:focus-visible {
+    outline: 5px auto -webkit-focus-ring-color;
+}
+
+.body {
+    flex: 1 1;
+    overflow: hidden;
+    overflow-y: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    scrollbar-color: #FFFFFF #252528;
+    scrollbar-width: thin;
+}
+
+.content {
+    flex-grow: 1;
+    max-height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.heading {
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    padding-top: 1rem;
+}
