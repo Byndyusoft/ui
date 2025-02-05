@@ -1,6 +1,18 @@
-import { Markdown, Meta } from "@storybook/blocks";
+import { Canvas, Controls, Markdown, Meta, Source } from "@storybook/blocks";
 import Readme from '../README.md';
+import * as useTimeoutStories from './useTimeout.stories';
 
-<Meta title="hooks/useTimeout" />
+<Meta title="hooks/useTimeout" of={useTimeoutStories} />
 
 <Markdown>{Readme}</Markdown>
+
+1. Import the hook where you need it:
+
+<Source language="javascript" code="import useTimeout from '@byndyusoft-ui/use-timeout';" />
+
+2. Call the hook with the desired arguments: a callback function and a delay in milliseconds.
+
+<Canvas sourceState="shown" of={useTimeoutStories.Template} />
+
+## Props
+<Controls />

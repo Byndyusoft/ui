@@ -1,27 +1,33 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { Callback, TimeoutId } from '@byndyusoft-ui/types';
 import useLatestRef from '@byndyusoft-ui/use-latest-ref';
+import { useEffect, useRef } from 'react';
 
-export type TCallback = () => void;
+export interface IUseTimeout {
+    start: Callback;
+    stop: Callback;
+}
 
-export default function useTimeout(callback: TCallback, delay: number | null): TCallback {
+export default function useTimeout(callback: Callback, delay: number): IUseTimeout {
     const savedCallback = useLatestRef(callback);
-    const timer = useRef<ReturnType<typeof setTimeout>>();
+    const timer = useRef<TimeoutId>();
 
-    const clear = useCallback(() => {
+    const stop = (): void => {
         if (timer.current) {
             clearTimeout(timer.current);
         }
-    }, []);
+    };
 
-    useEffect(() => {
-        if (delay === null) {
-            return undefined;
-        }
+    const start = (): void => {
+        stop();
+        timer.current = setTimeout(() => {
+            savedCallback.current();
+        }, delay);
+    };
 
-        timer.current = setTimeout(() => savedCallback.current(), delay);
+    useEffect(() => stop, []);
 
-        return () => clear();
-    }, [delay, savedCallback, clear]);
-
-    return clear;
+    return {
+        start,
+        stop
+    };
 }
