@@ -2,7 +2,7 @@ import React, { CSSProperties, useState } from 'react';
 import Portal from '@byndyusoft-ui/portal';
 import { normalizeCssValue, normalizePlatformValue } from './utilities';
 import { NotificationsItem } from './partials/NotificationsItem';
-import { useIsDocumentHidden } from './hooks/use-document-visibility';
+import { useIsDocumentHidden } from './hooks/useDocumentVisibility';
 import { INotificationsManagerProps, TNotificationPosition } from './Notifications.types';
 import { useNotificationsManager } from './hooks/useNotificationsManager';
 import { cn } from './utilities';

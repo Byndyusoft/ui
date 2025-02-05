@@ -21,7 +21,6 @@ class NotificationsService {
     create = (partial: TCreateNotificationParams): TNotificationItemId => {
         const id = partial?.id || notificationCounter++;
         const theme = partial?.theme || 'ordinary';
-
         const index = this.notifications.findIndex(item => item.id === id);
         const updatedItem = {
             ...this.notifications[index],
