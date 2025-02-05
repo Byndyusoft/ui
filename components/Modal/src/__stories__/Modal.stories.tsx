@@ -126,9 +126,9 @@ const ModalWithCustomClassNamesTemplate = () => {
 
     return (
         <>
-            <button onClick={() => open('shortBodyModal')}>Open modal</button>
+            <button onClick={() => open('modalWithCustomClassNames')}>Open modal</button>
             <Modal
-                id="shortBodyModal"
+                id="modalWithCustomClassNames"
                 classNames={{
                     container: styles.container,
                     dialog: styles.dialog,
