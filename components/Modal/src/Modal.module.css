@@ -1,22 +1,20 @@
-.bs-modal {
+.container {
     z-index: 1999999999;
     position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: 0;
+    inset: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    width: 100vw;
     overflow-x: hidden;
     overflow-y: auto;
     pointer-events: none;
 }
 
+.overlay {
+    cursor: pointer;
+}
 
-.bs-modal__dialog {
+.dialog {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -34,7 +32,7 @@
     visibility: hidden;
 }
 
-.bs-modal__dialog.is-open {
+.dialog.isOpen {
     opacity: 1;
     pointer-events: all;
     transform: translateY(0);
@@ -45,8 +43,7 @@
     visibility: visible;
 }
 
-
-.bs-modal__header {
+.header {
     position: relative;
     bottom: 0;
     left: 0;
@@ -57,12 +54,12 @@
     padding: 0.75rem 0.75rem 0.75rem 1rem;
 }
 
-.bs-modal__title {
+.title {
     margin-bottom: 0;
     margin-top: 0;
 }
 
-.bs-modal__close {
+.close {
     cursor: pointer;
     position: absolute;
     top: 0.75rem;
@@ -75,7 +72,7 @@
     background-size: 0.75rem;
 }
 
-.bs-modal__close-text {
+.closeText {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -88,11 +85,11 @@
     white-space: nowrap;
 }
 
-.bs-modal__close:focus-visible {
+.close:focus-visible {
     outline: 5px auto -webkit-focus-ring-color;
 }
 
-.bs-modal__body {
+.body {
     flex: 1 1;
     overflow: hidden;
     overflow-y: auto;
@@ -102,19 +99,19 @@
     scrollbar-width: thin;
 }
 
-.bs-modal__content {
+.content {
     flex-grow: 1;
     max-height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
 }
 
-.bs-modal__heading {
+.heading {
     margin-bottom: 0;
     margin-top: 0;
 }
 
-.bs-modal__footer {
+.footer {
     display: flex;
     flex-direction: column;
     justify-content: center;

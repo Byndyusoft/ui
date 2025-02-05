@@ -4,6 +4,13 @@ export const tags = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] as const;
 
 export type THeadingTag = (typeof tags)[number];
 
+export interface IModalClassNames {
+    container: string;
+    dialog: string;
+    overlay: string;
+    isOpen: string;
+}
+
 export interface IModalPartialProps extends HTMLAttributes<HTMLDivElement> {
     className?: string;
 }
@@ -14,6 +21,7 @@ export interface IModalCloseButtonProps extends ButtonHTMLAttributes<HTMLButtonE
 }
 
 export interface IModalContainerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'role' | 'className'> {
+    classNames?: IModalClassNames;
     id: string;
     onOpen?: () => void;
     onClose?: () => void;

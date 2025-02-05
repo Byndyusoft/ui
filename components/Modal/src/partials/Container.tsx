@@ -6,7 +6,14 @@ import Overlay from '@byndyusoft-ui/Overlay';
 import { useModals, useModalsState } from '@byndyusoft-ui/modals-provider';
 import { IModalContainerProps } from '../Modal.types';
 
-const ModalContainer: FC<IModalContainerProps> = ({ children, id, onOpen, onClose, ...props }): JSX.Element => {
+const ModalContainer: FC<IModalContainerProps> = ({
+    children,
+    classNames,
+    id,
+    onOpen,
+    onClose,
+    ...props
+}): JSX.Element => {
     const { register, unregister, close } = useModals();
     const modals = useModalsState();
     const isMounted = useIsMounted();
@@ -37,12 +44,12 @@ const ModalContainer: FC<IModalContainerProps> = ({ children, id, onOpen, onClos
 
     return (
         <Portal id={`portal-modal-${id}`}>
-            <div className="bs-modal" role="dialog" tabIndex={-1}>
-                <div {...props} className={cn('bs-modal__dialog', isOpen && 'is-open')} role="document">
+            <div className={classNames?.container} role="dialog" tabIndex={-1}>
+                <div {...props} className={cn(classNames?.dialog, isOpen && classNames?.isOpen)} role="document">
                     {isOpen && children}
                 </div>
             </div>
-            <Overlay isVisible={isOpen} fixed={true} onClick={handleClick} />
+            <Overlay className={classNames?.overlay} isVisible={isOpen} fixed={true} onClick={handleClick} />
         </Portal>
     );
 };
