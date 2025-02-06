@@ -1,16 +1,16 @@
 {
-  "name": "@byndyusoft-ui/use-timeout",
-  "version": "2.0.1",
+  "name": "@byndyusoft-ui/use-scroll-lock",
+  "version": "0.1.0",
   "description": "Byndyusoft UI React Hook",
   "keywords": [
     "byndyusoft",
     "byndyusoft-ui",
     "react",
     "hook",
-    "timeout"
+    "use-scroll-lock"
   ],
-  "author": "Eugene Abrosimov <sadcitizen@yandex.ru>",
-  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-timeout#readme",
+  "author": "Dmitrii Maletskii <maleckij@byndyusoft.com>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-scroll-lock#readme",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -22,18 +22,12 @@
     "build": "tsc --project tsconfig.build.json",
     "clean": "rimraf dist",
     "lint": "eslint src --config ../../eslint.config.js",
-    "test": "jest --config ../../jest.config.js --roots hooks/use-timeout/src"
+    "test": "jest --config ../../jest.config.js --roots hooks/use-scroll-lock/src"
   },
   "bugs": {
     "url": "https://github.com/Byndyusoft/ui/issues"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "dependencies": {
-    "@byndyusoft-ui/use-latest-ref": "*"
-  },
-  "peerDependencies": {
-    "@byndyusoft-ui/types": "0.2.0"
   }
 }

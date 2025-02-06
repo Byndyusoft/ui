@@ -5,6 +5,7 @@ html {
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
     scroll-behavior: smooth;
+    scrollbar-gutter: stable;
 }
 
 *,
@@ -15,6 +16,7 @@ html {
 
 body {
     margin: initial;
+    scrollbar-gutter: stable;
 }
 
 @media (prefers-reduced-motion: reduce) {
