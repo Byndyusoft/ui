@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React from 'react';
 import { IRadioProps } from '../RadioGroup.types';
 import { useRadioGroupContext } from './RadioGroupContext';
 
