@@ -7,8 +7,9 @@ const useRadioGroupState = ({ name, value, onChange }: IUseRadioGroupStateProps)
     useEffect(() => {
         if (value !== stateValue) {
             setStateValue(value);
+            onChange?.(value);
         }
-    }, [value]);
+    }, [value, stateValue]);
 
     const setValueHandler = useCallback(
         (targetValue: string) => {
