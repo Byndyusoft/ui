@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { IRadioProps } from '../RadioGroup.types';
 import { useRadioGroupContext } from './RadioGroupContext';
 
-const Radio = ({ value, children }: IRadioProps): JSX.Element => {
+const Radio = ({ value, children }: IRadioProps): ReactElement => {
     const { name, value: groupValue, setValue } = useRadioGroupContext();
 
     const radioId = `${name}-${value}`;
