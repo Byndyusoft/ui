@@ -16,7 +16,7 @@ function TemplateUseThrottledValueStory(): JSX.Element {
         leading,
         trailing
     });
-    const [mousePositionThrottled, setMousePositionThrottled] = useThrottledValue(mousePosition, DELAY_THROTTLE);
+    const [mousePositionThrottled, setMousePositionThrottled] = useThrottledValue<{ x: number; y: number }>(mousePosition, DELAY_THROTTLE);
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
         setInputValue(event.target.value);
