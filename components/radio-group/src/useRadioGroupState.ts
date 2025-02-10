@@ -1,12 +1,18 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { IUseRadioGroupStateProps, IUseRadioGroup } from './RadioGroup.types';
 
-const useRadioGroupState = ({ name, initialValue, onChange }: IUseRadioGroupStateProps): IUseRadioGroup => {
-    const [value, setValue] = useState(initialValue);
+const useRadioGroupState = ({ name, value, onChange }: IUseRadioGroupStateProps): IUseRadioGroup => {
+    const [stateValue, setStateValue] = useState(value);
+
+    useEffect(() => {
+        if (value !== stateValue) {
+            setStateValue(value);
+        }
+    }, [value]);
 
     const setValueHandler = useCallback(
         (targetValue: string) => {
-            setValue(targetValue);
+            setStateValue(targetValue);
             onChange?.(targetValue);
         },
         [onChange]
@@ -14,7 +20,7 @@ const useRadioGroupState = ({ name, initialValue, onChange }: IUseRadioGroupStat
 
     return {
         name,
-        value,
+        value: stateValue,
         setValue: setValueHandler
     };
 };

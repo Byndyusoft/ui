@@ -8,16 +8,16 @@ export interface IRadioProps {
 }
 
 export interface IRadioGroupProps {
-    initialValue: string;
+    value: string;
     children: ReactNode;
     name: string;
-    onChange?: TOnChange;
+    onChange: TOnChange;
 }
 
 export interface IUseRadioGroupStateProps {
     name: string;
-    initialValue: string;
-    onChange?: TOnChange;
+    value: string;
+    onChange: TOnChange;
 }
 
 export interface IUseRadioGroup {
@@ -28,7 +28,7 @@ export interface IUseRadioGroup {
 
 export interface IRadioGroupContextProviderProps {
     name: string;
-    initialValue: string;
+    value: string;
     children: ReactNode;
-    onChange?: TOnChange;
+    onChange: TOnChange;
 }

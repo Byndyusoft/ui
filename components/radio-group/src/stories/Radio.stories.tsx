@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { Story } from '@storybook/react';
 import RadioGroup from '../components/RadioGroup';
 import Radio from '../components/Radio';
@@ -10,7 +10,7 @@ const DefaultStory: Story = () => {
     return (
         <div>
             <strong>Fruit: {value}</strong>
-            <RadioGroup initialValue={value} name="fruit" onChange={setValue}>
+            <RadioGroup value={value} name="fruit" onChange={setValue}>
                 <Radio value="apple">🍎 Apple</Radio>
                 <Radio value="banana">🍌 Banana</Radio>
                 <Radio value="pineapple">🍍 Pineapple</Radio>
@@ -27,7 +27,7 @@ const WithCustomRadioStory: Story = () => {
     return (
         <div>
             <strong>Mood: {value}</strong>
-            <RadioGroup initialValue={value} name="mood" onChange={setValue}>
+            <RadioGroup value={value} name="mood" onChange={setValue}>
                 <CustomRadioComponent value="happy">😊 Happy</CustomRadioComponent>
                 <CustomRadioComponent value="neutral">😐 Neutral</CustomRadioComponent>
                 <CustomRadioComponent value="upset">😔 Upset</CustomRadioComponent>
@@ -37,6 +37,30 @@ const WithCustomRadioStory: Story = () => {
 };
 
 export const WithCustomRadio = WithCustomRadioStory.bind({});
+
+const ResetStateStory: Story = () => {
+    const [value, setValue] = useState('happy');
+
+    const handleResetState = (): void => {
+        setValue('happy');
+    };
+
+    return (
+        <div>
+            <strong>Mood: {value}</strong>
+            <RadioGroup value={value} name="mood" onChange={setValue}>
+                <CustomRadioComponent value="happy">😊 Happy</CustomRadioComponent>
+                <CustomRadioComponent value="neutral">😐 Neutral</CustomRadioComponent>
+                <CustomRadioComponent value="upset">😔 Upset</CustomRadioComponent>
+            </RadioGroup>
+            <button type="button" onClick={handleResetState}>
+                Reset state
+            </button>
+        </div>
+    );
+};
+
+export const ResetState = ResetStateStory.bind({});
 
 export default {
     title: 'components/RadioGroup',

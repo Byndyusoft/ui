@@ -15,13 +15,8 @@ export function useRadioGroupContext(): IUseRadioGroup {
     return context;
 }
 
-export const RadioGroupContextProvider = ({
-    name,
-    initialValue,
-    onChange,
-    children
-}: IRadioGroupContextProviderProps) => {
-    const radioGroupState = useRadioGroupState({ name, initialValue, onChange });
+export const RadioGroupContextProvider = ({ name, value, onChange, children }: IRadioGroupContextProviderProps) => {
+    const radioGroupState = useRadioGroupState({ name, value, onChange });
 
     return <RadioGroupContext.Provider value={radioGroupState}>{children}</RadioGroupContext.Provider>;
 };

@@ -5,11 +5,11 @@ import { useRadioGroupContext } from './RadioGroupContext';
 const Radio = ({ value, children }: IRadioProps): JSX.Element => {
     const { name, value: groupValue, setValue } = useRadioGroupContext();
 
-    const radioId = useMemo(() => `${name}-${value}`, [name, value]);
+    const radioId = `${name}-${value}`;
 
-    const onChangeHandler = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setValue(event.target.value);
-    }, []);
+    };
 
     return (
         <div>
@@ -19,7 +19,7 @@ const Radio = ({ value, children }: IRadioProps): JSX.Element => {
                 id={radioId}
                 value={value}
                 checked={groupValue === value}
-                onChange={onChangeHandler}
+                onChange={handleInputChange}
             />
             <label htmlFor={radioId}>{children}</label>
         </div>
