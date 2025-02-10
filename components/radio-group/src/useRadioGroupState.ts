@@ -7,10 +7,7 @@ const useRadioGroupState = ({ name, initialValue, onChange }: IUseRadioGroupStat
     const setValueHandler = useCallback(
         (targetValue: string) => {
             setValue(targetValue);
-
-            if (onChange) {
-                onChange(targetValue);
-            }
+            onChange?.(targetValue);
         },
         [onChange]
     );
