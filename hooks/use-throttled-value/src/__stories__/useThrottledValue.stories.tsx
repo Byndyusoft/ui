@@ -3,6 +3,12 @@ import { StoryObj } from '@storybook/react';
 import useThrottledValue from '../useThrottledValue';
 import styles from './useThrottledValue.stories.module.css';
 
+
+interface IMousePosition {
+    x: number;
+    y: number;
+}
+
 const DELAY_THROTTLE = 1500;
 
 function TemplateUseThrottledValueStory(): JSX.Element {
@@ -10,13 +16,13 @@ function TemplateUseThrottledValueStory(): JSX.Element {
     const [trailing, setTrailing] = useState(true);
 
     const [inputValue, setInputValue] = useState<string>('');
-    const [mousePosition, setMousePosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+    const [mousePosition, setMousePosition] = useState<IMousePosition>({ x: 0, y: 0 });
 
     const [inputThrottledValue, setInputThrottledValue] = useThrottledValue<string>(inputValue, DELAY_THROTTLE, {
         leading,
         trailing
     });
-    const [mousePositionThrottled, setMousePositionThrottled] = useThrottledValue<{ x: number; y: number }>(mousePosition, DELAY_THROTTLE);
+    const [mousePositionThrottled, setMousePositionThrottled] = useThrottledValue<IMousePosition>(mousePosition, DELAY_THROTTLE);
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
         setInputValue(event.target.value);
