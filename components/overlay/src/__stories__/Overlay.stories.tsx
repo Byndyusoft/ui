@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { StoryObj } from '@storybook/react';
+import cn from 'classnames';
 import { IOverlayProps } from '../Overlay.types';
 import Overlay from '../Overlay';
 import Loading from './Loading.svg';
@@ -26,7 +27,7 @@ const FrameTemplateWithModal: (args: IOverlayProps) => JSX.Element = (args: IOve
 
     useEffect(() => {
         setRefElement(frameRef.current);
-    }, [frameRef.current]);
+    }, []);
 
     return (
         <div className="container" ref={frameRef}>
@@ -49,13 +50,13 @@ const FrameTemplateWithCustomProps: (args: IOverlayProps) => JSX.Element = (args
 
     useEffect(() => {
         setRefElement(frameRef.current);
-    }, [frameRef.current]);
+    }, []);
 
     return (
         <div className="container" ref={frameRef}>
             <div className="content">
                 <p>Long content to demonstrate scrolling...</p>
-                <Overlay {...args} refElement={refElement}></Overlay>
+                <Overlay {...args} refElement={refElement} />
             </div>
         </div>
     );
@@ -67,13 +68,13 @@ const FrameTemplateWithCustomStyles: (args: IOverlayProps) => JSX.Element = (arg
 
     useEffect(() => {
         setRefElement(frameRef.current);
-    }, [frameRef.current]);
+    }, []);
 
     return (
         <div className="container" ref={frameRef}>
             <div className="content">
                 <p>Long content to demonstrate scrolling...</p>
-                <Overlay {...args} refElement={refElement} classNames={styles}></Overlay>
+                <Overlay {...args} refElement={refElement} classNames={styles} />
             </div>
         </div>
     );
@@ -85,12 +86,12 @@ const FrameTemplateWithLoading: (args: IOverlayProps) => JSX.Element = (args: IO
 
     useEffect(() => {
         setRefElement(frameRef.current);
-    }, [frameRef.current]);
+    }, []);
 
     return (
         <div className="container">
             <div className="content">
-                <div className="box" style={{ position: 'relative', margin: 'auto' }} ref={frameRef}>
+                <div className={cn('box', 'loadingBox')} ref={frameRef}>
                     <Overlay {...args} refElement={refElement}>
                         <img src={Loading} alt="Loading" />
                     </Overlay>

@@ -6,6 +6,11 @@
   height: 200px;
 }
 
+.loadingBox {
+  position: relative;
+  margin: auto;
+}
+
 .container {
   height: 500px;
 }

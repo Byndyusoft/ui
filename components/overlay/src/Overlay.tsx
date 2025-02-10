@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import cn from 'classnames';
-import useScrollLock from '@byndyusoft-ui/use-scroll-lock';
+import { useScrollLock } from '@byndyusoft-ui/use-scroll-lock';
 import { getDefaultOverlayClassNames, hexToRgba } from './utilities';
 import { IOverlayProps } from './Overlay.types';
 
@@ -34,7 +34,7 @@ const Overlay = forwardRef<HTMLDivElement, IOverlayProps>(
                     className
                 )}
                 style={{
-                    zIndex: zIndex,
+                    zIndex,
                     backgroundColor: hexToRgba(color, backgroundOpacity),
                     backdropFilter: `blur(${blur}px)`,
                     position: fixed ? 'fixed' : 'absolute'
@@ -49,5 +49,7 @@ const Overlay = forwardRef<HTMLDivElement, IOverlayProps>(
         );
     }
 );
+
+Overlay.displayName = 'Overlay';
 
 export default Overlay;

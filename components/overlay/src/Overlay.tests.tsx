@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import Overlay from './Overlay';
 
 describe('components/Overlay', () => {
@@ -80,9 +80,15 @@ describe('components/Overlay', () => {
         );
 
         const overlay = screen.getByRole('presentation');
-        expect(overlay.getAttribute('style')).toContain(
-            'z-index: 200; background-color: rgba(255, 0, 0, 0.8); position: fixed;'
-        );
+        const expectedStyles = {
+            zIndex: 200,
+            backgroundColor: 'rgba(255, 0, 0, 0.8)',
+            position: 'fixed'
+        };
+
+        Object.entries(expectedStyles).forEach(([property, value]) => {
+            expect(overlay).toHaveStyle({ [property]: value });
+        });
     });
 
     test('applies custom classNames', () => {
@@ -91,7 +97,7 @@ describe('components/Overlay', () => {
             fadeIn: 'custom-fade-in',
             fadeOut: 'custom-fade-out',
             center: 'custom-center'
-        };
+        } as const;
 
         render(
             <Overlay isVisible classNames={customClassNames}>
