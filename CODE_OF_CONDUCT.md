@@ -35,8 +35,6 @@
 
 `fix(Dropdown/Item): change styles names`
 
-
-
 ## Компонент
 
 ### Структура компонента
@@ -137,8 +135,15 @@ Name Surname
     "scripts": {
         "build": "tsc --project tsconfig.build.json",
         "clean": "rimraf dist",
-        "lint": "eslint src --config ../../eslint.config.js",
-        "test": "jest --config ../../jest.config.js --roots hooks/use-hook-name/src"
+        "test": "jest --config ../../jest.config.js --roots hooks/use-hook-name/src",
+        "lint:check": "npm run eslint:check && npm run prettier:check && npm run stylelint:check",
+        "lint:fix": "npm run eslint:fix && npm run prettier:fix && npm run stylelint:fix",
+        "eslint:check": "eslint src --config ../../eslint.config.js",
+        "eslint:fix": "eslint src --config ../../eslint.config.js --fix",
+        "prettier:check": "prettier --check '**/*.{ts,tsx,css,scss,json}'",
+        "prettier:fix": "prettier --write '**/*.{ts,tsx,css,scss,json}'",
+        "stylelint:check": "stylelint '**/*.{css,scss}' --allow-empty-input",
+        "stylelint:fix": "stylelint '**/*.{css,scss}' --fix --allow-empty-input"
     },
     "bugs": {
         "url": "https://github.com/Byndyusoft/ui/issues"
@@ -159,8 +164,8 @@ src
 
 ```json
 {
-  "extends": "./tsconfig.json",
-  "exclude": ["src/*.tests.ts", "src/*.stories.tsx"]
+    "extends": "./tsconfig.json",
+    "exclude": ["src/*.tests.ts", "src/*.stories.tsx"]
 }
 ```
 

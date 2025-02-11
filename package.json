@@ -14,12 +14,17 @@
   "scripts": {
     "build": "lerna run build",
     "clean": "lerna run clean",
-    "lint": "lerna run lint",
-    "test": "lerna run test --concurrency=1",
+    "test": "lerna run test",
+    "lint:check": "lerna run lint:check",
+    "lint:fix": "lerna run lint:fix",
+    "eslint:check": "lerna run eslint:check",
+    "eslint:fix": "lerna run eslint:fix",
+    "stylelint:check": "lerna run stylelint:check",
+    "stylelint:fix": "lerna run stylelint:fix",
+    "prettier:check": "lerna run prettier:check",
+    "prettier:fix": "lerna run prettier:fix",
     "postinstall": "(husky install) || true",
     "build-storybook": "storybook build --disable-telemetry",
-    "prettier:check": "prettier --check \"**/*.{ts,tsx,css,json}\"",
-    "prettier:write": "prettier --write \"**/*.{ts,tsx,css,json}\"",
     "start": "storybook dev -p 6009"
   },
   "repository": {
