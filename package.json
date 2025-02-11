@@ -44,7 +44,7 @@
     "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
     "@byndyusoft/eslint-config": "^2.0.0",
-    "@byndyusoft/stylelint-config": "^0.3.0",
+    "@byndyusoft/stylelint-config": "^1.0.0",
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
     "@newhighsco/storybook-addon-svgr": "^1.0.22",
@@ -83,7 +83,7 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "storybook": "^7.6.17",
     "storybook-css-modules": "^1.0.8",
-    "stylelint": "^13.0.0",
+    "stylelint": "^16.14.1",
     "ts-jest": "^28.0.8",
     "typescript": "^4.9.5"
   },
