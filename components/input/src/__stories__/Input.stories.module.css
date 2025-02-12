@@ -1,0 +1,23 @@
+.template_wrapper {
+    padding: 20px;
+    margin: auto;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.container {
+    margin: auto;
+    padding: 20px;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}

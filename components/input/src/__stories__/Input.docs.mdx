@@ -1,0 +1,55 @@
+import { Meta, Markdown, Canvas, Source, ArgsTable } from '@storybook/blocks';
+import Readme from '../../README.md';
+import Input from '../Input';
+import * as InputStories from './Input.stories';
+
+<Meta title="components/Input" of={InputStories} />
+
+<Markdown>{Readme}</Markdown>
+
+## Usage
+
+To use the component in your project you must:
+
+1. Import the component where you need it:
+
+<Source language="javascript" code="import Input from '@byndyusoft-ui/input';" />
+
+2. **Input Sizes**: Customize the size of the input field. Available sizes are `s`, `m`, `l`, `xl`.
+
+<Canvas
+    sourceState="shown"
+    of={InputStories.InputSizeStory}
+    story={{ height: '50px' }}
+/>
+
+3. **Input Variants**: Choose from different input variants such as `outline`, `line`, `unstyled`.
+
+<Canvas
+  sourceState="shown"
+  of={InputStories.InputVariantStory}
+  story={{ height: '50px' }}
+/>
+
+4. **Side Components**: Add components to the left or right side of the input field.
+
+<Canvas
+  sourceState="shown"
+  of={InputStories.InputSideComponentsStory}
+  story={{ height: '50px' }}
+/>
+
+5. **Invalid State**: Handle invalid input states by setting the `isInvalid` prop.
+
+<Canvas
+  sourceState="shown"
+  of={InputStories.InputInvalidTemplateStory}
+  story={{ height: '50px' }}
+/>
+
+
+## Props
+
+Inherited from `InputHTMLAttributes<HTMLInputElement>`
+
+<ArgsTable of={Input} />
