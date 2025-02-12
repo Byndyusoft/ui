@@ -6,7 +6,7 @@ type TInputSize = 's' | 'm' | 'l' | 'xl';
 
 type TInputVariant = 'outline' | 'line' | 'unstyled';
 
-export interface InputProps extends THTMLInputProps {
+export interface IInputProps extends THTMLInputProps {
     size?: TInputSize;
     variant?: TInputVariant;
     className?: string;

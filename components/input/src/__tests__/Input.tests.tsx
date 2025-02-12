@@ -2,11 +2,9 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Input from '../Input';
-import { InputProps } from '../input.types';
+import { IInputProps } from '../input.types';
 
-const setup = (props: InputProps = {}) => {
-    return render(<Input {...props} />);
-};
+const setup = (props: IInputProps = {}) => render(<Input {...props} />);
 
 describe('Input Component', () => {
     test('renders input element', () => {

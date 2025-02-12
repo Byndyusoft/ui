@@ -1,14 +1,14 @@
 import React, { ReactNode } from 'react';
 import { StoryObj } from '@storybook/react';
 import Input from '../Input';
-import { InputProps } from '../input.types';
+import { IInputProps } from '../input.types';
 import styles from './Input.stories.module.css';
 
 const TemplateWrapper = ({ children }: { children: ReactNode }) => {
     return <div className={styles.template_wrapper}>{children}</div>;
 };
 
-const InputSizeTemplate = (args: InputProps) => (
+const InputSizeTemplate = (args: IInputProps) => (
     <TemplateWrapper>
         <Input size="s" variant="outline" placeholder="size s" />
         <Input size="m" variant="outline" placeholder="size m" />
@@ -17,7 +17,7 @@ const InputSizeTemplate = (args: InputProps) => (
     </TemplateWrapper>
 );
 
-const InputVariantTemplate = (args: InputProps) => (
+const InputVariantTemplate = (args: IInputProps) => (
     <TemplateWrapper>
         <Input variant="unstyled" placeholder="unstyled" />
         <Input variant="line" placeholder="line" />
@@ -25,7 +25,7 @@ const InputVariantTemplate = (args: InputProps) => (
     </TemplateWrapper>
 );
 
-const InputSideComponentsTemplate = (args: InputProps) => (
+const InputSideComponentsTemplate = (args: IInputProps) => (
     <TemplateWrapper>
         <Input variant="outline" placeholder="Left component" leftComponent="🔍" />
         <Input variant="outline" placeholder="Right component" rightComponent="👁️" />
@@ -33,7 +33,7 @@ const InputSideComponentsTemplate = (args: InputProps) => (
     </TemplateWrapper>
 );
 
-const InputInvalidTemplate = (args: InputProps) => (
+const InputInvalidTemplate = (args: IInputProps) => (
     <TemplateWrapper>
         <Input variant="unstyled" placeholder="isInvalid unstyled" isInvalid />
         <Input variant="line" placeholder="isInvalid line" isInvalid />

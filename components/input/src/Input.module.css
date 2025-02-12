@@ -30,7 +30,6 @@
     --input-outline-focus-box-shadow: 0 0 0 1px var(--input-focus-color) inset;
     --input-invalid-outline-border: 1px solid var(--input-invalid-color);
     --input-invalid-outline-box-shadow: 0 0 0 1px var(--input-invalid-color) inset;
-
 }
 
 .input_container {

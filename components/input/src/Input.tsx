@@ -1,9 +1,9 @@
 import React, { forwardRef } from 'react';
 import cn from 'classnames';
-import { InputProps } from './input.types';
+import { IInputProps } from './input.types';
 import styles from './Input.module.css';
 
-const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
     const {
         size = 'l',
         type = 'text',
