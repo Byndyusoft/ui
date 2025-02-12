@@ -1,6 +1,6 @@
 {
   "name": "@byndyusoft-ui/use-throttled-callback",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Byndyusoft UI React Hook",
   "keywords": [
     "byndyusoft",
@@ -32,8 +32,10 @@
   "publishConfig": {
     "access": "public"
   },
-  "peerDependencies": {
-    "@byndyusoft-ui/types": "*",
-    "@byndyusoft-ui/use-timeout": "*"
+  "dependencies": {
+    "@byndyusoft-ui/use-timeout": "^2.0.1"
+  },
+  "devDependencies": {
+    "@byndyusoft-ui/types": "^0.2.0"
   }
 }
