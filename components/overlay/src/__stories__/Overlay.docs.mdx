@@ -1,0 +1,34 @@
+import { Meta, Markdown, Canvas, Source, ArgsTable } from '@storybook/blocks';
+import Readme from '../../README.md';
+import Overlay from '../Overlay';
+import * as OverlayStories from './Overlay.stories';
+
+<Meta title="components/Overlay" of={OverlayStories} />
+
+<Markdown>{Readme}</Markdown>
+
+## Usage
+
+To use the component in your project you must:
+
+1. Import the component where you need it:
+
+<Source language="javascript" code="import Overlay from '@byndyusoft-ui/overlay';" />
+
+2. Call the component and give it the desired props, for example:
+
+-   Overlay view with centered modal
+
+<Canvas sourceState="shown" of={OverlayStories.OverlayStoryWithModal} />
+
+-   Overlay view with custom props
+
+<Canvas sourceState="shown" of={OverlayStories.OverlayStoryWithCustomProps} />
+
+-   Overlay view with custom styles
+
+<Canvas sourceState="shown" of={OverlayStories.OverlayStoryWithCustomStyles} />
+
+-   Overlay inside block
+
+<Canvas sourceState="shown" of={OverlayStories.OverlayStoryWithLoading} />
