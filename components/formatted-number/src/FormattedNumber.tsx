@@ -11,7 +11,10 @@ const FormattedNumber = ({
     parseNumberToParts = parseNumberToPartsByDefault,
     numberPartsDividerClassName = ''
 }: IFormattedNumberViewProps): JSX.Element => {
-    const numberParts = useMemo(() => parseNumberToParts(formatter.format(number)), [parseNumberToParts, formatter, number]);
+    const numberParts = useMemo(
+        () => parseNumberToParts(formatter.format(number)),
+        [parseNumberToParts, formatter, number]
+    );
 
     return (
         <>
