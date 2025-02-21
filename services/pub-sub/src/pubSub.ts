@@ -33,6 +33,17 @@ class PubSub<ChannelsRecord extends TDefaultChannels<ChannelsRecord>> {
     }
 
     /**
+     * Unsubscribe all callbacks for a specific channel or all channels.
+     */
+    unsubscribeAll = <ChannelKey extends keyof ChannelsRecord>(channel?: ChannelKey): void => {
+        if (channel) {
+            this.channels.delete(channel);
+        } else {
+            this.channels.clear();
+        }
+    };
+
+    /**
      * Publishing to the channel.
      */
     publish<ChannelKey extends keyof ChannelsRecord>(
@@ -74,5 +85,3 @@ class PubSub<ChannelsRecord extends TDefaultChannels<ChannelsRecord>> {
 }
 
 export default PubSub;
-
-const instance = new PubSub();

@@ -71,4 +71,20 @@ describe('services/pub-sub', () => {
         expect(callback1).not.toHaveBeenCalled();
         expect(callback2).not.toHaveBeenCalled();
     });
+
+    test('should unsubscribe all callbacks for all channels using unsubscribeAll', () => {
+        const callback1 = jest.fn();
+        const callback2 = jest.fn();
+
+        pubSub.subscribe('testChannel', callback1);
+        pubSub.subscribe('asyncChannel', callback2);
+
+        pubSub.unsubscribeAll();
+
+        pubSub.publish('testChannel', 'Test data');
+        pubSub.publish('asyncChannel', 'Test data');
+
+        expect(callback1).not.toHaveBeenCalled();
+        expect(callback2).not.toHaveBeenCalled();
+    });
 });
