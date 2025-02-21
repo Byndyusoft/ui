@@ -1,12 +1,12 @@
 import PubSub from './pubSub';
 
-type TChannels = {
+interface IChannels {
     testChannel: (data?: string) => void;
     asyncChannel: (data?: string) => Promise<void>;
-};
+}
 
 describe('services/pub-sub', () => {
-    const pubSub = new PubSub<TChannels>();
+    const pubSub = new PubSub<IChannels>();
 
     afterEach(() => {
         pubSub.reset();
@@ -116,9 +116,11 @@ describe('services/pub-sub', () => {
         const asyncChannelInfo = result.find(item => item.channel === 'asyncChannel');
 
         expect(testChannelInfo).toBeDefined();
-        expect(testChannelInfo!.subscribers).toBe(2);
+
+        expect(testChannelInfo?.subscribers).toBe(2);
 
         expect(asyncChannelInfo).toBeDefined();
-        expect(asyncChannelInfo!.subscribers).toBe(1);
+
+        expect(asyncChannelInfo?.subscribers).toBe(1);
     });
 });

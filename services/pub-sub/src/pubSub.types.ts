@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type TChannelHandler = (data?: any) => void;
 
 export type TDefaultChannels<ChannelsRecord> = { [K in keyof ChannelsRecord]: TChannelHandler };
