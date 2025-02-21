@@ -101,4 +101,24 @@ describe('services/pub-sub', () => {
         expect(callback).toHaveBeenCalledTimes(1);
         expect(callback).toHaveBeenCalledWith('Test message 1');
     });
+
+    test('should return all subscriptions info', () => {
+        const callback1 = jest.fn();
+        const callback2 = jest.fn();
+
+        pubSub.subscribe('testChannel', callback1);
+        pubSub.subscribe('testChannel', callback2);
+        pubSub.subscribe('asyncChannel', callback1);
+
+        const result = pubSub.allSubscribes();
+
+        const testChannelInfo = result.find(item => item.channel === 'testChannel');
+        const asyncChannelInfo = result.find(item => item.channel === 'asyncChannel');
+
+        expect(testChannelInfo).toBeDefined();
+        expect(testChannelInfo!.subscribers).toBe(2);
+
+        expect(asyncChannelInfo).toBeDefined();
+        expect(asyncChannelInfo!.subscribers).toBe(1);
+    });
 });

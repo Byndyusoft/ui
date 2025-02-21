@@ -11,3 +11,8 @@ export type TChannelData<
     ChannelsRecord extends TDefaultChannels<ChannelsRecord>,
     ChannelKey extends keyof ChannelsRecord
 > = Parameters<ChannelsRecord[ChannelKey]>[0];
+
+export type TAllSubscribesResult<ChannelsRecord> = Array<{
+    channel: keyof ChannelsRecord;
+    subscribers: number;
+}>;

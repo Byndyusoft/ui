@@ -1,4 +1,4 @@
-import { TChannelData, TChannelMap, TDefaultChannels } from './pubSub.types';
+import { TAllSubscribesResult, TChannelData, TChannelMap, TDefaultChannels } from './pubSub.types';
 
 class PubSub<ChannelsRecord extends TDefaultChannels<ChannelsRecord>> {
     private channels: TChannelMap<ChannelsRecord> = new Map();
@@ -89,6 +89,16 @@ class PubSub<ChannelsRecord extends TDefaultChannels<ChannelsRecord>> {
         const promises = Array.from(channelSet).map(callback => Promise.resolve(callback(data)));
 
         await Promise.all(promises);
+    }
+
+    /**
+     * Returns an array containing information about all current subscriptions.
+     */
+    allSubscribes(): TAllSubscribesResult<ChannelsRecord> {
+        return Array.from(this.channels.entries()).map(([channel, subscribers]) => ({
+            channel,
+            subscribers: subscribers.size
+        }));
     }
 
     /**
