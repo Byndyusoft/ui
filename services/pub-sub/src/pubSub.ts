@@ -1,25 +1,7 @@
-import { TChannelData, TChannelMap, TDefaultChannels, TPubSubInstances } from './pubSub.types';
+import { TChannelData, TChannelMap, TDefaultChannels } from './pubSub.types';
 
-const DEFAULT_NAME_INSTANCE = '_default';
-
-class PubSub<ChannelsRecord extends TDefaultChannels> {
-    private static instances: TPubSubInstances = new Map();
+class PubSub<ChannelsRecord extends TDefaultChannels<ChannelsRecord>> {
     private channels: TChannelMap<ChannelsRecord> = new Map();
-
-    private constructor() {}
-
-    /**
-     * Getting an instance of a class.
-     */
-    static getInstance<ChannelsRecord extends TDefaultChannels>(
-        instanceKey: string = DEFAULT_NAME_INSTANCE
-    ): PubSub<ChannelsRecord> {
-        if (!this.instances.get(instanceKey)) {
-            this.instances.set(instanceKey, new PubSub<ChannelsRecord>());
-        }
-
-        return this.instances.get(instanceKey) as PubSub<ChannelsRecord>;
-    }
 
     /**
      * Subscribe to the channel.
@@ -63,7 +45,7 @@ class PubSub<ChannelsRecord extends TDefaultChannels> {
                 callback(data);
             }
         } else {
-            console.warn(`No subscribers for channel: ${channel as string}`);
+            console.warn(`No subscribers for channel: ${String(channel)}`);
         }
     }
 
@@ -72,15 +54,15 @@ class PubSub<ChannelsRecord extends TDefaultChannels> {
         data?: TChannelData<ChannelsRecord, ChannelKey>
     ): Promise<void> {
         const channelSet = this.channels.get(channel);
-        if (channelSet) {
-            for (const callback of channelSet) {
-                if (callback) {
-                    await callback(data);
-                }
-            }
-        } else {
-            console.warn(`No subscribers for channel: ${channel as string}`);
+
+        if (!channelSet) {
+            console.warn(`No subscribers for channel: ${String(channel)}`);
+            return;
         }
+
+        const promises = Array.from(channelSet).map(callback => Promise.resolve(callback(data)));
+
+        await Promise.all(promises);
     }
 
     /**
@@ -92,3 +74,5 @@ class PubSub<ChannelsRecord extends TDefaultChannels> {
 }
 
 export default PubSub;
+
+const instance = new PubSub();

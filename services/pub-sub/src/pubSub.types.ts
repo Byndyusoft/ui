@@ -1,14 +1,13 @@
-export type TDefaultChannels = Record<string, (data?: any) => void>;
+type TChannelHandler = (data?: any) => void;
 
-export type TChannelMap<ChannelsRecord extends TDefaultChannels> = Map<
+export type TDefaultChannels<ChannelsRecord> = { [K in keyof ChannelsRecord]: TChannelHandler };
+
+export type TChannelMap<ChannelsRecord extends TDefaultChannels<ChannelsRecord>> = Map<
     keyof ChannelsRecord,
     Set<ChannelsRecord[keyof ChannelsRecord]>
 >;
 
-export type TPubSubInstances = Map<string, unknown>;
-
-export type TChannelData<ChannelsRecord extends TDefaultChannels, ChannelKey extends keyof ChannelsRecord> = Parameters<
-    ChannelsRecord[ChannelKey]
->[0];
-
-export type ChannelsRecordAdapter<T> = { [K in keyof T]: T[K] };
+export type TChannelData<
+    ChannelsRecord extends TDefaultChannels<ChannelsRecord>,
+    ChannelKey extends keyof ChannelsRecord
+> = Parameters<ChannelsRecord[ChannelKey]>[0];

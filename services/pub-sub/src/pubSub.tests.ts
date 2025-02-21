@@ -6,23 +6,10 @@ type TChannels = {
 };
 
 describe('services/pub-sub', () => {
-    let pubSub: PubSub<TChannels>;
-
-    beforeEach(() => {
-        pubSub = PubSub.getInstance<TChannels>();
-    });
+    const pubSub = new PubSub<TChannels>();
 
     afterEach(() => {
         pubSub.reset();
-    });
-
-    test('should create a new instance and get the same instance for the same key', () => {
-        const instance1 = PubSub.getInstance<TChannels>('instance1');
-        const instance2 = PubSub.getInstance<TChannels>('instance1');
-        const instance3 = PubSub.getInstance<TChannels>('instance2');
-
-        expect(instance1).toBe(instance2);
-        expect(instance1).not.toBe(instance3);
     });
 
     test('should subscribe and publish to a channel', () => {
