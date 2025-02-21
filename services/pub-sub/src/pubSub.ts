@@ -33,6 +33,21 @@ class PubSub<ChannelsRecord extends TDefaultChannels<ChannelsRecord>> {
     }
 
     /**
+     *  After the first execution, the callback is automatically unsubscribed.
+     */
+    subscribeOnce<ChannelKey extends keyof ChannelsRecord>(
+        channel: ChannelKey,
+        callback: ChannelsRecord[ChannelKey]
+    ): void {
+        const onceCallback: ChannelsRecord[ChannelKey] = ((data?: TChannelData<ChannelsRecord, ChannelKey>) => {
+            this.unsubscribe(channel, onceCallback);
+            return callback(data);
+        }) as ChannelsRecord[ChannelKey];
+
+        this.subscribe(channel, onceCallback);
+    }
+
+    /**
      * Unsubscribe all callbacks for a specific channel or all channels.
      */
     unsubscribeAll = <ChannelKey extends keyof ChannelsRecord>(channel?: ChannelKey): void => {

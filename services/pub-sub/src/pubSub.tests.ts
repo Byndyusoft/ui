@@ -87,4 +87,18 @@ describe('services/pub-sub', () => {
         expect(callback1).not.toHaveBeenCalled();
         expect(callback2).not.toHaveBeenCalled();
     });
+
+    test('should call subscribeOnce callback only once', () => {
+        const callback = jest.fn();
+        pubSub.subscribeOnce('testChannel', callback);
+
+        // First publish should trigger the callback.
+        pubSub.publish('testChannel', 'Test message 1');
+
+        // Subsequent publish should not trigger the callback.
+        pubSub.publish('testChannel', 'Test message 2');
+
+        expect(callback).toHaveBeenCalledTimes(1);
+        expect(callback).toHaveBeenCalledWith('Test message 1');
+    });
 });
