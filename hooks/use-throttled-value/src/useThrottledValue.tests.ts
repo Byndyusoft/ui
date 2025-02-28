@@ -1,10 +1,11 @@
 import { waitFor } from '@testing-library/react';
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act, RenderResult } from '@testing-library/react-hooks';
 import useThrottledValue from './useThrottledValue';
+import { TUseThrottledValueReturn } from './useThrottledValue.types';
 
 const DELAY_THROTTLE = 500;
 
-const setup = (initialValue: unknown, delay: number) => {
+const setup = (initialValue: unknown, delay: number): RenderResult<TUseThrottledValueReturn<unknown>> => {
     const { result } = renderHook(() => useThrottledValue(initialValue, delay));
     return result;
 };
@@ -25,8 +26,8 @@ describe('hook/useThrottledValue', () => {
 
     test('should update the value after the delay', async () => {
         const result = setup(1, DELAY_THROTTLE);
-        const getCurrentThrottledValue = () => result.current[0];
-        const setThrottledValue = result.current[1];
+        const getCurrentThrottledValue = (): unknown => result.current[0];
+        const [, setThrottledValue] = result.current;
 
         expect(getCurrentThrottledValue()).toBe(1);
 

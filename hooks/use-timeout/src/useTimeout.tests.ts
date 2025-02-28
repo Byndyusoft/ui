@@ -57,7 +57,7 @@ describe('hooks/useTimeout', () => {
     });
 
     test('uses the latest callback when state changes', () => {
-        const callback = jest.fn();
+        const callback: Callback<number> = jest.fn();
 
         const { result, rerender } = renderHook(({ count }) => useTimeout(() => callback(count), 100), {
             initialProps: { count: 0 }
