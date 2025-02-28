@@ -7,11 +7,32 @@
     "clean": {
       "dependsOn": ["^clean"]
     },
-    "lint": {
-      "dependsOn": ["^lint"]
-    },
     "test": {
       "dependsOn": ["^test"]
+    },
+    "lint:check": {
+      "dependsOn": ["^lint:check"]
+    },
+    "lint:fix": {
+      "dependsOn": ["^lint:fix"]
+    },
+    "eslint:check": {
+      "dependsOn": ["^eslint:check"]
+    },
+    "eslint:fix": {
+      "dependsOn": ["^lint:fix"]
+    },
+    "stylelint:check": {
+      "dependsOn": ["^stylelint:check"]
+    },
+    "stylelint:fix": {
+      "dependsOn": ["^stylelint:fix"]
+    },
+    "prettier:check": {
+      "dependsOn": ["^prettier:check"]
+    },
+    "prettier:fix\"": {
+      "dependsOn": ["^prettier:fix"]
     }
   }
 }
