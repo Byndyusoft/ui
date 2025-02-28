@@ -21,7 +21,7 @@ const MouseEventTemplate = (): JSX.Element => {
 
 export const MouseEventStory: TMouseEventTemplateStory = {
     name: 'Mouse event',
-    decorators: [() => <MouseEventTemplate />]
+    decorators: [(): JSX.Element => <MouseEventTemplate />]
 };
 
 type TKeyboardEventTemplateStory = StoryObj<typeof KeyboardEventTemplate>;
@@ -38,7 +38,7 @@ const KeyboardEventTemplate = (): JSX.Element => {
 
 export const KeyboardEventStory: TKeyboardEventTemplateStory = {
     name: 'Keyboard event',
-    decorators: [() => <KeyboardEventTemplate />]
+    decorators: [(): JSX.Element => <KeyboardEventTemplate />]
 };
 
 type THTMLElementTemplateStory = StoryObj<typeof HTMLElementTemplate>;
@@ -59,7 +59,7 @@ const HTMLElementTemplate = (): JSX.Element => {
 
 export const HTMLElementStory: THTMLElementTemplateStory = {
     name: 'HTML element',
-    decorators: [() => <HTMLElementTemplate />]
+    decorators: [(): JSX.Element => <HTMLElementTemplate />]
 };
 
 export default {

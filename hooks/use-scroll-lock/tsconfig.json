@@ -7,8 +7,5 @@
     "module": "commonjs",
     "target": "es6"
   },
-  "include": [
-    "../../types.d.ts",
-    "src"
-  ]
+  "include": ["../../types.d.ts", "src"]
 }

@@ -104,7 +104,7 @@ const Template = (): JSX.Element => {
 export const HookStory: StoryObj<typeof Template> = {
     name: 'Hook story',
     render: Template
-}
+};
 
 export default {
     title: 'hooks/useArray'
