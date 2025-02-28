@@ -1,3 +1,9 @@
 # `@byndyusoft-ui/use-hover`
 
-Custom hook that tracks whether the element is being hovered.
+> A custom hook that tracks whether a DOM element is being hovered.
+
+### Installation
+
+```
+npm i @byndyusoft-ui/use-hover
+```

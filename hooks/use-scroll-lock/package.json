@@ -1,0 +1,40 @@
+{
+  "name": "@byndyusoft-ui/use-scroll-lock",
+  "version": "0.1.0",
+  "description": "Byndyusoft UI React Hook",
+  "keywords": [
+    "byndyusoft",
+    "byndyusoft-ui",
+    "react",
+    "hook",
+    "use-scroll-lock"
+  ],
+  "author": "Dmitrii Maletskii <maleckij@byndyusoft.com>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-scroll-lock#readme",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Byndyusoft/ui.git"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "clean": "rimraf dist",
+    "test": "jest --config ../../jest.config.js --roots hooks/use-scroll-lock/src",
+    "lint:check": "npm run eslint:check && npm run prettier:check && npm run stylelint:check",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix && npm run stylelint:fix",
+    "eslint:check": "eslint src --config ../../eslint.config.js",
+    "eslint:fix": "eslint src --config ../../eslint.config.js --fix",
+    "prettier:check": "prettier --check '**/*.{ts,tsx,css,scss,json}' '!**/dist/**'",
+    "prettier:fix": "prettier --write '**/*.{ts,tsx,css,scss,json}' '!**/dist/**'",
+    "stylelint:check": "stylelint '**/*.{css,scss}' --allow-empty-input",
+    "stylelint:fix": "stylelint '**/*.{css,scss}' --fix --allow-empty-input"
+  },
+  "bugs": {
+    "url": "https://github.com/Byndyusoft/ui/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

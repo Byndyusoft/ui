@@ -21,13 +21,13 @@ const Highlighter = ({
     highlighter = renderMarkedHighlight
 }: IHighlighterProps): JSX.Element => {
     // If no highlight patterns are provided, return the original text
-    if (!searchValues || searchValues.length === 0) {
+    if (searchValues.length === 0) {
         return <>{text}</>;
     }
 
     // Create regular expression patterns for searching
     const highlightPattern = searchValues.map(searchValue =>
-      ignoreSpaces ? searchValue.replace(/\s+/g, '').split('').join('\\s*') : searchValue
+        ignoreSpaces ? searchValue.replace(/\s+/g, '').split('').join('\\s*') : searchValue
     );
 
     const regex = new RegExp(highlightPattern.join('|'), ignoreCase ? 'gi' : 'g');
@@ -44,9 +44,9 @@ const Highlighter = ({
     const segments = splitTextIntoSegments(text, matches);
 
     // Highlight matches
-    const result: Array<string | ReactNode> = segments.map((part) => {
-        return part.isMatch ? highlighter(part.segment) : part.segment;
-    });
+    const result: Array<string | ReactNode> = segments.map(part =>
+        part.isMatch ? highlighter(part.segment) : part.segment
+    );
 
     return (
         <>

@@ -1,7 +1,7 @@
 /**
  * Interface for a text segment with match information.
  */
-interface TextSegment {
+interface ITextSegment {
     segment: string;
     isMatch: boolean;
 }
@@ -12,11 +12,8 @@ interface TextSegment {
  * @param matches - Array of regex matches
  * @returns Array of text segments with match information
  */
-export function splitTextIntoSegments(
-  text: string,
-  matches: Array<RegExpMatchArray>
-): Array<TextSegment> {
-    const result: Array<TextSegment> = [];
+export function splitTextIntoSegments(text: string, matches: Array<RegExpMatchArray>): Array<ITextSegment> {
+    const result: Array<ITextSegment> = [];
     let lastIndex = 0;
 
     matches.forEach(match => {
