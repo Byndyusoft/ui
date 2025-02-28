@@ -19,8 +19,7 @@ const FormattedNumber = ({
                 const isLastNumberPart = numberPartIndex === numberParts.length - 1;
 
                 return (
-                    // eslint-disable-next-line react/no-array-index-key
-                    <Fragment key={`${number}_${numberPartIndex}`}>
+                    <Fragment key={self.crypto.randomUUID()}>
                         {numberPart}
                         {!isLastNumberPart && (
                             /* eslint-disable react/forbid-dom-props */
