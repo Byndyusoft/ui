@@ -1,11 +1,11 @@
-import React, { useCallback, useRef, useState } from 'react';
-import useLocalStorage from './useLocalStorage';
+import React, { useCallback, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import useSessionStorage from "./useSessionStorage";
 
 type TTokenTemplateStory = StoryObj<typeof TokenTemplate>;
 
 const TokenTemplate = (): JSX.Element => {
-    const [token, { setValue: setToken, removeValue: removeToken }] = useLocalStorage('access', '');
+    const [token, { setValue: setToken, removeValue: removeToken }] = useSessionStorage('access', '');
     const [inputValue, setInputValue] = useState('Brand new token');
     const handleClick = useCallback(() => {
         setToken(inputValue);
@@ -17,7 +17,7 @@ const TokenTemplate = (): JSX.Element => {
 
     return (
         <section>
-            <div>Access token: {token ?? 'no token'}</div>
+            <div>Session storage: {token ?? 'no token'}</div>
             <p>
                 <input value={inputValue} onChange={e => setInputValue(e.target.value)} />
             </p>
@@ -36,7 +36,7 @@ export const Token: TTokenTemplateStory = {
 };
 
 const meta: Meta = {
-    title: 'hooks/useLocalStorage'
+    title: 'hooks/useSessionStorage',
 };
 
 export default meta;

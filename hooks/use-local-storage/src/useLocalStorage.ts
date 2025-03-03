@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import {useCallback, useState} from 'react';
 import * as localStorage from '@byndyusoft-ui/local-storage';
 import useEventListener from '@byndyusoft-ui/use-event-listener';
 
