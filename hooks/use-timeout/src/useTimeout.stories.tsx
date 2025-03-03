@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { StoryFn } from '@storybook/react';
 import useTimeout from './useTimeout';
 
-export const Template: StoryFn = args => {
+interface IStoryArgs {
+    delay: number;
+}
+
+export const Template: StoryFn<IStoryArgs> = (args): JSX.Element => {
     const [count, setCount] = useState(0);
     const [message, setMessage] = useState('');
 

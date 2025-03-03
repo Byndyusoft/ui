@@ -4,7 +4,7 @@ export default function useScrollLock(isLocked?: boolean, target?: HTMLElement |
     const originalOverflowRef = useRef<string>();
 
     useEffect(() => {
-        const element = target || document.body;
+        const element = target ?? document.body;
 
         if (!originalOverflowRef.current) {
             originalOverflowRef.current = window.getComputedStyle(element).overflow;
@@ -17,7 +17,7 @@ export default function useScrollLock(isLocked?: boolean, target?: HTMLElement |
         }
 
         return () => {
-            element.style.overflow = originalOverflowRef.current || '';
+            element.style.overflow = originalOverflowRef.current ?? '';
         };
     }, [isLocked, target]);
 }
