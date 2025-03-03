@@ -40,5 +40,8 @@
   },
   "peerDependencies": {
     "react": ">=17"
+  },
+  "dependencies": {
+    "nanoid": "^5.1.2"
   }
 }
