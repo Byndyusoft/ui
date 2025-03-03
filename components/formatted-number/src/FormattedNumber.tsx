@@ -1,4 +1,5 @@
 import React, { Fragment, useMemo } from 'react';
+import { nanoid } from 'nanoid';
 import { IFormattedNumberViewProps } from './FormattedNumber.types';
 import { getDefaultFormatter, parseNumberToPartsByDefault } from './FormattedNumber.utilities';
 
@@ -19,7 +20,7 @@ const FormattedNumber = ({
                 const isLastNumberPart = numberPartIndex === numberParts.length - 1;
 
                 return (
-                    <Fragment key={self.crypto.randomUUID()}>
+                    <Fragment key={nanoid()}>
                         {numberPart}
                         {!isLastNumberPart && (
                             /* eslint-disable react/forbid-dom-props */
