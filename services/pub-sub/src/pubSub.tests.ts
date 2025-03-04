@@ -1,12 +1,7 @@
 import PubSub from './pubSub';
 
-interface IChannels {
-    testChannel: (data?: string) => void;
-    asyncChannel: (data?: string) => Promise<void>;
-}
-
 describe('services/pub-sub', () => {
-    const pubSub = new PubSub<IChannels>();
+    const pubSub = new PubSub();
 
     afterEach(() => {
         pubSub.reset();
@@ -37,14 +32,6 @@ describe('services/pub-sub', () => {
         pubSub.publish('testChannel');
 
         expect(callback).not.toHaveBeenCalled();
-    });
-
-    test('should warn if no subscribers are present for a channel', () => {
-        console.warn = jest.fn();
-
-        pubSub.publish('testChannel', 'No one is listening');
-
-        expect(console.warn).toHaveBeenCalledWith('No subscribers for channel: testChannel');
     });
 
     test('should handle async subscribe callbacks', async () => {
@@ -110,17 +97,17 @@ describe('services/pub-sub', () => {
         pubSub.subscribe('testChannel', callback2);
         pubSub.subscribe('asyncChannel', callback1);
 
-        const result = pubSub.allSubscribes();
+        const result = pubSub.getAllSubscribers();
 
-        const testChannelInfo = result.find(item => item.channel === 'testChannel');
-        const asyncChannelInfo = result.find(item => item.channel === 'asyncChannel');
+        const testChannelInfo = result.find(item => item.event === 'testChannel');
+        const asyncChannelInfo = result.find(item => item.event === 'asyncChannel');
 
         expect(testChannelInfo).toBeDefined();
 
-        expect(testChannelInfo?.subscribers).toBe(2);
+        expect(testChannelInfo?.subscribers.length).toBe(2);
 
         expect(asyncChannelInfo).toBeDefined();
 
-        expect(asyncChannelInfo?.subscribers).toBe(1);
+        expect(asyncChannelInfo?.subscribers.length).toBe(1);
     });
 });
