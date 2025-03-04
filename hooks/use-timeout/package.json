@@ -41,6 +41,6 @@
     "@byndyusoft-ui/use-latest-ref": "*"
   },
   "peerDependencies": {
-    "@byndyusoft-ui/types": "0.2.0"
+    "@byndyusoft-ui/types": "0.3.0"
   }
 }
