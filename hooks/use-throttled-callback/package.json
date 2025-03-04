@@ -40,9 +40,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@byndyusoft-ui/use-timeout": "^2.0.1"
-  },
-  "devDependencies": {
-    "@byndyusoft-ui/types": "^0.2.0"
+    "@byndyusoft-ui/use-timeout": "^2.0.1",
+    "@byndyusoft-ui/types": "^0.3.0"
   }
 }
