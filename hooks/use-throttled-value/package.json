@@ -1,6 +1,6 @@
 {
   "name": "@byndyusoft-ui/use-throttled-value",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Byndyusoft UI React Hook",
   "keywords": [
     "byndyusoft",
@@ -40,7 +40,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@byndyusoft-ui/use-throttled-callback": "*",
-    "@byndyusoft-ui/types": "^0.3.0"
+    "@byndyusoft-ui/use-throttled-callback": "0.2.0",
+    "@byndyusoft-ui/types": "0.3.0"
   }
 }
