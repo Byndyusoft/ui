@@ -31,7 +31,7 @@
     "prettier:check": {
       "dependsOn": ["^prettier:check"]
     },
-    "prettier:fix\"": {
+    "prettier:fix": {
       "dependsOn": ["^prettier:fix"]
     }
   }
