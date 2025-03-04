@@ -15,7 +15,6 @@
   "scripts": {
     "build": "turbo build",
     "clean": "turbo clean",
-    "lint": "turbo lint",
     "test": "turbo test",
     "lint:check": "turbo lint:check",
     "lint:fix": "turbo lint:fix",
