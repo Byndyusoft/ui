@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {StoryObj} from '@storybook/react';
+import { StoryObj } from '@storybook/react';
 import Highlighter from './Highlighter';
 import type { IHighlighterProps } from './Highlighter.types';
 
@@ -13,7 +13,7 @@ export const BaseStory: StoryObj<typeof Template> = {
         text: 'Warehouse',
         ignoreCase: true
     }
-}
+};
 
 export const HighlightWithOverlappingSearchValuesStory: StoryObj<typeof Template> = {
     name: 'Highlight with overlapping search values',
@@ -22,27 +22,27 @@ export const HighlightWithOverlappingSearchValuesStory: StoryObj<typeof Template
         searchValues: ['This', 'is'],
         text: 'This is a test string'
     }
-}
+};
 
 function customHighlight(str: string): JSX.Element {
     return <strong>{str}</strong>;
 }
 
 export const CustomHighlightStory: StoryObj<typeof Template> = {
-  name: 'Custom highlight',
-  render: Template,
-  args: {
-      searchValues: ['re'],
-      text: 'Warehouse',
-      ignoreCase: true,
-      highlighter: customHighlight
-  }
+    name: 'Custom highlight',
+    render: Template,
+    args: {
+        searchValues: ['re'],
+        text: 'Warehouse',
+        ignoreCase: true,
+        highlighter: customHighlight
+    }
 };
 
 const text =
     'Trado cribro custodia tum amissio aut. \n Ascit ubi vetus depraedor decerno terminatio cicuta caput provident';
 
-const InteractiveTemplate = (args: IHighlighterProps) => {
+const InteractiveTemplate = (args: IHighlighterProps): JSX.Element => {
     const [highlight, setHighlight] = useState(args.searchValues[0]);
 
     return (
