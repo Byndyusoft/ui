@@ -4,6 +4,7 @@ export type TOnChange = (value: string) => void;
 
 export interface IRadioProps {
     value: string;
+    isDisabled?: boolean;
     children: ReactNode;
 }
 

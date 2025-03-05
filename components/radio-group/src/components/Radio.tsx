@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { IRadioProps } from '../RadioGroup.types';
 import { useRadioGroupContext } from './RadioGroupContext';
 
-const Radio = ({ value, children }: IRadioProps): ReactElement => {
+const Radio = ({ value, isDisabled, children }: IRadioProps): ReactElement => {
     const { name, value: groupValue, setValue } = useRadioGroupContext();
 
     const radioId = `${name}-${value}`;
@@ -20,6 +20,7 @@ const Radio = ({ value, children }: IRadioProps): ReactElement => {
                 value={value}
                 checked={groupValue === value}
                 onChange={handleInputChange}
+                disabled={isDisabled}
             />
             <label htmlFor={radioId}>{children}</label>
         </div>
