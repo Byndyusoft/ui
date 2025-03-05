@@ -1,7 +1,0 @@
-{
-  "packages": ["components/*", "hooks/*", "packages/*", "services/*", "styles/*"],
-  "useWorkspaces": true,
-  "version": "independent",
-  "npmClient": "npm",
-  "useNx": false
-}

@@ -1,0 +1,58 @@
+{{- if .Values.ingress.enabled }}
+{{- $envname := .Values.environment }}
+{{- $microservicename := .Values.microservice.name }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $microservicename }}
+  labels:
+    app: {{ $microservicename }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    project: {{ .Values.project }}
+    environment: {{ .Values.environment }}
+    {{- with .Values.ingress.labels }}
+    {{ toYaml . }}
+    {{- end }}
+  {{- $annotations := pluck $envname .Values.ingress.annotations | first | default .Values.ingress.annotations.default }}
+  {{- with $annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if .Values.ingress.ingressClassName }}
+  ingressClassName: {{ .Values.ingress.ingressClassName }}
+  {{- else }}
+  ingressClassName: "nginx"
+  {{- end }}
+  {{- if .Values.ingress.tls }}
+  tls:
+  {{- range .Values.ingress.tls }}
+  {{- $hosts := pluck $envname .hosts | first | default .hosts.default }}
+  {{- if $hosts }}
+  - hosts:
+      {{- range split "," $hosts }}
+      - {{ . | toString }}
+      {{- end }}
+    secretName: {{ .secretName }}
+  {{- end }}
+  {{- end }}
+  {{- end }}
+  rules:
+    {{- range .Values.ingress.hosts }}
+    {{ $host := pluck $envname .host | first | default .host.default }}
+    {{- if $host }}
+    - host: {{ $host | toString }}
+      http:
+        paths:
+          - path: {{ .path | default "/" }}
+            pathType: {{ .pathType | default "Prefix" }}
+            backend:
+              service:
+                name: {{ $microservicename }}
+                port:
+                  number: {{ .servicePorts | default 80 }}
+    {{- end }}
+    {{- end }}
+{{- end }}

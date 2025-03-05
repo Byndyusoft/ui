@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { StoryFn } from '@storybook/react';
+import { StoryObj } from '@storybook/react';
 import useArray from './useArray';
 import './useArray.stories.css';
 
-const HookStoryComponent = (): JSX.Element => {
+const Template = (): JSX.Element => {
     const [addValue, setAddValue] = useState(0);
     const [prependValue, setPrependValue] = useState(0);
     const [fromValue, setFromValue] = useState(0);
@@ -101,11 +101,10 @@ const HookStoryComponent = (): JSX.Element => {
     );
 };
 
-const Template: StoryFn = () => <HookStoryComponent />;
-
-export const HookStory = Template.bind({});
-
-HookStory.args = {};
+export const HookStory: StoryObj<typeof Template> = {
+    name: 'Hook story',
+    render: Template
+};
 
 export default {
     title: 'hooks/useArray'
