@@ -1,0 +1,33 @@
+import {
+    Markdown,
+    Source,
+    Canvas,
+    Meta,
+    ArgsTable
+} from '@storybook/blocks';
+import Readme from '../README.md';
+import View from './View';
+import * as ViewStories from './View.stories';
+
+<Meta title="components/View" of={ViewStories} />
+
+<Markdown><Readme /></Markdown>
+
+## Usage
+
+To use the component in your project you must:
+
+1. Import the component where you need it:
+
+<Source
+    language="javascript"
+    code="import View from '@byndyusoft-ui/view';"
+/>
+
+2. Call the component and give it the desired props, for example:
+
+<Canvas sourceState="shown" of={ViewStories.ComponentStory} />
+
+## Props
+
+<ArgsTable of={View} />
