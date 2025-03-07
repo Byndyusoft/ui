@@ -13,30 +13,16 @@ module.exports = {
         getAbsolutePath('@storybook/addon-links'),
         getAbsolutePath('@storybook/addon-essentials'),
         getAbsolutePath('@storybook/addon-a11y'),
-        {
-            name: '@storybook/addon-docs',
-            options: {
-                transcludeMarkdown: true,
-                presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript']
-            }
-        },
+        getAbsolutePath('@storybook/addon-docs'),
         getAbsolutePath('@storybook/addon-mdx-gfm'),
-        getAbsolutePath('@newhighsco/storybook-addon-svgr')
+        getAbsolutePath('@newhighsco/storybook-addon-svgr'),
+        getAbsolutePath("@storybook/addon-mdx-gfm"),
+        // getAbsolutePath("@storybook/addon-webpack5-compiler-swc")
     ],
 
-    framework: {
-        name: getAbsolutePath('@storybook/react-webpack5'),
-        options: {
-            builder: {
-                useSWC: true,
-                fsCache: true,
-                lazyCompilation: true
-            }
-        }
-    },
+    framework: '@storybook/react-vite',
 
     docs: {
-        autodocs: 'tag',
         defaultName: 'Documentation'
     }
 };
