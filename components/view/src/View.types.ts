@@ -42,4 +42,5 @@ export interface IViewSpacings {
 // export interface IViewProps extends Omit<HTMLAttributes<HTMLElement>, 'style'>, IViewSpacings {
 export interface IViewProps extends HTMLAttributes<HTMLElement>, IViewSpacings {
     as?: keyof ReactHTML;
+    className?: string;
 }
