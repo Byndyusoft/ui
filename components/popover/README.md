@@ -1,6 +1,6 @@
 # `@byndyusoft-ui/popover`
 ---
-> Add description
+> React component that displays modal content over clicked element
 
 ### Installation
 
