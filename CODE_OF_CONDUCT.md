@@ -35,8 +35,6 @@
 
 `fix(Dropdown/Item): change styles names`
 
-
-
 ## Компонент
 
 ### Структура компонента
@@ -57,6 +55,7 @@ component-name // Название компонента в kebab case
 |   ├── ComponentName.tests.tsx
 |   ├── ComponentName.stories.tsx
 |   ├── ComponentName.stories.css // стили историй
+|   ├── ComponentName.docs.mdx // документация компонента
 |   └── index.ts
 ├── README.md
 ├── package.json
@@ -78,7 +77,7 @@ use-hook-name // Название хука в kebab case
 |   ├── useHookName.tests.ts
 |   ├── useHookName.stories.tsx
 |   ├── useHookName.stories.css
-|   └── useHookName.stories.mdx
+|   └── useHookName.docs.mdx // документация хука
 ├── README.md
 ├── package.json
 ├── .npmignore
@@ -136,8 +135,15 @@ Name Surname
     "scripts": {
         "build": "tsc --project tsconfig.build.json",
         "clean": "rimraf dist",
-        "lint": "eslint src --config ../../eslint.config.js",
-        "test": "jest --config ../../jest.config.js --roots hooks/use-hook-name/src"
+        "test": "jest --config ../../jest.config.js --roots hooks/use-hook-name/src",
+        "lint:check": "npm run eslint:check && npm run prettier:check && npm run stylelint:check",
+        "lint:fix": "npm run eslint:fix && npm run prettier:fix && npm run stylelint:fix",
+        "eslint:check": "eslint src --config ../../eslint.config.js",
+        "eslint:fix": "eslint src --config ../../eslint.config.js --fix",
+        "prettier:check": "prettier --check '**/*.{ts,tsx,css,scss,json}'",
+        "prettier:fix": "prettier --write '**/*.{ts,tsx,css,scss,json}'",
+        "stylelint:check": "stylelint '**/*.{css,scss}' --allow-empty-input",
+        "stylelint:fix": "stylelint '**/*.{css,scss}' --fix --allow-empty-input"
     },
     "bugs": {
         "url": "https://github.com/Byndyusoft/ui/issues"
@@ -158,8 +164,8 @@ src
 
 ```json
 {
-  "extends": "./tsconfig.json",
-  "exclude": ["src/*.tests.ts", "src/*.stories.tsx"]
+    "extends": "./tsconfig.json",
+    "exclude": ["src/*.tests.ts", "src/*.stories.tsx"]
 }
 ```
 

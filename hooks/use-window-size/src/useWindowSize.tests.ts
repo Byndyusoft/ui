@@ -4,9 +4,9 @@ import useWindowSize from './useWindowSize';
 describe('use-window-size', () => {
     const triggerResize = (dimension: 'width' | 'height', value: number): void => {
         if (dimension === 'width') {
-            (window.innerWidth as number) = value;
+            window.innerWidth = value;
         } else {
-            (window.innerHeight as number) = value;
+            window.innerHeight = value;
         }
 
         window.dispatchEvent(new Event('resize'));
