@@ -178,7 +178,7 @@ src
         "declaration": true,
         "declarationDir": "dist",
         "outDir": "dist",
-        "module": "commonjs",
+        "module": "ESnext",
         "target": "es6"
     },
     "include": ["src"]
