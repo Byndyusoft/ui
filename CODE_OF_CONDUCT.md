@@ -135,7 +135,6 @@ Name Surname
     "scripts": {
         "build": "tsc --project tsconfig.build.json",
         "clean": "rimraf dist",
-        "test": "jest --config ../../jest.config.js --roots hooks/use-hook-name/src",
         "lint:check": "npm run eslint:check && npm run prettier:check && npm run stylelint:check",
         "lint:fix": "npm run eslint:fix && npm run prettier:fix && npm run stylelint:fix",
         "eslint:check": "eslint src --config ../../eslint.config.js",
