@@ -9,11 +9,16 @@ export interface IUseTimeout {
 
 export default function useTimeout(callback: Callback, delay: number): IUseTimeout {
     const savedCallback = useLatestRef(callback);
-    const timer = useRef<TimeoutId>();
+    const timer = useRef<TimeoutId | null>(null);
 
+    console.log('useTimeout RENDER', timer.current);
     const stop = (): void => {
+        console.log('timer', timer.current);
+        // console.log('timer if', Boolean(timer.current));
         if (timer.current) {
+            console.log('CLEAR IF TIMER')
             clearTimeout(timer.current);
+            timer.current = null;
         }
     };
 
@@ -24,7 +29,10 @@ export default function useTimeout(callback: Callback, delay: number): IUseTimeo
         }, delay);
     };
 
-    useEffect(() => stop, []);
+    useEffect(() => {
+        console.log('USE EFFECT STOP')
+        return stop;
+    }, []);
 
     return {
         start,
