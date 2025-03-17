@@ -1,0 +1,22 @@
+:root {
+    --magic-unit: 1rem;
+
+    --mu025: calc(var(--magic-unit) * 0.25);
+    --mu050: calc(var(--magic-unit) * 0.5);
+    --mu075: calc(var(--magic-unit) * 0.75);
+    --mu100: calc(var(--magic-unit) * 1);
+    --mu125: calc(var(--magic-unit) * 1.25);
+    --mu150: calc(var(--magic-unit) * 1.5);
+    --mu175: calc(var(--magic-unit) * 1.75);
+    --mu200: calc(var(--magic-unit) * 2);
+    --mu250: calc(var(--magic-unit) * 2.5);
+    --mu300: calc(var(--magic-unit) * 3);
+    --mu350: calc(var(--magic-unit) * 3.5);
+    --mu400: calc(var(--magic-unit) * 4);
+    --mu500: calc(var(--magic-unit) * 5);
+    --mu600: calc(var(--magic-unit) * 6);
+    --mu700: calc(var(--magic-unit) * 7);
+    --mu800: calc(var(--magic-unit) * 8);
+    --mu900: calc(var(--magic-unit) * 9);
+    --mu1000: calc(var(--magic-unit) * 10);
+}

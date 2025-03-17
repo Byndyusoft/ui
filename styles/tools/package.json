@@ -10,9 +10,12 @@
   ],
   "author": "Nikolai Kuznetsov <kuznetsov@byndyusoft.com>",
   "license": "Apache-2.0",
-  "main": "index.css",
+  "main": "dist/index.css",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Byndyusoft/ui.git"
+  },
+  "scripts": {
+    "build": "sass src/index.scss dist/index.css --style=compressed"
   }
 }

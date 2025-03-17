@@ -1,0 +1,70 @@
+@use "sass:map";
+
+$sizes: (
+    "025": var(--mu025),
+    "050": var(--mu050),
+    "075": var(--mu075),
+    "100": var(--mu100),
+    "125": var(--mu125),
+    "150": var(--mu150),
+    "200": var(--mu200),
+    "250": var(--mu250),
+    "300": var(--mu300),
+    "350": var(--mu350),
+    "400": var(--mu400),
+    "500": var(--mu500),
+    "600": var(--mu600),
+    "700": var(--mu700),
+    "800": var(--mu800),
+    "900": var(--mu900),
+    "1000": var(--mu1000)
+);
+
+// top, right, left, bottom, all, vertical, horizontal
+$sides: (
+    "t": "top",
+    "r": "right",
+    "l": "left",
+    "b": "bottom",
+    "all": "all",
+    "v": "vertical",
+    "h": "horizontal"
+);
+$props: (
+    "m": "margin",
+    "p": "padding"
+);
+
+@mixin make-space-util($prop, $side, $size) {
+    @if ($side == "all") {
+        .#{$prop}-#{$size} {
+            #{map.get($props, $prop)}: #{map.get($sizes, $size)} !important;
+        }
+    } @else if ($side == "v") {
+        .#{$prop}#{$side}-#{$size} {
+            #{map.get($props, $prop)}-top: #{map.get($sizes, $size)} !important;
+            #{map.get($props, $prop)}-bottom: #{map.get($sizes, $size)} !important;
+        }
+    } @else if ($side == "h") {
+        .#{$prop}#{$side}-#{$size} {
+            #{map.get($props, $prop)}-left: #{map.get($sizes, $size)} !important;
+            #{map.get($props, $prop)}-right: #{map.get($sizes, $size)} !important;
+        }
+    } @else {
+        .#{$prop}#{$side}-#{$size} {
+            #{map.get($props, $prop)}-#{map.get($sides, $side)}: #{map.get($sizes, $size)} !important;
+        }
+    }
+}
+
+@each $sideName, $sideVal in $sides {
+    @each $sizeName, $sizeVal in $sizes {
+        @include make-space-util("m", $sideName, $sizeName);
+    }
+}
+
+@each $sideName, $sideVal in $sides {
+    @each $sizeName, $sizeVal in $sizes {
+        @include make-space-util("p", $sideName, $sizeName);
+    }
+}
