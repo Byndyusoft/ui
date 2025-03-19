@@ -24,7 +24,7 @@ export const Default: TStory = {
         <Popover {...args}>
             <PopoverTrigger>Click to show</PopoverTrigger>
 
-            <PopoverContent width={300}>Click the trigger text to close</PopoverContent>
+            <PopoverContent>Click the trigger text to close</PopoverContent>
         </Popover>
     )
 };

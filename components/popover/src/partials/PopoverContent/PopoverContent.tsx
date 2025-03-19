@@ -18,19 +18,21 @@ const PopoverContent = forwardRef<HTMLDivElement, IPopoverContentProps>(
         if (!floatingContext.open) return null;
 
         if (withPortal) {
-            <FloatingPortal>
-                <FloatingFocusManager context={floatingContext} modal={modal} disabled={isFloatingFocusDisabled}>
-                    <div
-                        ref={ref}
-                        // eslint-disable-next-line react/forbid-dom-props
-                        style={{ ...popoverContext.floatingStyles, ...style }}
-                        className={cn(styles.popoverContent, className)}
-                        {...popoverContext.getFloatingProps(props)}
-                    >
-                        {props.children}
-                    </div>
-                </FloatingFocusManager>
-            </FloatingPortal>;
+            return (
+                <FloatingPortal>
+                    <FloatingFocusManager context={floatingContext} modal={modal} disabled={isFloatingFocusDisabled}>
+                        <div
+                            ref={ref}
+                            // eslint-disable-next-line react/forbid-dom-props
+                            style={{ ...popoverContext.floatingStyles, ...style }}
+                            className={cn(styles.popoverContent, className)}
+                            {...popoverContext.getFloatingProps(props)}
+                        >
+                            {props.children}
+                        </div>
+                    </FloatingFocusManager>
+                </FloatingPortal>
+            );
         }
 
         return (
