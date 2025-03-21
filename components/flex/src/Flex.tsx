@@ -1,10 +1,11 @@
 import React, { FC, useMemo } from 'react';
 import cn from 'classnames';
-import View, { sanitizeMagicUnit, TMagicUnit } from '@byndyusoft-ui/view';
+import View, { sanitizeMagicUnit, TSpacingUnit } from '@byndyusoft-ui/view';
 import { IFlexProps, TAlignContent, TAlignItems, TFlexDirection, TFlexWrap, TJustifyContent } from './Flex.types';
 import './Flex.scss';
 
-const blockClassName = 'ml-flex';
+const prefix = 'bsui';
+const blockClassName = `${prefix}-flex`;
 
 export function getDirectionModifier(direction?: TFlexDirection): string {
     if (direction) {
@@ -46,7 +47,7 @@ export function getJustifyContentModifier(justifyContent?: TJustifyContent): str
     return '';
 }
 
-export function getGapModifiers(gap?: TMagicUnit, rowGap?: TMagicUnit, columnGap?: TMagicUnit): Array<string> {
+export function getGapModifiers(gap?: TSpacingUnit, rowGap?: TSpacingUnit, columnGap?: TSpacingUnit): Array<string> {
     if (gap) {
         return [`${blockClassName}--g-${sanitizeMagicUnit(gap)}`];
     }

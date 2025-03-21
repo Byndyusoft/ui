@@ -26,7 +26,7 @@ $justifyContentVariants: flex-start, flex-end, center, space-between, space-arou
 $alignContentVariants: flex-start, flex-end, center, space-between, space-around, space-evenly, stretch;
 $alignItemsVariants: flex-start, flex-end, center, baseline, stretch;
 
-.ml-flex {
+.bsui-flex {
     display: flex;
 
     &--fd {
