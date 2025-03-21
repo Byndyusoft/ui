@@ -1,4 +1,4 @@
-import {IViewProps, TMagicUnit} from "@byndyusoft-ui/view/src/View.types";
+import {IViewProps, TSpacingUnit} from "@byndyusoft-ui/view/src/View.types";
 
 export const directions = ['row', 'column', 'row-reverse', 'column-reverse'] as const;
 
@@ -41,7 +41,7 @@ export interface IFlexProps extends IViewProps {
     direction?: TFlexDirection;
     justifyContent?: TJustifyContent;
     wrap?: TFlexWrap;
-    gap?: TMagicUnit;
-    rowGap?: TMagicUnit;
-    columnGap?: TMagicUnit;
+    gap?: TSpacingUnit;
+    rowGap?: TSpacingUnit;
+    columnGap?: TSpacingUnit;
 }
