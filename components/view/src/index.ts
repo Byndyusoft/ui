@@ -1,2 +1,2 @@
 export { default, sanitize as sanitizeMagicUnit } from './View';
-export { TMagicUnit, IViewProps } from './View.types';
+export { TSpacingUnit, IViewProps } from './View.types';

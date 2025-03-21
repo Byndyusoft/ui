@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import View from './View';
-import { magicUnits } from './View.types';
+import { spacingUnits } from './View.types';
 import { InputType } from '@storybook/core/dist/csf';
 import './View.css'
 
@@ -21,7 +21,7 @@ function ViewContent() {
 }
 
 const spaceControl: InputType = {
-    options: magicUnits,
+    options: spacingUnits,
     control: { type: 'select' }
 };
 
