@@ -37,21 +37,21 @@ $props: (
 @mixin make-space-util($prop, $side, $size) {
     @if ($side == "all") {
         .#{$prop}-#{$size} {
-            #{map.get($props, $prop)}: #{map.get($sizes, $size)} !important;
+            #{map.get($props, $prop)}: #{map.get($sizes, $size)};
         }
     } @else if ($side == "v") {
         .#{$prop}#{$side}-#{$size} {
-            #{map.get($props, $prop)}-top: #{map.get($sizes, $size)} !important;
-            #{map.get($props, $prop)}-bottom: #{map.get($sizes, $size)} !important;
+            #{map.get($props, $prop)}-top: #{map.get($sizes, $size)};
+            #{map.get($props, $prop)}-bottom: #{map.get($sizes, $size)};
         }
     } @else if ($side == "h") {
         .#{$prop}#{$side}-#{$size} {
-            #{map.get($props, $prop)}-left: #{map.get($sizes, $size)} !important;
-            #{map.get($props, $prop)}-right: #{map.get($sizes, $size)} !important;
+            #{map.get($props, $prop)}-left: #{map.get($sizes, $size)};
+            #{map.get($props, $prop)}-right: #{map.get($sizes, $size)};
         }
     } @else {
         .#{$prop}#{$side}-#{$size} {
-            #{map.get($props, $prop)}-#{map.get($sides, $side)}: #{map.get($sizes, $size)} !important;
+            #{map.get($props, $prop)}-#{map.get($sides, $side)}: #{map.get($sizes, $size)};
         }
     }
 }
