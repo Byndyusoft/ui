@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import usePrevious from './usePrevious';
 import type { StoryObj } from '@storybook/react';
-import './usePrevious.stories.css';
+import './usePreviousStory.css';
 
 type TStory = StoryObj<typeof Template>;
 

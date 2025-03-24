@@ -23,7 +23,7 @@ const Setup = (props: { onClick: () => void }): JSX.Element => {
 
 describe('hooks/useClickOutside', () => {
     test('add two refs', async () => {
-        const onClick = jest.fn();
+        const onClick = vi.fn();
         render(<Setup onClick={onClick} />);
 
         await userEvent.click(screen.getByLabelText('button-1'));
