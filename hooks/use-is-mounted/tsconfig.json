@@ -5,7 +5,8 @@
     "declarationDir": "dist",
     "outDir": "dist",
     "module": "ESnext",
-    "target": "es6"
+    "target": "es6",
+    "types": []
   },
   "include": [
     "src"

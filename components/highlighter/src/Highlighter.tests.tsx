@@ -44,7 +44,7 @@ describe('Highlighter', () => {
     });
 
     test('renders the text with custom highlight styles', () => {
-        const customHighlight = (str: string): JSX.Element => <strong>{str}</strong>;
+        const customHighlight = (str: string): React.ReactNode => <strong>{str}</strong>;
         setup({ ...defaultProps, highlighter: customHighlight });
 
         expect(screen.queryByText('test', { selector: 'mark' })).not.toBeInTheDocument();

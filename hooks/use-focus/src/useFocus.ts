@@ -2,8 +2,8 @@ import { RefObject, useEffect } from 'react';
 import useEventListener from '@byndyusoft-ui/use-event-listener';
 import useToggle from '@byndyusoft-ui/use-toggle';
 
-export default function useFocus<T extends HTMLElement = HTMLElement>(
-    elementRef: RefObject<T>,
+export default function useFocus<T extends HTMLElement>(
+    elementRef: RefObject<T | null>,
     defaultState = false
 ): boolean {
     const [isFocused, { toLeftValue: focus, toRightValue: blur }] = useToggle(true, false, defaultState);

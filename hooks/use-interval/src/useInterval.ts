@@ -3,7 +3,7 @@ import useLatestRef from '@byndyusoft-ui/use-latest-ref';
 
 export default function useInterval(callback: () => void, delay: number | null): () => void {
     const savedCallback = useLatestRef(callback);
-    const timer = useRef<ReturnType<typeof setInterval>>();
+    const timer = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const clear = useCallback(() => {
         if (timer.current) {

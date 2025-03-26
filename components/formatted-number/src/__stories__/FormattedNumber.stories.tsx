@@ -4,7 +4,7 @@ import { IFormattedNumberViewProps } from '../FormattedNumber.types';
 import FormattedNumber, { getMaxFractionalPartOfNumbers } from '..';
 import styles from './FormattedNumber.stories.module.css';
 
-const Template: (args: IFormattedNumberViewProps) => JSX.Element = (args: IFormattedNumberViewProps) => (
+const Template: (args: IFormattedNumberViewProps) => React.ReactNode = (args: IFormattedNumberViewProps) => (
     <div className={styles.templateContainer}>
         <span>
             <FormattedNumber {...args} />
@@ -32,7 +32,7 @@ export const CustomDefaultFormatterOptionsViewStory: StoryObj<typeof Template> =
     }
 };
 
-const WithSameFractionalPartView = (): JSX.Element => {
+const WithSameFractionalPartView = (): React.ReactNode => {
     const numbers = [123, 2317546731354.654, 6488946759912.511, 5990.45, 1123];
 
     const defaultFormatterOptions = {

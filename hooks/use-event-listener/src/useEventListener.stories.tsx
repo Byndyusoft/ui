@@ -4,7 +4,7 @@ import type { StoryObj } from '@storybook/react';
 
 type TMouseEventTemplateStory = StoryObj<typeof MouseEventTemplate>;
 
-const MouseEventTemplate = (): JSX.Element => {
+const MouseEventTemplate = (): React.ReactNode => {
     const [coords, setCoords] = useState({ x: 0, y: 0 });
     const ref = useRef(null);
 
@@ -21,12 +21,12 @@ const MouseEventTemplate = (): JSX.Element => {
 
 export const MouseEventStory: TMouseEventTemplateStory = {
     name: 'Mouse event',
-    decorators: [(): JSX.Element => <MouseEventTemplate />]
+    decorators: [(): React.ReactNode => <MouseEventTemplate />]
 };
 
 type TKeyboardEventTemplateStory = StoryObj<typeof KeyboardEventTemplate>;
 
-const KeyboardEventTemplate = (): JSX.Element => {
+const KeyboardEventTemplate = (): React.ReactNode => {
     const [key, setKey] = useState('none');
 
     const handler = useCallback((event: KeyboardEvent) => setKey(event.key), [setKey]);
@@ -38,12 +38,12 @@ const KeyboardEventTemplate = (): JSX.Element => {
 
 export const KeyboardEventStory: TKeyboardEventTemplateStory = {
     name: 'Keyboard event',
-    decorators: [(): JSX.Element => <KeyboardEventTemplate />]
+    decorators: [(): React.ReactNode => <KeyboardEventTemplate />]
 };
 
 type THTMLElementTemplateStory = StoryObj<typeof HTMLElementTemplate>;
 
-const HTMLElementTemplate = (): JSX.Element => {
+const HTMLElementTemplate = (): React.ReactNode => {
     const ref = useRef(null);
 
     const handler = useCallback(() => alert('Button clicked!'), []);
@@ -59,7 +59,7 @@ const HTMLElementTemplate = (): JSX.Element => {
 
 export const HTMLElementStory: THTMLElementTemplateStory = {
     name: 'HTML element',
-    decorators: [(): JSX.Element => <HTMLElementTemplate />]
+    decorators: [(): React.ReactNode => <HTMLElementTemplate />]
 };
 
 export default {

@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import useClickOutside from './useClickOutside';
 
-const Setup = (props: { onClick: () => void }): JSX.Element => {
+const Setup = (props: { onClick: () => void }): React.ReactNode => {
     const ref1 = useRef(null);
     const ref2 = useRef(null);
 

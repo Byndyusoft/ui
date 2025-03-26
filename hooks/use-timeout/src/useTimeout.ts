@@ -9,7 +9,7 @@ export interface IUseTimeout {
 
 export default function useTimeout(callback: Callback, delay: number): IUseTimeout {
     const savedCallback = useLatestRef(callback);
-    const timer = useRef<TimeoutId>();
+    const timer = useRef<TimeoutId | null>(null);
 
     const stop = (): void => {
         if (timer.current) {

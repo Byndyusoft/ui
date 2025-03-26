@@ -11,7 +11,7 @@ const FormattedNumber = ({
     formatter = getDefaultFormatter(defaultFormatterOptions),
     parseNumberToParts = parseNumberToPartsByDefault,
     numberPartsDividerClassName = ''
-}: IFormattedNumberViewProps): JSX.Element => {
+}: IFormattedNumberViewProps): React.ReactNode => {
     const numberParts = useMemo(
         () => parseNumberToParts(formatter.format(number)),
         [parseNumberToParts, formatter, number]

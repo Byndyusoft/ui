@@ -1,9 +1,10 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
+import { Mock } from 'vitest';
 import useThrottledCallback, { IThrottledCallbackOptions } from './useThrottledCallback';
 
 const DELAY_THROTTLE = 500;
 
-const setup = (callback: jest.Mock, delay: number, options?: IThrottledCallbackOptions) =>
+const setup = (callback: Mock, delay: number, options?: IThrottledCallbackOptions) =>
     renderHook(() => useThrottledCallback(callback, delay, options));
 
 const multipleCalls = (callback: () => void, delay: number): void => {

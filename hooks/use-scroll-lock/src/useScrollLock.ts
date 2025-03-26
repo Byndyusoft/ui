@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 export default function useScrollLock(isLocked?: boolean, target?: HTMLElement | null): void {
-    const originalOverflowRef = useRef<string>();
+    const originalOverflowRef = useRef<string>('');
 
     useEffect(() => {
         const element = target ?? document.body;

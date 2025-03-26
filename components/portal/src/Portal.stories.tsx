@@ -4,7 +4,7 @@ import { StoryObj } from '@storybook/react';
 import Portal from './Portal';
 import './PortalStory.module.scss';
 
-const Template = (): JSX.Element => (
+const Template = (): React.ReactNode => (
     <div className="portalStory">
         <p>Text in main app container</p>
         <Portal id="topRightPortal">

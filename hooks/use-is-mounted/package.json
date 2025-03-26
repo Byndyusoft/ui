@@ -28,8 +28,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "peerDependencies": {
-    "react": ">=17"
   }
 }

@@ -13,7 +13,7 @@ afterEach(() => {
     vi.clearAllMocks();
 });
 
-const Setup = ({ isDocumentListener }: ISetupProps): JSX.Element => {
+const Setup = ({ isDocumentListener }: ISetupProps): React.ReactNode => {
     const elementRef = useRef(null);
     const documentRef = useRef(document);
 
@@ -34,7 +34,7 @@ const Setup = ({ isDocumentListener }: ISetupProps): JSX.Element => {
     );
 };
 
-const SetupForWindow = (): JSX.Element => {
+const SetupForWindow = (): React.ReactNode => {
     useEventListener('click', handler);
 
     return <button type="button">Click on me!</button>;

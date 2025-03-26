@@ -10,7 +10,7 @@ interface IMousePosition {
 
 const DELAY_THROTTLE = 1500;
 
-function TemplateUseThrottledValueStory(): JSX.Element {
+function TemplateUseThrottledValueStory(): React.ReactNode {
     const [leading, setLeading] = useState(true);
     const [trailing, setTrailing] = useState(true);
 

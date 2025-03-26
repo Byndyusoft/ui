@@ -1,7 +1,7 @@
-import { Renderer, renderHook, RenderHookResult } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import usePrevious from './usePrevious';
 
-const setup = (value?: unknown): RenderHookResult<unknown, unknown, Renderer<unknown>> =>
+const setup = (value?: unknown) =>
     renderHook(state => usePrevious(state), { initialProps: value });
 
 describe('hooks/usePrevious', () => {

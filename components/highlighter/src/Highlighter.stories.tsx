@@ -3,7 +3,7 @@ import { StoryObj } from '@storybook/react';
 import Highlighter from './Highlighter';
 import type { IHighlighterProps } from './Highlighter.types';
 
-const Template = (args: IHighlighterProps): JSX.Element => <Highlighter {...args} />;
+const Template = (args: IHighlighterProps): React.ReactNode => <Highlighter {...args} />;
 
 export const BaseStory: StoryObj<typeof Template> = {
     name: 'Base story',
@@ -24,7 +24,7 @@ export const HighlightWithOverlappingSearchValuesStory: StoryObj<typeof Template
     }
 };
 
-function customHighlight(str: string): JSX.Element {
+function customHighlight(str: string): React.ReactNode {
     return <strong>{str}</strong>;
 }
 
@@ -42,7 +42,7 @@ export const CustomHighlightStory: StoryObj<typeof Template> = {
 const text =
     'Trado cribro custodia tum amissio aut. \n Ascit ubi vetus depraedor decerno terminatio cicuta caput provident';
 
-const InteractiveTemplate = (args: IHighlighterProps): JSX.Element => {
+const InteractiveTemplate = (args: IHighlighterProps): React.ReactNode => {
     const [highlight, setHighlight] = useState(args.searchValues[0]);
 
     return (

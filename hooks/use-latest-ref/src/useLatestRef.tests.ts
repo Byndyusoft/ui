@@ -1,8 +1,7 @@
-import { Renderer, renderHook, RenderHookResult } from '@testing-library/react-hooks';
+import { renderHook, } from '@testing-library/react';
 import useLatestRef from './useLatestRef';
-import { MutableRefObject } from 'react';
 
-const setup = <T>(value?: T): RenderHookResult<T, MutableRefObject<T>, Renderer<T>> =>
+const setup = <T>(value?: T) =>
     renderHook(state => useLatestRef(state), { initialProps: value });
 
 describe('hooks/useLatestRef', () => {

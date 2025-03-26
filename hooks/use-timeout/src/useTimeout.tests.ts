@@ -1,9 +1,8 @@
 import { Callback } from '@byndyusoft-ui/types';
-import { Renderer, renderHook, RenderHookResult } from '@testing-library/react-hooks';
-import useTimeout, { IUseTimeout } from './useTimeout';
+import { renderHook } from '@testing-library/react';
+import useTimeout from './useTimeout';
 
-const setup = (callback: Callback, delay: number): RenderHookResult<void, IUseTimeout, Renderer<void>> =>
-    renderHook(() => useTimeout(callback, delay));
+const setup = (callback: Callback, delay: number) => renderHook(() => useTimeout(callback, delay));
 
 describe('hooks/useTimeout', () => {
     beforeAll(() => {

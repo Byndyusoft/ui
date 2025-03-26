@@ -3,7 +3,7 @@ import { StoryObj } from '@storybook/react';
 import useArray from './useArray';
 import './useArrayStory.css';
 
-const Template = (): JSX.Element => {
+const Template = (): React.ReactNode => {
     const [addValue, setAddValue] = useState(0);
     const [prependValue, setPrependValue] = useState(0);
     const [fromValue, setFromValue] = useState(0);

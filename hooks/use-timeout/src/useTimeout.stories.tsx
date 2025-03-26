@@ -6,7 +6,7 @@ interface IStoryArgs {
     delay: number;
 }
 
-export const Template: StoryFn<IStoryArgs> = (args): JSX.Element => {
+export const Template: StoryFn<IStoryArgs> = (args): React.ReactNode => {
     const [count, setCount] = useState(0);
     const [message, setMessage] = useState('');
 

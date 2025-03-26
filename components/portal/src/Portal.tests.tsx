@@ -22,14 +22,14 @@ describe('components/Portal', () => {
 
         userEvent.setup();
 
-        const ComponentWithPortal = ({ children }: { children?: ReactNode }): JSX.Element => (
+        const ComponentWithPortal = ({ children }: { children?: ReactNode }): React.ReactNode => (
             // eslint-disable-next-line testing-library/no-node-access
             <Portal targetElement={document.getElementById(PORTAL_KEY) as HTMLElement}>
                 <li>{children}</li>
             </Portal>
         );
 
-        const SomeFeature = (): JSX.Element => {
+        const SomeFeature = (): React.ReactNode => {
             const [items, setItems] = useState<string[]>([]);
 
             return (

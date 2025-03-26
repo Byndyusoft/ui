@@ -3,7 +3,7 @@ import { StoryObj } from '@storybook/react';
 import useScrollLock from '../useScrollLock';
 import styles from './useScrollLock.stories.module.css';
 
-const TemplateWithoutTarget = (): JSX.Element => {
+const TemplateWithoutTarget = (): React.ReactNode => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useScrollLock(isModalOpen);
@@ -25,7 +25,7 @@ const TemplateWithoutTarget = (): JSX.Element => {
     );
 };
 
-const TemplateWithTarget = (): JSX.Element => {
+const TemplateWithTarget = (): React.ReactNode => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const modalRef = useRef<HTMLDivElement>(null);
 

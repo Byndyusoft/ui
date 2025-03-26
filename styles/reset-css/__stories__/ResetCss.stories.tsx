@@ -3,7 +3,7 @@ import cn from 'classnames';
 import Frame from 'react-frame-component';
 import styles from './ResetCss.stories.module.css';
 
-const ElementsList = (): JSX.Element => (
+const ElementsList = (): React.ReactNode => (
     // eslint-disable-next-line react/forbid-dom-props
     <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '1rem' }}>
         <label htmlFor="input">Инпут</label>
@@ -46,7 +46,7 @@ const ElementsList = (): JSX.Element => (
     </div>
 );
 
-export const Sandbox = (): JSX.Element => (
+export const Sandbox = (): React.ReactNode => (
     <div className={styles.container}>
         <div>
             <h3>reset-css OFF</h3>

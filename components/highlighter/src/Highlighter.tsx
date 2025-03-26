@@ -6,7 +6,7 @@ import { splitTextIntoSegments } from './Highlighter.utilities';
  * Default function to render highlighted text in bold style
  * @param str
  */
-function renderMarkedHighlight(str: string): JSX.Element {
+function renderMarkedHighlight(str: string): React.ReactNode {
     return <mark>{str}</mark>;
 }
 
@@ -19,7 +19,7 @@ const Highlighter = ({
     ignoreCase,
     ignoreSpaces,
     highlighter = renderMarkedHighlight
-}: IHighlighterProps): JSX.Element => {
+}: IHighlighterProps): React.ReactNode => {
     // If no highlight patterns are provided, return the original text
     if (searchValues.length === 0) {
         return <>{text}</>;

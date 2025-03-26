@@ -5,7 +5,7 @@ import styles from './useThrottledCallback.stories.module.css';
 
 const DELAY_THROTTLE = 1500;
 
-const UseThrottledCallbackStory = (): JSX.Element => {
+const UseThrottledCallbackStory = (): React.ReactNode => {
     const [count, setCount] = useState<number>(0);
     const [noLeadingCount, setNoLeadingCount] = useState<number>(0);
     const [noTrailingCount, setNoTrailingCount] = useState<number>(0);

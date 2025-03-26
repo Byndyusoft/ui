@@ -5,7 +5,7 @@ import React from 'react';
 import { StoryObj } from '@storybook/react';
 import <%= name %> from './<%= name %>';
 
-const Template = (...args): JSX.Element => <HookStory {...args} />;
+const Template = (...args): React.ReactNode => <HookStory {...args} />;
 
 export const <%= name %>Story: StoryObj<\typeof Template> = {
     name: 'Story name',

@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import useHover from './useHover';
 
-function Setup(): JSX.Element {
+function Setup(): React.ReactNode {
     const ref = useRef(null);
     const isHovered = useHover(ref);
 

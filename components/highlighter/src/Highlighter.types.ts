@@ -16,7 +16,7 @@ export interface IHighlighterProps {
      * By default, renders matched text in mark style
      * @param str
      */
-    highlighter?: (str: string) => JSX.Element;
+    highlighter?: (str: string) => React.ReactNode;
     /**
      * Flag to indicate if spaces should be ignored in the search pattern
      */

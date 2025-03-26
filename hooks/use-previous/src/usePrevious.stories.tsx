@@ -5,7 +5,7 @@ import './usePreviousStory.css';
 
 type TStory = StoryObj<typeof Template>;
 
-const Template = (): JSX.Element => {
+const Template = (): React.ReactNode => {
     const [counter, setCounter] = useState(0);
     const res = usePrevious(counter);
 
