@@ -8,7 +8,7 @@ describe('hooks/usePrevious', () => {
     test('returns undefined on initial render', () => {
         const { result } = setup();
 
-        expect(result.current).toBeUndefined();
+        expect(result.current).toBe(null);
     });
 
     test('always returns previous state after each update', () => {

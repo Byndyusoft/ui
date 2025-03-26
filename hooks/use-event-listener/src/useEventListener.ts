@@ -25,7 +25,7 @@ function useEventListener<KW extends keyof WindowEventMap>(
 function useEventListener<KH extends keyof HTMLElementEventMap, T extends HTMLElement = HTMLDivElement>(
     eventName: KH,
     handler: (event: HTMLElementEventMap[KH]) => void,
-    target: RefObject<T>,
+    target: RefObject<T | null>,
     options?: boolean | AddEventListenerOptions
 ): void;
 
