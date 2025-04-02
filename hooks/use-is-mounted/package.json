@@ -21,7 +21,7 @@
   "scripts": {
     "build": "tsc",
     "clean": "rimraf dist",
-    "lint": "eslint src --config ../../eslint.config.js"
+    "lint": "eslint src --config ../../eslint.config.mjs"
   },
   "bugs": {
     "url": "https://github.com/Byndyusoft/ui/issues"
