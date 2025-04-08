@@ -1,8 +1,7 @@
 import { useMemo, useState } from 'react';
 import useThrottledCallback, { IThrottledCallbackOptions } from '@byndyusoft-ui/use-throttled-callback';
 import { InitialState } from '@byndyusoft-ui/types';
-
-type TUseThrottledValueReturn<T> = [T, (arg: T) => void];
+import { TUseThrottledValueReturn } from './useThrottledValue.types';
 
 const useThrottledValue = <T>(
     value: InitialState<T>,

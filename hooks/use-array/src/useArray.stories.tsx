@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StoryObj } from '@storybook/react';
 import useArray from './useArray';
-import './useArray.stories.css';
+import './useArrayStory.css';
 
 const Template = (): JSX.Element => {
     const [addValue, setAddValue] = useState(0);
@@ -104,7 +104,7 @@ const Template = (): JSX.Element => {
 export const HookStory: StoryObj<typeof Template> = {
     name: 'Hook story',
     render: Template
-}
+};
 
 export default {
     title: 'hooks/useArray'

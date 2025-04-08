@@ -17,12 +17,12 @@ describe('useScrollLock', () => {
 
     it('should lock body scroll when isLocked=true', () => {
         renderHook(() => useScrollLock(true));
-        expect(document.body.style.overflow).toBe('hidden');
+        expect(document.body).toHaveStyle({ overflow: 'hidden' });
     });
 
     it('should not lock body scroll when isLocked=false', () => {
         renderHook(() => useScrollLock(false));
-        expect(document.body.style.overflow).toBe('');
+        expect(document.body).toHaveStyle({ overflow: '' });
     });
 
     it('should handle isLocked value changes correctly', () => {
@@ -30,26 +30,26 @@ describe('useScrollLock', () => {
             initialProps: { isLocked: false }
         });
 
-        expect(document.body.style.overflow).toBe('');
+        expect(document.body).toHaveStyle({ overflow: '' });
 
         rerender({ isLocked: true });
-        expect(document.body.style.overflow).toBe('hidden');
+        expect(document.body).toHaveStyle({ overflow: 'hidden' });
 
         rerender({ isLocked: false });
-        expect(document.body.style.overflow).toBe('');
+        expect(document.body).toHaveStyle({ overflow: '' });
     });
 
     it('should lock scroll on target element when provided', () => {
         renderHook(() => useScrollLock(true, targetElement));
-        expect(targetElement.style.overflow).toBe('hidden');
-        expect(document.body.style.overflow).not.toBe('hidden');
+        expect(targetElement).toHaveStyle({ overflow: 'hidden' });
+        expect(document.body).not.toHaveStyle({ overflow: 'hidden' });
     });
 
     it('should restore original overflow style on target element', () => {
         const { unmount } = renderHook(() => useScrollLock(true, targetElement));
-        expect(targetElement.style.overflow).toBe('hidden');
+        expect(targetElement).toHaveStyle({ overflow: 'hidden' });
 
         unmount();
-        expect(targetElement.style.overflow).toBe('auto');
+        expect(targetElement).toHaveStyle({ overflow: 'auto' });
     });
 });

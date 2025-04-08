@@ -24,65 +24,67 @@ describe('Highlighter', () => {
     });
 
     test('renders the text with highlighted text when there is a match', () => {
-        const { container } = setup({ ...defaultProps });
+        setup({ ...defaultProps });
 
-        expect(container.querySelector('mark')).toHaveTextContent('test');
+        expect(screen.getByText('test', { selector: 'mark' })).toBeInTheDocument();
     });
 
     test('renders the text with multiple highlighted matches', () => {
-        const { container } = setup({ ...defaultProps, text: 'test test test' });
+        setup({ ...defaultProps, text: 'test test test' });
 
-        expect(container.querySelectorAll('mark')).toHaveLength(3);
+        const highlights = screen.getAllByText('test', { selector: 'mark' });
+        expect(highlights).toHaveLength(3);
     });
 
     test('renders the text with case-insensitive highlighted matches', () => {
-        const { container } = setup({ ...defaultProps, text: 'Test TEST Test', ignoreCase: true });
+        setup({ ...defaultProps, text: 'Test TEST Test', ignoreCase: true });
 
-        expect(container.querySelectorAll('mark')).toHaveLength(3);
+        const highlights = screen.getAllByText(/test/i, { selector: 'mark' });
+        expect(highlights).toHaveLength(3);
     });
 
     test('renders the text with custom highlight styles', () => {
-        const customHighlight = (str: string) => <strong>{str}</strong>;
-        const { container } = setup({ ...defaultProps, highlighter: customHighlight });
+        const customHighlight = (str: string): JSX.Element => <strong>{str}</strong>;
+        setup({ ...defaultProps, highlighter: customHighlight });
 
-        const markedText = container.querySelectorAll('mark');
-        expect(markedText.length).toBe(0);
-
-        const customHighlightedText = container.querySelector('strong');
-        expect(customHighlightedText).toHaveTextContent('test');
+        expect(screen.queryByText('test', { selector: 'mark' })).not.toBeInTheDocument();
+        expect(screen.getByText('test', { selector: 'strong' })).toBeInTheDocument();
     });
 
     test('renders the text with ignored spaces in the highlight pattern', () => {
-        const { container } = setup({ ...defaultProps, searchValues: ['t e s t'], ignoreSpaces: true });
+        setup({ ...defaultProps, searchValues: ['t e s t'], ignoreSpaces: true });
 
-        expect(container.querySelector('mark')).toHaveTextContent('test');
+        expect(screen.getByText('test', { selector: 'mark' })).toBeInTheDocument();
     });
 
     test('renders the text with multiple search values', () => {
-        const { container } = setup({ ...defaultProps, searchValues: ['test', 'This'], ignoreSpaces: true });
-        const markedText = container.querySelectorAll('mark');
-        expect(markedText.length).toBe(2);
-        expect(markedText[0]).toHaveTextContent('This');
-        expect(markedText[1]).toHaveTextContent('test');
+        setup({ ...defaultProps, searchValues: ['test', 'This'], ignoreSpaces: true });
+
+        const highlights = screen.getAllByText(/test|This/, { selector: 'mark' });
+        expect(highlights).toHaveLength(2);
+        expect(highlights[0]).toHaveTextContent('This');
+        expect(highlights[1]).toHaveTextContent('test');
     });
 
     test('renders the text with overlapping search values', () => {
-        const { container } = setup({ ...defaultProps, searchValues: ['This', 'is'] });
-        const markedText = container.querySelectorAll('mark');
-        expect(markedText.length).toBe(2);
-        expect(markedText[0]).toHaveTextContent('This');
-        expect(markedText[1]).toHaveTextContent('is');
+        setup({ ...defaultProps, searchValues: ['This', 'is'] });
+
+        const highlights = screen.getAllByText(/This|is/, { selector: 'mark' });
+        expect(highlights).toHaveLength(2);
+        expect(highlights[0]).toHaveTextContent('This');
+        expect(highlights[1]).toHaveTextContent('is');
     });
 
     test('renders the text with overlapping search values, without sorting by string length', () => {
-        const { container } = setup({
+        setup({
             ...defaultProps,
             text: 'iss is',
             searchValues: ['is', 'iss']
         });
-        const markedText = container.querySelectorAll('mark');
-        expect(markedText.length).toBe(2);
-        expect(markedText[0]).toHaveTextContent('is');
-        expect(markedText[1]).toHaveTextContent('is');
+
+        const highlights = screen.getAllByText(/is/, { selector: 'mark' });
+        expect(highlights).toHaveLength(2);
+        expect(highlights[0]).toHaveTextContent('is');
+        expect(highlights[1]).toHaveTextContent('is');
     });
 });
