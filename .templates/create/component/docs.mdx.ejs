@@ -6,9 +6,9 @@ import {
     Source,
     Canvas,
     Meta,
-    ArgsTable
+    ArgTypes
 } from '@storybook/blocks';
-import Readme from '../README.md';
+import Readme from '../README.md?raw';
 import <%= name %> from './<%= name %>';
 import * as <%= name %>Stories from './<%= name %>.stories';
 
@@ -33,4 +33,4 @@ To use the component in your project you must:
 
 ## Props
 
-<ArgsTable of={<%= name %>} />
+<ArgTypes of={<%= name %>} />

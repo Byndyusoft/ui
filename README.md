@@ -36,3 +36,30 @@
 -   `clean` - remove folder with production version of entity
 -   `lint` - check entity files for errors by linters
 -   `test` - start tests inside entity folder
+
+#### Vitest
+
+[Workspace guide](https://vitest.dev/guide/workspace)
+
+There are two ways to define workspaces:
+
+- Inline in root `vitest.config.mts`
+- In root config with glob string and vitest.config.ts in each workspace/package. Example:
+```ts
+import { defineProject, mergeConfig } from 'vitest/config';
+import configShared from '../../vitest.config';
+
+/**
+ * vitest.config for correct vitest workspace detection.
+ * export default configShared works too.
+ */
+export default mergeConfig(configShared, defineProject({
+   test: {
+      include: ['**/*.tests.(ts|tsx)'],
+      setupFiles: ['../../setupTests.ts'],
+   }
+}));
+```
+Command for execute only one package:
+
+`vitest run --root ../../ --project hooks"`

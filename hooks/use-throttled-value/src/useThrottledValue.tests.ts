@@ -3,6 +3,7 @@ import { renderHook, act, RenderResult } from '@testing-library/react-hooks';
 import useThrottledValue from './useThrottledValue';
 import { TUseThrottledValueReturn } from './useThrottledValue.types';
 
+
 const DELAY_THROTTLE = 500;
 
 const setup = (initialValue: unknown, delay: number): RenderResult<TUseThrottledValueReturn<unknown>> => {
@@ -12,11 +13,11 @@ const setup = (initialValue: unknown, delay: number): RenderResult<TUseThrottled
 
 describe('hook/useThrottledValue', () => {
     beforeEach(() => {
-        jest.useFakeTimers();
+        vi.useFakeTimers();
     });
 
     afterEach(() => {
-        jest.clearAllTimers();
+        vi.clearAllTimers();
     });
 
     test('should return the initial value', () => {
@@ -40,7 +41,7 @@ describe('hook/useThrottledValue', () => {
         expect(getCurrentThrottledValue()).toBe(2);
 
         act(() => {
-            jest.advanceTimersByTime(DELAY_THROTTLE);
+            vi.advanceTimersByTime(DELAY_THROTTLE);
         });
 
         await waitFor(() => {
@@ -53,13 +54,13 @@ describe('hook/useThrottledValue', () => {
         });
 
         act(() => {
-            jest.advanceTimersByTime(DELAY_THROTTLE);
+            vi.advanceTimersByTime(DELAY_THROTTLE);
         });
 
         expect(getCurrentThrottledValue()).toBe(6);
 
         act(() => {
-            jest.advanceTimersByTime(DELAY_THROTTLE / 2);
+            vi.advanceTimersByTime(DELAY_THROTTLE / 2);
         });
 
         act(() => {
@@ -68,7 +69,7 @@ describe('hook/useThrottledValue', () => {
         });
 
         act(() => {
-            jest.advanceTimersByTime(DELAY_THROTTLE);
+            vi.advanceTimersByTime(DELAY_THROTTLE);
         });
 
         expect(getCurrentThrottledValue()).toBe(8);
