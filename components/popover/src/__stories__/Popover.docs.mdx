@@ -1,0 +1,37 @@
+import { Meta, Markdown, Canvas, Source, ArgTypes } from '@storybook/blocks';
+import Readme from '../../README.md';
+import * as PopoverStories from './Popover.stories';
+
+<Meta title="components/Popover" of={PopoverStories} />
+
+<Markdown>{Readme}</Markdown>
+
+## Usage
+
+To use the component in your project you must:
+
+1. Import the component where you need it:
+
+<Source language="javascript" code="import Popover from '@byndyusoft-ui/popover';" />
+
+2. Call the component and give it the desired props, for example:
+
+-   Simple popover
+
+<Canvas sourceState="shown" of={PopoverStories.Default} />
+
+-   With portal
+
+<Canvas sourceState="shown" of={PopoverStories.WithPortal} />
+
+-   Fit content width by container
+
+<Canvas sourceState="shown" of={PopoverStories.FitContentWidthByContainer} />
+
+-   Close on click outside or press esc
+
+<Canvas sourceState="shown" of={PopoverStories.CloseOnClickOutsideOrPressEsc} />
+
+## Props
+
+<ArgTypes of={PopoverStories} />
