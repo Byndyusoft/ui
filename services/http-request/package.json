@@ -1,0 +1,34 @@
+{
+    "name": "@byndyusoft-ui/http-request",
+    "version": "0.0.1",
+    "description": "Byndyusoft UI HTTP Service",
+    "keywords": [
+      "byndyusoft",
+      "byndyusoft-ui",
+      "http",
+      "request",
+      "axios",
+      "fetch"
+    ],
+    "author": "Byndyusoft Frontend Developer <frontend@byndyusoft.com>",
+    "homepage": "https://github.com/Byndyusoft/ui/tree/master/services/http-request#readme",
+    "license": "Apache-2.0",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/Byndyusoft/ui.git"
+    },
+    "scripts": {
+      "build": "tsc --project tsconfig.build.json",
+      "clean": "rimraf dist",
+      "lint": "eslint src --config ../../eslint.config.js",
+      "test": "jest --config ../../jest.config.js --roots services/pub-sub/src"
+    },
+    "bugs": {
+      "url": "https://github.com/Byndyusoft/ui/issues"
+    },
+    "publishConfig": {
+      "access": "public"
+    }
+  }
