@@ -8,7 +8,13 @@ export type TFetchGetFn = <R>(...args: TFetchGetArguments) => Promise<R>;
 export type TFetchPostFn = <R>(...args: TFetchPostArguments) => Promise<R>;
 
 // Default rest controller with 'fetch'
-export const fetchRestController: IHTTPRequestRestController<TFetchGetFn, TFetchPostFn> = {
+export const fetchRestController: IHTTPRequestRestController<
+    TFetchGetFn,
+    TFetchPostFn,
+    TFetchPostFn,
+    TFetchPostFn,
+    TFetchPostFn
+> = {
     get: async (...args) => {
         const [url, options] = args;
 
@@ -24,6 +30,42 @@ export const fetchRestController: IHTTPRequestRestController<TFetchGetFn, TFetch
         try {
             const response = await fetch(url, {
                 method: 'POST',
+                body: body ? JSON.stringify(body) : undefined
+            });
+            return response.json();
+        } catch (error) {
+            throw error;
+        }
+    },
+    patch: async (...args) => {
+        const [url, body] = args;
+        try {
+            const response = await fetch(url, {
+                method: 'PATCH',
+                body: body ? JSON.stringify(body) : undefined
+            });
+            return response.json();
+        } catch (error) {
+            throw error;
+        }
+    },
+    put: async (...args) => {
+        const [url, body] = args;
+        try {
+            const response = await fetch(url, {
+                method: 'PUT',
+                body: body ? JSON.stringify(body) : undefined
+            });
+            return response.json();
+        } catch (error) {
+            throw error;
+        }
+    },
+    delete: async (...args) => {
+        const [url, body] = args;
+        try {
+            const response = await fetch(url, {
+                method: 'DELETE',
                 body: body ? JSON.stringify(body) : undefined
             });
             return response.json();
