@@ -1,21 +1,28 @@
+import { IHttpRequestOptions } from './httpRequest.types';
 import HttpRestController from './restController';
-import { IHTTPRequestRestController } from './restController.types';
+import { IHTTPRestController } from './restController.types';
 import { fetchRestController, TFetchGetFn, TFetchPostFn } from './restControllerTemplates';
 
-interface IHttpRequestOptions<GetHandler, PostHandler, PatchHandler, PutHandler, DeleteHandler> {
-    restController?: IHTTPRequestRestController<GetHandler, PostHandler, PatchHandler, PutHandler, DeleteHandler>;
-}
-
 class HttpRequest<
-    GetHandler extends (...args: Parameters<GetHandler>) => ReturnType<GetHandler> = TFetchGetFn,
-    PostHandler extends (...args: Parameters<PostHandler>) => ReturnType<PostHandler> = TFetchPostFn,
-    PatchHandler extends (...args: Parameters<PatchHandler>) => ReturnType<PatchHandler> = TFetchPostFn,
-    PutHandler extends (...args: Parameters<PutHandler>) => ReturnType<PutHandler> = TFetchPostFn,
-    DeleteHandler extends (...args: Parameters<DeleteHandler>) => ReturnType<DeleteHandler> = TFetchPostFn
+    GetHandler extends (...args: Parameters<GetHandler>) => ReturnType<GetHandler> = <R>(
+        ...args: Parameters<TFetchGetFn>
+    ) => R,
+    PostHandler extends (...args: Parameters<PostHandler>) => ReturnType<PostHandler> = <R>(
+        ...args: Parameters<TFetchPostFn>
+    ) => R,
+    PatchHandler extends (...args: Parameters<PatchHandler>) => ReturnType<PatchHandler> = <R>(
+        ...args: Parameters<TFetchPostFn>
+    ) => R,
+    PutHandler extends (...args: Parameters<PutHandler>) => ReturnType<PutHandler> = <R>(
+        ...args: Parameters<TFetchPostFn>
+    ) => R,
+    DeleteHandler extends (...args: Parameters<DeleteHandler>) => ReturnType<DeleteHandler> = <R>(
+        ...args: Parameters<TFetchPostFn>
+    ) => R
 > {
     private readonly restController:
-        | IHTTPRequestRestController<GetHandler, PostHandler, PatchHandler, PutHandler, DeleteHandler>
-        | IHTTPRequestRestController<TFetchGetFn, TFetchPostFn, TFetchPostFn, TFetchPostFn, TFetchPostFn>;
+        | IHTTPRestController<GetHandler, PostHandler, PatchHandler, PutHandler, DeleteHandler>
+        | IHTTPRestController<TFetchGetFn, TFetchPostFn, TFetchPostFn, TFetchPostFn, TFetchPostFn>;
 
     constructor(options?: IHttpRequestOptions<GetHandler, PostHandler, PatchHandler, PutHandler, DeleteHandler>) {
         if (options?.restController) {
@@ -37,7 +44,7 @@ class HttpRequest<
         }
     }
 
-    get(...args: Parameters<GetHandler>) {
+    get<R>(...args: Parameters<GetHandler>): Promise<R> {
         try {
             return Function.prototype.apply(this.restController.get, args);
         } catch (exception) {
@@ -45,7 +52,7 @@ class HttpRequest<
         }
     }
 
-    post(...args: Parameters<PostHandler>) {
+    post<R>(...args: Parameters<PostHandler>): Promise<R> {
         try {
             return Function.prototype.apply(this.restController.post, args);
         } catch (exception) {
@@ -53,7 +60,7 @@ class HttpRequest<
         }
     }
 
-    patch(...args: Parameters<PatchHandler>): PatchHandler {
+    patch<R>(...args: Parameters<PatchHandler>): Promise<R> {
         try {
             return Function.prototype.apply(this.restController.patch, args);
         } catch (exception) {
@@ -61,7 +68,7 @@ class HttpRequest<
         }
     }
 
-    put(...args: Parameters<PutHandler>) {
+    put<R>(...args: Parameters<PutHandler>): Promise<R> {
         try {
             return Function.prototype.apply(this.restController.put, args);
         } catch (exception) {
@@ -69,7 +76,7 @@ class HttpRequest<
         }
     }
 
-    delete(...args: Parameters<DeleteHandler>) {
+    delete<R>(...args: Parameters<DeleteHandler>): Promise<R> {
         try {
             return Function.prototype.apply(this.restController.delete, args);
         } catch (exception) {
@@ -93,5 +100,24 @@ class HttpRequest<
 // const Test = new HttpRequest({
 //     restController: TestController
 // });
+
+async () => {
+    const TestController = new HttpRestController({
+        get(url: string) {
+            console.log(url);
+            return Promise.resolve();
+        },
+        post: (url: string, body: object) => {
+            console.log({ url, body });
+            return new Promise(() => {});
+        }
+    });
+
+    const httpRequestService = new HttpRequest({
+        restController: TestController
+    });
+
+    const data = await httpRequestService.get<{ data: string }>('http://localhost:1234/api');
+};
 
 export default HttpRequest;

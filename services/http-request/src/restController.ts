@@ -1,12 +1,4 @@
-import { IHTTPRequestRestController } from './restController.types';
-
-interface IHttpRestControllerOptions<
-    GetHandler,
-    PostHandler,
-    PatchHandler = undefined,
-    PutHandler = undefined,
-    DeleteHandler = undefined
-> extends IHTTPRequestRestController<GetHandler, PostHandler, PatchHandler, PutHandler, DeleteHandler> {}
+import { IHTTPRestController, IHttpRestControllerOptions } from './restController.types';
 
 class HttpRestController<
     GetHandler,
@@ -14,7 +6,7 @@ class HttpRestController<
     PatchHandler = undefined,
     PutHandler = undefined,
     DeleteHandler = undefined
-> implements IHTTPRequestRestController<GetHandler, PostHandler, PatchHandler, PutHandler, DeleteHandler>
+> implements IHTTPRestController<GetHandler, PostHandler, PatchHandler, PutHandler, DeleteHandler>
 {
     constructor(
         public options: IHttpRestControllerOptions<GetHandler, PostHandler, PatchHandler, PutHandler, DeleteHandler>

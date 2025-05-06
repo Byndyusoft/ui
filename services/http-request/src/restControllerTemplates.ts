@@ -1,14 +1,14 @@
-import { IHTTPRequestRestController } from './restController.types';
+import { IHTTPRestController } from './restController.types';
 
 export type TFetchGetArguments = [url: string, options?: RequestInit];
 export type TFetchPostArgumentsBody = object | string | number | boolean | undefined;
 export type TFetchPostArguments = [url: string, body: TFetchPostArgumentsBody, options?: RequestInit];
 
-export type TFetchGetFn = <R>(...args: TFetchGetArguments) => Promise<R>;
+export type TFetchGetFn<R = Promise<unknown>> = (...args: TFetchGetArguments) => Promise<R>;
 export type TFetchPostFn = <R>(...args: TFetchPostArguments) => Promise<R>;
 
 // Default rest controller with 'fetch'
-export const fetchRestController: IHTTPRequestRestController<
+export const fetchRestController: IHTTPRestController<
     TFetchGetFn,
     TFetchPostFn,
     TFetchPostFn,
