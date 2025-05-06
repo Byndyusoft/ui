@@ -85,39 +85,4 @@ class HttpRequest<
     }
 }
 
-// type TTestGet = <R>() => Promise<R>;
-// type TTestPost = <R>(url: string, ebody: object) => Promise<R>;
-
-// const TestController = new HttpRestController<TTestGet, TTestPost>({
-//     get<R>() {
-//         return Promise.resolve() as Promise<R>;
-//     },
-//     post: (url, body) => {
-//         return new Promise(() => {});
-//     }
-// });
-
-// const Test = new HttpRequest({
-//     restController: TestController
-// });
-
-async () => {
-    const TestController = new HttpRestController({
-        get(url: string) {
-            console.log(url);
-            return Promise.resolve();
-        },
-        post: (url: string, body: object) => {
-            console.log({ url, body });
-            return new Promise(() => {});
-        }
-    });
-
-    const httpRequestService = new HttpRequest({
-        restController: TestController
-    });
-
-    const data = await httpRequestService.get<{ data: string }>('http://localhost:1234/api');
-};
-
 export default HttpRequest;
