@@ -20,6 +20,38 @@ There are two classes ready to be used as restControllers: **HttpRestControllerF
     httpRequestService.get("http://localhost:3000/api/");
 ```
 
+### Example of usage with HttpRestControllerFetch
+
+```ts
+    const restController = new HttpRestControllerFetch();
+    const HttpService = new HttpRequest({
+        restController
+    });
+
+    const handleGetProducts = async (): Promise<void> => {
+        const products = await httpService
+            .get('http://localhost:3322/products')
+            .then(async r => (await r.json()) as IProduct[]);
+
+        setProducts(products);
+    };
+```
+
+### Example of usage with HttpRestControllerAxios
+
+```ts
+    const restController = new HttpRestControllerAxios();
+    const HttpService = new HttpRequest({
+        restController
+    });
+
+    const handleGetProducts = async (): Promise<void> => {
+        const products = await httpService.get<IProduct[]>('http://localhost:3322/products').then(r => r.data);
+
+        setProducts(products);
+    };
+```
+
 ### You can define own HttpRestController and pass it like this 
 
 ```ts
