@@ -1,6 +1,6 @@
 # `@byndyusoft-ui/http-service`
 
-> Http service service
+> Http service
 ### Installation
 
 ```bash
