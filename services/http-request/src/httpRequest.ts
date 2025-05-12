@@ -1,88 +1,39 @@
+import { HttpRestControllerAxios } from './constants/axiosRestController';
+import { HttpRestControllerFetch } from './constants/fetchRestController';
 import { IHttpRequestOptions } from './httpRequest.types';
 import HttpRestController from './restController';
-import { IHTTPRestController } from './restController.types';
-import { fetchRestController, TFetchGetFn, TFetchPostFn } from './restControllerTemplates';
 
-class HttpRequest<
-    GetHandler extends (...args: Parameters<GetHandler>) => ReturnType<GetHandler> = <R>(
-        ...args: Parameters<TFetchGetFn>
-    ) => R,
-    PostHandler extends (...args: Parameters<PostHandler>) => ReturnType<PostHandler> = <R>(
-        ...args: Parameters<TFetchPostFn>
-    ) => R,
-    PatchHandler extends (...args: Parameters<PatchHandler>) => ReturnType<PatchHandler> = <R>(
-        ...args: Parameters<TFetchPostFn>
-    ) => R,
-    PutHandler extends (...args: Parameters<PutHandler>) => ReturnType<PutHandler> = <R>(
-        ...args: Parameters<TFetchPostFn>
-    ) => R,
-    DeleteHandler extends (...args: Parameters<DeleteHandler>) => ReturnType<DeleteHandler> = <R>(
-        ...args: Parameters<TFetchPostFn>
-    ) => R
-> {
-    private readonly restController:
-        | IHTTPRestController<GetHandler, PostHandler, PatchHandler, PutHandler, DeleteHandler>
-        | IHTTPRestController<TFetchGetFn, TFetchPostFn, TFetchPostFn, TFetchPostFn, TFetchPostFn>;
+class HttpRequest<RestController extends HttpRestController> {
+    public restController: RestController | undefined;
 
-    constructor(options?: IHttpRequestOptions<GetHandler, PostHandler, PatchHandler, PutHandler, DeleteHandler>) {
-        if (options?.restController) {
-            this.restController = new HttpRestController<
-                GetHandler,
-                PostHandler,
-                PatchHandler,
-                PutHandler,
-                DeleteHandler
-            >(options?.restController);
+    public get: RestController['get'];
+    public post: RestController['post'];
+    public patch: RestController['patch'];
+    public put: RestController['put'];
+    public delete: RestController['delete'];
+
+    constructor(options: IHttpRequestOptions<RestController>) {
+        if (options.restController) {
+            const restController = options.restController;
+            this.restController = restController;
+
+            this.get = this.restController.get;
+            this.post = this.restController.post;
+            this.patch = this.restController.patch;
+            this.put = this.restController.put;
+            this.delete = this.restController.delete;
         } else {
-            this.restController = new HttpRestController<
-                TFetchGetFn,
-                TFetchPostFn,
-                TFetchPostFn,
-                TFetchPostFn,
-                TFetchPostFn
-            >(fetchRestController);
-        }
-    }
-
-    get<R>(...args: Parameters<GetHandler>): Promise<R> {
-        try {
-            return Function.prototype.apply(this.restController.get, args);
-        } catch (exception) {
-            throw exception;
-        }
-    }
-
-    post<R>(...args: Parameters<PostHandler>): Promise<R> {
-        try {
-            return Function.prototype.apply(this.restController.post, args);
-        } catch (exception) {
-            throw exception;
-        }
-    }
-
-    patch<R>(...args: Parameters<PatchHandler>): Promise<R> {
-        try {
-            return Function.prototype.apply(this.restController.patch, args);
-        } catch (exception) {
-            throw exception;
-        }
-    }
-
-    put<R>(...args: Parameters<PutHandler>): Promise<R> {
-        try {
-            return Function.prototype.apply(this.restController.put, args);
-        } catch (exception) {
-            throw exception;
-        }
-    }
-
-    delete<R>(...args: Parameters<DeleteHandler>): Promise<R> {
-        try {
-            return Function.prototype.apply(this.restController.delete, args);
-        } catch (exception) {
-            throw exception;
+            this.get = () => Promise.reject('get handler was not specified');
+            this.post = () => Promise.reject('post handler was not specified');
+            this.patch = () => Promise.reject('patch handler was not specified');
+            this.put = () => Promise.reject('put handler was not specified');
+            this.delete = () => Promise.reject('delete handler was not specified');
         }
     }
 }
+
+const httpRequest = new HttpRequest({
+    restController: new HttpRestControllerAxios()
+});
 
 export default HttpRequest;

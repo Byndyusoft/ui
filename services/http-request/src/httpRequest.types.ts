@@ -1,5 +1,5 @@
-import { IHTTPRestController } from './restController.types';
+import HttpRestController from './restController';
 
-export interface IHttpRequestOptions<GetHandler, PostHandler, PatchHandler, PutHandler, DeleteHandler> {
-    restController?: IHTTPRestController<GetHandler, PostHandler, PatchHandler, PutHandler, DeleteHandler>;
+export interface IHttpRequestOptions<RestController = HttpRestController> {
+    restController?: RestController;
 }
