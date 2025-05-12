@@ -9,29 +9,80 @@ npm i @byndyusoft-ui/http-request
 
 ## Usage
 
-### To start using this service you need to create a new class instance of HttpRequest.
-By default this service is using 'fetch' for sending requests.
-
+### To start using this service you need to create a new class instance of HttpRequest and provide restController option.
+There are two classes ready to be used as restControllers: **HttpRestControllerFetch** and **HttpRestControllerAxios**. For fetch and axios.
 ```ts
-    const httpRequestService = new HttpRequest();
+    const restController = new HttpRestControllerFetch();
+    const httpRequest = new HttpRequest({
+    restController
+});
 
     httpRequestService.get("http://localhost:3000/api/");
 ```
 
-### You can define own HttpRestController and pass it like on example below.
-❗GET and POST methods must be described, others (PATCH/PUT/DELETE) are optional. 
+### You can define own HttpRestController and pass it like this 
 
 ```ts
-    const restController = new HttpRestController({
-        get: () => {},
-        post: () => {},
-        /// ...
-    })
-    
+    // myOwnHttpRestController.ts
+    import { HttpRestController } from '@byndyusoft-ui/http-request';
+
+    class HttpRestControllerCustom extends HttpRestController {
+        constructor() {
+            super();
+        }
+
+        async get<R>(url: string, headers?: Headers): Promise<R> {
+            return fetch(url, { method: 'GET', headers: { ...headers } }) as Promise<R>;
+        }
+
+        async post<R>(url: string, body: object, headers?: Headers): Promise<R> {
+            return fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(body),
+                headers: {
+                    ...this.headers,
+                    ...headers
+                }
+            }) as Promise<R>;
+        }
+
+        async put<R>(url: string, body: object, headers?: Headers): Promise<R> {
+            return fetch(url, {
+                method: 'PUT',
+                body: JSON.stringify(body),
+                headers: { ...headers }
+            }) as Promise<R>;
+        }
+
+        async patch<R>(url: string, body: object, headers?: Headers): Promise<R> {
+            return fetch(url, {
+                method: 'PATCH',
+                body: JSON.stringify(body),
+                headers: { ...headers }
+            }) as Promise<R>;
+        }
+
+        async delete<R>(url: string, body: object = {}, headers?: Headers): Promise<R> {
+            return fetch(url, {
+                method: 'DELETE',
+                body: JSON.stringify(body),
+                headers: { ...headers }
+            }) as Promise<R>;
+        }
+    }
+
+    export default HttpRestControllerCustom;
+```
+```ts
+
+    // httpRequest.ts
+    import HttpRestControllerCustom from './myOwnHttpRestController.ts'
+
+    const restController = new HttpRestControllerCustom();
     const httpRequestService = new HttpRequest({
         restController
     });
 
     httpRequestService.get("http://localhost:3000/api/");
-
 ```
+
