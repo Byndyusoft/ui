@@ -1,5 +1,5 @@
 {
-    "name": "@byndyusoft-ui/http-request",
+    "name": "@byndyusoft-ui/http-service",
     "version": "0.0.1",
     "description": "Byndyusoft UI HTTP Service",
     "keywords": [
@@ -11,7 +11,7 @@
         "fetch"
     ],
     "author": "Byndyusoft Frontend Developer <frontend@byndyusoft.com>",
-    "homepage": "https://github.com/Byndyusoft/ui/tree/master/services/http-request#readme",
+    "homepage": "https://github.com/Byndyusoft/ui/tree/master/services/http-service#readme",
     "license": "Apache-2.0",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -22,7 +22,7 @@
     "scripts": {
         "build": "rollup --config",
         "clean": "rimraf dist",
-        "test": "jest --config ../../jest.config.js --roots services/http-request/src",
+        "test": "jest --config ../../jest.config.js --roots services/http-service/src",
         "lint:check": "npm run eslint:check && npm run prettier:check && npm run stylelint:check",
         "lint:fix": "npm run eslint:fix && npm run prettier:fix && npm run stylelint:fix",
         "eslint:check": "eslint src --config ../../eslint.config.js",
