@@ -14,8 +14,8 @@ There are two classes ready to be used as restControllers: **HttpRestControllerF
 ```ts
     const restController = new HttpRestControllerFetch();
     const httpService = new HttpService({
-    restController
-});
+        restController
+    });
 
     httpService.get("http://localhost:3000/api/");
 ```
