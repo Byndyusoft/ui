@@ -8,11 +8,19 @@ export class HttpRestControllerFetch extends HttpRestController {
 
     public headers: Headers;
 
-    async get<R>(url: string, headers?: Headers): Promise<R> {
-        return fetch(url, { method: 'GET', headers: { ...this.headers, ...headers } }) as Promise<R>;
-    }
+    setHeader = (key: string, value: string | null): void => {
+        if (value) {
+            this.headers.set(key, value);
+        } else {
+            this.headers.delete(key);
+        }
+    };
 
-    async post<R>(url: string, body: object, headers?: Headers): Promise<R> {
+    get = async <R>(url: string, headers?: Headers): Promise<R> => {
+        return fetch(url, { method: 'GET', headers: { ...this.headers, ...headers } }) as Promise<R>;
+    };
+
+    post = async <R>(url: string, body: object, headers?: Headers): Promise<R> => {
         return fetch(url, {
             method: 'POST',
             body: JSON.stringify(body),
@@ -21,29 +29,29 @@ export class HttpRestControllerFetch extends HttpRestController {
                 ...headers
             }
         }) as Promise<R>;
-    }
+    };
 
-    async put<R>(url: string, body: object, headers?: Headers): Promise<R> {
-        return fetch(url, {
-            method: 'PUT',
-            body: JSON.stringify(body),
-            headers: { ...this.headers, ...headers }
-        }) as Promise<R>;
-    }
-
-    async patch<R>(url: string, body: object, headers?: Headers): Promise<R> {
+    patch = async <R>(url: string, body: object, headers?: Headers): Promise<R> => {
         return fetch(url, {
             method: 'PATCH',
             body: JSON.stringify(body),
             headers: { ...this.headers, ...headers }
         }) as Promise<R>;
-    }
+    };
 
-    async delete<R>(url: string, body: object = {}, headers?: Headers): Promise<R> {
+    put = async <R>(url: string, body: object, headers?: Headers): Promise<R> => {
+        return fetch(url, {
+            method: 'PUT',
+            body: JSON.stringify(body),
+            headers: { ...this.headers, ...headers }
+        }) as Promise<R>;
+    };
+
+    delete = async <R>(url: string, body: object = {}, headers?: Headers): Promise<R> => {
         return fetch(url, {
             method: 'DELETE',
             body: JSON.stringify(body),
             headers: { ...this.headers, ...headers }
         }) as Promise<R>;
-    }
+    };
 }

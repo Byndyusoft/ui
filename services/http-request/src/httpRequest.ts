@@ -1,5 +1,3 @@
-import { HttpRestControllerAxios } from './constants/axiosRestController';
-import { HttpRestControllerFetch } from './constants/fetchRestController';
 import { IHttpRequestOptions } from './httpRequest.types';
 import HttpRestController from './restController';
 
@@ -11,6 +9,7 @@ class HttpRequest<RestController extends HttpRestController> {
     public patch: RestController['patch'];
     public put: RestController['put'];
     public delete: RestController['delete'];
+    public setHeader: RestController['setHeader'];
 
     constructor(options: IHttpRequestOptions<RestController>) {
         if (options.restController) {
@@ -22,18 +21,16 @@ class HttpRequest<RestController extends HttpRestController> {
             this.patch = this.restController.patch;
             this.put = this.restController.put;
             this.delete = this.restController.delete;
+            this.setHeader = this.restController.setHeader;
         } else {
             this.get = () => Promise.reject('get handler was not specified');
             this.post = () => Promise.reject('post handler was not specified');
             this.patch = () => Promise.reject('patch handler was not specified');
             this.put = () => Promise.reject('put handler was not specified');
             this.delete = () => Promise.reject('delete handler was not specified');
+            this.setHeader = () => undefined;
         }
     }
 }
-
-const httpRequest = new HttpRequest({
-    restController: new HttpRestControllerAxios()
-});
 
 export default HttpRequest;

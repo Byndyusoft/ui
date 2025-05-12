@@ -19,53 +19,57 @@ export class HttpRestControllerAxios extends HttpRestController {
         });
     }
 
-    async get<T, R = AxiosResponse<T>>(url: string, params: object = {}, options: object = {}): Promise<R> {
+    setHeader = (key: string, value: string | null): void => {
+        this.axiosInstance.defaults.headers[key] = value;
+    };
+
+    get = async <T, R = AxiosResponse<T>>(url: string, params: object = {}, options: object = {}): Promise<R> => {
         return this.axiosInstance.get(url, {
             params,
             ...options
         });
-    }
+    };
 
-    async post<T, R = AxiosResponse<T>>(
+    post = async <T, R = AxiosResponse<T>>(
         url: string,
         body?: object,
         params: object = {},
         options: object = {}
-    ): Promise<R> {
+    ): Promise<R> => {
         return this.axiosInstance.post(url, body, {
             params,
             ...options
         });
-    }
+    };
 
-    async patch<T, R = AxiosResponse<T>>(
+    patch = async <T, R = AxiosResponse<T>>(
         url: string,
         body?: object,
         params: object = {},
         options: object = {}
-    ): Promise<R> {
+    ): Promise<R> => {
         return this.axiosInstance.patch(url, body, {
             params,
             ...options
         });
-    }
+    };
 
-    async put<T, R = AxiosResponse<T>>(
+    put = async <T, R = AxiosResponse<T>>(
         url: string,
         body?: object,
         params: object = {},
         options: object = {}
-    ): Promise<R> {
+    ): Promise<R> => {
         return this.axiosInstance.put(url, body, {
             params,
             ...options
         });
-    }
+    };
 
-    async delete<T, R = AxiosResponse<T>>(url: string, params: object = {}, options: object = {}): Promise<R> {
+    delete = async <T, R = AxiosResponse<T>>(url: string, params: object = {}, options: object = {}): Promise<R> => {
         return this.axiosInstance.delete(url, {
             params,
             ...options
         });
-    }
+    };
 }
