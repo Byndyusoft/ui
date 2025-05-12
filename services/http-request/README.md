@@ -1,30 +1,30 @@
-# `@byndyusoft-ui/http-request`
+# `@byndyusoft-ui/http-service`
 
-> Http request service
+> Http service service
 ### Installation
 
 ```bash
-npm i @byndyusoft-ui/http-request
+npm i @byndyusoft-ui/http-service
 ```
 
 ## Usage
 
-### To start using this service you need to create a new class instance of HttpRequest and provide restController option.
+### To start using this service you need to create a new class instance of HttpService and provide restController option.
 There are two classes ready to be used as restControllers: **HttpRestControllerFetch** and **HttpRestControllerAxios**. For fetch and axios.
 ```ts
     const restController = new HttpRestControllerFetch();
-    const httpRequest = new HttpRequest({
+    const httpService = new HttpService({
     restController
 });
 
-    httpRequestService.get("http://localhost:3000/api/");
+    httpService.get("http://localhost:3000/api/");
 ```
 
 ### Example of usage with HttpRestControllerFetch
 
 ```ts
     const restController = new HttpRestControllerFetch();
-    const HttpService = new HttpRequest({
+    const HttpService = new HttpService({
         restController
     });
 
@@ -41,7 +41,7 @@ There are two classes ready to be used as restControllers: **HttpRestControllerF
 
 ```ts
     const restController = new HttpRestControllerAxios();
-    const HttpService = new HttpRequest({
+    const HttpService = new HttpService({
         restController
     });
 
@@ -56,7 +56,7 @@ There are two classes ready to be used as restControllers: **HttpRestControllerF
 
 ```ts
     // myOwnHttpRestController.ts
-    import { HttpRestController } from '@byndyusoft-ui/http-request';
+    import { HttpRestController } from '@byndyusoft-ui/http-service';
 
     class HttpRestControllerCustom extends HttpRestController {
         constructor() {
@@ -104,14 +104,14 @@ There are two classes ready to be used as restControllers: **HttpRestControllerF
 ```
 ```ts
 
-    // httpRequest.ts
+    // httpService.ts
     import HttpRestControllerCustom from './myOwnHttpRestController.ts'
 
     const restController = new HttpRestControllerCustom();
-    const httpRequestService = new HttpRequest({
+    const httpService = new HttpService({
         restController
     });
 
-    httpRequestService.get("http://localhost:3000/api/");
+    httpService.get("http://localhost:3000/api/");
 ```
 

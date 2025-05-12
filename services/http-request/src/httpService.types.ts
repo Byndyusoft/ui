@@ -1,5 +1,5 @@
 import HttpRestController from './restController';
 
-export interface IHttpRequestOptions<RestController = HttpRestController> {
+export interface IHttpServiceOptions<RestController = HttpRestController> {
     restController?: RestController;
 }

@@ -1,7 +1,7 @@
-import { IHttpRequestOptions } from './httpRequest.types';
+import { IHttpServiceOptions } from './httpService.types';
 import HttpRestController from './restController';
 
-class HttpRequest<RestController extends HttpRestController> {
+class HttpService<RestController extends HttpRestController> {
     public restController: RestController | undefined;
 
     public get: RestController['get'];
@@ -11,7 +11,7 @@ class HttpRequest<RestController extends HttpRestController> {
     public delete: RestController['delete'];
     public setHeader: RestController['setHeader'];
 
-    constructor(options: IHttpRequestOptions<RestController>) {
+    constructor(options: IHttpServiceOptions<RestController>) {
         if (options.restController) {
             const restController = options.restController;
             this.restController = restController;
@@ -33,4 +33,4 @@ class HttpRequest<RestController extends HttpRestController> {
     }
 }
 
-export default HttpRequest;
+export default HttpService;
