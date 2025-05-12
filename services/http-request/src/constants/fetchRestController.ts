@@ -17,7 +17,9 @@ export class HttpRestControllerFetch extends HttpRestController {
     };
 
     get = async <R>(url: string, headers?: Headers): Promise<R> => {
-        return fetch(url, { method: 'GET', headers: { ...this.headers, ...headers } }) as Promise<R>;
+        return fetch(url, { method: 'GET', headers: { ...this.headers, ...headers } }).then(r =>
+            r.json()
+        ) as Promise<R>;
     };
 
     post = async <R>(url: string, body: object, headers?: Headers): Promise<R> => {
@@ -28,7 +30,7 @@ export class HttpRestControllerFetch extends HttpRestController {
                 ...this.headers,
                 ...headers
             }
-        }) as Promise<R>;
+        }).then(r => r.json()) as Promise<R>;
     };
 
     patch = async <R>(url: string, body: object, headers?: Headers): Promise<R> => {
@@ -36,7 +38,7 @@ export class HttpRestControllerFetch extends HttpRestController {
             method: 'PATCH',
             body: JSON.stringify(body),
             headers: { ...this.headers, ...headers }
-        }) as Promise<R>;
+        }).then(r => r.json()) as Promise<R>;
     };
 
     put = async <R>(url: string, body: object, headers?: Headers): Promise<R> => {
@@ -44,7 +46,7 @@ export class HttpRestControllerFetch extends HttpRestController {
             method: 'PUT',
             body: JSON.stringify(body),
             headers: { ...this.headers, ...headers }
-        }) as Promise<R>;
+        }).then(r => r.json()) as Promise<R>;
     };
 
     delete = async <R>(url: string, body: object = {}, headers?: Headers): Promise<R> => {
@@ -52,6 +54,6 @@ export class HttpRestControllerFetch extends HttpRestController {
             method: 'DELETE',
             body: JSON.stringify(body),
             headers: { ...this.headers, ...headers }
-        }) as Promise<R>;
+        }).then(r => r.json()) as Promise<R>;
     };
 }
