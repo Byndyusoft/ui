@@ -24,7 +24,7 @@ There are two classes ready to be used as restControllers: **HttpRestControllerF
 
 ```ts
     const restController = new HttpRestControllerFetch();
-    const HttpService = new HttpService({
+    const httpService = new HttpService({
         restController
     });
 
@@ -41,7 +41,7 @@ There are two classes ready to be used as restControllers: **HttpRestControllerF
 
 ```ts
     const restController = new HttpRestControllerAxios();
-    const HttpService = new HttpService({
+    const httpService = new HttpService({
         restController
     });
 
