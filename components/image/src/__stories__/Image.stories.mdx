@@ -1,0 +1,44 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import { Markdown } from '@storybook/blocks';
+import Readme from '../../README.md';
+
+<Meta title="components/Image" />
+
+<Markdown>{Readme}</Markdown>
+
+# Image stories
+### Lazy fallback skeleton
+
+<Canvas>
+  <Story id="components-image--lazy-fallback-skeleton" />
+</Canvas>
+
+### Lazy fallback src
+
+<Canvas>
+  <Story id="components-image--lazy-fallback-src" />
+</Canvas>
+
+### Preload fallback skeleton
+
+<Canvas>
+  <Story id="components-image--preload-fallback-skeleton" />
+</Canvas>
+
+### Preload fallback src
+
+<Canvas>
+  <Story id="components-image--preload-fallback-src" />
+</Canvas>
+
+### Error fallback
+
+<Canvas>
+  <Story id="components-image--error-fallback" />
+</Canvas>
+
+### Error fallback src
+
+<Canvas>
+  <Story id="components-image--error-fallback-src" />
+</Canvas>
