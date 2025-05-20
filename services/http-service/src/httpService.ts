@@ -10,11 +10,11 @@ class HttpService<RestController extends HttpRestController> {
     public put: RestController['put'];
     public delete: RestController['delete'];
     public setHeader: RestController['setHeader'];
+    public setTokenData: RestController['setTokenData'];
 
     constructor(options: IHttpServiceOptions<RestController>) {
         if (options.restController) {
-            const restController = options.restController;
-            this.restController = restController;
+            this.restController = options.restController;
 
             this.get = this.restController.get;
             this.post = this.restController.post;
@@ -22,6 +22,7 @@ class HttpService<RestController extends HttpRestController> {
             this.put = this.restController.put;
             this.delete = this.restController.delete;
             this.setHeader = this.restController.setHeader;
+            this.setTokenData = this.restController.setTokenData;
         } else {
             this.get = () => Promise.reject('get handler was not specified');
             this.post = () => Promise.reject('post handler was not specified');
@@ -29,6 +30,7 @@ class HttpService<RestController extends HttpRestController> {
             this.put = () => Promise.reject('put handler was not specified');
             this.delete = () => Promise.reject('delete handler was not specified');
             this.setHeader = () => undefined;
+            this.setTokenData = () => undefined;
         }
     }
 }
