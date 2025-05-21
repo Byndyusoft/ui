@@ -53,10 +53,13 @@ export class HttpRestControllerAxios extends HttpRestController {
                     this.tokenData?.setNewTokenPayload(response.data);
 
                     return response.data.accessToken;
-                });
+                })
 
             return this.refreshTokenRequest;
         } catch (error) {
+            this.tokenData?.clearTokens();
+            window.location.href = '/login';
+
             throw new Error(`Token refresh failed: ${error}`);
         } finally {
             this.refreshTokenRequest = null;
@@ -70,12 +73,18 @@ export class HttpRestControllerAxios extends HttpRestController {
             const isNotRefreshUrl = request.url !== this.tokenData?.tokenRefreshUrl;
 
             if (accessToken && !isExpired) {
-                this.setHeader('Authorization', `Bearer ${accessToken}`);
+                request.headers['Authorization'] = `Bearer ${accessToken}`;
             }
 
             if (isExpired && isNotRefreshUrl) {
-               const newAccessToken = await this.refreshTokens();
-               this.setHeader('Authorization', `Bearer ${newAccessToken}`);
+                try {
+                    const newAccessToken = await this.refreshTokens();
+                    request.headers['Authorization'] = `Bearer ${newAccessToken}`;
+                } catch (refreshError) {
+                    console.error('Session expired');
+
+                    return Promise.reject(refreshError);
+                }
             }
 
             return request;
@@ -85,18 +94,19 @@ export class HttpRestControllerAxios extends HttpRestController {
             response => response,
             async (error: AxiosError) => {
                 const requestConfig = error.config;
+                const isNotRefreshUrl = error.config?.url !== this.tokenData?.tokenRefreshUrl;
 
-                if (error.response?.status === (httpStatus.UNAUTHORIZED as number)) {
+                if (error.response?.status === (httpStatus.UNAUTHORIZED as number) && isNotRefreshUrl) {
                     try {
                         const newAccessToken = await this.refreshTokens();
 
-                        requestConfig?.headers.set('Authorization', `Bearer ${newAccessToken}`);
+                        if (requestConfig) {
+                            requestConfig.headers['Authorization'] = `Bearer ${newAccessToken}`;
+                        }
 
                         return this.axiosInstance(requestConfig ?? {});
                     } catch (refreshError) {
-                        console.error('Session expired. Redirect to login...');
-                        this.tokenData?.clearTokens();
-                        window.location.href = '/login';
+                        console.error('Session expired');
 
                         return Promise.reject(refreshError);
                     }
