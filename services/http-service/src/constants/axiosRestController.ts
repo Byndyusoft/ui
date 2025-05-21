@@ -125,47 +125,38 @@ export class HttpRestControllerAxios extends HttpRestController {
         this.axiosInstance.defaults.headers[key] = value;
     };
 
-    get = async <T, R = AxiosResponse<T>>(url: string, params: object = {}, options: object = {}): Promise<R> =>
-        this.axiosInstance.get(url, {
-            params,
-            ...options
-        });
+    async get<T, R = AxiosResponse<T>>(url: string, params: object = {}, options: object = {}): Promise<R> {
+        return this.axiosInstance.get(url, { params, ...options });
+    };
 
-    post = async <T, R = AxiosResponse<T>>(
+    async post<T, R = AxiosResponse<T>>(
         url: string,
         body?: object,
         params: object = {},
         options: object = {}
-    ): Promise<R> => this.axiosInstance.post(url, body, {
-            params,
-            ...options
-        });
+    ): Promise<R> {
+        return this.axiosInstance.post(url, body, { params, ...options });
+    };
 
-    patch = async <T, R = AxiosResponse<T>>(
+    async patch<T, R = AxiosResponse<T>>(
         url: string,
         body?: object,
         params: object = {},
         options: object = {}
-    ): Promise<R> =>
-        this.axiosInstance.patch(url, body, {
-            params,
-            ...options
-        });
+    ): Promise<R> {
+        return this.axiosInstance.patch(url, body, { params, ...options });
+    };
 
-    put = async <T, R = AxiosResponse<T>>(
+    async put<T, R = AxiosResponse<T>>(
         url: string,
         body?: object,
         params: object = {},
         options: object = {}
-    ): Promise<R> =>
-        this.axiosInstance.put(url, body, {
-            params,
-            ...options
-        });
+    ): Promise<R> {
+        return this.axiosInstance.put(url, body, { params, ...options });
+    }
 
-    delete = async <T, R = AxiosResponse<T>>(url: string, params: object = {}, options: object = {}): Promise<R> =>
-        this.axiosInstance.delete(url, {
-            params,
-            ...options
-        });
+    async delete<T, R = AxiosResponse<T>>(url: string, params: object = {}, options: object = {}): Promise<R> {
+        return this.axiosInstance.delete(url, { params, ...options });
+    };
 }
