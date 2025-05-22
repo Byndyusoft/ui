@@ -11,7 +11,8 @@ export default defineConfig({
             'hooks/use-timeout', //workspace example. 'hooks/*' plus separate vitest.config.ts in each workspace like in README.md will work too.
             getWorkspaceConfig('components'),
             getWorkspaceConfig('hooks'),
-            getWorkspaceConfig('packages')
+            getWorkspaceConfig('packages'),
+            getWorkspaceConfig('services')
         ]
     }
 });
