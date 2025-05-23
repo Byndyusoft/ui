@@ -1,0 +1,8 @@
+.template_wrapper {
+    padding: 20px;
+    margin: auto;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}

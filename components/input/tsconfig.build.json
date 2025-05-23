@@ -1,0 +1,4 @@
+{
+  "extends": "@byndyusoft-ui/modals-provider/tsconfig.json",
+  "exclude": ["src/*.tests.ts", "src/*.stories.*"]
+}
