@@ -1,8 +1,4 @@
-export declare enum httpStatus {
-    CONTINUE = 100,
-    SWITCHING_PROTOCOLS = 101,
-    PROCESSING = 102,
-    EARLYHINTS = 103,
+export declare enum HttpStatus {
     OK = 200,
     CREATED = 201,
     ACCEPTED = 202,

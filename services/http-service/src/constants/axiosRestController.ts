@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 import HttpRestController from '../restController';
 import { ITokenData, ITokenPayload } from '../token.types';
-import { httpStatus } from '../httpStatus';
+import { HttpStatus } from '../httpStatus';
 
 const DEFAULT_REQUEST_TIMEOUT = 60000;
 
@@ -96,7 +96,7 @@ export class HttpRestControllerAxios extends HttpRestController {
                 const requestConfig = error.config;
                 const isNotRefreshUrl = error.config?.url !== this.tokenData?.tokenRefreshUrl;
 
-                if (error.response?.status === (httpStatus.UNAUTHORIZED as number) && isNotRefreshUrl) {
+                if (error.response?.status === (HttpStatus.UNAUTHORIZED as number) && isNotRefreshUrl) {
                     try {
                         const newAccessToken = await this.refreshTokens();
 

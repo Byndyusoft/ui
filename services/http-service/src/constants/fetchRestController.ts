@@ -1,4 +1,6 @@
 import HttpRestController from '../restController';
+import { Headers, Response } from 'happy-dom';
+import { ITokenData } from '../token.types';
 
 export class HttpRestControllerFetch extends HttpRestController {
     public headers: Headers = new Headers();
@@ -71,4 +73,6 @@ export class HttpRestControllerFetch extends HttpRestController {
             headers: this.mergeCurrentHeaders(headers)
         }) as Promise<R>;
     };
+
+    setTokenData(arg: ITokenData): void {}
 }
