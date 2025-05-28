@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { HttpClient, IHttpClientInit, DEFAULT_REQUEST_TIMEOUT } from './httpClient.types';
+import { HttpClient, IHttpClientInit, DEFAULT_REQUEST_TIMEOUT } from './httpClient';
 import { IRequestClientOptions } from './httpRequest';
 
 export class AxiosHttpClient extends HttpClient {

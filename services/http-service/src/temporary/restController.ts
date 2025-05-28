@@ -1,4 +1,4 @@
-import { ITokenData } from './token.types';
+import { ITokenData } from '../token.types';
 
 abstract class HttpRestController {
     abstract get<R>(...args: any[]): Promise<R>;

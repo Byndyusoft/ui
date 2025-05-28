@@ -1,4 +1,4 @@
-import HttpRestController from '../restController';
+import HttpRestController from './restController';
 import { Headers, Response } from 'happy-dom';
 import { ITokenData } from '../token.types';
 

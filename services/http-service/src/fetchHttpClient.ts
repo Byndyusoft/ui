@@ -1,5 +1,5 @@
 import { IHeaders, IRequestClientOptions } from './httpRequest';
-import { DEFAULT_REQUEST_TIMEOUT, HttpClient, IHttpClientInit } from './httpClient.types';
+import { DEFAULT_REQUEST_TIMEOUT, HttpClient, IHttpClientInit } from './httpClient';
 
 export class FetchHttpClient extends HttpClient {
     baseURL: string;

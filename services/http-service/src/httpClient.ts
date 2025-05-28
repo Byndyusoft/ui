@@ -36,19 +36,19 @@ export abstract class HttpClient {
         return '';
     }
 
-    get<R>() {
+    get<R = unknown>() {
         return new HttpRequest<R>(this.requestClient, HttpMethod.GET);
     }
 
-    post<R>() {
+    post<R = unknown>() {
         return new HttpRequestWithBody<R>(this.requestClient, HttpMethod.POST);
     }
 
-    put<R>() {
+    put<R = unknown>() {
         return new HttpRequestWithBody<R>(this.requestClient, HttpMethod.PUT);
     }
 
-    patch<R>() {
+    patch<R = unknown>() {
         return new HttpRequestWithBody<R>(this.requestClient, HttpMethod.PATCH);
     }
 

@@ -1,5 +1,5 @@
 import { IHttpServiceOptions } from '../httpService.types';
-import HttpRestController from '../restController';
+import HttpRestController from './restController';
 
 class HttpService<RestController extends HttpRestController> {
     public restController: RestController | undefined;

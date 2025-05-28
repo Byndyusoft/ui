@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
-import HttpRestController from '../restController';
+import HttpRestController from './restController';
 import { ITokenData, ITokenPayload } from '../token.types';
 import { HttpStatus } from '../httpStatus';
 
