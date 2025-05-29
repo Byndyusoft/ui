@@ -1,4 +1,4 @@
-import { IHttpServiceOptions } from '../httpService.types';
+import { IHttpServiceOptions } from './httpService.types';
 import HttpRestController from './restController';
 
 class HttpService<RestController extends HttpRestController> {

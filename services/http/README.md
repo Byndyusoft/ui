@@ -4,7 +4,7 @@
 ### Installation
 
 ```bash
-npm i @byndyusoft-ui/http-service
+npm i @byndyusoft-ui/http
 ```
 
 ## Usage
@@ -56,7 +56,7 @@ There are two classes ready to be used as restControllers: **HttpRestControllerF
 
 ```ts
     // myOwnHttpRestController.ts
-    import { HttpRestController } from '@byndyusoft-ui/http-service';
+    import { HttpRestController } from '@byndyusoft-ui/http';
 
     class HttpRestControllerCustom extends HttpRestController {
         constructor() {

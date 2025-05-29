@@ -1,4 +1,4 @@
-import { HttpMethod } from './httpMethod.types';
+import { HttpMethod } from '../types/httpMethod.types';
 
 export type IHeaders = Record<string, string>;
 

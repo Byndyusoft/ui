@@ -1,4 +1,4 @@
-export declare enum HttpStatus {
+export declare enum HttpStatusTypes {
     OK = 200,
     CREATED = 201,
     ACCEPTED = 202,

@@ -1,6 +1,6 @@
 import HttpRestController from './restController';
 import { Headers, Response } from 'happy-dom';
-import { ITokenData } from '../token.types';
+import { ITokenData } from '../types/token.types';
 
 export class HttpRestControllerFetch extends HttpRestController {
     public headers: Headers = new Headers();

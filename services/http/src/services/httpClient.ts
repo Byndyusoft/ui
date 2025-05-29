@@ -1,5 +1,5 @@
 import { HttpRequest, HttpRequestWithBody, IRequestClientOptions, IHeaders, TQueryParams } from './httpRequest';
-import { HttpMethod } from './httpMethod.types';
+import { HttpMethod } from '../types/httpMethod.types';
 
 export const DEFAULT_REQUEST_TIMEOUT = 60000;
 

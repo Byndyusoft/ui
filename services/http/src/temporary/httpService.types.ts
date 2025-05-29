@@ -1,4 +1,4 @@
-import HttpRestController from './temporary/restController';
+import HttpRestController from './restController';
 
 export interface IHttpServiceOptions<RestController = HttpRestController> {
     restController?: RestController;

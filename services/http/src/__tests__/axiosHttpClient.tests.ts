@@ -1,6 +1,6 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { AxiosHttpClient } from '../axiosHttpClient';
+import AxiosHttpClient from '../services/axiosClient';
 
 describe('services/AxiosHttpClient', () => {
     let mockAxios: MockAdapter;
