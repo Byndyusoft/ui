@@ -24,7 +24,3 @@ export class AxiosHttpClient extends HttpClient {
         this.axiosInstance.defaults.headers[key] = value;
     };
 }
-
-const test = new AxiosHttpClient({ baseURL: 'http://localhost:3000/' });
-
-const request = test.post<{ test: 'test'}>().url('helo').body({ mama: 'me' }).send();

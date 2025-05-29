@@ -66,7 +66,6 @@
     "@types/estree": "^1.0.5",
     "@types/react": "^17.0.21",
     "@types/react-dom": "^17.0.17",
-    "axios-mock-adapter": "^2.1.0",
     "classnames": "^2.3.1",
     "eslint": "8.22.0",
     "happy-dom": "^17.4.4",
