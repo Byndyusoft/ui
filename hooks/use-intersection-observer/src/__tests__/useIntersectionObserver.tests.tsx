@@ -1,5 +1,4 @@
 import { render } from '@testing-library/react';
-import { vi } from 'vitest';
 import React, { useEffect, useState } from 'react';
 import { IUseIntersectionObserverOptions } from '../useIntersectionObserver.types';
 import {
@@ -63,7 +62,7 @@ const setupHookComponentWithEntry = (props: IComponentProps = {}) => render(<Hoo
 
 describe('hooks/useIntersectionObserver', () => {
     beforeEach(() => {
-        setupIntersectionMocking(vi.fn());
+        setupIntersectionMocking(vi.fn);
     });
     afterEach(() => {
         resetIntersectionMocking();
