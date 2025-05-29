@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react';
+import { vi } from 'vitest';
 import React, { useEffect, useState } from 'react';
 import { IUseIntersectionObserverOptions } from '../useIntersectionObserver.types';
 import {
@@ -62,7 +63,7 @@ const setupHookComponentWithEntry = (props: IComponentProps = {}) => render(<Hoo
 
 describe('hooks/useIntersectionObserver', () => {
     beforeEach(() => {
-        setupIntersectionMocking(jest.fn);
+        setupIntersectionMocking(vi.fn());
     });
     afterEach(() => {
         resetIntersectionMocking();
@@ -144,7 +145,7 @@ describe('hooks/useIntersectionObserver', () => {
     });
 
     test('should trigger onChange', () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         setupHookComponent({ options: { onChange } });
 
         mockAllIsIntersecting(true);

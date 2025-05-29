@@ -15,7 +15,7 @@ function warnOnMissingSetup() {
     console.error('Intersection Observer was not configured to handle mocking');
 }
 
-export function setupIntersectionMocking(mockFn: typeof jest.fn): void {
+export function setupIntersectionMocking(mockFn: typeof vi.fn): void {
     global.IntersectionObserver = mockFn((cb, options = {}) => {
         const observerData: IObserverData = {
             callback: cb,

@@ -11,5 +11,10 @@ export default {
         preserveModules: true,
         preserveModulesRoot: 'src'
     },
-    plugins: [svgr(), peerDeps(), resolve(), commonjs()]
+    plugins: [
+        svgr(),
+        peerDeps(),
+        resolve(),
+        commonjs()
+    ]
 };
