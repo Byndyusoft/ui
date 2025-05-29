@@ -7,12 +7,12 @@ export default defineConfig({
         globals: true,
         environment: 'jsdom',
         //https://vitest.dev/guide/workspace
-        workspace: [
-            'hooks/use-timeout', //workspace example. 'hooks/*' plus separate vitest.config.ts in each workspace like in README.md will work too.
-            getWorkspaceConfig('components'),
-            getWorkspaceConfig('hooks'),
-            getWorkspaceConfig('packages')
-        ]
+        // workspace: [
+        //     'hooks/use-timeout', //workspace example. 'hooks/*' plus separate vitest.config.ts in each workspace like in README.md will work too.
+        //     getWorkspaceConfig('components'),
+        //     getWorkspaceConfig('hooks'),
+        //     getWorkspaceConfig('packages')
+        // ]
     }
 });
 
