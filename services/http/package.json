@@ -1,7 +1,7 @@
 {
-    "name": "@byndyusoft-ui/http-service",
+    "name": "@byndyusoft-ui/http",
     "version": "0.0.1",
-    "description": "Byndyusoft UI HTTP Service",
+    "description": "Byndyusoft UI HTTP Client",
     "keywords": [
         "byndyusoft",
         "byndyusoft-ui",
@@ -11,7 +11,7 @@
         "fetch"
     ],
     "author": "Byndyusoft Frontend Developer <frontend@byndyusoft.com>",
-    "homepage": "https://github.com/Byndyusoft/ui/tree/master/services/http-service#readme",
+    "homepage": "https://github.com/Byndyusoft/ui/tree/master/services/http#readme",
     "license": "Apache-2.0",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -22,7 +22,7 @@
     "scripts": {
         "build": "rollup --config",
         "clean": "rimraf dist",
-        "test": "jest --config ../../jest.config.js --roots services/http-service/src",
+        "test": "jest --config ../../jest.config.js --roots services/http/src",
         "lint:check": "npm run eslint:check && npm run prettier:check && npm run stylelint:check",
         "lint:fix": "npm run eslint:fix && npm run prettier:fix && npm run stylelint:fix",
         "eslint:check": "eslint src --config ../../eslint.config.js",
@@ -38,7 +38,7 @@
     "publishConfig": {
         "access": "public"
     },
-    "devDependencies": {
+    "peerDependencies": {
         "axios-mock-adapter": "^2.1.0"
     },
     "dependencies": {
