@@ -1,8 +1,10 @@
-import { defineConfig, TestProjectConfiguration } from 'vitest/config';
+import { defineConfig } from 'vitest/config';
+import svgr from 'vite-plugin-svgr';
 
 const testsGlob = '**/*.tests.(ts|tsx)';
 
 export default defineConfig({
+    plugins: [svgr()],
     test: {
         globals: true,
         environment: 'jsdom',
@@ -16,7 +18,7 @@ export default defineConfig({
     }
 });
 
-function getWorkspaceConfig(name: string): TestProjectConfiguration {
+function getWorkspaceConfig(name) {
     return {
         extends: true,
         test: {
