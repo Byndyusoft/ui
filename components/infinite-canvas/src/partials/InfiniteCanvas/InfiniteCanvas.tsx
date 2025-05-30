@@ -11,7 +11,6 @@ const InfiniteCanvas = ({ className, children }: IInfiniteCanvasProps): ReactEle
 
     const [dragging, setDragging] = useState(false);
 
-    // Refs to store the offset and dragging state
     const offsetXRef = useRef(0);
     const offsetYRef = useRef(0);
     const isDraggingRef = useRef(false);

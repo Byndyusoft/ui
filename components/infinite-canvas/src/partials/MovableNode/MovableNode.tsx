@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, ReactElement, ReactNode, useCallback, useContext, useRef, useState } from 'react';
 import { InfiniteCanvasContext } from '../../InfiniteCanvasContext';
 
-// import styles from './MovableNode.module.css';
+import styles from './MovableNode.module.css';
 
 interface IMovableNode extends PropsWithChildren<unknown> {}
 
@@ -49,7 +49,7 @@ const MovableNode = ({ children }: IMovableNode): ReactElement => {
 
     return (
         <div
-            // className={styles.container}
+            className={styles.container}
             onMouseDown={handleMouseDown}
             style={{
                 transform: `translate3d(${offset.x}px, ${offset.y}px, 0)`
