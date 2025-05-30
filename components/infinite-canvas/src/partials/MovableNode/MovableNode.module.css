@@ -1,0 +1,7 @@
+.container {
+    display: inline-block;
+    pointer-events: all;
+    user-select: 'none';
+    transform-origin: '0, 0';
+    cursor: 'move';
+}
