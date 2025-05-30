@@ -32,7 +32,7 @@ const Form = ({ defaultValues, onSubmit }: IFormProps): JSX.Element => {
 
 describe('components/CheckBox', () => {
     test('should render children', () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
 
         render(
             <CheckBox isChecked onChange={onChange}>
@@ -44,7 +44,7 @@ describe('components/CheckBox', () => {
     });
 
     test('should render checked checkbox', () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
 
         render(
             <CheckBox isChecked onChange={onChange}>
@@ -56,7 +56,7 @@ describe('components/CheckBox', () => {
     });
 
     test('should render unchecked checkbox', () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
 
         render(
             <CheckBox isChecked={false} onChange={onChange}>
@@ -68,7 +68,7 @@ describe('components/CheckBox', () => {
     });
 
     test('should render disabled checkbox', () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
 
         render(
             <CheckBox isChecked isDisabled onChange={onChange}>
@@ -80,7 +80,7 @@ describe('components/CheckBox', () => {
     });
 
     test('should render indeterminate checkbox', () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
 
         render(
             <CheckBox isChecked={false} isIndeterminate onChange={onChange}>
@@ -92,7 +92,7 @@ describe('components/CheckBox', () => {
     });
 
     test('should works with react-hook-form correctly', async () => {
-        const onSubmit = jest.fn();
+        const onSubmit = vi.fn();
         const defaultValues = {
             isChecked: true
         };
