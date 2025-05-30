@@ -4,8 +4,8 @@ import cn from 'classnames';
 import { ICheckBoxIndicatorClassNames } from '../CheckBox.types';
 import { useCheckBox } from './CheckBoxContext';
 
-import { ReactComponent as CheckIcon } from '../assets/check.svg';
-import { ReactComponent as IndeterminateIcon } from '../assets/indeterminate.svg';
+import CheckIcon from '../assets/check.svg?react';
+import IndeterminateIcon from '../assets/indeterminate.svg?react';
 
 export interface ICheckBoxIndicatorProps {
     className?: string;
