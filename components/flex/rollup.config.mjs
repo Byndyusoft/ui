@@ -1,13 +1,13 @@
 import typescript from '@rollup/plugin-typescript';
 import baseConfig from '../../rollup.base.config.mjs';
-import postcss from 'rollup-plugin-postcss';
+import scss from 'rollup-plugin-scss';
 
 export default {
     ...baseConfig,
     input: ['src/index.ts'],
     plugins: [
         ...baseConfig.plugins,
-        postcss(),
+        scss(),
         typescript({
             tsconfig: './tsconfig.json',
             exclude: ['src/**/*.stories.tsx', 'src/**/*.tests.tsx', 'node_modules']
