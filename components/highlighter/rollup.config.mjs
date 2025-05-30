@@ -1,5 +1,5 @@
 import typescript from '@rollup/plugin-typescript';
-import baseConfig from '../../rollup.base.config';
+import baseConfig from '../../rollup.base.config.mjs';
 
 export default {
     ...baseConfig,

@@ -62,7 +62,7 @@ const setupHookComponentWithEntry = (props: IComponentProps = {}) => render(<Hoo
 
 describe('hooks/useIntersectionObserver', () => {
     beforeEach(() => {
-        setupIntersectionMocking(jest.fn);
+        setupIntersectionMocking(vi.fn);
     });
     afterEach(() => {
         resetIntersectionMocking();
@@ -144,7 +144,7 @@ describe('hooks/useIntersectionObserver', () => {
     });
 
     test('should trigger onChange', () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         setupHookComponent({ options: { onChange } });
 
         mockAllIsIntersecting(true);

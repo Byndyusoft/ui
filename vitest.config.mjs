@@ -14,7 +14,8 @@ export default defineConfig({
             getWorkspaceConfig('components'),
             getWorkspaceConfig('hooks'),
             getWorkspaceConfig('packages')
-        ]
+        ],
+        include: ['src/**/*.{test,tests,spec}.[jt]s?(x)', 'src/**/__tests__/**.*'],
     }
 });
 
