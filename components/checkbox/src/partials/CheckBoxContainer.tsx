@@ -1,4 +1,4 @@
-import React, { ReactNode, forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import React, { JSX, ReactNode, forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import { v4 as guid } from 'uuid';
 import cn from 'classnames';
 

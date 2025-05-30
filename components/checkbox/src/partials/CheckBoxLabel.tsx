@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { JSX, ReactNode } from 'react';
 import cn from 'classnames';
 
 import { ICheckBoxLabelClassNames } from '../CheckBox.types';

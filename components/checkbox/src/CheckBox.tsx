@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { JSX, forwardRef } from 'react';
 
 import { ICheckBoxProps } from './CheckBox.types';
 import getDefaultCheckBoxClassNames from './utilities/getDefaultCheckBoxClassNames';
