@@ -4,15 +4,9 @@
     "declaration": true,
     "declarationDir": "dist",
     "outDir": "dist",
-    "module": "commonjs",
+    "module": "ESNext",
     "target": "es6"
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules",
-    "src/**/*.tests.tsx",
-    "src/**/*.stories.tsx"
-  ]
+  "include": ["src"],
+  "exclude": ["node_modules", "src/**/*.tests.tsx", "src/**/*.stories.tsx"]
 }

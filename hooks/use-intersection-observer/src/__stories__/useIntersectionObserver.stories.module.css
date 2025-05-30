@@ -1,0 +1,129 @@
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    text-align: center;
+    height: calc(100vh - 32px);
+    width: 100%;
+    overflow: hidden;
+}
+
+.status_bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background: white;
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+}
+
+.status_bar_title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.status_bar_warning {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.warning {
+    color: orangered;
+    font-size: 16px;
+}
+
+.status_bar_in_view {
+    margin: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.status_bar_entry {
+    margin: 0 10px;
+}
+
+.status_bar_entry pre {
+    background: #f5f5f5;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    max-width: 400px;
+    overflow-x: auto;
+}
+
+.scroll_container {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 82px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.scroll_down,
+.scroll_up {
+    height: 100vh;
+    background: lightgray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border: 1px solid #ccc;
+}
+
+.observed_element {
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border: 1px solid #ccc;
+}
+
+.status_label {
+    padding: 1px 8px;
+    border-radius: 4px;
+}
+
+.in_view {
+    background: lightgreen;
+}
+
+.out_of_view {
+    background: lightcoral;
+}
+
+.root_margin_visual {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border: 2px dashed red;
+    background: yellow;
+}

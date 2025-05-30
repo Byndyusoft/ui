@@ -1,0 +1,21 @@
+{
+  "name": "@byndyusoft-ui/css-utilities",
+  "version": "0.0.1",
+  "description": "Byndyusoft UI CSS Tools",
+  "keywords": [
+    "byndyusoft",
+    "byndyusoft-ui",
+    "css",
+    "reset-css"
+  ],
+  "author": "Nikolai Kuznetsov <kuznetsov@byndyusoft.com>",
+  "license": "Apache-2.0",
+  "main": "dist/index.css",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Byndyusoft/ui.git"
+  },
+  "scripts": {
+    "build": "sass src/index.scss dist/index.css --style=compressed"
+  }
+}

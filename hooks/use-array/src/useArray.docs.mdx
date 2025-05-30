@@ -1,0 +1,19 @@
+import { Markdown, Meta, Canvas, Source } from '@storybook/blocks';
+import Readme from '../README.md?raw';
+import * as useArrayStories from './useArray.stories';
+
+<Meta title="hooks/useArray" of={useArrayStories} />
+
+<Markdown>{Readme}</Markdown>
+
+## Usage
+
+To use the hook in your project you must:
+
+1. Import the hook where you need it:
+
+<Source language="javascript" code="import useArray from '@byndyusoft-ui/use-array';" />
+
+2. Call the hook and give it the desired args.
+
+<Canvas sourceState="shown" of={useArrayStories.HookStory} />

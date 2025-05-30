@@ -1,0 +1,38 @@
+{
+  "name": "@byndyusoft-ui/view",
+  "version": "0.0.1",
+  "description": "Byndyusoft UI View React Component",
+  "keywords": [
+    "byndyusoft",
+    "byndyusoft-ui",
+    "react",
+    "view"
+  ],
+  "author": "Byndyusoft Frontend Developer <frontend@byndyusoft.com>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/components/view#readme",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Byndyusoft/ui.git"
+  },
+  "scripts": {
+    "build": "rollup --config",
+    "clean": "rimraf dist",
+    "lint:check": "npm run eslint:check && npm run prettier:check && npm run stylelint:check",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix && npm run stylelint:fix",
+    "eslint:check": "eslint src --config ../../eslint.config.js",
+    "eslint:fix": "eslint src --config ../../eslint.config.js --fix",
+    "prettier:check": "prettier --check '**/*.{ts,tsx,css,scss,json}' '!**/dist/**'",
+    "prettier:fix": "prettier --write '**/*.{ts,tsx,css,scss,json}' '!**/dist/**'",
+    "stylelint:check": "stylelint '**/*.{css,scss}' --allow-empty-input",
+    "stylelint:fix": "stylelint '**/*.{css,scss}' --fix --allow-empty-input"
+  },
+  "bugs": {
+    "url": "https://github.com/Byndyusoft/ui/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

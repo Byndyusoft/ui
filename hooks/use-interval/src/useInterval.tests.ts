@@ -6,44 +6,44 @@ const setup = (callback: () => void, delay: number | null): RenderHookResult<voi
 
 describe('hooks/useInterval', () => {
     beforeAll(() => {
-        jest.useFakeTimers();
-        jest.spyOn(global, 'clearInterval');
+        vi.useFakeTimers();
     });
 
     test('calls callback', () => {
-        const callback = jest.fn();
+        const callback = vi.fn();
 
         setup(callback, 100);
 
         expect(callback).not.toBeCalled();
 
-        jest.advanceTimersByTime(101);
+        vi.advanceTimersByTime(101);
 
         expect(callback).toHaveBeenCalledTimes(1);
 
-        jest.advanceTimersByTime(100);
+        vi.advanceTimersByTime(100);
 
         expect(callback).toHaveBeenCalledTimes(2);
 
-        jest.advanceTimersByTime(100);
+        vi.advanceTimersByTime(100);
 
         expect(callback).toHaveBeenCalledTimes(3);
     });
 
     test('does not call callback if delay is null', () => {
-        const callback = jest.fn();
+        const callback = vi.fn();
 
         setup(callback, null);
 
         expect(callback).not.toBeCalled();
 
-        jest.advanceTimersByTime(150);
+        vi.advanceTimersByTime(150);
 
         expect(callback).not.toBeCalled();
     });
 
     test('clears interval', () => {
-        const callback = jest.fn();
+        vi.spyOn(global, 'clearInterval');
+        const callback = vi.fn();
 
         const { result } = setup(callback, 100);
         expect(clearInterval).toHaveBeenCalledTimes(0);
@@ -52,7 +52,7 @@ describe('hooks/useInterval', () => {
 
         result.current();
 
-        jest.advanceTimersByTime(150);
+        vi.advanceTimersByTime(150);
 
         expect(callback).toHaveBeenCalledTimes(0);
         expect(clearInterval).toHaveBeenCalledTimes(1);

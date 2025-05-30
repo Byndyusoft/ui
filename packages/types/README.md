@@ -1,47 +1,17 @@
-# `types`
+# `@byndyusoft-ui/types`
 
-> TODO: description
+## Installation
 
-## Usage
+```sh
+npm i @byndyusoft-ui/types
+# or
+yarn add @byndyusoft-ui/types
+```
 
 ### Import library
 
 ```
-const types = require('@byndyusoft-ui/types');
-
-or
-
 import types from '@byndyusoft-ui/types';
-```
-
-### ValueOf
-
-```typescript
-import { ValueOf } from '@byndyusoft-ui/types';
-
-enum Fruits {
-    APPLE = 'apple',
-    ORANGE = 'orange'
-}
-
-const fruitsDictionary = {
-    [Fruits.APPLE]: 'Яблоко' as string,
-    [Fruits.ORANGE]: 'Апельсин' as string
-};
-
-const TFruitsDictionaryValues = ValueOf<typeof fruitsDictionary>;
-// TFruitsDictionaryValues = 'Яблоко' | 'Апельсин'
-```
-
-### IsTuple
-
-```typescript
-import { IsTuple } from '@byndyusoft-ui/types';
-
-type Test1 = IsTuple<string>; // false
-type Test2 = IsTuple<Array<string>>; // false
-type Test3 = IsTuple<[string]>; // true
-type Test4 = IsTuple<[string, number]>; // true
 ```
 
 ### Callback
@@ -95,14 +65,19 @@ callback(100); // return string
 ```
 
 ```typescript
-type TArgs = [number, number, number];
+type TArgs = [
+    number,
+    number,
+    number? // optional argument
+];
 type TReturn = boolean;
 
-const callback: Callback<TArgs, TReturn> = (num1, num2, num3) => {
+const callback: Callback<TArgs, TReturn> = (num1, num2, num3 = -5) => {
     return 0 < num1 + num2 + num3;
 };
 
-callback(1, 2, 3); // return boolean
+callback(1, 2); // return false
+callback(1, 2, 3); // return true
 ```
 
 ```typescript
@@ -177,4 +152,92 @@ const callback: Callback<number, string> = (a) => {
 const callback: Callback<[number, number, number], string> = (a, b, c) => {
     return 'Text';
 };
+```
+
+### EmptyObject
+
+```typescript
+const str: {} = 'str'; // ok
+const num: {} = 123; // ok
+const bool: {} = true; // ok
+```
+
+```typescript
+import { EmptyObject } from '@byndyusoft-ui/types';
+
+const str: EmptyObject = 'str'; // Type 'string' is not assignable to type 'EmptyObject'.
+const num: EmptyObject = 123; // Type 'number' is not assignable to type 'EmptyObject'.
+const bool: EmptyObject = true; // Type 'boolean' is not assignable to type 'EmptyObject'.
+```
+
+### IsTuple
+
+```typescript
+import { IsTuple } from '@byndyusoft-ui/types';
+
+type Test1 = IsTuple<string>; // false
+type Test2 = IsTuple<Array<string>>; // false
+type Test3 = IsTuple<[string]>; // true
+type Test4 = IsTuple<[string, number]>; // true
+```
+
+### PlainObject
+
+```typescript
+const date: object = new Date(); // ok
+const rgx: object = new RegExp('[a-z]'); // ok
+```
+
+```typescript
+import { PlainObject } from '@byndyusoft-ui/types';
+
+const date: PlainObject = new Date(); // Type 'Date' is not assignable to type 'PlainObject<unknown>'.
+const rgx: PlainObject = new RegExp('[a-z]'); // Type 'RegExp' is not assignable to type 'PlainObject<unknown>'.
+
+const a: PlainObject = { a: 'b', c: 'd' }; // ok
+```
+
+### ValueOf
+
+```typescript
+import { ValueOf } from '@byndyusoft-ui/types';
+
+enum Fruits {
+    APPLE = 'apple',
+    ORANGE = 'orange'
+}
+
+const fruitsDictionary = {
+    [Fruits.APPLE]: 'Яблоко' as string,
+    [Fruits.ORANGE]: 'Апельсин' as string
+};
+
+const TFruitsDictionaryValues = ValueOf<typeof fruitsDictionary>;
+// TFruitsDictionaryValues = 'Яблоко' | 'Апельсин'
+```
+
+### TimeoutId
+
+```typescript
+import { TimeoutId } from '@byndyusoft-ui/types';
+
+const timeoutIdRef = useRef<TimeoutId | null>(null);
+
+timeoutIdRef.current = setTimeout(() => {}, 1000);
+
+clearTimeout(timeoutIdRef.current);
+timeoutIdRef.current = null;
+```
+
+### IntervalId
+
+```typescript
+import { IntervalId } from '@byndyusoft-ui/types';
+
+const intervalIdRef = useRef<IntervalId | null>(null);
+
+intervalIdRef.current = setInterval(() => {}, 1000);
+
+clearInterval(intervalIdRef.current);
+intervalIdRef.current = null;
 ```

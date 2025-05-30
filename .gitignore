@@ -1,19 +1,12 @@
-# dependencies
-node_modules
-
-# build
-dist
-
-# testing
-.coverage
-
-# editors
-.idea
-.vscode
-
-# misc
 *.log
+.idea
 .DS_Store
+.vscode
+node_modules
 .cache
+dist
 lib
+coverage
 yarn.lock
+storybook-static
+.turbo

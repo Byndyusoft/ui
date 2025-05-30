@@ -1,0 +1,45 @@
+{
+  "name": "@byndyusoft-ui/use-throttled-callback",
+  "version": "0.2.0",
+  "description": "Byndyusoft UI React Hook",
+  "keywords": [
+    "byndyusoft",
+    "byndyusoft-ui",
+    "react",
+    "hook",
+    "throttle",
+    "use-throttle",
+    "use-throttled-callback"
+  ],
+  "author": "Fomin Gleb <gleb.fom28@gmail.com>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-throttled-callback#readme",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Byndyusoft/ui.git"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "clean": "rimraf dist",
+    "lint:check": "npm run eslint:check && npm run prettier:check && npm run stylelint:check",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix && npm run stylelint:fix",
+    "eslint:check": "eslint src --config ../../eslint.config.js",
+    "eslint:fix": "eslint src --config ../../eslint.config.js --fix",
+    "prettier:check": "prettier --check '**/*.{ts,tsx,css,scss,json}' '!**/dist/**'",
+    "prettier:fix": "prettier --write '**/*.{ts,tsx,css,scss,json}' '!**/dist/**'",
+    "stylelint:check": "stylelint '**/*.{css,scss}' --allow-empty-input",
+    "stylelint:fix": "stylelint '**/*.{css,scss}' --fix --allow-empty-input"
+  },
+  "bugs": {
+    "url": "https://github.com/Byndyusoft/ui/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@byndyusoft-ui/use-timeout": "^2.0.1",
+    "@byndyusoft-ui/types": "^0.3.0"
+  }
+}

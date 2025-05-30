@@ -1,0 +1,24 @@
+import { Meta, Markdown, Canvas, Source, ArgTypes } from '@storybook/blocks';
+import Readme from '../README.md?raw';
+import Portal from './Portal';
+import * as PortalStories from './Portal.stories';
+
+<Meta title="components/Portal" of={PortalStories} />
+
+<Markdown>{Readme}</Markdown>
+
+## Usage
+
+To use the component in your project you must:
+
+1. Import the component where you need it:
+
+<Source language="javascript" code="import Portal from '@byndyusoft-ui/portal';" />
+
+2. Call the component and give it the desired props, for example:
+
+<Canvas sourceState="shown" of={PortalStories.PortalStory} />
+
+## Props
+
+<ArgTypes of={Portal} />

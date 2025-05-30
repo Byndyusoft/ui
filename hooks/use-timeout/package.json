@@ -1,6 +1,6 @@
 {
   "name": "@byndyusoft-ui/use-timeout",
-  "version": "0.0.1",
+  "version": "2.0.1",
   "description": "Byndyusoft UI React Hook",
   "keywords": [
     "byndyusoft",
@@ -20,9 +20,16 @@
   },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
+    "test": "vitest run --root ../../ --project @byndyusoft-ui/use-timeout",
     "clean": "rimraf dist",
-    "lint": "eslint src --config ../../eslint.config.js",
-    "test": "jest --config ../../jest.config.js --roots hooks/use-timeout/src"
+    "lint:check": "npm run eslint:check && npm run prettier:check && npm run stylelint:check",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix && npm run stylelint:fix",
+    "eslint:check": "eslint src --config ../../eslint.config.js",
+    "eslint:fix": "eslint src --config ../../eslint.config.js --fix",
+    "prettier:check": "prettier --check '**/*.{ts,tsx,css,scss,json}' '!**/dist/**'",
+    "prettier:fix": "prettier --write '**/*.{ts,tsx,css,scss,json}' '!**/dist/**'",
+    "stylelint:check": "stylelint '**/*.{css,scss}' --allow-empty-input",
+    "stylelint:fix": "stylelint '**/*.{css,scss}' --fix --allow-empty-input"
   },
   "bugs": {
     "url": "https://github.com/Byndyusoft/ui/issues"
@@ -32,5 +39,8 @@
   },
   "dependencies": {
     "@byndyusoft-ui/use-latest-ref": "*"
+  },
+  "peerDependencies": {
+    "@byndyusoft-ui/types": "0.3.0"
   }
 }

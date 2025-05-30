@@ -1,10 +1,10 @@
 import React from 'react';
 import cn from 'classnames';
-import { Story } from '@storybook/react';
+import { StoryObj } from '@storybook/react';
 import Portal from './Portal';
-import './Portal.stories.css';
+import './PortalStory.css';
 
-const Template: Story = () => (
+const Template = (): JSX.Element => (
     <div className="portalStory">
         <p>Text in main app container</p>
         <Portal id="topRightPortal">
@@ -30,9 +30,11 @@ const Template: Story = () => (
     </div>
 );
 
-export const Example = Template.bind({});
+export const PortalStory: StoryObj<typeof Template> = {
+    name: 'Portal story',
+    render: Template
+};
 
 export default {
-    title: 'components/Portal',
-    component: Portal
+    title: 'components/Portal'
 };
