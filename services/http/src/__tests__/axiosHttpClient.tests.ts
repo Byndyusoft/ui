@@ -1,52 +1,65 @@
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
+import { setupServer } from 'msw/node';
+import * as handlers from '../__handlers__/httpClient.handlers';
 import AxiosHttpClient from '../services/axiosClient';
 
-interface IResponseData {
-    success: boolean;
+interface IBody {
+    bodyKey: string;
 }
 
-describe('services/AxiosHttpClient', () => {
-    let mockAxios: MockAdapter;
+const requestBody: IBody = {
+    bodyKey: 'bodyValue'
+}
 
-    beforeEach(() => {
-        mockAxios = new MockAdapter(axios);
+const baseUrl = 'https://test-url.com';
+
+const baseHeaders = { 'Authorization': 'Bearer token' };
+
+const optionalHeaders = { Header: 'Header value'};
+
+const server = setupServer();
+
+describe('services/AxiosHttpClient', () => {
+    beforeAll(() => {
+        server.listen({ onUnhandledRequest: 'error' });
     })
 
     afterEach(() => {
-        mockAxios.restore();
+        server.resetHandlers();
+    });
+
+    afterAll(() => {
+        server.close();
     });
 
     test('should send POST request with correct headers, body, and URL', async () => {
-        const baseUrl = 'https://some-url.ru';
-        const path = '/test-path';
-        const body = { key: 'value' };
-        const headers = { 'Authorization': 'Bearer token' };
-        const responseData = { success: true };
+        server.use(handlers.postRequest);
+        const path = '/post';
 
-        mockAxios
-            .onPost(path)
-            .reply(200, responseData);
-
-        const httpClientInstance = new AxiosHttpClient({ baseURL: baseUrl, headers: { test: 'value' } });
+        const httpClientInstance = new AxiosHttpClient({ baseURL: baseUrl, headers: baseHeaders });
 
         const response = await httpClientInstance
-            .post<IResponseData>()
+            .post()
             .url(path)
-            .headers(headers)
-            .body(body)
+            .headers(optionalHeaders)
+            .body(requestBody)
             .send();
 
-        expect(mockAxios.history.post.length).toBe(1);
+        expect(response).toEqual(requestBody);
+    });
 
-        const lastRequest = mockAxios.history.post[0];
+    test('should send GET request with correct query string', async () => {
+        server.use(handlers.getRequestWithQuery);
+        const path = '/get/with-query';
+        const queryParams = { testKey: 'testValue' };
 
-        console.log(lastRequest.headers);
+        const httpClientInstance = new AxiosHttpClient({ baseURL: baseUrl });
 
-        expect(lastRequest.baseURL).toBe(baseUrl);
-        expect(lastRequest.url).toBe(path);
-        expect(lastRequest.data).toEqual(JSON.stringify(body));
-        expect(lastRequest.headers).toMatchObject(Object.assign(headers, { test: 'value' }));
-        expect(response).toEqual({ success: true });
+        const response = await httpClientInstance
+            .get()
+            .url(path)
+            .params(queryParams)
+            .send();
+
+        expect(response).toEqual(queryParams);
     });
 });
