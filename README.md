@@ -44,7 +44,7 @@
 There are two ways to define workspaces:
 
 - Inline in root `vitest.config.mts`
-- In root config with glob string and vitest.config.ts in each workspace/package. Example:
+- In root config with glob string and vitest.config.mjs in each workspace/package. Example:
 ```ts
 import { defineProject, mergeConfig } from 'vitest/config';
 import configShared from '../../vitest.config';
