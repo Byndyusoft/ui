@@ -2,6 +2,10 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import AxiosHttpClient from '../services/axiosClient';
 
+interface IResponseData {
+    success: boolean;
+}
+
 describe('services/AxiosHttpClient', () => {
     let mockAxios: MockAdapter;
 
@@ -18,15 +22,16 @@ describe('services/AxiosHttpClient', () => {
         const path = '/test-path';
         const body = { key: 'value' };
         const headers = { 'Authorization': 'Bearer token' };
+        const responseData = { success: true };
 
         mockAxios
-            .onPost(baseUrl + path, { key: 'response' }, { headers })
-            .reply(200, { success: true });
+            .onPost(path)
+            .reply(200, responseData);
 
-        const httpClientInstance = new AxiosHttpClient({ baseURL: baseUrl });
+        const httpClientInstance = new AxiosHttpClient({ baseURL: baseUrl, headers: { test: 'value' } });
 
         const response = await httpClientInstance
-            .post()
+            .post<IResponseData>()
             .url(path)
             .headers(headers)
             .body(body)
@@ -36,9 +41,12 @@ describe('services/AxiosHttpClient', () => {
 
         const lastRequest = mockAxios.history.post[0];
 
-        expect(lastRequest.url).toBe(baseUrl + path);
+        console.log(lastRequest.headers);
+
+        expect(lastRequest.baseURL).toBe(baseUrl);
+        expect(lastRequest.url).toBe(path);
         expect(lastRequest.data).toEqual(JSON.stringify(body));
-        expect(lastRequest.headers).toMatchObject(headers);
+        expect(lastRequest.headers).toMatchObject(Object.assign(headers, { test: 'value' }));
         expect(response).toEqual({ success: true });
     });
 });

@@ -15,9 +15,9 @@ export class AxiosHttpClient extends HttpClient {
             timeout: timeout ?? DEFAULT_REQUEST_TIMEOUT
         });
 
-        this.requestClient = function<R>(arg: IRequestClientOptions): Promise<R> {
-            return this.axiosInstance({ url: arg.url, method: arg.method, headers: arg.headers, params: arg.params, data: arg.body });
-        };
+        this.requestClient = <R>(arg: IRequestClientOptions): Promise<R> =>
+            this.axiosInstance({ url: arg.url, method: arg.method, headers: arg.headers, params: arg.params, data: arg.body })
+                .then(response => response.data)
     }
 
     setHeader(key: string, value: string): void {

@@ -20,7 +20,7 @@ export interface IHttpClient {
 }
 
 export abstract class HttpClient {
-    abstract requestClient<R>(arg: IRequestClientOptions): Promise<R>;
+    abstract requestClient: <R>(arg: IRequestClientOptions) => Promise<R>;
 
     abstract setHeader(key: string, value: string): void;
 

@@ -17,7 +17,8 @@ export class FetchHttpClient extends HttpClient {
             const url = encodeURI(`${this.baseURL}${arg.url}`) + HttpClient.buildQueryString(arg.params);
             const headers = Object.assign(this.headers, arg.headers);
 
-            return fetch(url, { method: arg.method, headers, body: JSON.stringify(arg.body) }) as Promise<R>;
+            return fetch(url, { method: arg.method, headers, body: JSON.stringify(arg.body) })
+                .then(response => response.json()) as Promise<R>;
         };
     }
 

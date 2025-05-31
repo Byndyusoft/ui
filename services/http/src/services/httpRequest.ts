@@ -66,11 +66,11 @@ export class HttpRequestWithBody<T> extends HttpRequest<T> {
     }
 
     send(): Promise<T> {
-        return super.requestClient({
+        return this.requestClient({
             url: this.urlValue,
-            method: super.method,
-            headers: super.headersValue,
-            params: super.paramsValue,
+            method: this.method,
+            headers: this.headersValue,
+            params: this.paramsValue,
             body: this.bodyValue
         })
     }
