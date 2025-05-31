@@ -6,12 +6,13 @@
     "jsx": "react",
     "lib": ["dom", "dom.iterable", "esnext"],
     "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
+    "module": "ESNext",
     "moduleResolution": "node",
+    "skipLibCheck": true,
     "resolveJsonModule": true,
     "strict": true,
-    "target": "esnext",
-    "types": ["vitest/globals", "@testing-library/jest-dom"]
+    "target": "ESNext",
+    "types": ["vite-plugin-svgr/client", "vitest/globals", "@testing-library/jest-dom"]
   },
   "exclude": ["node_modules"],
   "include": ["types.d.ts", "components", "hooks", "services", "styles"]

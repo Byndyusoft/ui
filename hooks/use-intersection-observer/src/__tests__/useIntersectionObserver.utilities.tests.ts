@@ -8,7 +8,7 @@ import {
 
 describe('hooks/useIntersectionObserver/utilities', () => {
     beforeEach(() => {
-        setupIntersectionMocking(jest.fn);
+        setupIntersectionMocking(vi.fn);
     });
     afterEach(() => {
         resetIntersectionMocking();
@@ -16,7 +16,7 @@ describe('hooks/useIntersectionObserver/utilities', () => {
 
     test('should be able to use observe', () => {
         const element = document.createElement('div');
-        const callback = jest.fn();
+        const callback = vi.fn();
         const unmount = observe({
             element,
             callback,

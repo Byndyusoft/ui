@@ -3,7 +3,8 @@ import useThrottledCallback, { IThrottledCallbackOptions } from './useThrottledC
 
 const DELAY_THROTTLE = 500;
 
-const setup = (callback: jest.Mock, delay: number, options?: IThrottledCallbackOptions) =>
+// todo: replace any
+const setup = (callback: any, delay: number, options?: IThrottledCallbackOptions) =>
     renderHook(() => useThrottledCallback(callback, delay, options));
 
 const multipleCalls = (callback: () => void, delay: number): void => {
