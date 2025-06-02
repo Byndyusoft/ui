@@ -1,6 +1,15 @@
 import { http, HttpResponse } from 'msw';
+import {
+    baseUrl,
+    getPath,
+    postPath,
+    putPath,
+    patchPath,
+    deletePath,
+    getPathWithQueryParams
+} from '../__fixtures__/httpClient.fixtures';
 
-export const getRequest = http.get('https://test-url.com/get', ({ request }) => {
+export const getRequest = http.get(`${baseUrl}${getPath}`, ({ request }) => {
     if (request.headers.get('Authorization') !== 'Bearer token' || request.headers.get('Header') !== 'Header value') {
         return new HttpResponse(null, { status: 400, statusText: 'Wrong headers' });
     }
@@ -8,19 +17,19 @@ export const getRequest = http.get('https://test-url.com/get', ({ request }) => 
     return HttpResponse.json({ success: true });
 });
 
-export const getRequestWithQuery = http.get('https://test-url.com/get/with-query', ({ request }) => {
+export const getRequestWithQuery = http.get(`${baseUrl}${getPathWithQueryParams}`, ({ request }) => {
     const url = new URL(request.url)
 
-    const testValue  = url.searchParams.get('testKey')
+    const testParamValue  = url.searchParams.get('testParam')
 
-    if (!testValue) {
+    if (!testParamValue) {
         return new HttpResponse(null, { status: 404 })
     }
 
-    return HttpResponse.json({ testKey: testValue })
+    return HttpResponse.json({ testParam: testParamValue })
 });
 
-export const postRequest = http.post('https://test-url.com/post', async ({ request }) => {
+export const postRequest = http.post(`${baseUrl}${postPath}`, async ({ request }) => {
     const requestBody = await request.clone().json();
 
     if (requestBody && request.headers.get('Authorization') === 'Bearer token' && request.headers.get('Header') === 'Header value') {
@@ -30,30 +39,12 @@ export const postRequest = http.post('https://test-url.com/post', async ({ reque
     return new HttpResponse(null, { status: 400, statusText: 'No body' });
 });
 
-export const putRequest = http.put('https://test-url.com/put', async ({ request }) => {
+export const putRequest = http.put(`${baseUrl}${putPath}`, async ({ request }) => {
     const url = new URL(request.url)
 
-    const testValue  = url.searchParams.get('testKey')
+    const testParamValue  = url.searchParams.get('testParam')
 
-    if (!testValue) {
-        return new HttpResponse(null, { status: 404 })
-    }
-
-    const requestBody = await request.clone().json();
-
-    if (requestBody && request.headers.get('Authorization') === 'Bearer token' && request.headers.get('Header') === 'Header value') {
-        return HttpResponse.json(requestBody);
-    }
-
-    return new HttpResponse(null, { status: 400, statusText: 'No body' });
-});
-
-export const patchRequest = http.patch('https://test-url.com/patch', async ({ request }) => {
-    const url = new URL(request.url)
-
-    const testValue  = url.searchParams.get('testKey')
-
-    if (!testValue) {
+    if (!testParamValue) {
         return new HttpResponse(null, { status: 404 })
     }
 
@@ -66,12 +57,30 @@ export const patchRequest = http.patch('https://test-url.com/patch', async ({ re
     return new HttpResponse(null, { status: 400, statusText: 'No body' });
 });
 
-export const deleteRequest = http.delete('https://test-url.com/delete', async ({ request }) => {
+export const patchRequest = http.patch(`${baseUrl}${patchPath}`, async ({ request }) => {
     const url = new URL(request.url)
 
-    const testValue  = url.searchParams.get('testKey');
+    const testParamValue  = url.searchParams.get('testParam')
 
-    if (!testValue) {
+    if (!testParamValue) {
+        return new HttpResponse(null, { status: 404 })
+    }
+
+    const requestBody = await request.clone().json();
+
+    if (requestBody && request.headers.get('Authorization') === 'Bearer token' && request.headers.get('Header') === 'Header value') {
+        return HttpResponse.json(requestBody);
+    }
+
+    return new HttpResponse(null, { status: 400, statusText: 'No body' });
+});
+
+export const deleteRequest = http.delete(`${baseUrl}${deletePath}`, async ({ request }) => {
+    const url = new URL(request.url)
+
+    const testParamValue  = url.searchParams.get('testParam');
+
+    if (!testParamValue) {
         return new HttpResponse(null, { status: 404 });
     }
 

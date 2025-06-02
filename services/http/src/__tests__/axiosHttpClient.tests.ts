@@ -1,26 +1,20 @@
 import { setupServer } from 'msw/node';
 import * as handlers from '../__handlers__/httpClient.handlers';
 import AxiosHttpClient from '../services/axiosClient';
-
-interface IBody {
-    bodyKey: string;
-}
-
-const requestBody: IBody = {
-    bodyKey: 'bodyValue'
-}
-
-interface ISuccessResponse {
-    success: boolean;
-}
-
-const baseUrl = 'https://test-url.com';
-
-const baseHeaders = { 'Authorization': 'Bearer token' };
-
-const optionalHeaders = { Header: 'Header value'};
-
-const queryParams = { testKey: 'тестовоеЗначение' };
+import {
+    baseUrl,
+    baseHeaders,
+    optionalHeaders,
+    queryParams,
+    getPath,
+    getPathWithQueryParams,
+    postPath,
+    putPath,
+    patchPath,
+    deletePath,
+    requestBody,
+    successResponse
+} from '../__fixtures__/httpClient.fixtures';
 
 const server = setupServer();
 
@@ -43,12 +37,12 @@ describe('services/AxiosHttpClient', () => {
         const httpClientInstance = new AxiosHttpClient({ baseURL: baseUrl, headers: baseHeaders });
 
         const response = await httpClientInstance
-            .get<ISuccessResponse>()
-            .url('/get')
+            .get<{}>()
+            .url(getPath)
             .headers(optionalHeaders)
             .send();
 
-        expect(response).toEqual({ success: true });
+        expect(response).toEqual(successResponse);
     });
 
     test('should send GET request with correct query string', async () => {
@@ -58,7 +52,7 @@ describe('services/AxiosHttpClient', () => {
 
         const response = await httpClientInstance
             .get()
-            .url('/get/with-query')
+            .url(getPathWithQueryParams)
             .params(queryParams)
             .send();
 
@@ -72,7 +66,7 @@ describe('services/AxiosHttpClient', () => {
 
         const response = await httpClientInstance
             .post()
-            .url('/post')
+            .url(postPath)
             .headers(optionalHeaders)
             .body(requestBody)
             .send();
@@ -87,7 +81,7 @@ describe('services/AxiosHttpClient', () => {
 
         const response = await httpClientInstance
             .put()
-            .url('/put')
+            .url(putPath)
             .headers(optionalHeaders)
             .params(queryParams)
             .body(requestBody)
@@ -103,7 +97,7 @@ describe('services/AxiosHttpClient', () => {
 
         const response = await httpClientInstance
             .patch()
-            .url('/patch')
+            .url(patchPath)
             .headers(optionalHeaders)
             .params(queryParams)
             .body(requestBody)
@@ -119,7 +113,7 @@ describe('services/AxiosHttpClient', () => {
 
         const response = await httpClientInstance
             .delete()
-            .url('/delete')
+            .url(deletePath)
             .headers(optionalHeaders)
             .params(queryParams)
             .send();
