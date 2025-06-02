@@ -13,7 +13,7 @@ export class FetchHttpClient extends HttpClient {
         this.baseURL = baseURL;
         this.headers = Object.assign(this.headers, headers);
         this.timeout = timeout ?? DEFAULT_REQUEST_TIMEOUT;
-        this.requestClient = function<R>(arg: IRequestClientOptions): Promise<R> {
+        this.requestClient = <R>(arg: IRequestClientOptions): Promise<R> => {
             const url = encodeURI(`${this.baseURL}${arg.url}`) + HttpClient.buildQueryString(arg.params);
             const headers = Object.assign(this.headers, arg.headers);
 
