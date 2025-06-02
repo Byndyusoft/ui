@@ -5,6 +5,11 @@ import scss from 'rollup-plugin-scss';
 export default {
     ...baseConfig,
     input: ['src/index.ts'],
+    output: {
+        ...baseConfig.output,
+        format: 'esm',
+        preserveModules: true
+    },
     plugins: [
         ...baseConfig.plugins,
         scss(),

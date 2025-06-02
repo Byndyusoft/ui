@@ -6,8 +6,8 @@ export default {
     input: ['src/index.ts'],
     output: {
         ...baseConfig.output,
-        format: 'es',
-        preserveModules: false,
+        format: 'esm',
+        preserveModules: false
     },
     plugins: [
         ...baseConfig.plugins,
