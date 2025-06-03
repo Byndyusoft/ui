@@ -23,4 +23,20 @@ export interface IHttpClientResponse<T = any> {
     // config?: IRequestConfig<D>;
 }
 
-export interface IHttpClientError {}
+export class HttpClientError<T = unknown> extends Error {
+    code?: string;
+    response?: IHttpClientResponse<T>;
+    // config?: IRequestConfig<D>
+
+    constructor(args: {
+        message?: string;
+        code?: string;
+        response?: IHttpClientResponse<T>;
+        // config?: IRequestConfig<D>;
+    }) {
+        super(args.message);
+
+        this.code = args.code;
+        this.response = args.response;
+    };
+}

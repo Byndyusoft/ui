@@ -39,7 +39,6 @@
         "access": "public"
     },
     "peerDependencies": {
-        "axios-mock-adapter": "^2.1.0",
         "msw": "^2.8.7"
     },
     "dependencies": {
