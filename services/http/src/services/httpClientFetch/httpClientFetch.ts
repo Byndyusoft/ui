@@ -1,7 +1,7 @@
 import { IHeaders, IRequestClientOptions } from '../httpRequest';
 import { DEFAULT_REQUEST_TIMEOUT, HttpClient, IHttpClientInit } from '../httpClient';
 
-export class FetchHttpClient extends HttpClient {
+export class HttpClientFetch extends HttpClient {
     baseURL: string;
     headers: IHeaders = {};
     timeout: number;

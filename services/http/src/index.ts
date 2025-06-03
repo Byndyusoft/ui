@@ -1,3 +1,3 @@
-export { default as AxiosClient } from './services/axiosClient';
-export { default as FetchClient } from './services/fetchClient';
+export { default as HttpClientAxios } from './services/httpClientAxios';
+export { default as HttpClientFetch } from './services/httpClientFetch';
 export { HttpStatusCode } from './types/httpStatusCode.types';

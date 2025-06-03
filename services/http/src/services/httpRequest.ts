@@ -57,9 +57,9 @@ export class HttpRequest<T> {
 }
 
 export class HttpRequestWithBody<T> extends HttpRequest<T> {
-    private bodyValue?: Object = {};
+    private bodyValue?: object = {};
 
-    body(body: Object): this {
+    body<B extends object>(body: B): this {
         this.bodyValue = body;
 
         return this;

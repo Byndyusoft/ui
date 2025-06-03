@@ -1,6 +1,6 @@
 import { setupServer } from 'msw/node';
 import * as handlers from '../__handlers__/httpClient.handlers';
-import FetchHttpClient from '../services/fetchClient';
+import HttpClientFetch from '../services/httpClientFetch';
 
 import {
     baseUrl,
@@ -19,7 +19,7 @@ import {
 
 const server = setupServer();
 
-describe('services/FetchHttpClient', () => {
+describe('services/HttpClientFetch', () => {
     beforeAll(() => {
         server.listen({ onUnhandledRequest: 'error' });
     })
@@ -35,7 +35,7 @@ describe('services/FetchHttpClient', () => {
     test('should send GET request with correct headers, body, and URL', async () => {
         server.use(handlers.getRequest);
 
-        const httpClientInstance = new FetchHttpClient({ baseURL: baseUrl, headers: baseHeaders });
+        const httpClientInstance = new HttpClientFetch({ baseURL: baseUrl, headers: baseHeaders });
 
         const response = await httpClientInstance
             .get()
@@ -49,7 +49,7 @@ describe('services/FetchHttpClient', () => {
     test('should send GET request with correct query string', async () => {
         server.use(handlers.getRequestWithQuery);
 
-        const httpClientInstance = new FetchHttpClient({ baseURL: baseUrl });
+        const httpClientInstance = new HttpClientFetch({ baseURL: baseUrl });
 
         const response = await httpClientInstance
             .get()
@@ -63,7 +63,7 @@ describe('services/FetchHttpClient', () => {
     test('should send POST request with correct headers, body, and URL', async () => {
         server.use(handlers.postRequest);
 
-        const httpClientInstance = new FetchHttpClient({ baseURL: baseUrl, headers: baseHeaders });
+        const httpClientInstance = new HttpClientFetch({ baseURL: baseUrl, headers: baseHeaders });
 
         const response = await httpClientInstance
             .post()
@@ -78,7 +78,7 @@ describe('services/FetchHttpClient', () => {
     test('should send PUT request with correct headers, body, URL and query string', async () => {
         server.use(handlers.putRequest);
 
-        const httpClientInstance = new FetchHttpClient({ baseURL: baseUrl, headers: baseHeaders });
+        const httpClientInstance = new HttpClientFetch({ baseURL: baseUrl, headers: baseHeaders });
 
         const response = await httpClientInstance
             .put()
@@ -94,7 +94,7 @@ describe('services/FetchHttpClient', () => {
     test('should send PATCH request with correct headers, body, URL and query string', async () => {
         server.use(handlers.patchRequest);
 
-        const httpClientInstance = new FetchHttpClient({ baseURL: baseUrl, headers: baseHeaders });
+        const httpClientInstance = new HttpClientFetch({ baseURL: baseUrl, headers: baseHeaders });
 
         const response = await httpClientInstance
             .patch()
@@ -110,7 +110,7 @@ describe('services/FetchHttpClient', () => {
     test('should send DELETE request with correct headers, body, URL and query string', async () => {
         server.use(handlers.deleteRequest);
 
-        const httpClientInstance = new FetchHttpClient({ baseURL: baseUrl, headers: baseHeaders });
+        const httpClientInstance = new HttpClientFetch({ baseURL: baseUrl, headers: baseHeaders });
 
         const response = await httpClientInstance
             .delete()
