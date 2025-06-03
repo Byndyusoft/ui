@@ -16,6 +16,7 @@ import {
     requestBody,
     successResponse
 } from '../__fixtures__/httpClient.fixtures';
+import { HttpStatusCode } from '../types/httpStatusCode.types';
 
 const server = setupServer();
 
@@ -43,7 +44,7 @@ describe('services/HttpClientFetch', () => {
             .headers(optionalHeaders)
             .send();
 
-        expect(response).toEqual(successResponse);
+        expect(response.data).toEqual(successResponse);
     });
 
     test('should send GET request with correct query string', async () => {
@@ -57,7 +58,7 @@ describe('services/HttpClientFetch', () => {
             .params(queryParams)
             .send();
 
-        expect(response).toEqual(queryParams);
+        expect(response.data).toEqual(queryParams);
     });
 
     test('should send POST request with correct headers, body, and URL', async () => {
@@ -72,7 +73,7 @@ describe('services/HttpClientFetch', () => {
             .body(requestBody)
             .send();
 
-        expect(response).toEqual(requestBody);
+        expect(response.data).toEqual(requestBody);
     });
 
     test('should send PUT request with correct headers, body, URL and query string', async () => {
@@ -88,7 +89,7 @@ describe('services/HttpClientFetch', () => {
             .body(requestBody)
             .send();
 
-        expect(response).toEqual(requestBody);
+        expect(response.data).toEqual(requestBody);
     });
 
     test('should send PATCH request with correct headers, body, URL and query string', async () => {
@@ -104,7 +105,7 @@ describe('services/HttpClientFetch', () => {
             .body(requestBody)
             .send();
 
-        expect(response).toEqual(requestBody);
+        expect(response.data).toEqual(requestBody);
     });
 
     test('should send DELETE request with correct headers, body, URL and query string', async () => {
@@ -119,6 +120,6 @@ describe('services/HttpClientFetch', () => {
             .params(queryParams)
             .send();
 
-        expect(response).toEqual('');
+        expect(response.status).toEqual(HttpStatusCode.OK);
     });
 });

@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
+import axios, { AxiosInstance, AxiosError } from 'axios';
 import { HttpClient, IHttpClientInit, DEFAULT_REQUEST_TIMEOUT } from '../httpClient';
 import { IRequestClientOptions } from '../httpRequest';
 import { IHttpClientResponse, THeaders } from '../../types/httpClient.types';
@@ -22,7 +22,7 @@ export class HttpClientAxios extends HttpClient {
                     data: response.data,
                     status: response.status,
                     statusText: response.statusText,
-                    headers: response.headers as THeaders
+                    headers: Object.fromEntries(response.headers.entries())
                 }));
     }
 
