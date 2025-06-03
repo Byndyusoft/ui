@@ -1,26 +1,21 @@
 import { HttpMethod } from '../types/httpMethod.types';
-
-export type IHeaders = Record<string, string>;
-
-export type TQueryParamValue = string | number | boolean;
-
-export type TQueryParams = Record<string, TQueryParamValue>;
+import { IHttpClientResponse, THeaders, TQueryParams } from '../types/httpClient.types';
 
 export interface IRequestClientOptions {
     url: string;
     method: HttpMethod;
-    headers: IHeaders;
+    headers: THeaders;
     params: TQueryParams;
     body?: Object;
 }
 
-export type TRequestClient<T> = (arg: IRequestClientOptions) => Promise<T>;
+export type TRequestClient<T> = (arg: IRequestClientOptions) => Promise<IHttpClientResponse<T>>;
 
 export class HttpRequest<T> {
     protected requestClient: TRequestClient<T>;
     protected urlValue: string = '';
     protected method: HttpMethod;
-    protected headersValue: IHeaders = {};
+    protected headersValue: THeaders = {};
     protected paramsValue: TQueryParams = {};
 
     constructor(requestClient: TRequestClient<T>, method: HttpMethod) {
@@ -34,7 +29,7 @@ export class HttpRequest<T> {
         return this;
     }
 
-    headers(headers: IHeaders): this {
+    headers(headers: THeaders): this {
         Object.assign(this.headersValue, headers);
 
         return this;
@@ -46,7 +41,7 @@ export class HttpRequest<T> {
         return this;
     }
 
-    send(): Promise<T> {
+    send(): Promise<IHttpClientResponse<T>> {
         return this.requestClient({
             url: this.urlValue,
             method: this.method,
@@ -65,7 +60,7 @@ export class HttpRequestWithBody<T> extends HttpRequest<T> {
         return this;
     }
 
-    send(): Promise<T> {
+    send(): Promise<IHttpClientResponse<T>> {
         return this.requestClient({
             url: this.urlValue,
             method: this.method,

@@ -1,26 +1,17 @@
-import { HttpRequest, HttpRequestWithBody, IRequestClientOptions, IHeaders, TQueryParams } from './httpRequest';
+import { HttpRequest, HttpRequestWithBody, IRequestClientOptions } from './httpRequest';
 import { HttpMethod } from '../types/httpMethod.types';
+import { IHttpClientResponse, THeaders, TQueryParams } from '../types/httpClient.types';
 
 export const DEFAULT_REQUEST_TIMEOUT = 60000;
 
 export interface IHttpClientInit {
     baseURL: string;
-    headers?: IHeaders;
+    headers?: THeaders;
     timeout?: number;
 }
 
-export interface IHttpClient {
-    requestClient<R>(arg: IRequestClientOptions): Promise<R>;
-    setHeader(key: string, value: string): void;
-    get<R>(): HttpRequest<R>;
-    post<R>(): HttpRequestWithBody<R>;
-    put<R>(): HttpRequestWithBody<R>;
-    patch<R>(): HttpRequestWithBody<R>;
-    delete(): HttpRequest<void>;
-}
-
 export abstract class HttpClient {
-    abstract requestClient: <R>(arg: IRequestClientOptions) => Promise<R>;
+    abstract requestClient: <R>(arg: IRequestClientOptions) => Promise<IHttpClientResponse<R>>;
 
     abstract setHeader(key: string, value: string): void;
 

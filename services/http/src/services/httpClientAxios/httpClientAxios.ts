@@ -1,6 +1,7 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 import { HttpClient, IHttpClientInit, DEFAULT_REQUEST_TIMEOUT } from '../httpClient';
 import { IRequestClientOptions } from '../httpRequest';
+import { IHttpClientResponse, THeaders } from '../../types/httpClient.types';
 
 export class HttpClientAxios extends HttpClient {
     requestClient;
@@ -15,9 +16,14 @@ export class HttpClientAxios extends HttpClient {
             timeout: timeout ?? DEFAULT_REQUEST_TIMEOUT
         });
 
-        this.requestClient = <R>(arg: IRequestClientOptions): Promise<R> =>
-            this.axiosInstance({ url: arg.url, method: arg.method, headers: arg.headers, params: arg.params, data: arg.body })
-                .then(response => response.data)
+        this.requestClient = <R>(arg: IRequestClientOptions): Promise<IHttpClientResponse<R>> =>
+            this.axiosInstance<R>({ url: arg.url, method: arg.method, headers: arg.headers, params: arg.params, data: arg.body })
+                .then(response => ({
+                    data: response.data,
+                    status: response.status,
+                    statusText: response.statusText,
+                    headers: response.headers as THeaders
+                }));
     }
 
     setHeader(key: string, value: string): void {
