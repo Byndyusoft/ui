@@ -22,7 +22,7 @@ export class HttpClientAxios extends HttpClient {
                     data: response.data,
                     status: response.status,
                     statusText: response.statusText,
-                    headers: Object.fromEntries(response.headers.entries())
+                    headers: Object.fromEntries(Object.entries(response.headers))
                 }))
                 .catch((error: AxiosError<E>) => {
                     throw new HttpClientError({
@@ -32,8 +32,7 @@ export class HttpClientAxios extends HttpClient {
                             data: error.response.data,
                             status: error.response.status,
                             statusText: error.response.statusText,
-                            headers: Object.entries(error.response.headers)
-                                .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {}) // TODO: временное решение
+                            headers: Object.fromEntries(Object.entries(error.response.headers))
                         } : undefined
                     });
                 });
