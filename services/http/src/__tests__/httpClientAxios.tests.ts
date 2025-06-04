@@ -13,9 +13,12 @@ import {
     patchPath,
     deletePath,
     requestBody,
-    successResponse
+    successResponse,
+    getPathWithError,
+    errorDetails
 } from '../__fixtures__/httpClient.fixtures';
 import { HttpStatusCode } from '../types/httpStatusCode.types';
+import { HttpClientError } from '../types/httpClient.types';
 
 const server = setupServer();
 
@@ -58,6 +61,26 @@ describe('services/HttpClientAxios', () => {
             .send();
 
         expect(response.data).toEqual(queryParams);
+    });
+
+    test('should get correct error on GET request', async () => {
+        server.use(handlers.getRequestWithError);
+
+        const httpClientInstance = new HttpClientAxios({ baseURL: baseUrl });
+
+        try {
+            await httpClientInstance
+                .get()
+                .url(getPathWithError)
+                .params(queryParams)
+                .send();
+        } catch (error) {
+            const clientError = error as HttpClientError;
+
+            expect(clientError.code).toBe('ERR_BAD_REQUEST');
+            expect(clientError.response?.status).toBe(HttpStatusCode.BAD_REQUEST);
+            expect(clientError.response?.data).toEqual(errorDetails);
+        }
     });
 
     test('should send POST request with correct headers, body, and URL', async () => {

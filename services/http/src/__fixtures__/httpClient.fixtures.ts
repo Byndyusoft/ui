@@ -9,6 +9,7 @@ export const successResponse = {
 export const baseUrl = 'https://test-url.com';
 export const getPath = '/get';
 export const getPathWithQueryParams = '/get/with-query';
+export const getPathWithError = '/get/with-error';
 export const postPath = '/post';
 export const putPath = '/put';
 export const patchPath = '/patch';
@@ -19,3 +20,5 @@ export const baseHeaders = { Authorization: 'Bearer token' };
 export const optionalHeaders = { Header: 'Header value'};
 
 export const queryParams = { testParam: 'тестовоеЗначение' };
+
+export const errorDetails = { detail_1: 'description_1', detail_2: 'description_2' };

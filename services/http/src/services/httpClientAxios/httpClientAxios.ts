@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosError } from 'axios';
 import { HttpClient, IHttpClientInit, DEFAULT_REQUEST_TIMEOUT } from '../httpClient';
 import { IRequestClientOptions } from '../httpRequest';
-import { IHttpClientResponse, THeaders } from '../../types/httpClient.types';
+import { HttpClientError, IHttpClientResponse } from '../../types/httpClient.types';
 
 export class HttpClientAxios extends HttpClient {
     requestClient;
@@ -16,14 +16,27 @@ export class HttpClientAxios extends HttpClient {
             timeout: timeout ?? DEFAULT_REQUEST_TIMEOUT
         });
 
-        this.requestClient = <R>(arg: IRequestClientOptions): Promise<IHttpClientResponse<R>> =>
+        this.requestClient = <R, E>(arg: IRequestClientOptions): Promise<IHttpClientResponse<R>> =>
             this.axiosInstance<R>({ url: arg.url, method: arg.method, headers: arg.headers, params: arg.params, data: arg.body })
                 .then(response => ({
                     data: response.data,
                     status: response.status,
                     statusText: response.statusText,
                     headers: Object.fromEntries(response.headers.entries())
-                }));
+                }))
+                .catch((error: AxiosError<E>) => {
+                    throw new HttpClientError({
+                        message: error.message,
+                        code: error.code,
+                        response: error.response ? {
+                            data: error.response.data,
+                            status: error.response.status,
+                            statusText: error.response.statusText,
+                            headers: Object.entries(error.response.headers)
+                                .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {}) // TODO: временное решение
+                        } : undefined
+                    });
+                });
     }
 
     setHeader(key: string, value: string): void {

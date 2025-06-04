@@ -15,7 +15,7 @@ export interface IRequestConfig<D> {
     data?: D;
 }
 
-export interface IHttpClientResponse<T = any> {
+export interface IHttpClientResponse<T = unknown> {
     data: T;
     status: HttpStatusCode;
     statusText: string;
@@ -34,8 +34,7 @@ export class HttpClientError<T = unknown> extends Error {
         response?: IHttpClientResponse<T>;
         // config?: IRequestConfig<D>;
     }) {
-        super(args.message);
-
+        super();
         this.code = args.code;
         this.response = args.response;
     };

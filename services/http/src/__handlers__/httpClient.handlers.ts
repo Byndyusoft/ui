@@ -6,7 +6,10 @@ import {
     putPath,
     patchPath,
     deletePath,
-    getPathWithQueryParams
+    getPathWithQueryParams,
+    getPathWithError,
+    queryParams,
+    errorDetails
 } from '../__fixtures__/httpClient.fixtures';
 
 export const getRequest = http.get(`${baseUrl}${getPath}`, ({ request }) => {
@@ -18,15 +21,27 @@ export const getRequest = http.get(`${baseUrl}${getPath}`, ({ request }) => {
 });
 
 export const getRequestWithQuery = http.get(`${baseUrl}${getPathWithQueryParams}`, ({ request }) => {
-    const url = new URL(request.url)
+    const url = new URL(request.url);
 
-    const testParamValue  = url.searchParams.get('testParam')
+    const testParamValue  = url.searchParams.get('testParam');
 
     if (!testParamValue) {
-        return new HttpResponse(null, { status: 404 })
+        return new HttpResponse(null, { status: 404 });
     }
 
-    return HttpResponse.json({ testParam: testParamValue })
+    return HttpResponse.json({ testParam: testParamValue });
+});
+
+export const getRequestWithError = http.get(`${baseUrl}${getPathWithError}`, ({ request }) => {
+    const url = new URL(request.url);
+
+    const testParamValue  = url.searchParams.get('testParam');
+
+    if (testParamValue === queryParams['testParam']) {
+        return new HttpResponse(JSON.stringify(errorDetails), { status: 400, headers: { 'content-type': 'application/json' } });
+    }
+
+    return HttpResponse.json({ testParam: testParamValue });
 });
 
 export const postRequest = http.post(`${baseUrl}${postPath}`, async ({ request }) => {
