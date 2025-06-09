@@ -15,7 +15,9 @@ import {
     patchPath,
     deletePath,
     requestBody,
-    successResponse, errorDetails
+    successResponse,
+    errorDetails,
+    getPathWithTimeout
 } from '../__fixtures__/httpClient.fixtures';
 import { HttpStatusCode } from '../types/httpStatusCode.types';
 import { HttpClientError } from '../types/httpClient.types';
@@ -63,17 +65,19 @@ describe('services/HttpClientFetch', () => {
         expect(response.data).toEqual(queryParams);
     });
 
-    test('should get correct error on GET request', async () => {
+    test('should get correct 400 error on GET request', async () => {
         server.use(handlers.getRequestWithError);
 
         const httpClientInstance = new HttpClientFetch({ baseURL: baseUrl });
 
         try {
-            await httpClientInstance
+            const response = await httpClientInstance
                 .get()
                 .url(getPathWithError)
                 .params(queryParams)
                 .send();
+
+            expect(response).rejects.toThrowError();
         } catch (error) {
             const clientError = error as HttpClientError;
 
@@ -81,6 +85,37 @@ describe('services/HttpClientFetch', () => {
             expect(clientError.response?.status).toBe(HttpStatusCode.BAD_REQUEST);
             expect(clientError.response?.data).toEqual(errorDetails);
         }
+    });
+
+    test('should get the error when GET request timeout exceeded', async () => {
+        server.use(handlers.getRequestWithTimeout);
+
+        const httpClientInstance = new HttpClientFetch({ baseURL: baseUrl, timeout: 1000 });
+
+        const response = httpClientInstance
+            .get()
+            .url(getPathWithTimeout)
+            .send();
+
+        await expect(response).rejects.toThrowError('Timeout of 1000ms exceeded');
+    });
+
+    test('should get the error on request cancel', async () => {
+        server.use(handlers.getRequestWithTimeout);
+
+        const httpClientInstance = new HttpClientFetch({ baseURL: baseUrl });
+
+        const controller = new AbortController();
+
+        const response = httpClientInstance
+            .get()
+            .url(getPathWithTimeout)
+            .signal(controller.signal)
+            .send();
+
+        controller.abort();
+
+        await expect(response).rejects.toThrowError('The request was cancelled');
     });
 
     test('should send POST request with correct headers, body, and URL', async () => {

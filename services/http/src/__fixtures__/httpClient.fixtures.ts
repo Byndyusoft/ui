@@ -10,6 +10,7 @@ export const baseUrl = 'https://test-url.com';
 export const getPath = '/get';
 export const getPathWithQueryParams = '/get/with-query';
 export const getPathWithError = '/get/with-error';
+export const getPathWithTimeout = '/get/with-timeout';
 export const postPath = '/post';
 export const putPath = '/put';
 export const patchPath = '/patch';

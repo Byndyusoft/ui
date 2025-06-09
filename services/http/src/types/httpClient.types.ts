@@ -34,7 +34,7 @@ export class HttpClientError<T = unknown> extends Error {
         response?: IHttpClientResponse<T>;
         // config?: IRequestConfig<D>;
     }) {
-        super();
+        super(args.message);
         this.code = args.code;
         this.response = args.response;
     };

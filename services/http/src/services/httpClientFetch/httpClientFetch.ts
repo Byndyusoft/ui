@@ -1,6 +1,22 @@
-import { IRequestClientOptions } from '../httpRequest';
+import { IRequestOptions } from '../httpRequest';
 import { DEFAULT_REQUEST_TIMEOUT, HttpClient, IHttpClientInit } from '../httpClient';
 import { THeaders, IHttpClientResponse, HttpClientError } from '../../types/httpClient.types';
+
+const combineAbortSignals = (signals: Array<AbortSignal | undefined>): AbortSignal => {
+    const controller = new AbortController();
+
+    signals.forEach(signal => {
+        if (!signal) return;
+
+        if (signal.aborted) {
+            controller.abort();
+        } else {
+            signal.addEventListener('abort', () => controller.abort());
+        }
+    });
+
+    return controller.signal;
+};
 
 export class HttpClientFetch extends HttpClient {
     baseURL: string;
@@ -14,11 +30,28 @@ export class HttpClientFetch extends HttpClient {
         this.baseURL = baseURL;
         this.headers = Object.assign(this.headers, headers);
         this.timeout = timeout ?? DEFAULT_REQUEST_TIMEOUT;
-        this.requestClient = async <R, E>(arg: IRequestClientOptions): Promise<IHttpClientResponse<R>> => {
-            const url = encodeURI(`${this.baseURL}${arg.url}`) + HttpClient.buildQueryString(arg.params);
-            const headers = Object.assign(this.headers, arg.headers);
 
-            const response = await fetch(url, { method: arg.method, headers, body: JSON.stringify(arg.body) });
+        this.requestClient = async <R, E>(options: IRequestOptions): Promise<IHttpClientResponse<R>> => {
+            const url = encodeURI(`${this.baseURL}${options.url}`) + HttpClient.buildQueryString(options.params);
+            const headers = Object.assign(this.headers, options.headers);
+
+            const timeoutSignal = AbortSignal.timeout(this.timeout);
+            const combinedSignals = combineAbortSignals([timeoutSignal, options.signal])
+
+            const response = await fetch(url, {
+                method: options.method,
+                headers,
+                body: JSON.stringify(options.body),
+                signal: combinedSignals
+            }).catch(error => {
+                if (error.name === 'AbortError') {
+                    throw new HttpClientError({
+                        code: error.code,
+                        message: timeoutSignal.aborted ? `Timeout of ${this.timeout}ms exceeded` : 'The request was cancelled'
+                    });
+                }
+                throw error; // TODO: добавить ловлю остальных ошибок
+            });
 
             const contentType = response.headers.get('Content-Type');
 

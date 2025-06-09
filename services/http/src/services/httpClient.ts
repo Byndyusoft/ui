@@ -1,4 +1,4 @@
-import { HttpRequest, HttpRequestWithBody, IRequestClientOptions } from './httpRequest';
+import { HttpRequest, HttpRequestWithBody, IRequestOptions } from './httpRequest';
 import { HttpMethod } from '../types/httpMethod.types';
 import { IHttpClientResponse, THeaders, TQueryParams } from '../types/httpClient.types';
 
@@ -11,7 +11,7 @@ export interface IHttpClientInit {
 }
 
 export abstract class HttpClient {
-    abstract requestClient: <R>(arg: IRequestClientOptions) => Promise<IHttpClientResponse<R>>;
+    abstract requestClient: <R>(arg: IRequestOptions) => Promise<IHttpClientResponse<R>>;
 
     abstract setHeader(key: string, value: string): void;
 

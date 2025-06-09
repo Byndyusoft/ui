@@ -1,4 +1,4 @@
-import { http, HttpResponse } from 'msw';
+import { http, HttpResponse, delay } from 'msw';
 import {
     baseUrl,
     getPath,
@@ -8,8 +8,10 @@ import {
     deletePath,
     getPathWithQueryParams,
     getPathWithError,
+    getPathWithTimeout,
     queryParams,
-    errorDetails
+    errorDetails,
+    successResponse
 } from '../__fixtures__/httpClient.fixtures';
 
 export const getRequest = http.get(`${baseUrl}${getPath}`, ({ request }) => {
@@ -41,7 +43,13 @@ export const getRequestWithError = http.get(`${baseUrl}${getPathWithError}`, ({ 
         return new HttpResponse(JSON.stringify(errorDetails), { status: 400, headers: { 'content-type': 'application/json' } });
     }
 
-    return HttpResponse.json({ testParam: testParamValue });
+    return HttpResponse.json(successResponse);
+});
+
+export const getRequestWithTimeout = http.get(`${baseUrl}${getPathWithTimeout}`, async () => {
+    await delay(3000);
+
+    return HttpResponse.json(successResponse);
 });
 
 export const postRequest = http.post(`${baseUrl}${postPath}`, async ({ request }) => {

@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosError } from 'axios';
 import { HttpClient, IHttpClientInit, DEFAULT_REQUEST_TIMEOUT } from '../httpClient';
-import { IRequestClientOptions } from '../httpRequest';
+import { IRequestOptions } from '../httpRequest';
 import { HttpClientError, IHttpClientResponse } from '../../types/httpClient.types';
 
 export class HttpClientAxios extends HttpClient {
@@ -13,11 +13,19 @@ export class HttpClientAxios extends HttpClient {
         this.axiosInstance = axios.create({
             baseURL,
             headers,
-            timeout: timeout ?? DEFAULT_REQUEST_TIMEOUT
+            timeout: timeout ?? DEFAULT_REQUEST_TIMEOUT,
+            timeoutErrorMessage: `Timeout of ${timeout ?? DEFAULT_REQUEST_TIMEOUT}ms exceeded`
         });
 
-        this.requestClient = <R, E>(arg: IRequestClientOptions): Promise<IHttpClientResponse<R>> =>
-            this.axiosInstance<R>({ url: arg.url, method: arg.method, headers: arg.headers, params: arg.params, data: arg.body })
+        this.requestClient = <R, E>(options: IRequestOptions): Promise<IHttpClientResponse<R>> =>
+            this.axiosInstance<R>({
+                url: options.url,
+                method: options.method,
+                headers: options.headers,
+                params: options.params,
+                data: options.body,
+                signal: options.signal
+            })
                 .then(response => ({
                     data: response.data,
                     status: response.status,
@@ -25,6 +33,13 @@ export class HttpClientAxios extends HttpClient {
                     headers: Object.fromEntries(Object.entries(response.headers))
                 }))
                 .catch((error: AxiosError<E>) => {
+                    if (error.code === 'ERR_CANCELED') {
+                        throw new HttpClientError({
+                            code: error.code,
+                            message: options.signal?.aborted ? 'The request was cancelled' : error.message
+                        });
+                    }
+
                     throw new HttpClientError({
                         message: error.message,
                         code: error.code,
