@@ -19,7 +19,6 @@ import {
     errorDetails
 } from '../__fixtures__/httpClient.fixtures';
 import { HttpStatusCode } from '../types/httpStatusCode.types';
-import { HttpClientError } from '../types/httpClient.types';
 
 const server = setupServer();
 
@@ -69,21 +68,19 @@ describe('services/HttpClientAxios', () => {
 
         const httpClientInstance = new HttpClientAxios({ baseURL: baseUrl });
 
-        try {
-            const response = await httpClientInstance
-                .get()
-                .url(getPathWithError)
-                .params(queryParams)
-                .send();
+        const response = httpClientInstance
+            .get()
+            .url(getPathWithError)
+            .params(queryParams)
+            .send();
 
-            expect(response).rejects.toThrowError();
-        } catch (error) {
-            const clientError = error as HttpClientError;
-
-            expect(clientError.code).toBe('ERR_BAD_REQUEST');
-            expect(clientError.response?.status).toBe(HttpStatusCode.BAD_REQUEST);
-            expect(clientError.response?.data).toEqual(errorDetails);
-        }
+        await expect(response).rejects.toMatchObject({
+            code: 'ERR_BAD_REQUEST',
+            response: {
+                status: HttpStatusCode.BAD_REQUEST,
+                data: errorDetails
+            }
+        });
     });
 
     test('should get the error when GET request timeout exceeded', async () => {

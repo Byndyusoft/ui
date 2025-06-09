@@ -33,15 +33,12 @@ export class HttpClientAxios extends HttpClient {
                     headers: Object.fromEntries(Object.entries(response.headers))
                 }))
                 .catch((error: AxiosError<E>) => {
-                    if (error.code === 'ERR_CANCELED') {
-                        throw new HttpClientError({
-                            code: error.code,
-                            message: options.signal?.aborted ? 'The request was cancelled' : error.message
-                        });
-                    }
+                    const message = (error.code === 'ERR_CANCELED' && options.signal?.aborted)
+                        ? 'The request was cancelled'
+                        : error.message;
 
                     throw new HttpClientError({
-                        message: error.message,
+                        message: message,
                         code: error.code,
                         response: error.response ? {
                             data: error.response.data,
