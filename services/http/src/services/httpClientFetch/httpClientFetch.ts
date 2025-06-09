@@ -50,7 +50,11 @@ export class HttpClientFetch extends HttpClient {
                         message: timeoutSignal.aborted ? `Timeout of ${this.timeout}ms exceeded` : 'The request was cancelled'
                     });
                 }
-                throw error; // TODO: добавить ловлю остальных ошибок
+
+                throw new HttpClientError({
+                    code: error.code,
+                    message: error.message
+                });
             });
 
             const contentType = response.headers.get('Content-Type');
