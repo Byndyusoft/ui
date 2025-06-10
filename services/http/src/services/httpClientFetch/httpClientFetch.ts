@@ -29,19 +29,21 @@ export class HttpClientFetch extends HttpClient {
                 body: JSON.stringify(processedConfig.data),
                 signal: combinedSignals
             }).catch(error => {
+                let message: string;
+
                 if (error.name === 'AbortError') {
-                    throw new HttpClientError({
-                        code: error.code,
-                        message: timeoutSignal.aborted ? `Timeout of ${this.timeout}ms exceeded` : 'The request was cancelled',
-                        config: processedConfig
-                    });
+                    message = timeoutSignal.aborted
+                        ? `Timeout of ${this.timeout}ms exceeded`
+                        : 'The request was cancelled';
+                } else {
+                    message = error.message;
                 }
 
-                throw new HttpClientError({
+                return this.processError(new HttpClientError({
                     code: error.code,
-                    message: error.message,
+                    message: message,
                     config: processedConfig
-                });
+                }));
             });
 
             const contentType = response.headers.get('Content-Type');
@@ -57,7 +59,7 @@ export class HttpClientFetch extends HttpClient {
             }
 
             if (!response.ok) {
-                throw new HttpClientError({
+                return this.processError(new HttpClientError({
                     message: `Request failed with status ${response.status}`,
                     code: `ERR_${response.statusText.toUpperCase().replace(' ', '_')}`,
                     response: {
@@ -67,16 +69,16 @@ export class HttpClientFetch extends HttpClient {
                         headers: Object.fromEntries(response.headers.entries()),
                     },
                     config: processedConfig
-                });
+                }));
             }
 
-            return {
+            return await this.processResponse<R>({
                 data: data as R,
                 status: response.status,
                 statusText: response.statusText,
                 headers: Object.fromEntries(response.headers.entries()),
                 config: processedConfig
-            };
+            });
         };
     }
 }

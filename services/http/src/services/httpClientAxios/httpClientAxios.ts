@@ -27,7 +27,7 @@ export class HttpClientAxios extends HttpClient {
                 ...processedConfig,
                 signal: combinedSignals
             })
-                .then(response => ({
+                .then(response => this.processResponse<R>({
                     data: response.data,
                     status: response.status,
                     statusText: response.statusText,
@@ -45,7 +45,7 @@ export class HttpClientAxios extends HttpClient {
                         message = error.message;
                     }
 
-                    throw new HttpClientError({
+                    return this.processError(new HttpClientError({
                         message: message,
                         code: error.code,
                         response: error.response ? {
@@ -55,7 +55,7 @@ export class HttpClientAxios extends HttpClient {
                             headers: Object.fromEntries(Object.entries(error.response.headers))
                         } : undefined,
                         config: processedConfig
-                    });
+                    }));
                 });
         };
     }

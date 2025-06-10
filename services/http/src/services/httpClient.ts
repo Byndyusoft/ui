@@ -17,7 +17,8 @@ export interface IHttpClientInit {
 }
 
 type TRequestInterceptor = (request: IRequestConfig) => Promise<IRequestConfig>;
-type TResponseInterceptor = (response: IHttpClientResponse, error?: HttpClientError) => Promise<IHttpClientResponse>;
+type TResponseInterceptor<R = any> = (response: IHttpClientResponse<R>) => Promise<IHttpClientResponse<R>>;
+type TErrorInterceptor = (error: HttpClientError) => Promise<never>;
 
 export abstract class HttpClient {
     baseURL: string;
@@ -25,6 +26,7 @@ export abstract class HttpClient {
     timeout: number;
     protected requestInterceptor?: TRequestInterceptor;
     protected responseInterceptor?: TResponseInterceptor;
+    protected errorInterceptor?: TErrorInterceptor;
 
     protected constructor({ baseURL, headers, timeout }: IHttpClientInit) {
         this.baseURL = baseURL ?? '';
@@ -32,7 +34,7 @@ export abstract class HttpClient {
         this.timeout = timeout ?? DEFAULT_REQUEST_TIMEOUT;
     }
 
-    abstract requestClient: <R>(arg: IRequestOptions) => Promise<IHttpClientResponse<R>>;
+    protected abstract requestClient: <R>(arg: IRequestOptions) => Promise<IHttpClientResponse<R>>;
 
     static buildQueryString(queryParams: TQueryParams) {
         const params = Object.keys(queryParams);
@@ -74,15 +76,27 @@ export abstract class HttpClient {
         this.requestInterceptor = interceptor;
     }
 
-    addResponseInterceptor(interceptor: TResponseInterceptor): void {
+    addResponseInterceptor<R>(interceptor: TResponseInterceptor<R>): void {
         this.responseInterceptor = interceptor;
     }
 
+    addErrorInterceptor(interceptor: TErrorInterceptor): void {
+        this.errorInterceptor = interceptor;
+    }
+
     protected async processRequest(config: IRequestConfig): Promise<IRequestConfig> {
-        if (this.requestInterceptor) {
-            return this.requestInterceptor(config);
+        return this.requestInterceptor?.(config) ?? config;
+    }
+
+    protected async processResponse<R>(response: IHttpClientResponse<R>): Promise<IHttpClientResponse<R>> {
+        return this.responseInterceptor?.(response) ?? response;
+    }
+
+    protected async processError(error: HttpClientError): Promise<never> {
+        if (this.errorInterceptor) {
+            return this.errorInterceptor(error);
         }
 
-        return config;
+        throw error;
     }
 }
