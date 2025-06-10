@@ -1,22 +1,7 @@
 import { IRequestOptions } from '../httpRequest';
 import { HttpClient, IHttpClientInit } from '../httpClient';
 import { IHttpClientResponse, HttpClientError } from '../../types/httpClient.types';
-
-const combineAbortSignals = (signals: Array<AbortSignal | undefined>): AbortSignal => {
-    const controller = new AbortController();
-
-    signals.forEach(signal => {
-        if (!signal) return;
-
-        if (signal.aborted) {
-            controller.abort();
-        } else {
-            signal.addEventListener('abort', () => controller.abort());
-        }
-    });
-
-    return controller.signal;
-};
+import { combineAbortSignals } from '../../utilities/httpClient.utilities';
 
 export class HttpClientFetch extends HttpClient {
     requestClient;
@@ -26,10 +11,10 @@ export class HttpClientFetch extends HttpClient {
 
         this.requestClient = async <R, E>(options: IRequestOptions): Promise<IHttpClientResponse<R>> => {
             const url = encodeURI(`${this.baseURL}${options.url}`) + HttpClient.buildQueryString(options.params);
-            const headers = Object.assign(this.headers, options.headers);
+            const headers = { ...this.headers, ...options.headers };
 
             const timeoutSignal = AbortSignal.timeout(this.timeout);
-            const combinedSignals = combineAbortSignals([timeoutSignal, options.signal])
+            const combinedSignals = combineAbortSignals(timeoutSignal, options.signal)
 
             const response = await fetch(url, {
                 method: options.method,

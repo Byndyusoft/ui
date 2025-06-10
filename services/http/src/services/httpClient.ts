@@ -12,12 +12,12 @@ export interface IHttpClientInit {
 
 export abstract class HttpClient {
     baseURL: string;
-    headers: THeaders = {};
+    headers: THeaders;
     timeout: number;
 
     protected constructor({ baseURL, headers, timeout }: IHttpClientInit) {
         this.baseURL = baseURL ?? '';
-        this.headers = Object.assign(this.headers, headers);
+        this.headers = headers ?? {};
         this.timeout = timeout ?? DEFAULT_REQUEST_TIMEOUT;
     }
 

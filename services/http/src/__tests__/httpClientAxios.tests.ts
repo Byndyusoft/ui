@@ -93,7 +93,7 @@ describe('services/HttpClientAxios', () => {
             .url(getPathWithTimeout)
             .send();
 
-        await expect(response).rejects.toThrow(); // Error('Timeout of 1000ms exceeded');
+        await expect(response).rejects.toThrowError('Timeout of 1000ms exceeded');
     });
 
     test('should get the error on request cancel', async () => {
