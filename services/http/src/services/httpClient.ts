@@ -1,6 +1,12 @@
 import { HttpRequest, HttpRequestWithBody, IRequestOptions } from './httpRequest';
 import { HttpMethod } from '../types/httpMethod.types';
-import { IHttpClientResponse, THeaders, TQueryParams } from '../types/httpClient.types';
+import {
+    IHttpClientResponse,
+    HttpClientError,
+    THeaders,
+    TQueryParams,
+    IRequestConfig
+} from '../types/httpClient.types';
 
 export const DEFAULT_REQUEST_TIMEOUT = 60000;
 
@@ -10,10 +16,15 @@ export interface IHttpClientInit {
     timeout?: number;
 }
 
+type TRequestInterceptor = (request: IRequestConfig) => Promise<IRequestConfig>;
+type TResponseInterceptor = (response: IHttpClientResponse, error?: HttpClientError) => Promise<IHttpClientResponse>;
+
 export abstract class HttpClient {
     baseURL: string;
     headers: THeaders;
     timeout: number;
+    protected requestInterceptor?: TRequestInterceptor;
+    protected responseInterceptor?: TResponseInterceptor;
 
     protected constructor({ baseURL, headers, timeout }: IHttpClientInit) {
         this.baseURL = baseURL ?? '';
@@ -57,5 +68,21 @@ export abstract class HttpClient {
 
     delete() {
         return new HttpRequest<void>(this.requestClient, HttpMethod.DELETE);
+    }
+
+    addRequestInterceptor(interceptor: TRequestInterceptor): void {
+        this.requestInterceptor = interceptor;
+    }
+
+    addResponseInterceptor(interceptor: TResponseInterceptor): void {
+        this.responseInterceptor = interceptor;
+    }
+
+    protected async processRequest(config: IRequestConfig): Promise<IRequestConfig> {
+        if (this.requestInterceptor) {
+            return this.requestInterceptor(config);
+        }
+
+        return config;
     }
 }

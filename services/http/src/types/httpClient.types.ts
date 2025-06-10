@@ -6,7 +6,7 @@ export type TQueryParamValue = string | number | boolean;
 
 export type TQueryParams = Record<string, TQueryParamValue>;
 
-export interface IRequestConfig<D> {
+export interface IRequestConfig<D = unknown> {
     url?: string;
     method?: string;
     baseURL?: string;
@@ -15,27 +15,28 @@ export interface IRequestConfig<D> {
     data?: D;
 }
 
-export interface IHttpClientResponse<T = unknown> {
+export interface IHttpClientResponse<T = unknown, D = unknown> {
     data: T;
     status: HttpStatusCode;
     statusText: string;
     headers: THeaders;
-    // config?: IRequestConfig<D>;
+    config?: IRequestConfig<D>;
 }
 
-export class HttpClientError<T = unknown> extends Error {
+export class HttpClientError<T = unknown, D = unknown> extends Error {
     code?: string;
     response?: IHttpClientResponse<T>;
-    // config?: IRequestConfig<D>
+    config?: IRequestConfig<D>
 
     constructor(args: {
         message?: string;
         code?: string;
         response?: IHttpClientResponse<T>;
-        // config?: IRequestConfig<D>;
+        config?: IRequestConfig<D>;
     }) {
         super(args.message);
         this.code = args.code;
         this.response = args.response;
+        this.config = args.config;
     };
 }

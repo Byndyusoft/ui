@@ -10,28 +10,37 @@ export class HttpClientFetch extends HttpClient {
         super(initSettings);
 
         this.requestClient = async <R, E>(options: IRequestOptions): Promise<IHttpClientResponse<R>> => {
-            const url = encodeURI(`${this.baseURL}${options.url}`) + HttpClient.buildQueryString(options.params);
-            const headers = { ...this.headers, ...options.headers };
+            const processedConfig = await this.processRequest({
+                url: options.url,
+                method: options.method,
+                baseURL: this.baseURL,
+                headers: { ...this.headers, ...options.headers },
+                params: options.params,
+                data: options.body
+            });
 
+            const url = encodeURI(`${processedConfig.baseURL}${processedConfig.url}`) + HttpClient.buildQueryString(processedConfig.params ?? {});
             const timeoutSignal = AbortSignal.timeout(this.timeout);
-            const combinedSignals = combineAbortSignals(timeoutSignal, options.signal)
+            const combinedSignals = combineAbortSignals(timeoutSignal, options.signal);
 
             const response = await fetch(url, {
-                method: options.method,
-                headers,
-                body: JSON.stringify(options.body),
+                method: processedConfig.method,
+                headers: processedConfig.headers,
+                body: JSON.stringify(processedConfig.data),
                 signal: combinedSignals
             }).catch(error => {
                 if (error.name === 'AbortError') {
                     throw new HttpClientError({
                         code: error.code,
-                        message: timeoutSignal.aborted ? `Timeout of ${this.timeout}ms exceeded` : 'The request was cancelled'
+                        message: timeoutSignal.aborted ? `Timeout of ${this.timeout}ms exceeded` : 'The request was cancelled',
+                        config: processedConfig
                     });
                 }
 
                 throw new HttpClientError({
                     code: error.code,
-                    message: error.message
+                    message: error.message,
+                    config: processedConfig
                 });
             });
 
@@ -56,7 +65,8 @@ export class HttpClientFetch extends HttpClient {
                         status: response.status,
                         statusText: response.statusText,
                         headers: Object.fromEntries(response.headers.entries()),
-                    }
+                    },
+                    config: processedConfig
                 });
             }
 
@@ -65,6 +75,7 @@ export class HttpClientFetch extends HttpClient {
                 status: response.status,
                 statusText: response.statusText,
                 headers: Object.fromEntries(response.headers.entries()),
+                config: processedConfig
             };
         };
     }
