@@ -1,6 +1,6 @@
 import { IRequestOptions } from '../httpRequest';
-import { DEFAULT_REQUEST_TIMEOUT, HttpClient, IHttpClientInit } from '../httpClient';
-import { THeaders, IHttpClientResponse, HttpClientError } from '../../types/httpClient.types';
+import { HttpClient, IHttpClientInit } from '../httpClient';
+import { IHttpClientResponse, HttpClientError } from '../../types/httpClient.types';
 
 const combineAbortSignals = (signals: Array<AbortSignal | undefined>): AbortSignal => {
     const controller = new AbortController();
@@ -19,17 +19,10 @@ const combineAbortSignals = (signals: Array<AbortSignal | undefined>): AbortSign
 };
 
 export class HttpClientFetch extends HttpClient {
-    baseURL: string;
-    headers: THeaders = {};
-    timeout: number;
     requestClient;
 
-    constructor({ baseURL, headers, timeout }: IHttpClientInit) {
-        super();
-
-        this.baseURL = baseURL;
-        this.headers = Object.assign(this.headers, headers);
-        this.timeout = timeout ?? DEFAULT_REQUEST_TIMEOUT;
+    constructor(initSettings: IHttpClientInit) {
+        super(initSettings);
 
         this.requestClient = async <R, E>(options: IRequestOptions): Promise<IHttpClientResponse<R>> => {
             const url = encodeURI(`${this.baseURL}${options.url}`) + HttpClient.buildQueryString(options.params);
@@ -89,9 +82,5 @@ export class HttpClientFetch extends HttpClient {
                 headers: Object.fromEntries(response.headers.entries()),
             };
         };
-    }
-
-    setHeader(key: string, value: string): void {
-        this.headers[key] = value;
     }
 }

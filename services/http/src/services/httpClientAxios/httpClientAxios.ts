@@ -1,30 +1,25 @@
-import axios, { AxiosInstance, AxiosError } from 'axios';
-import { HttpClient, IHttpClientInit, DEFAULT_REQUEST_TIMEOUT } from '../httpClient';
+import axios, { AxiosError } from 'axios';
+import { HttpClient, IHttpClientInit } from '../httpClient';
 import { IRequestOptions } from '../httpRequest';
 import { HttpClientError, IHttpClientResponse } from '../../types/httpClient.types';
 
 export class HttpClientAxios extends HttpClient {
     requestClient;
-    private axiosInstance: AxiosInstance;
 
-    constructor({ baseURL, headers, timeout }: IHttpClientInit) {
-        super();
-
-        this.axiosInstance = axios.create({
-            baseURL,
-            headers,
-            timeout: timeout ?? DEFAULT_REQUEST_TIMEOUT,
-            timeoutErrorMessage: `Timeout of ${timeout ?? DEFAULT_REQUEST_TIMEOUT}ms exceeded`
-        });
+    constructor(initSettings: IHttpClientInit) {
+        super(initSettings);
 
         this.requestClient = <R, E>(options: IRequestOptions): Promise<IHttpClientResponse<R>> =>
-            this.axiosInstance<R>({
+            axios<R>({
+                baseURL: this.baseURL,
                 url: options.url,
                 method: options.method,
-                headers: options.headers,
+                headers: { ...this.headers, ...options.headers },
                 params: options.params,
                 data: options.body,
-                signal: options.signal
+                signal: options.signal,
+                timeout: this.timeout,
+                timeoutErrorMessage: `Timeout of ${this.timeout}ms exceeded`
             })
                 .then(response => ({
                     data: response.data,
@@ -49,8 +44,4 @@ export class HttpClientAxios extends HttpClient {
                     });
                 });
     }
-
-    setHeader(key: string, value: string): void {
-        this.axiosInstance.defaults.headers[key] = value;
-    };
 }

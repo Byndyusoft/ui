@@ -5,15 +5,23 @@ import { IHttpClientResponse, THeaders, TQueryParams } from '../types/httpClient
 export const DEFAULT_REQUEST_TIMEOUT = 60000;
 
 export interface IHttpClientInit {
-    baseURL: string;
+    baseURL?: string;
     headers?: THeaders;
     timeout?: number;
 }
 
 export abstract class HttpClient {
-    abstract requestClient: <R>(arg: IRequestOptions) => Promise<IHttpClientResponse<R>>;
+    baseURL: string;
+    headers: THeaders = {};
+    timeout: number;
 
-    abstract setHeader(key: string, value: string): void;
+    protected constructor({ baseURL, headers, timeout }: IHttpClientInit) {
+        this.baseURL = baseURL ?? '';
+        this.headers = Object.assign(this.headers, headers);
+        this.timeout = timeout ?? DEFAULT_REQUEST_TIMEOUT;
+    }
+
+    abstract requestClient: <R>(arg: IRequestOptions) => Promise<IHttpClientResponse<R>>;
 
     static buildQueryString(queryParams: TQueryParams) {
         const params = Object.keys(queryParams);
@@ -26,6 +34,10 @@ export abstract class HttpClient {
         }
         return '';
     }
+
+    setHeader(key: string, value: string): void {
+        this.headers[key] = value;
+    };
 
     get<R = unknown>() {
         return new HttpRequest<R>(this.requestClient, HttpMethod.GET);
