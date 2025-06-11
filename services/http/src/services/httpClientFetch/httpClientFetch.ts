@@ -39,11 +39,11 @@ export class HttpClientFetch extends HttpClient {
                     message = error.message;
                 }
 
-                return this.processError(new HttpClientError({
+                throw new HttpClientError({
                     code: error.code,
                     message: message,
                     config: processedConfig
-                }));
+                });
             });
 
             const contentType = response.headers.get('Content-Type');
@@ -59,6 +59,8 @@ export class HttpClientFetch extends HttpClient {
             }
 
             if (!response.ok) {
+                // TODO: через интерцептор проходят только те ошибки, которые генерируются если response.ok === false,
+                //  надо обсудить достаточно ли этого
                 return this.processError(new HttpClientError({
                     message: `Request failed with status ${response.status}`,
                     code: `ERR_${response.statusText.toUpperCase().replace(' ', '_')}`,

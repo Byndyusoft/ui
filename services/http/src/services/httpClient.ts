@@ -18,7 +18,7 @@ export interface IHttpClientInit {
 
 type TRequestInterceptor = (request: IRequestConfig) => Promise<IRequestConfig>;
 type TResponseInterceptor<R = any> = (response: IHttpClientResponse<R>) => Promise<IHttpClientResponse<R>>;
-type TErrorInterceptor = (error: HttpClientError) => Promise<never>;
+type TErrorInterceptor<R = any> = (error: HttpClientError) => Promise<never | IHttpClientResponse<R>>;
 
 export abstract class HttpClient {
     baseURL: string;
@@ -92,7 +92,7 @@ export abstract class HttpClient {
         return this.responseInterceptor?.(response) ?? response;
     }
 
-    protected async processError(error: HttpClientError): Promise<never> {
+    protected async processError<R>(error: HttpClientError): Promise<never | IHttpClientResponse<R>> {
         if (this.errorInterceptor) {
             return this.errorInterceptor(error);
         }
