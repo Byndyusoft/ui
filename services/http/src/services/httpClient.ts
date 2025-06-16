@@ -34,7 +34,7 @@ export abstract class HttpClient {
         this.timeout = timeout ?? DEFAULT_REQUEST_TIMEOUT;
     }
 
-    protected abstract requestClient: <R>(arg: IRequestOptions) => Promise<IHttpClientResponse<R>>;
+    abstract requestClient: <R>(arg: IRequestOptions) => Promise<IHttpClientResponse<R>>;
 
     static buildQueryString(queryParams: TQueryParams) {
         const params = Object.keys(queryParams);
@@ -72,15 +72,15 @@ export abstract class HttpClient {
         return new HttpRequest<void>(this.requestClient, HttpMethod.DELETE);
     }
 
-    addRequestInterceptor(interceptor: TRequestInterceptor): void {
+    setRequestInterceptor(interceptor: TRequestInterceptor): void {
         this.requestInterceptor = interceptor;
     }
 
-    addResponseInterceptor<R>(interceptor: TResponseInterceptor<R>): void {
+    setResponseInterceptor<R>(interceptor: TResponseInterceptor<R>): void {
         this.responseInterceptor = interceptor;
     }
 
-    addErrorInterceptor(interceptor: TErrorInterceptor): void {
+    setErrorInterceptor(interceptor: TErrorInterceptor): void {
         this.errorInterceptor = interceptor;
     }
 

@@ -2,10 +2,10 @@ import { HttpMethod } from '../types/httpMethod.types';
 import { IHttpClientResponse, THeaders, TQueryParams } from '../types/httpClient.types';
 
 export interface IRequestOptions {
-    url: string;
     method: HttpMethod;
-    headers: THeaders;
-    params: TQueryParams;
+    url?: string;
+    headers?: THeaders;
+    params?: TQueryParams;
     signal?: AbortSignal;
     body?: Object;
 }
@@ -16,8 +16,8 @@ export class HttpRequest<T> {
     protected requestClient: TRequestClient<T>;
     protected urlValue: string = '';
     protected method: HttpMethod;
-    protected headersValue: THeaders = {};
-    protected paramsValue: TQueryParams = {};
+    protected headersValue?: THeaders;
+    protected paramsValue?: TQueryParams;
     protected abortSignal?: AbortSignal;
 
     constructor(requestClient: TRequestClient<T>, method: HttpMethod) {
@@ -32,13 +32,13 @@ export class HttpRequest<T> {
     }
 
     headers(headers: THeaders): this {
-        Object.assign(this.headersValue, headers);
+        this.headersValue = { ...this.headersValue, ...headers };
 
         return this;
     }
 
     params(queryParams: TQueryParams): this {
-        Object.assign(this.paramsValue, queryParams);
+        this.paramsValue = { ...this.paramsValue, ...queryParams };
 
         return this;
     }

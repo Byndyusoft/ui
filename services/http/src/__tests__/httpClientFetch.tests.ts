@@ -17,9 +17,12 @@ import {
     requestBody,
     successResponse,
     errorDetails,
-    getPathWithTimeout
+    getPathWithTimeout,
+    getDataWithAuthorizationPath,
+    getTokenPath
 } from '../__fixtures__/httpClient.fixtures';
 import { HttpStatusCode } from '../types/httpStatusCode.types';
+import { HttpMethod } from '../types/httpMethod.types';
 
 const server = setupServer();
 
@@ -175,5 +178,63 @@ describe('services/HttpClientFetch', () => {
             .send();
 
         expect(response.status).toEqual(HttpStatusCode.OK);
+    });
+
+    test('should request interceptor to change authorization header before request', async () => {
+        server.use(handlers.getToken, handlers.getDataWithAuthorization);
+
+        const httpClientInstance = new HttpClientFetch({ baseURL: baseUrl, headers: { Authorization: 'Bearer token' } });
+
+        httpClientInstance.setRequestInterceptor(async requestConfig => {
+            if (requestConfig.url !== getTokenPath) {
+                const { data: { token: newToken } } = await httpClientInstance.get<{ token: string }>().url(getTokenPath).send();
+
+                requestConfig.headers = { ...requestConfig.headers, Authorization: `Bearer ${newToken}` };
+
+                httpClientInstance.setHeader('Authorization', `Bearer ${newToken}`);
+            }
+
+            return requestConfig;
+        });
+
+        const response = await httpClientInstance
+            .get()
+            .url(getDataWithAuthorizationPath)
+            .send();
+
+        expect(response.data).toEqual(successResponse);
+        expect(httpClientInstance.headers.Authorization).toEqual('Bearer test_token_01');
+    });
+
+    test('should error interceptor to update token if gets 401 error and retry request', async () => {
+        server.use(handlers.getToken, handlers.getDataWithAuthorization);
+
+        const httpClientInstance = new HttpClientFetch({ baseURL: baseUrl, headers: { Authorization: 'Bearer token' } });
+
+        httpClientInstance.setErrorInterceptor(async error =>  {
+           if (error.response?.status === HttpStatusCode.UNAUTHORIZED && error.config?.url !== getTokenPath) {
+               const { data: { token: newToken } } = await httpClientInstance.get<{ token: string }>().url(getTokenPath).send();
+
+               httpClientInstance.setHeader('Authorization', `Bearer ${newToken}`);
+
+               return httpClientInstance.requestClient({
+                   method: error.config?.method as HttpMethod,
+                   url: error.config?.url,
+                   headers: { ...error.config?.headers, Authorization: `Bearer ${newToken}` },
+                   params: error.config?.params,
+                   body: error.config?.data as Object
+               });
+           }
+
+            throw error;
+        });
+
+        const response = await httpClientInstance
+            .get()
+            .url(getDataWithAuthorizationPath)
+            .send();
+
+        expect(response.data).toEqual(successResponse);
+        expect(httpClientInstance.headers.Authorization).toEqual('Bearer test_token_01');
     });
 });
