@@ -1,8 +1,9 @@
 import { Meta, Story, Canvas } from '@storybook/addon-docs';
 import { Markdown } from '@storybook/blocks';
-import Readme from '../../README.md';
+import Readme from '../../README.md?raw';
+import * as useIntersectionObserverStories from './useIntersectionObserver.stories';
 
-<Meta title="hooks/useIntersectionObserver" />
+<Meta title="hooks/useIntersectionObserver" of={useIntersectionObserverStories} />
 
 <Markdown>{Readme}</Markdown>
 
