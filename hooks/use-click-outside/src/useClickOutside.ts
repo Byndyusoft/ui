@@ -21,9 +21,7 @@ export default function useClickOutside<T extends HTMLElement>(
         const isInside = latestRefs.current.some(ref => {
             if (!ref) return false;
 
-            const element = ref instanceof HTMLElement
-                ? ref
-                : ref.current;
+            const element = ref instanceof HTMLElement ? ref : ref.current;
 
             return element?.contains(target);
         });

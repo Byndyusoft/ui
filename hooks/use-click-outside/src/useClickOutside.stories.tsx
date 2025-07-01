@@ -1,4 +1,4 @@
-import React, { forwardRef, MutableRefObject, useRef } from 'react';
+import React, { forwardRef, useRef } from 'react';
 import { StoryObj } from '@storybook/react';
 import useClickOutside from './useClickOutside';
 
@@ -7,7 +7,21 @@ export default {
 };
 
 const Block = forwardRef<HTMLDivElement>(function Block(props, ref) {
-    return <div ref={ref} style={{ height: '2rem', width: '20rem', background: 'violet', marginBottom: '2rem', lineHeight: '2rem', padding: '1rem' }} >click outside</div>;
+    return (
+        <div
+            ref={ref}
+            style={{
+                height: '2rem',
+                width: '20rem',
+                background: 'violet',
+                marginBottom: '2rem',
+                lineHeight: '2rem',
+                padding: '1rem'
+            }}
+        >
+            click outside
+        </div>
+    );
 });
 
 const Template = (): JSX.Element => {

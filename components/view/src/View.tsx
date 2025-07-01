@@ -1,4 +1,4 @@
-import {createElement, FC, useMemo} from 'react';
+import { createElement, FC, useMemo } from 'react';
 import { IViewProps, IViewSpacings } from './View.types';
 
 const spacingUnitPrefix = 'su';
@@ -52,7 +52,7 @@ export const getSpacingClasses = (spacingProps: IViewSpacings): string => {
 
 const View: FC<IViewProps> = ({ as = 'div', children, ...props }): JSX.Element => {
     const deps = spacingPropsNames.map(key => props[key] ?? null);
-    const classNames = useMemo(() => getSpacingClasses(props as IViewSpacings), deps)
+    const classNames = useMemo(() => getSpacingClasses(props as IViewSpacings), deps);
 
     //Spacing props only for class mappings
     spacingPropsNames.forEach(key => {
