@@ -35,8 +35,12 @@
   },
   "publishConfig": {
     "access": "public"
-  },  
+  },
   "peerDependencies": {
     "react": ">=17"
+  },
+  "dependencies": {
+    "@byndyusoft-ui/view": "^0.0.1",
+    "classnames": "^2.3.1"
   }
 }

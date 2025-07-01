@@ -1,12 +1,12 @@
-import {IViewProps, TSpacingUnit} from "@byndyusoft-ui/view/src/View.types";
+import { IViewProps, TSpacingUnit } from '@byndyusoft-ui/view';
 
 export const directions = ['row', 'column', 'row-reverse', 'column-reverse'] as const;
 
-export type TFlexDirection = typeof directions[number];
+export type TFlexDirection = (typeof directions)[number];
 
 export const flexWraps = ['nowrap', 'wrap', 'wrap-reverse'] as const;
 
-export type TFlexWrap = typeof flexWraps[number];
+export type TFlexWrap = (typeof flexWraps)[number];
 
 export const justifyContentVariants = [
     'flex-start',
@@ -17,7 +17,7 @@ export const justifyContentVariants = [
     'space-evenly'
 ] as const;
 
-export type TJustifyContent = typeof justifyContentVariants[number];
+export type TJustifyContent = (typeof justifyContentVariants)[number];
 
 export const alignContentVariants = [
     'flex-start',
@@ -29,11 +29,11 @@ export const alignContentVariants = [
     'stretch'
 ] as const;
 
-export type TAlignContent = typeof alignContentVariants[number];
+export type TAlignContent = (typeof alignContentVariants)[number];
 
 export const alignItemsVariants = ['flex-start', 'flex-end', 'center', 'baseline', 'stretch'] as const;
 
-export type TAlignItems = typeof alignItemsVariants[number];
+export type TAlignItems = (typeof alignItemsVariants)[number];
 
 export interface IFlexProps extends IViewProps {
     alignContent?: TAlignContent;
