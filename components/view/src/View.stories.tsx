@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import View from './View';
 import { spacingUnits } from './View.types';
 import { InputType } from '@storybook/core/dist/csf';
-import './View.css'
+import './View.css';
 
 const meta: Meta<typeof View> = {
     title: 'components/View',
@@ -27,7 +27,7 @@ const spaceControl: InputType = {
 
 export const Default: Story = {
     args: {
-        children: ViewContent,
+        children: ViewContent
     },
     render: args => (
         <View {...args}>

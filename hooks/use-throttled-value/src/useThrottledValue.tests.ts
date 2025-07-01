@@ -3,7 +3,6 @@ import { renderHook, act, RenderResult } from '@testing-library/react-hooks';
 import useThrottledValue from './useThrottledValue';
 import { TUseThrottledValueReturn } from './useThrottledValue.types';
 
-
 const DELAY_THROTTLE = 500;
 
 const setup = (initialValue: unknown, delay: number): RenderResult<TUseThrottledValueReturn<unknown>> => {
