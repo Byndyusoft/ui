@@ -13,6 +13,7 @@
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "sideEffects": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Byndyusoft/ui.git"

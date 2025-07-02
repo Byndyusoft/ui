@@ -1,5 +1,6 @@
 import { createElement, FC, useMemo } from 'react';
 import { IViewProps, IViewSpacings } from './View.types';
+import './View.css';
 
 const spacingUnitPrefix = 'su';
 

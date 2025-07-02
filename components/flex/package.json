@@ -13,6 +13,7 @@
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "sideEffects": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Byndyusoft/ui.git"
@@ -40,6 +41,7 @@
     "react": ">=17"
   },
   "dependencies": {
+    "@byndyusoft-ui/css-utilities": "^0.0.1",
     "@byndyusoft-ui/view": "^0.0.1",
     "classnames": "^2.3.1"
   }

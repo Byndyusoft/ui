@@ -1,21 +1,23 @@
+import postcss from 'rollup-plugin-postcss';
+import postcssImport from 'postcss-import';
 import typescript from '@rollup/plugin-typescript';
 import baseConfig from '../../rollup.base.config.mjs';
-import scss from 'rollup-plugin-scss';
 
 export default {
     ...baseConfig,
     input: ['src/index.ts'],
-    output: {
-        ...baseConfig.output,
-        format: 'esm',
-        preserveModules: true
-    },
     plugins: [
         ...baseConfig.plugins,
-        scss(),
+        postcss({
+            inject: true,
+            extract: false,
+            minimize: true,
+            plugins: [postcssImport()]
+        }),
         typescript({
             tsconfig: './tsconfig.json',
-            exclude: ['src/**/*.stories.tsx', 'src/**/*.tests.tsx', 'node_modules']
+            exclude: ['src/**/*.stories.tsx', 'src/**/*.tests.tsx', 'node_modules'],
+            module: 'ESNext'
         })
     ]
 };
