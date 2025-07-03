@@ -76,7 +76,7 @@
     "prettier": "^2.7.1",
     "react": "^17.0.2",
     "rollup": "^4.41.1",
-    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-auto-external": "^2.0.0",
     "rollup-plugin-postcss": "^4.0.2",
     "sass": "^1.89.0",
     "storybook": "^8.6.4",

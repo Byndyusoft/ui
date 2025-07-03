@@ -1,7 +1,7 @@
+import svgr from 'vite-plugin-svgr';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
-import peerDeps from 'rollup-plugin-peer-deps-external';
-import svgr from 'vite-plugin-svgr';
+import autoExternal from 'rollup-plugin-auto-external';
 
 export default {
     output: {
@@ -11,5 +11,5 @@ export default {
         preserveModules: true,
         preserveModulesRoot: 'src'
     },
-    plugins: [svgr(), peerDeps(), nodeResolve(), commonjs()]
+    plugins: [svgr(), nodeResolve(), commonjs(), autoExternal()]
 };
