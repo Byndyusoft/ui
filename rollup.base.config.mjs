@@ -6,7 +6,7 @@ import autoExternal from 'rollup-plugin-auto-external';
 export default {
     output: {
         exports: 'named',
-        format: 'cjs',
+        format: 'esm',
         dir: 'dist',
         preserveModules: true,
         preserveModulesRoot: 'src'
