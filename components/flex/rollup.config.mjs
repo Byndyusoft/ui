@@ -1,5 +1,4 @@
 import postcss from 'rollup-plugin-postcss';
-import postcssImport from 'postcss-import';
 import typescript from '@rollup/plugin-typescript';
 import baseConfig from '../../rollup.base.config.mjs';
 
@@ -12,7 +11,6 @@ export default {
             inject: true,
             extract: false,
             minimize: true,
-            plugins: [postcssImport()]
         }),
         typescript({
             tsconfig: './tsconfig.json',
