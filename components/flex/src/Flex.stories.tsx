@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { IFlexProps } from './Flex.types';
 import Flex from './Flex';
 import styles from './FlexStories.module.css';
-import cn from "classnames";
+import cn from 'classnames';
 
 const meta: Meta<typeof Flex> = {
     title: 'components/Flex',

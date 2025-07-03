@@ -1,25 +1,24 @@
-import View, {getSpacingClasses} from "./View";
-import {IViewSpacings} from "./View.types";
-
+import { getSpacingClasses } from './View';
+import { IViewSpacings } from './View.types';
 
 describe('components/View', () => {
     test('getSpacingClasses', () => {
         const props: IViewSpacings = {
-            margin: "su025",
-            marginTop: "su025",
-            marginBottom: "su025",
-            marginLeft: "su025",
-            marginRight: "su025",
-            paddingVertical: "su025",
-            marginHorizontal: "su025",
-            paddingTop: "su025",
-            paddingBottom: "su025",
-            paddingLeft: "su025",
-            paddingRight: "su025",
-            padding: "su025",
-            marginVertical: "su025",
-            paddingHorizontal: "su025",
-        }
+            margin: 'su025',
+            marginTop: 'su025',
+            marginBottom: 'su025',
+            marginLeft: 'su025',
+            marginRight: 'su025',
+            paddingVertical: 'su025',
+            marginHorizontal: 'su025',
+            paddingTop: 'su025',
+            paddingBottom: 'su025',
+            paddingLeft: 'su025',
+            paddingRight: 'su025',
+            padding: 'su025',
+            marginVertical: 'su025',
+            paddingHorizontal: 'su025'
+        };
 
         const expectResult = [
             'm-025',
@@ -39,5 +38,5 @@ describe('components/View', () => {
         ].join(' ');
 
         expect(getSpacingClasses(props)).toBe(expectResult);
-    })
-})
+    });
+});
