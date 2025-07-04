@@ -4,8 +4,8 @@
     "declaration": true,
     "declarationDir": "dist",
     "outDir": "dist",
-    "module": "ESNext",
-    "target": "es6"
+    "module": "ESNext"
   },
-  "include": ["src"]
+  "include": ["../../types.d.ts", "src"],
+  "exclude": ["src/**/*.stories.*", "src/**/*.docs.*", "src/**/*.tests.*"]
 }
