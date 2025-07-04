@@ -1,6 +1,6 @@
 {
   "name": "@byndyusoft-ui/use-event-listener",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "Byndyusoft UI React Hook",
   "keywords": [
     "byndyusoft",
@@ -37,6 +37,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@byndyusoft-ui/use-latest-ref": "^0.0.1"
+    "@byndyusoft-ui/use-latest-ref": "^1.0.0"
   }
 }

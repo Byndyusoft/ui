@@ -1,6 +1,6 @@
 {
   "name": "@byndyusoft-ui/flex",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Byndyusoft UI Flex React Component",
   "keywords": [
     "byndyusoft",
@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@byndyusoft-ui/css-utilities": "^0.0.1",
-    "@byndyusoft-ui/view": "^0.0.1",
+    "@byndyusoft-ui/view": "^1.0.0",
     "classnames": "^2.3.1"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@byndyusoft-ui/use-focus",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "Byndyusoft UI React Hook",
   "keywords": [
     "byndyusoft",
@@ -37,7 +37,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@byndyusoft-ui/use-event-listener": "^0.1.1",
-    "@byndyusoft-ui/use-toggle": "^0.1.0"
+    "@byndyusoft-ui/use-event-listener": "^1.0.0",
+    "@byndyusoft-ui/use-toggle": "^1.0.0"
   }
 }
