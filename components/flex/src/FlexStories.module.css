@@ -8,10 +8,12 @@
 
 .flexContentMid {
     min-height: 4rem;
+    background: lightgreen;
 }
 
 .flexContentBig {
     height: 6rem;
+    background: coral;
 }
 
 .templateContainer {
