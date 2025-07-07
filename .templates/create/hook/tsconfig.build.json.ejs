@@ -3,5 +3,5 @@ to: hooks/<%= h.changeCase.paramCase(name) %>/tsconfig.build.json
 ---
 {
   "extends": "./tsconfig.json",
-  "exclude": ["src/**/*.stories.*", "src/**/*.docs.*", "src/**/*.tests.*"]
+  "exclude": ["src/**/*.stories.*", "src/**/__stories__", "src/**/*.docs.*", "src/**/*.tests.*", "src/**/__tests__"]
 }

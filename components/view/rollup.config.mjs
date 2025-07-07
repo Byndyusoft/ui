@@ -10,11 +10,17 @@ export default {
         postcss({
             inject: true,
             extract: false,
-            minimize: true,
+            minimize: true
         }),
         typescript({
             tsconfig: './tsconfig.json',
-            exclude: ['src/**/*.stories.*', 'src/**/*.docs.*', 'src/**/*.tests.*', 'node_modules']
+            exclude: [
+                'src/**/*.stories.*',
+                'src/**/__stories__',
+                'src/**/*.docs.*',
+                'src/**/*.tests.*',
+                'src/**/__tests__'
+            ]
         })
     ]
 };
