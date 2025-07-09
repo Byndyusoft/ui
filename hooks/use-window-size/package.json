@@ -1,6 +1,6 @@
 {
   "name": "@byndyusoft-ui/use-window-size",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Byndyusoft UI React Hook",
   "keywords": [
     "byndyusoft",
@@ -38,6 +38,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@byndyusoft-ui/use-event-listener": "^1.0.0"
+    "@byndyusoft-ui/use-event-listener": "^0.1.2"
   }
 }
