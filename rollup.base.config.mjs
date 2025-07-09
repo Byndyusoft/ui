@@ -2,6 +2,7 @@ import svgr from 'vite-plugin-svgr';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import autoExternal from 'rollup-plugin-auto-external';
+import postcss from 'rollup-plugin-postcss';
 
 export default {
     output: {
@@ -11,5 +12,15 @@ export default {
         preserveModules: true,
         preserveModulesRoot: 'src'
     },
-    plugins: [svgr(), nodeResolve(), commonjs(), autoExternal()]
+    plugins: [
+        svgr(),
+        nodeResolve(),
+        commonjs(),
+        autoExternal(),
+        postcss({
+            inject: true,
+            extract: false,
+            minimize: true
+        })
+    ]
 };
