@@ -3,7 +3,6 @@ import baseConfig from '../../rollup.base.config.mjs';
 
 export default {
     ...baseConfig,
-    input: ['src/index.ts'],
     plugins: [
         ...baseConfig.plugins,
         typescript({

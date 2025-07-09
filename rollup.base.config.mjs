@@ -5,6 +5,7 @@ import autoExternal from 'rollup-plugin-auto-external';
 import postcss from 'rollup-plugin-postcss';
 
 export default {
+    input: ['src/index.ts'],
     output: {
         exports: 'named',
         format: 'esm',
