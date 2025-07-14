@@ -7,15 +7,7 @@ to: hooks/<%= h.changeCase.paramCase(name) %>/tsconfig.json
     "declaration": true,
     "declarationDir": "dist",
     "outDir": "dist",
-    "module": "ESNext",
-    "target": "es6"
+    "module": "ESNext"
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules",
-    "src/**/*.tests.tsx",
-    "src/**/*.stories.tsx"
-  ]
+  "include": ["src"]
 }
