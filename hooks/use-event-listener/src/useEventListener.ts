@@ -45,8 +45,6 @@ function useEventListener<
     useEffect(() => {
         const targetElement: T | Window = target?.current ?? window;
 
-        if (!(targetElement && targetElement.addEventListener)) return;
-
         const listener: typeof handler = event => savedHandler.current(event);
 
         targetElement.addEventListener(eventName, listener, options);

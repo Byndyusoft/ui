@@ -8,11 +8,12 @@ module.exports = {
     },
     overrides: [
         {
-            files: ['src/**/*.tests.@(ts|tsx|js|jsx)', 'src/**/*.stories.@(ts|tsx|js|jsx)'],
+            files: ['src/**/*.{tests,stories}.@(ts|tsx|js|jsx)', '**/__tests__/**'],
             rules: {
                 '@typescript-eslint/no-magic-numbers': 'off',
                 '@typescript-eslint/explicit-module-boundary-types': 'warn',
-                'react/button-has-type': 'off'
+                'react/button-has-type': 'off',
+                'react/forbid-dom-props': 'off'
             }
         }
     ]

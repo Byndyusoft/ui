@@ -1,11 +1,17 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act, RenderHookResult } from '@testing-library/react-hooks';
 import useThrottledCallback, { IThrottledCallbackOptions } from './useThrottledCallback';
 
 const DELAY_THROTTLE = 500;
 
-// todo: replace any
-const setup = (callback: any, delay: number, options?: IThrottledCallbackOptions) =>
-    renderHook(() => useThrottledCallback(callback, delay, options));
+interface ICallback {
+    (...args: unknown[]): void;
+}
+
+const setup = (
+    callback: ICallback,
+    delay: number,
+    options?: IThrottledCallbackOptions
+): RenderHookResult<unknown, ICallback> => renderHook(() => useThrottledCallback(callback, delay, options));
 
 const multipleCalls = (callback: () => void, delay: number): void => {
     act(() => {

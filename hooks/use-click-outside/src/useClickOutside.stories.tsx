@@ -6,7 +6,8 @@ export default {
     title: 'hooks/useCLickOutside'
 };
 
-const Block = forwardRef<HTMLDivElement>(function Block(props, ref) {
+// eslint-disable-next-line prefer-arrow-callback
+const Block = forwardRef<HTMLDivElement>(function Block(props, ref): JSX.Element {
     return (
         <div
             ref={ref}
@@ -29,7 +30,7 @@ const Template = (): JSX.Element => {
     const ref2 = useRef(null);
     const ref3 = useRef(null);
 
-    const handleClickOutside = () => {
+    const handleClickOutside = (): void => {
         alert('clickOutside');
     };
 
@@ -44,9 +45,9 @@ const Template = (): JSX.Element => {
     );
 };
 
-type Story = StoryObj<typeof Template>;
+type TStory = StoryObj<typeof Template>;
 
-export const HookStory: Story = {
+export const HookStory: TStory = {
     name: 'useCLickOutside',
     render: Template
 };

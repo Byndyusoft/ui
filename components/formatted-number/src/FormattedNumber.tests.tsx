@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import FormattedNumber, { SYMBOL_BETWEEN_FORMATTED_NUMBER_PARTS_LABEL } from '../FormattedNumber';
-import { getMaxFractionalPartOfNumbers } from '../index';
+import FormattedNumber, { SYMBOL_BETWEEN_FORMATTED_NUMBER_PARTS_LABEL } from './FormattedNumber';
+import { getMaxFractionalPartOfNumbers } from './index';
 
 describe('components/FormattedNumber', () => {
     test('simple number renders correctly', () => {

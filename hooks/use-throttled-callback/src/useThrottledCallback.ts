@@ -37,6 +37,8 @@ function useThrottledCallback<A extends unknown[]>(
                 start();
             }
         },
+        // TODO: explore this place and try to remove eslint-disable
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [callback, delay, leading, trailing]
     );
 }
