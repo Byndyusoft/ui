@@ -1,5 +1,10 @@
 module.exports = {
-    extends: '@byndyusoft/eslint-config/frontend',
+    extends: [
+        '@byndyusoft/eslint-config/typescript',
+        '@byndyusoft/eslint-config/typescript-style-frontend',
+        '@byndyusoft/eslint-config/react',
+        '@byndyusoft/eslint-config/react-testing'
+    ],
     parserOptions: {
         project: 'tsconfig.json'
     },
