@@ -6,9 +6,8 @@ export default {
     title: 'hooks/useCLickOutside'
 };
 
-// eslint-disable-next-line prefer-arrow-callback
-const Block = forwardRef<HTMLDivElement>(function Block(props, ref): JSX.Element {
-    return (
+const Block = forwardRef<HTMLDivElement>(
+    (props, ref): JSX.Element => (
         <div
             ref={ref}
             style={{
@@ -22,8 +21,10 @@ const Block = forwardRef<HTMLDivElement>(function Block(props, ref): JSX.Element
         >
             click outside
         </div>
-    );
-});
+    )
+);
+
+Block.displayName = 'Block';
 
 const Template = (): JSX.Element => {
     const ref1 = useRef(null);
