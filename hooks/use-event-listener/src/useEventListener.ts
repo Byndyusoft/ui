@@ -45,6 +45,9 @@ function useEventListener<
     useEffect(() => {
         const targetElement: T | Window = target?.current ?? window;
 
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        if (!targetElement?.addEventListener) return;
+
         const listener: typeof handler = event => savedHandler.current(event);
 
         targetElement.addEventListener(eventName, listener, options);
