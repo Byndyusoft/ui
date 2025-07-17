@@ -3,7 +3,7 @@ import { StoryObj } from '@storybook/react';
 import useClickOutside from './useClickOutside';
 
 export default {
-    title: 'hooks/useCLickOutside'
+    title: 'hooks/useClickOutside'
 };
 
 const Block = forwardRef<HTMLDivElement>(
