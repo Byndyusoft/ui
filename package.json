@@ -15,8 +15,8 @@
   "scripts": {
     "build": "turbo build",
     "clean": "turbo clean",
-    "test": "vitest",
-    "test:watch": "vitest --watch",
+    "test": "vitest run --typecheck",
+    "test:watch": "vitest watch --typecheck",
     "lint:check": "turbo lint:check",
     "lint:fix": "turbo lint:fix",
     "eslint:check": "turbo eslint:check",
@@ -87,7 +87,7 @@
     "typescript": "^4.9.5",
     "vite": "^6.2.1",
     "vite-plugin-svgr": "^4.3.0",
-    "vitest": "^3.0.8"
+    "vitest": "^3.2.4"
   },
   "peerDependencies": {
     "classnames": "^2.3.1",
