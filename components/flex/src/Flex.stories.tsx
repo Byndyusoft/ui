@@ -12,16 +12,14 @@ const meta: Meta<typeof Flex> = {
 
 export default meta;
 
-const FlexContent = () => {
-    return (
-        <>
-            <div className={styles.flexContent} />
-            <div className={cn(styles.flexContent, styles.flexContentBig)} />
-            <div className={styles.flexContent} />
-            <div className={cn(styles.flexContent, styles.flexContentMid)} />
-        </>
-    );
-};
+const FlexContent = (): JSX.Element => (
+    <>
+        <div className={styles.flexContent} />
+        <div className={cn(styles.flexContent, styles.flexContentBig)} />
+        <div className={styles.flexContent} />
+        <div className={cn(styles.flexContent, styles.flexContentMid)} />
+    </>
+);
 
 const Template = (args: IFlexProps): JSX.Element => (
     <Flex {...args} className={styles.templateContainer}>

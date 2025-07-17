@@ -29,7 +29,7 @@ export const getSpacingClasses = (spacingProps: IViewSpacings): string => {
     const classes: string[] = [];
 
     spacingPropsNames.forEach((name: keyof IViewSpacings) => {
-        const value = spacingProps?.[name];
+        const value = spacingProps[name];
 
         if (!value) {
             return;
@@ -53,6 +53,7 @@ export const getSpacingClasses = (spacingProps: IViewSpacings): string => {
 
 const View: FC<IViewProps> = ({ as = 'div', children, ...props }): JSX.Element => {
     const deps = spacingPropsNames.map(key => props[key] ?? null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const classNames = useMemo(() => getSpacingClasses(props as IViewSpacings), deps);
 
     //Spacing props only for class mappings
