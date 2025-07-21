@@ -2,6 +2,7 @@ import React, { FC, useMemo } from 'react';
 import cn from 'classnames';
 import View, { sanitizeMagicUnit, TSpacingUnit } from '@byndyusoft-ui/view';
 import { IFlexProps, TAlignContent, TAlignItems, TFlexDirection, TFlexWrap, TJustifyContent } from './Flex.types';
+import '@byndyusoft-ui/css-utilities';
 import './Flex.scss';
 
 const prefix = 'bsui';

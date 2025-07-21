@@ -1,4 +1,4 @@
-import { IViewProps, TSpacingUnit } from '@byndyusoft-ui/view/src/View.types';
+import { IViewProps, TSpacingUnit } from '@byndyusoft-ui/view';
 
 export const directions = ['row', 'column', 'row-reverse', 'column-reverse'] as const;
 

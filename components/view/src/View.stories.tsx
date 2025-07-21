@@ -2,8 +2,7 @@ import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import View from './View';
 import { spacingUnits } from './View.types';
-import { InputType } from '@storybook/core/dist/csf';
-import './View.css';
+import { InputType } from '@storybook/types';
 
 const meta: Meta<typeof View> = {
     title: 'components/View',
@@ -14,9 +13,9 @@ const meta: Meta<typeof View> = {
 };
 export default meta;
 
-type Story = StoryObj<typeof View>;
+type TStory = StoryObj<typeof View>;
 
-function ViewContent() {
+function ViewContent(): JSX.Element {
     return <div style={{ width: '100%', height: '2rem', borderRadius: '0.5rem', background: 'skyblue' }} />;
 }
 
@@ -25,7 +24,7 @@ const spaceControl: InputType = {
     control: { type: 'select' }
 };
 
-export const Default: Story = {
+export const Default: TStory = {
     args: {
         children: ViewContent
     },

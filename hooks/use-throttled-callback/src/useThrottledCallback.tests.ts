@@ -1,13 +1,18 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act, RenderHookResult } from '@testing-library/react-hooks';
+import { Callback } from '@byndyusoft-ui/types';
 import useThrottledCallback, { IThrottledCallbackOptions } from './useThrottledCallback';
 
 const DELAY_THROTTLE = 500;
 
-// todo: replace any
-const setup = (callback: any, delay: number, options?: IThrottledCallbackOptions) =>
-    renderHook(() => useThrottledCallback(callback, delay, options));
+type THookArgCallback = Callback<unknown[]>;
 
-const multipleCalls = (callback: () => void, delay: number): void => {
+const setup = (
+    callback: THookArgCallback,
+    delay: number,
+    options?: IThrottledCallbackOptions
+): RenderHookResult<unknown, THookArgCallback> => renderHook(() => useThrottledCallback(callback, delay, options));
+
+const multipleCalls = (callback: THookArgCallback, delay: number): void => {
     act(() => {
         callback();
         callback();

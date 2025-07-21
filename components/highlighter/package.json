@@ -9,10 +9,13 @@
     "highlighter"
   ],
   "author": "Zhukov Andrey <zhukov@byndyusoft.com>",
-  "homepage": "https://github.com/Byndyusoft/ui/tree/master/components/Highlighter#readme",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/components/highlighter#readme",
   "license": "ISC",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Byndyusoft/ui.git"

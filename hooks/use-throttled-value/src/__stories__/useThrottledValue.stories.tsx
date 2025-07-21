@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { StoryObj } from '@storybook/react';
 import useThrottledValue from '../useThrottledValue';
 import styles from './useThrottledValue.stories.module.css';
@@ -31,17 +31,20 @@ function TemplateUseThrottledValueStory(): JSX.Element {
         setInputThrottledValue(event.target.value);
     };
 
-    const handleMouseMove = (event: MouseEvent): void => {
-        setMousePosition({ x: event.clientX, y: event.clientY });
-        setMousePositionThrottled({ x: event.clientX, y: event.clientY });
-    };
+    const handleMouseMove = useCallback(
+        (event: MouseEvent): void => {
+            setMousePosition({ x: event.clientX, y: event.clientY });
+            setMousePositionThrottled({ x: event.clientX, y: event.clientY });
+        },
+        [setMousePositionThrottled]
+    );
 
     useEffect(() => {
         window.addEventListener('mousemove', handleMouseMove);
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
         };
-    }, []);
+    }, [handleMouseMove]);
 
     return (
         <div>

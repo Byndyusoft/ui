@@ -177,8 +177,10 @@ import { IsTuple } from '@byndyusoft-ui/types';
 
 type Test1 = IsTuple<string>; // false
 type Test2 = IsTuple<Array<string>>; // false
-type Test3 = IsTuple<[string]>; // true
-type Test4 = IsTuple<[string, number]>; // true
+type Test3 = IsTuple<unknown[]>; // false
+type Test4 = IsTuple<[]>; // true
+type Test5 = IsTuple<[string]>; // true
+type Test6 = IsTuple<[string, number?]>; // true
 ```
 
 ### PlainObject

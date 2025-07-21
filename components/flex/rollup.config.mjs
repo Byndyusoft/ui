@@ -3,9 +3,17 @@ import baseConfig from '../../rollup.base.config.mjs';
 
 export default {
     ...baseConfig,
-    input: ['src/index.ts'],
     plugins: [
         ...baseConfig.plugins,
-        typescript({ tsconfig: './tsconfig.json', exclude: ['src/**/*.stories.tsx', 'src/**/*.tests.tsx', 'node_modules'] })
+        typescript({
+            tsconfig: './tsconfig.json',
+            exclude: [
+                'src/**/*.stories.*',
+                'src/**/__stories__',
+                'src/**/*.docs.*',
+                'src/**/*.tests.*',
+                'src/**/__tests__'
+            ]
+        })
     ]
 };

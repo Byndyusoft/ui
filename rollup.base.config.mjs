@@ -1,20 +1,27 @@
-import resolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
-import peerDeps from 'rollup-plugin-peer-deps-external';
 import svgr from 'vite-plugin-svgr';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import autoExternal from 'rollup-plugin-auto-external';
+import postcss from 'rollup-plugin-postcss';
 
 export default {
+    input: ['src/index.ts'],
     output: {
         exports: 'named',
-        format: 'cjs',
+        format: 'esm',
         dir: 'dist',
         preserveModules: true,
         preserveModulesRoot: 'src'
     },
     plugins: [
         svgr(),
-        peerDeps(),
-        resolve(),
-        commonjs()
+        nodeResolve(),
+        commonjs(),
+        autoExternal(),
+        postcss({
+            inject: true,
+            extract: false,
+            minimize: true
+        })
     ]
 };
