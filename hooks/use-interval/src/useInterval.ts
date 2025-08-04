@@ -9,6 +9,7 @@ export default function useInterval({ callback, delay }: IUseIntervalProps): IUs
     const clear = useCallback(() => {
         if (timer.current) {
             clearInterval(timer.current);
+            timer.current = undefined;
         }
     }, []);
 
