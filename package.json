@@ -14,7 +14,7 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "turbo build",
-    "clean": "turbo clean",
+    "clean": "turbo clean && rimraf .turbo",
     "test": "vitest run --typecheck",
     "test:watch": "vitest watch --typecheck",
     "lint:check": "turbo lint:check",
