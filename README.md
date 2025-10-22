@@ -24,7 +24,7 @@
 
 1. To add a new entity create a new branch `feature/new-entity-name` from branch `next`
 2. By using `hygen` create a folder with files for a new entity<br>
-   4.1. If you are using `hygen` at first time, you need to install (`npm install -global hygen`) and initialize it (`npx hygen init self`). [More about `hygen`](https://www.hygen.io/docs/quick-start/) <br>
+   4.1. If you are using `hygen` at first time, you need to install (`npm install -global hygen`). [More about `hygen`](https://www.npmjs.com/package/hygen#quick-start) <br>
    4.2. To create a folder for your entity, use command `npx hygen create entity-type` (entity types: `component`, `hook`)
 3. Develop new entity with tests and stories
 4. Check that building production version, tests, stories and linters run without problems

@@ -3,11 +3,11 @@ import { StoryObj } from '@storybook/react';
 import useClickOutside from './useClickOutside';
 
 export default {
-    title: 'hooks/useCLickOutside'
+    title: 'hooks/useClickOutside'
 };
 
-const Block = forwardRef<HTMLDivElement>(function Block(props, ref) {
-    return (
+const Block = forwardRef<HTMLDivElement>(
+    (props, ref): JSX.Element => (
         <div
             ref={ref}
             style={{
@@ -21,15 +21,17 @@ const Block = forwardRef<HTMLDivElement>(function Block(props, ref) {
         >
             click outside
         </div>
-    );
-});
+    )
+);
+
+Block.displayName = 'Block';
 
 const Template = (): JSX.Element => {
     const ref1 = useRef(null);
     const ref2 = useRef(null);
     const ref3 = useRef(null);
 
-    const handleClickOutside = () => {
+    const handleClickOutside = (): void => {
         alert('clickOutside');
     };
 
@@ -44,9 +46,9 @@ const Template = (): JSX.Element => {
     );
 };
 
-type Story = StoryObj<typeof Template>;
+type TStory = StoryObj<typeof Template>;
 
-export const HookStory: Story = {
+export const HookStory: TStory = {
     name: 'useCLickOutside',
     render: Template
 };

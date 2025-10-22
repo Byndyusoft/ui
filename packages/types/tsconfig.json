@@ -6,6 +6,6 @@
     "outDir": "dist",
     "module": "ESNext"
   },
-  "include": ["../../types.d.ts", "src"],
-  "exclude": ["src/**/*.stories.*", "src/**/*.docs.*", "src/**/*.tests.*", "node_modules"]
+  "include": ["src"],
+  "exclude": ["src/**/*.stories.*", "src/**/__stories__", "src/**/*.docs.*", "src/**/*.tests.*", "src/**/__tests__"]
 }

@@ -1,5 +1,8 @@
-import { getMaxFractionalPartOfNumbers } from '../index';
-import { getDefaultFormatter, parseNumberToPartsByDefault } from '../FormattedNumber.utilities';
+import {
+    getDefaultFormatter,
+    getMaxFractionalPartOfNumbers,
+    parseNumberToPartsByDefault
+} from './FormattedNumber.utilities';
 
 describe('components/FormattedNumber/utilities', () => {
     describe('getMaxFractionalPartOfNumbers', () => {

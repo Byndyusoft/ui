@@ -37,7 +37,7 @@ function useThrottledCallback<A extends unknown[]>(
                 start();
             }
         },
-        [callback, delay, leading, trailing]
+        [callback, leading, start]
     );
 }
 
