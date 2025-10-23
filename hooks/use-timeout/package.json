@@ -38,7 +38,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@byndyusoft-ui/use-latest-ref": "^0.0.1"
+    "@byndyusoft-ui/use-latest-ref": "^1.0.0"
   },
   "peerDependencies": {
     "@byndyusoft-ui/types": "0.3.0"
