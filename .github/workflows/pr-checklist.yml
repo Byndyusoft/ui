@@ -1,0 +1,21 @@
+name: PR Checklist
+
+on:
+    pull_request:
+        types: [opened, edited, synchronize, reopened]
+
+jobs:
+    checklist:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check checklist completion
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      const body = context.payload.pull_request.body || '';
+                      const unchecked = body.match(/- \[ \]/g);
+                      if (unchecked && unchecked.length > 0) {
+                        core.setFailed(`❌ Checklist not completed. ${unchecked.length} items remain unchecked.`);
+                      } else {
+                        core.notice('✅ Checklist complete');
+                      }
