@@ -7,7 +7,6 @@ export const SYMBOL_BETWEEN_FORMATTED_NUMBER_PARTS_LABEL = 'Symbol between forma
 
 const FormattedNumber = ({
     number,
-    minusSymbol = '−',
     defaultFormatterOptions,
     formatter = getDefaultFormatter(defaultFormatterOptions),
     parseNumberToParts = parseNumberToPartsByDefault,
@@ -25,7 +24,7 @@ const FormattedNumber = ({
 
                 return (
                     <Fragment key={nanoid()}>
-                        {numberPartIndex === 0 && number < 0 && minusSymbol}
+                        {numberPartIndex === 0 && number < 0 && '−'}
                         {numberPart}
                         {!isLastNumberPart && (
                             /* eslint-disable react/forbid-dom-props */
