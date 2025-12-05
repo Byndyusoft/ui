@@ -20,6 +20,14 @@ export const SimpleNumberViewStory: StoryObj<typeof Template> = {
     }
 };
 
+export const NegativeNumberViewStory: StoryObj<typeof Template> = {
+    name: 'Negative number view',
+    render: Template,
+    args: {
+        number: -363863.397562
+    }
+};
+
 export const CustomDefaultFormatterOptionsViewStory: StoryObj<typeof Template> = {
     name: 'Custom default formatter options view',
     render: Template,
