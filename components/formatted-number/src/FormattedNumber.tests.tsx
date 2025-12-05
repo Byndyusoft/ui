@@ -5,9 +5,19 @@ import { getMaxFractionalPartOfNumbers } from './FormattedNumber.utilities';
 
 describe('components/FormattedNumber', () => {
     test('simple number renders correctly', () => {
-        render(<FormattedNumber number={123.123} />);
+        render(
+            <>
+                <span>
+                    <FormattedNumber number={123.123} />
+                </span>
+                <span>
+                    <FormattedNumber number={-321.321} />
+                </span>
+            </>
+        );
 
         expect(screen.getByText('123,123')).toBeInTheDocument();
+        expect(screen.getByText('−321,321')).toBeInTheDocument();
     });
 
     test('thin spaces render correctly', () => {
