@@ -110,4 +110,62 @@ describe('services/pub-sub', () => {
 
         expect(asyncChannelInfo?.subscribers.length).toBe(1);
     });
+
+    test('should enforce typed events and callbacks', async () => {
+        type ProgressPayload = { type: 'progress'; value: number };
+        type CompletePayload = { type: 'complete'; message: string };
+        type Channels = {
+            addTodo: (data: { id: number; text: string }) => void;
+            clearTodos: () => void;
+            notifyAsync: (data: string) => Promise<void>;
+            status: ((payload: ProgressPayload) => void) | ((payload: CompletePayload) => number);
+        };
+
+        const typedPubSub = new PubSub<Channels>();
+
+        const addTodoCallback = jest.fn<ReturnType<Channels['addTodo']>, Parameters<Channels['addTodo']>>();
+        const clearTodosCallback = jest.fn();
+        const progressSpy = jest.fn();
+        const completeSpy = jest.fn();
+        const onProgress = jest.fn((payload: ProgressPayload) => {
+            if (payload.type === 'progress') {
+                progressSpy(payload.value);
+            }
+        });
+        const onComplete = jest.fn((payload: CompletePayload) => {
+            if ('message' in payload) {
+                completeSpy(payload.message);
+                return payload.message.length;
+            }
+            return 0;
+        });
+
+        typedPubSub.subscribe('addTodo', addTodoCallback);
+        typedPubSub.subscribe('clearTodos', clearTodosCallback);
+        typedPubSub.subscribe('notifyAsync', async message => {
+            await Promise.resolve(message.toUpperCase());
+        });
+        typedPubSub.subscribe('status', onProgress);
+        typedPubSub.subscribe('status', onComplete);
+
+        typedPubSub.publish('addTodo', { id: 1, text: 'First todo' });
+        typedPubSub.publish('clearTodos');
+        await typedPubSub.publishAsync('status', { type: 'progress', value: 50 });
+        await typedPubSub.publishAsync('status', { type: 'complete', message: 'done' });
+
+        expect(addTodoCallback).toHaveBeenCalledWith({ id: 1, text: 'First todo' });
+        expect(clearTodosCallback).toHaveBeenCalledTimes(1);
+        expect(progressSpy).toHaveBeenCalledWith(50);
+        expect(completeSpy).toHaveBeenCalledWith('done');
+
+        // @ts-expect-error wrong payload type should not compile
+        () => typedPubSub.publish('addTodo', 'invalid');
+        // @ts-expect-error wrong payload shape for status
+        () => typedPubSub.publish('status', { type: 'complete', value: 1 });
+        // @ts-expect-error wrong callback signature
+        const wrongStatusSubscribe = () => typedPubSub.subscribe('status', (payload: number) => payload);
+
+        // @ts-expect-error unknown channel name
+        () => typedPubSub.subscribe('unknownChannel', () => {});
+    });
 });

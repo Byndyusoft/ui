@@ -1,54 +1,65 @@
-type Callback = (data: unknown) => void;
+type PubSubEventHandler = (...args: any[]) => unknown;
+type PubSubEvents = Record<string, PubSubEventHandler>;
 
-export default class PubSub {
-    private events: Map<string, Set<Callback>> = new Map();
+type EventArgs<Events extends PubSubEvents, EventName extends keyof Events> = Parameters<Events[EventName]>;
+type EventReturn<Events extends PubSubEvents, EventName extends keyof Events> = ReturnType<Events[EventName]>;
 
-    subscribe(event: string, callback: Callback): void {
-        if (!this.events.has(event)) {
-            this.events.set(event, new Set());
-        }
-        this.events.get(event)!.add(callback);
+export default class PubSub<Events extends PubSubEvents = PubSubEvents> {
+    private events: Map<keyof Events, Set<Events[keyof Events]>> = new Map();
+
+    subscribe<EventName extends keyof Events>(event: EventName, callback: Events[EventName]): void {
+        const callbacks = (this.events.get(event) as Set<Events[EventName]> | undefined) ?? new Set<Events[EventName]>();
+        callbacks.add(callback);
+        this.events.set(event, callbacks);
     }
 
-    subscribeOnce(event: string, callback: Callback): void {
-        const onceCallback: Callback = (data: unknown) => {
-            callback(data); // Execute the callback
-            this.unsubscribe(event, onceCallback); // Unsubscribe after execution
-        };
+    subscribeOnce<EventName extends keyof Events>(event: EventName, callback: Events[EventName]): void {
+        const onceCallback: Events[EventName] = ((...args: EventArgs<Events, EventName>) => {
+            (callback as (...args: EventArgs<Events, EventName>) => void | Promise<void>)(...args);
+            this.unsubscribe(event, onceCallback);
+        }) as Events[EventName];
+
         this.subscribe(event, onceCallback);
     }
 
-    publish(event: string, data: unknown = null): void {
-        if (this.events.has(event)) {
-            this.events.get(event)!.forEach(callback => callback(data));
+    publish<EventName extends keyof Events>(event: EventName, ...args: EventArgs<Events, EventName>): void {
+        const callbacks = this.events.get(event) as Set<Events[EventName]> | undefined;
+        callbacks?.forEach(callback => {
+            (callback as (...args: EventArgs<Events, EventName>) => EventReturn<Events, EventName>)(...args);
+        });
+    }
+
+    async publishAsync<EventName extends keyof Events>(
+        event: EventName,
+        ...args: EventArgs<Events, EventName>
+    ): Promise<void> {
+        const callbacks = this.events.get(event) as Set<Events[EventName]> | undefined;
+        if (callbacks) {
+            const handlers = Array.from(callbacks).map(callback =>
+                Promise.resolve(
+                    (callback as (...args: EventArgs<Events, EventName>) => EventReturn<Events, EventName>)(...args)
+                )
+            );
+            await Promise.all(handlers);
         }
     }
 
-    async publishAsync(event: string, data: unknown = null): Promise<void> {
-        if (this.events.has(event)) {
-            const callbacks = Array.from(this.events.get(event)!);
-            // Execute all callbacks concurrently
-            await Promise.all(callbacks.map(callback => callback(data)));
+    unsubscribe<EventName extends keyof Events>(event: EventName, callback: Events[EventName]): void {
+        const callbacks = this.events.get(event) as Set<Events[EventName]> | undefined;
+        if (!callbacks) {
+            return;
+        }
+
+        callbacks.delete(callback);
+
+        if (callbacks.size === 0) {
+            this.events.delete(event);
         }
     }
 
-    unsubscribe(event: string, callback: Callback): void {
-        if (this.events.has(event)) {
-            const callbacks = this.events.get(event)!;
-            callbacks.delete(callback);
-
-            // Clean up the event if no callbacks are left
-            if (callbacks.size === 0) {
-                this.events.delete(event);
-            }
-        }
-    }
-
-    unsubscribeAll(event?: string): void {
+    unsubscribeAll(event?: keyof Events): void {
         if (event) {
-            if (this.events.has(event)) {
-                this.events.delete(event);
-            }
+            this.events.delete(event);
         } else {
             this.events.clear();
         }
@@ -58,9 +69,10 @@ export default class PubSub {
         this.events.clear();
     }
 
-    getAllSubscribers(): { event: string; subscribers: Callback[] }[] {
-        return Array.from(this.events.entries()).map(([event, callbacks]) => {
-            return { event, subscribers: Array.from(callbacks) };
-        });
+    getAllSubscribers(): { event: keyof Events; subscribers: Events[keyof Events][] }[] {
+        return Array.from(this.events.entries()).map(([event, callbacks]) => ({
+            event,
+            subscribers: Array.from(callbacks) as Events[keyof Events][]
+        }));
     }
 }
