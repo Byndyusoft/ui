@@ -13,7 +13,16 @@ const MouseEventTemplate = (): JSX.Element => {
     useEventListener('mousemove', handler, ref);
 
     return (
-        <div ref={ref}>
+        <div
+            ref={ref}
+            style={{
+                width: '300px',
+                height: '200px',
+                padding: '25px',
+                cursor: 'pointer',
+                backgroundColor: 'lightblue'
+            }}
+        >
             Mouse coordinates: {coords.x}, {coords.y}
         </div>
     );

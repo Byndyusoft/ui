@@ -9,7 +9,7 @@
     "modals"
   ],
   "author": "Dmitrii Maletskii <maleckij@byndyusoft.ru>",
-  "homepage": "https://github.com/Byndyusoft/ui/tree/master/components/ModalsProvider#readme",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/components/modals-provider#readme",
   "license": "ISC",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

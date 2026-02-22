@@ -1,0 +1,13 @@
+.table {
+    width: 300px;
+    border-collapse: collapse;
+    border: 2px solid rgb(140 140 140);
+    letter-spacing: 1px;
+
+    th,
+    td {
+        border: 1px solid rgb(160 160 160);
+        padding: 8px 10px;
+        text-align: left;
+    }
+}
