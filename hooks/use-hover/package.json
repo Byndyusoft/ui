@@ -20,7 +20,7 @@
   },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
-    "clean": "rimraf dist",
+    "clean": "rimraf dist && rimraf .turbo && rimraf node_modules && rimraf package-lock.json",
     "lint:check": "npm run eslint:check && npm run prettier:check && npm run stylelint:check",
     "lint:fix": "npm run eslint:fix && npm run prettier:fix && npm run stylelint:fix",
     "eslint:check": "eslint src --config ../../eslint.config.js",
@@ -38,6 +38,6 @@
   },
   "dependencies": {
     "@byndyusoft-ui/use-event-listener": "^0.1.0",
-    "@byndyusoft-ui/use-toggle": "^0.1.0"
+    "@byndyusoft-ui/use-toggle": "^1.0.0"
   }
 }
