@@ -13,8 +13,8 @@
   "description": "Byndyusoft React UI Library",
   "main": "lib/index.js",
   "scripts": {
-    "build": "turbo build",
-    "clean": "turbo clean",
+    "build": "npm run clean && turbo build",
+    "clean": "turbo clean && rimraf .turbo",
     "test": "vitest run --typecheck",
     "test:watch": "vitest watch --typecheck",
     "lint:check": "turbo lint:check",
@@ -27,7 +27,10 @@
     "prettier:fix": "turbo prettier:fix",
     "postinstall": "(husky install) || true",
     "build-storybook": "storybook build --disable-telemetry",
-    "start": "storybook dev -p 6009"
+    "start": "storybook dev -p 6009",
+    "set-changes": "changeset",
+    "update-packages-versions": "changeset version",
+    "publish": "changeset publish"
   },
   "repository": {
     "type": "git",
@@ -48,6 +51,7 @@
   "devDependencies": {
     "@byndyusoft/eslint-config": "^2.0.0",
     "@byndyusoft/stylelint-config": "^1.0.0",
+    "@changesets/cli": "^2.29.7",
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
     "@rollup/plugin-commonjs": "^28.0.3",

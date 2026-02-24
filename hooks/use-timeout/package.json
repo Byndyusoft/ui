@@ -21,7 +21,7 @@
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "test": "vitest run --root ../../ --project @byndyusoft-ui/use-timeout",
-    "clean": "rimraf dist",
+    "clean": "rimraf dist && rimraf .turbo && rimraf node_modules && rimraf package-lock.json",
     "lint:check": "npm run eslint:check && npm run prettier:check && npm run stylelint:check",
     "lint:fix": "npm run eslint:fix && npm run prettier:fix && npm run stylelint:fix",
     "eslint:check": "eslint src --config ../../eslint.config.js",
@@ -38,7 +38,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@byndyusoft-ui/use-latest-ref": "^0.0.1"
+    "@byndyusoft-ui/use-latest-ref": "^1.0.0"
   },
   "peerDependencies": {
     "@byndyusoft-ui/types": "0.3.0"

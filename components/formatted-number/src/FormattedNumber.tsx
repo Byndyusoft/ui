@@ -13,7 +13,7 @@ const FormattedNumber = ({
     numberPartsDividerClassName = ''
 }: IFormattedNumberViewProps): JSX.Element => {
     const numberParts = useMemo(
-        () => parseNumberToParts(formatter.format(number)),
+        () => parseNumberToParts(formatter.format(Math.abs(number))),
         [parseNumberToParts, formatter, number]
     );
 
@@ -24,6 +24,7 @@ const FormattedNumber = ({
 
                 return (
                     <Fragment key={nanoid()}>
+                        {numberPartIndex === 0 && number < 0 && '−'}
                         {numberPart}
                         {!isLastNumberPart && (
                             /* eslint-disable react/forbid-dom-props */

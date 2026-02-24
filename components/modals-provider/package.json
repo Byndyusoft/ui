@@ -9,7 +9,7 @@
     "modals"
   ],
   "author": "Dmitrii Maletskii <maleckij@byndyusoft.ru>",
-  "homepage": "https://github.com/Byndyusoft/ui/tree/master/components/ModalsProvider#readme",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/components/modals-provider#readme",
   "license": "ISC",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -22,7 +22,7 @@
   },
   "scripts": {
     "build": "rollup --config",
-    "clean": "rimraf dist",
+    "clean": "rimraf dist && rimraf .turbo && rimraf node_modules && rimraf package-lock.json",
     "lint:check": "npm run eslint:check && npm run prettier:check && npm run stylelint:check",
     "lint:fix": "npm run eslint:fix && npm run prettier:fix && npm run stylelint:fix",
     "eslint:check": "eslint src --config ../../eslint.config.js",
