@@ -1,9 +1,9 @@
 import { Renderer, renderHook, RenderHookResult } from '@testing-library/react-hooks';
-import useInterval from './useInterval';
-import { IUseInterval, IUseIntervalProps } from './userInterval.types';
+import { Callback, Nullable } from '@byndyusoft-ui/types';
+import useInterval, { IUseInterval } from './useInterval';
 
-const setup = ({ callback, delay }: IUseIntervalProps): RenderHookResult<void, IUseInterval, Renderer<void>> =>
-    renderHook(() => useInterval({ callback, delay }));
+const setup = (callback: Callback, delay: Nullable<number>): RenderHookResult<void, IUseInterval, Renderer<void>> =>
+    renderHook(() => useInterval(callback, delay));
 
 describe('hooks/useInterval', () => {
     beforeAll(() => {
@@ -14,7 +14,7 @@ describe('hooks/useInterval', () => {
         const callback = vi.fn();
         const delay = 100;
 
-        const { result } = setup({ callback, delay });
+        const { result } = setup(callback, delay);
 
         expect(callback).not.toBeCalled();
 
@@ -33,10 +33,11 @@ describe('hooks/useInterval', () => {
         expect(callback).toHaveBeenCalledTimes(3);
     });
 
-    test.skip('does not call callback if delay is null', () => {
+    test('does not call callback if delay is null', () => {
         const callback = vi.fn();
+        const delay = null;
 
-        setup({ callback, delay: 0 });
+        setup(callback, delay);
 
         expect(callback).not.toBeCalled();
 
@@ -45,12 +46,12 @@ describe('hooks/useInterval', () => {
         expect(callback).not.toBeCalled();
     });
 
-    test('clears interval', () => {
+    test('stops interval', () => {
         vi.spyOn(global, 'clearInterval');
         const callback = vi.fn();
         const delay = 100;
 
-        const { result } = setup({ callback, delay });
+        const { result } = setup(callback, delay);
         expect(clearInterval).toHaveBeenCalledTimes(0);
 
         expect(callback).not.toBeCalled();
@@ -61,7 +62,7 @@ describe('hooks/useInterval', () => {
 
         expect(callback).toHaveBeenCalledTimes(1);
 
-        result.current.clear();
+        result.current.stop();
 
         vi.advanceTimersByTime(delay + 1);
 
