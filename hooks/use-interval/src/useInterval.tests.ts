@@ -1,7 +1,8 @@
 import { Renderer, renderHook, RenderHookResult } from '@testing-library/react-hooks';
-import useInterval from './useInterval';
+import { Callback, Nullable } from '@byndyusoft-ui/types';
+import useInterval, { IUseInterval } from './useInterval';
 
-const setup = (callback: () => void, delay: number | null): RenderHookResult<void, () => void, Renderer<void>> =>
+const setup = (callback: Callback, delay: Nullable<number>): RenderHookResult<void, IUseInterval, Renderer<void>> =>
     renderHook(() => useInterval(callback, delay));
 
 describe('hooks/useInterval', () => {
@@ -11,10 +12,13 @@ describe('hooks/useInterval', () => {
 
     test('calls callback', () => {
         const callback = vi.fn();
+        const delay = 100;
 
-        setup(callback, 100);
+        const { result } = setup(callback, delay);
 
         expect(callback).not.toBeCalled();
+
+        result.current.start();
 
         vi.advanceTimersByTime(101);
 
@@ -31,8 +35,9 @@ describe('hooks/useInterval', () => {
 
     test('does not call callback if delay is null', () => {
         const callback = vi.fn();
+        const delay = null;
 
-        setup(callback, null);
+        setup(callback, delay);
 
         expect(callback).not.toBeCalled();
 
@@ -41,20 +46,27 @@ describe('hooks/useInterval', () => {
         expect(callback).not.toBeCalled();
     });
 
-    test('clears interval', () => {
+    test('stops interval', () => {
         vi.spyOn(global, 'clearInterval');
         const callback = vi.fn();
+        const delay = 100;
 
-        const { result } = setup(callback, 100);
+        const { result } = setup(callback, delay);
         expect(clearInterval).toHaveBeenCalledTimes(0);
 
         expect(callback).not.toBeCalled();
 
-        result.current();
+        result.current.start();
 
-        vi.advanceTimersByTime(150);
+        vi.advanceTimersByTime(delay + 1);
 
-        expect(callback).toHaveBeenCalledTimes(0);
+        expect(callback).toHaveBeenCalledTimes(1);
+
+        result.current.stop();
+
+        vi.advanceTimersByTime(delay + 1);
+
+        expect(callback).toHaveBeenCalledTimes(1);
         expect(clearInterval).toHaveBeenCalledTimes(1);
     });
 });
