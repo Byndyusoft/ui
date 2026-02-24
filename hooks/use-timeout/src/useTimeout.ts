@@ -22,11 +22,9 @@ export default function useTimeout(callback: Callback, delay: Nullable<number>):
         stop();
 
         if (delay !== null && delay >= 0) {
-            timer.current = setTimeout(() => {
-                savedCallback.current();
-            }, delay);
+            timer.current = setTimeout(() => savedCallback.current(), delay);
         }
-    }, []);
+    }, [delay, stop, savedCallback]);
 
     useEffect(() => stop, []);
 

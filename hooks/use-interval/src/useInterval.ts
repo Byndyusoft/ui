@@ -19,9 +19,7 @@ export default function useInterval(callback: Callback, delay: Nullable<number>)
     }, []);
 
     const start = useCallback(() => {
-        if (timer.current) {
-            stop();
-        }
+        stop();
 
         if (delay !== null && delay >= 0) {
             timer.current = setInterval(() => savedCallback.current(), delay);
