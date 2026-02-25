@@ -53,6 +53,7 @@ export const MultipleRefsStory: StoryObj<typeof MultipleRefsTemplate> = {
 
 const DisabledTemplate = (): JSX.Element => {
     const ref = useRef<HTMLDivElement>(null);
+    const buttonRef = useRef<HTMLButtonElement>(null);
     const [disabled, setDisabled] = useState(false);
     const [lastAction, setLastAction] = useState<string>('none');
 
@@ -60,12 +61,12 @@ const DisabledTemplate = (): JSX.Element => {
         setLastAction('clickOutside');
     }, []);
 
-    useClickOutside(handleClickOutside, [ref], { disabled });
+    useClickOutside(handleClickOutside, [ref, buttonRef], { disabled });
 
     return (
         <div style={{ padding: '1rem' }}>
             <p>Disabled: {String(disabled)}</p>
-            <button type="button" onClick={(): void => setDisabled(v => !v)}>
+            <button ref={buttonRef} type="button" onClick={(): void => setDisabled(v => !v)}>
                 Toggle disabled
             </button>
             <div
