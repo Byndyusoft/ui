@@ -1,5 +1,11 @@
 # @byndyusoft-ui/use-timeout
 
+## 2.1.2
+
+### Patch Changes
+
+-   Revert to commonjs
+
 ## 2.1.1
 
 ### Patch Changes
