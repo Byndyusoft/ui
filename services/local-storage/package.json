@@ -29,6 +29,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@byndyusoft-ui/types": "0.2.1"
+    "@byndyusoft-ui/types": "^0.3.0"
   }
 }
