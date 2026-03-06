@@ -1,0 +1,83 @@
+$gapSizes: (
+    "025": var(--su025),
+    "050": var(--su050),
+    "075": var(--su075),
+    "100": var(--su100),
+    "125": var(--su125),
+    "150": var(--su150),
+    "200": var(--su200),
+    "250": var(--su250),
+    "300": var(--su300),
+    "350": var(--su350),
+    "400": var(--su400),
+    "500": var(--su500),
+    "600": var(--su600),
+    "700": var(--su700),
+    "800": var(--su800),
+    "900": var(--su900),
+    "1000": var(--su1000)
+);
+
+$flexDirections: row, row-reverse, column, column-reverse;
+$flexWraps: nowrap, wrap, wrap-reverse;
+$justifyContentVariants: flex-start, flex-end, center, space-between, space-around, space-evenly;
+$alignContentVariants: flex-start, flex-end, center, space-between, space-around, space-evenly, stretch;
+$alignItemsVariants: flex-start, flex-end, center, baseline, stretch;
+
+.bsui-flex {
+    display: flex;
+
+    &--fd {
+        @each $direction in $flexDirections {
+            &-#{$direction} {
+                flex-direction: $direction;
+            }
+        }
+    }
+
+    &--fw {
+        @each $wrap in $flexWraps {
+            &-#{$wrap} {
+                flex-wrap: $wrap;
+            }
+        }
+    }
+
+    &--jc {
+        @each $variant in $justifyContentVariants {
+            &-#{$variant} {
+                justify-content: $variant;
+            }
+        }
+    }
+
+    &--ac {
+        @each $variant in $alignContentVariants {
+            &-#{$variant} {
+                align-content: $variant;
+            }
+        }
+    }
+
+    &--ai {
+        @each $variant in $alignItemsVariants {
+            &-#{$variant} {
+                align-items: $variant;
+            }
+        }
+    }
+
+    @each $gapSizeName, $gapSizeValue in $gapSizes {
+        &--g-#{$gapSizeName} {
+            gap: $gapSizeValue;
+        }
+
+        &--rg-#{$gapSizeName} {
+            row-gap: $gapSizeValue;
+        }
+
+        &--cg-#{$gapSizeName} {
+            column-gap: $gapSizeValue;
+        }
+    }
+}

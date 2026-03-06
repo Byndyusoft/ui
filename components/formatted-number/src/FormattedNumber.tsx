@@ -1,4 +1,5 @@
 import React, { Fragment, useMemo } from 'react';
+import { nanoid } from 'nanoid';
 import { IFormattedNumberViewProps } from './FormattedNumber.types';
 import { getDefaultFormatter, parseNumberToPartsByDefault } from './FormattedNumber.utilities';
 
@@ -12,7 +13,7 @@ const FormattedNumber = ({
     numberPartsDividerClassName = ''
 }: IFormattedNumberViewProps): JSX.Element => {
     const numberParts = useMemo(
-        () => parseNumberToParts(formatter.format(number)),
+        () => parseNumberToParts(formatter.format(Math.abs(number))),
         [parseNumberToParts, formatter, number]
     );
 
@@ -22,7 +23,8 @@ const FormattedNumber = ({
                 const isLastNumberPart = numberPartIndex === numberParts.length - 1;
 
                 return (
-                    <Fragment key={`${number}_${numberPart}`}>
+                    <Fragment key={nanoid()}>
+                        {numberPartIndex === 0 && number < 0 && '−'}
                         {numberPart}
                         {!isLastNumberPart && (
                             /* eslint-disable react/forbid-dom-props */

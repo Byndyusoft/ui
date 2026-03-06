@@ -2,12 +2,10 @@
 
 ## Структура документации
 
-1. Описание компонента или хука
-2. Установка
-3. Использование (с примерами кода)
-4. Лицензия
-
-[Пример документации хука](#use-hook-namereadmemd)
+1. Нейминг
+2. Описание компонента
+3. Описание хука
+4. Общие рекомендации
 
 ## Нейминг
 
@@ -54,7 +52,7 @@ component-name // Название компонента в kebab case
 |   ├── ComponentName.types.ts
 |   ├── ComponentName.tests.tsx
 |   ├── ComponentName.stories.tsx
-|   ├── ComponentName.stories.css // стили историй
+|   ├── ComponentName.stories.module.css // стили историй
 |   ├── ComponentName.docs.mdx // документация компонента
 |   └── index.ts
 ├── README.md
@@ -63,6 +61,8 @@ component-name // Название компонента в kebab case
 ├── rollup.config.js
 └── tsconfig.json
 ```
+
+Шаблон файлов можно посмотреть в hygen-шаблоне компонента: `[rootDir]/.templates/create/component`
 
 ## Хук
 
@@ -76,7 +76,7 @@ use-hook-name // Название хука в kebab case
 |   ├── useHookName.utilities.ts // логика и методы хука
 |   ├── useHookName.tests.ts
 |   ├── useHookName.stories.tsx
-|   ├── useHookName.stories.css
+|   ├── useHookName.stories.module.css
 |   └── useHookName.docs.mdx // документация хука
 ├── README.md
 ├── package.json
@@ -85,105 +85,7 @@ use-hook-name // Название хука в kebab case
 └── tsconfig.json
 ```
 
-#### use-hook-name/README.md
-
-````markdown
-# `@byndyusoft-ui/use-hook-name`
-
-A React hook that uses hook name. // hook description
-
-### Installation
-
-```sh
-npm i @byndyusoft-ui/use-hook-name
-# or
-yarn add @byndyusoft-ui/use-hook-name
-```
-
-### Usage
-
-```ts
-// Usage examples
-```
-
-### License
-
-Apache-2.0
-
-### Author
-
-Name Surname
-````
-
-#### use-hook-name/package.json
-
-```json
-{
-    "name": "@byndyusoft-ui/use-hook-name",
-    "version": "0.1.0",
-    "description": "Byndyusoft UI React Hook",
-    "keywords": ["byndyusoft", "byndyusoft-ui", "react", "hook", "hook-name"],
-    "author": "Ivan Frontendov <frontendov@byndyusoft.com>",
-    "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-hook-name#readme",
-    "license": "Apache-2.0",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/Byndyusoft/ui.git"
-    },
-    "scripts": {
-        "build": "tsc --project tsconfig.build.json",
-        "clean": "rimraf dist",
-        "test": "jest --config ../../jest.config.js --roots hooks/use-hook-name/src",
-        "lint:check": "npm run eslint:check && npm run prettier:check && npm run stylelint:check",
-        "lint:fix": "npm run eslint:fix && npm run prettier:fix && npm run stylelint:fix",
-        "eslint:check": "eslint src --config ../../eslint.config.js",
-        "eslint:fix": "eslint src --config ../../eslint.config.js --fix",
-        "prettier:check": "prettier --check '**/*.{ts,tsx,css,scss,json}'",
-        "prettier:fix": "prettier --write '**/*.{ts,tsx,css,scss,json}'",
-        "stylelint:check": "stylelint '**/*.{css,scss}' --allow-empty-input",
-        "stylelint:fix": "stylelint '**/*.{css,scss}' --fix --allow-empty-input"
-    },
-    "bugs": {
-        "url": "https://github.com/Byndyusoft/ui/issues"
-    },
-    "publishConfig": {
-        "access": "public"
-    }
-}
-```
-
-#### use-hook-name/.npmignore
-
-```
-src
-```
-
-#### use-hook-name/tsconfig.build.json
-
-```json
-{
-    "extends": "./tsconfig.json",
-    "exclude": ["src/*.tests.ts", "src/*.stories.tsx"]
-}
-```
-
-#### use-hook-name/tsconfig.json
-
-```json
-{
-    "extends": "../../tsconfig.json",
-    "compilerOptions": {
-        "declaration": true,
-        "declarationDir": "dist",
-        "outDir": "dist",
-        "module": "commonjs",
-        "target": "es6"
-    },
-    "include": ["src"]
-}
-```
+Шаблон файлов можно посмотреть в hygen-шаблоне хука: `[rootDir]/.templates/create/hook`
 
 ### Возвращаемые значения хука
 
@@ -201,3 +103,9 @@ const [state, { mutateFn1, mutateFn2 }] = useHookName();
 
 Если пакет будет использоваться только в тестах или историях, то устанавливаем в package.json **проекта** в раздел **devDependencies**.\
 Если пакет нужен в самом компоненте, то устанавливаем в package.json **компонента** в раздел **peerDependencies**.
+
+## Общие рекомендации
+
+1. [Создавайте новые хуки и компоненты по hygen-шаблону](./README.md#create-a-new-entity)
+2. Библиотеки стилей следует импортировать в ts файл, а не в css/scss. Это необходимо, чтобы сборщик не положил их в бандл, и чтобы их импорт корректно сохранился в бандле
+3. Не забывайте указывать все зависимости пакета, в том числе и пакеты из этого репозитория, в package.json в peerDependencies и dependencies

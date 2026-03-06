@@ -1,6 +1,6 @@
 {
   "name": "@byndyusoft-ui/types",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Byndyusoft UI Utility Types",
   "keywords": [
     "byndyusoft",
@@ -19,7 +19,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist && rimraf .turbo && rimraf node_modules && rimraf package-lock.json"
   },
   "bugs": {
     "url": "https://github.com/Byndyusoft/ui/issues"

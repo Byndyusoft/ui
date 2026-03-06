@@ -7,10 +7,10 @@ interface ISetupProps {
     isDocumentListener?: boolean;
 }
 
-const handler = jest.fn();
+const handler = vi.fn();
 
 afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 });
 
 const Setup = ({ isDocumentListener }: ISetupProps): JSX.Element => {

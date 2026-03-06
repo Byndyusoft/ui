@@ -4,8 +4,8 @@
     "declaration": true,
     "declarationDir": "dist",
     "outDir": "dist",
-    "module": "commonjs",
-    "target": "es6"
+    "module": "ESNext"
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["src/**/*.stories.*", "src/**/__stories__", "src/**/*.docs.*", "src/**/*.tests.*", "src/**/__tests__"]
 }

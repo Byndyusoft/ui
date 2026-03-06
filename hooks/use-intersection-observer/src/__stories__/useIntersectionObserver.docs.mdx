@@ -1,0 +1,97 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import { Markdown } from '@storybook/blocks';
+import Readme from '../../README.md?raw';
+import * as useIntersectionObserverStories from './useIntersectionObserver.stories';
+
+<Meta title="hooks/useIntersectionObserver" of={useIntersectionObserverStories} />
+
+<Markdown>{Readme}</Markdown>
+
+# useIntersectionObserver stories
+### 1. Default settings
+```jsx
+const ref = useRef();
+const { isIntersecting, entry } = useIntersectionObserver(ref);
+```
+<Canvas>
+  <Story id="hooks-useintersectionobserver--default" />
+</Canvas>
+
+### 2. Threshold
+
+```jsx
+const ref = useRef();
+const { isIntersecting, entry } = useIntersectionObserver(ref, {
+  threshold: 0.5,
+});
+```
+<Canvas>
+  <Story id="hooks-useintersectionobserver--threshold" />
+</Canvas>
+
+### 3. Root margin
+
+```jsx
+const ref = useRef();
+const { isIntersecting, entry } = useIntersectionObserver(ref, {
+  rootMargin: "50px",
+});
+```
+<Canvas>
+  <Story id="hooks-useintersectionobserver--root-margin" />
+</Canvas>
+
+### 4. Skip
+```jsx
+const ref = useRef();
+const { isIntersecting, entry } = useIntersectionObserver(ref,{
+  skip: true,
+});
+```
+<Canvas>
+  <Story id="hooks-useintersectionobserver--skip" />
+</Canvas>
+
+### 5. Trigger once
+```jsx
+const ref = useRef();
+const { isIntersecting, entry } = useIntersectionObserver(ref, {
+  triggerOnce: true,
+});
+```
+<Canvas>
+  <Story id="hooks-useintersectionobserver--trigger-once" />
+</Canvas>
+
+### 6. onChange
+```jsx
+const ref = useRef();
+const { isIntersecting } = useIntersectionObserver(ref, {
+  onChange: (isIntersecting, entry) => {
+      console.log('useIntersectionObserver onChange', isIntersecting, entry)
+      if (isIntersecting) {
+          alert(`isIntersecting: ${isIntersecting}`);
+      }
+  }
+});
+```
+<Canvas>
+  <Story id="hooks-useintersectionobserver--on-change" />
+</Canvas>
+
+### 6. Delay
+```jsx
+const ref = useRef();
+const { isIntersecting, entry } = useIntersectionObserver(ref, {
+   delay: 1000, // experimental
+});
+```
+<Canvas>
+  <Story id="hooks-useintersectionobserver--delay" />
+</Canvas>
+
+
+### 7. Dynamic
+<Canvas>
+  <Story id="hooks-useintersectionobserver--dynamic" />
+</Canvas>

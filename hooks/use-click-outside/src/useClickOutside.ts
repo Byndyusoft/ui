@@ -1,4 +1,4 @@
-import { useCallback, MutableRefObject, useRef } from 'react';
+import { useCallback, MutableRefObject, useRef, useEffect } from 'react';
 import useEventListener from '@byndyusoft-ui/use-event-listener';
 
 export default function useClickOutside<T extends HTMLElement>(
@@ -6,28 +6,30 @@ export default function useClickOutside<T extends HTMLElement>(
     ...refs: Array<MutableRefObject<T | null> | HTMLElement | null>
 ): void {
     const documentRef = useRef(document);
-    const stringifiedRefs = JSON.stringify(refs);
+    const latestHandler = useRef(handler);
+    const latestRefs = useRef(refs);
 
-    const internalHandler = useCallback(
-        (e: Event): void => {
-            const refWithEvent = refs.find(ref => {
-                if (ref === null) {
-                    return false;
-                }
+    // Keep refs updated
+    useEffect(() => {
+        latestHandler.current = handler;
+        latestRefs.current = refs;
+    });
 
-                if (ref instanceof HTMLElement) {
-                    return ref.contains(e.target as Node);
-                }
+    const internalHandler = useCallback((e: Event) => {
+        const target = e.target as Node;
 
-                return ref.current?.contains(e.target as Node);
-            });
+        const isInside = latestRefs.current.some(ref => {
+            if (!ref) return false;
 
-            if (!refWithEvent) {
-                handler();
-            }
-        },
-        [stringifiedRefs, handler]
-    );
+            const element = ref instanceof HTMLElement ? ref : ref.current;
+
+            return element?.contains(target);
+        });
+
+        if (!isInside) {
+            latestHandler.current();
+        }
+    }, []); // Empty dependency array since we use latest refs
 
     useEventListener('click', internalHandler, documentRef);
 }

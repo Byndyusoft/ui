@@ -1,6 +1,6 @@
 {
   "name": "@byndyusoft-ui/use-previous",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Byndyusoft UI React Hook",
   "keywords": [
     "byndyusoft",
@@ -20,14 +20,13 @@
   },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
-    "clean": "rimraf dist",
-    "test": "jest --config ../../jest.config.js --roots hooks/use-previous/src",
+    "clean": "rimraf dist && rimraf .turbo && rimraf node_modules && rimraf package-lock.json",
     "lint:check": "npm run eslint:check && npm run prettier:check && npm run stylelint:check",
     "lint:fix": "npm run eslint:fix && npm run prettier:fix && npm run stylelint:fix",
     "eslint:check": "eslint src --config ../../eslint.config.js",
     "eslint:fix": "eslint src --config ../../eslint.config.js --fix",
-    "prettier:check": "prettier --check '**/*.{ts,tsx,css,scss,json}' '!**/dist/**'",
-    "prettier:fix": "prettier --write '**/*.{ts,tsx,css,scss,json}' '!**/dist/**'",
+    "prettier:check": "prettier --check \"**/*.{ts,tsx,css,scss,json}\"",
+    "prettier:fix": "prettier --write \"**/*.{ts,tsx,css,scss,json}\"",
     "stylelint:check": "stylelint '**/*.{css,scss}' --allow-empty-input",
     "stylelint:fix": "stylelint '**/*.{css,scss}' --fix --allow-empty-input"
   },
