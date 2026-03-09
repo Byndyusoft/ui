@@ -1,5 +1,5 @@
-import {useCallback, useState} from 'react';
-import * as localStorage from '@byndyusoft-ui/local-storage';
+import { useCallback, useMemo, useRef, useState } from 'react';
+import { TSerializeValue, TDeserializeValue, LocalStorageService } from '@byndyusoft-ui/local-storage';
 import useEventListener from '@byndyusoft-ui/use-event-listener';
 
 export interface IUseLocalStorageActions<TValue> {
@@ -8,8 +8,9 @@ export interface IUseLocalStorageActions<TValue> {
 }
 
 export interface IUseLocalStorageOptions<TValue> {
-    serialize: (value: TValue) => string;
-    deserialize: (raw: string) => TValue;
+    serialize?: TSerializeValue<TValue>;
+    deserialize?: TDeserializeValue<TValue>;
+    syncTabs?: boolean;
 }
 
 export type TUseLocalStorage<TValue> = [TValue, IUseLocalStorageActions<TValue>];
@@ -19,33 +20,44 @@ export default function useLocalStorage<TValue>(
     defaultValue: TValue,
     options?: IUseLocalStorageOptions<TValue>
 ): TUseLocalStorage<TValue> {
-    const [storedValue, setStoredValue] = useState<TValue>(() =>
-        localStorage.getValue(key, defaultValue, options?.deserialize)
+    const service = useRef(
+        new LocalStorageService(key, defaultValue, { serialize: options?.serialize, deserialize: options?.deserialize })
     );
+
+    const [storedValue, setStoredValue] = useState<TValue>(() => service.current.getValue());
 
     const setValue = useCallback(
         (nextValue: TValue) => {
-            localStorage.setValue(key, nextValue, options?.serialize);
+            service.current.setValue(nextValue);
             setStoredValue(nextValue);
         },
         [key, options]
     );
 
     const removeValue = useCallback(() => {
-        localStorage.removeValue(key);
+        service.current.removeValue();
         setStoredValue(defaultValue);
     }, [key, defaultValue]);
 
     const handleEvent = useCallback(
         (event: StorageEvent) => {
-            if (window.localStorage === event.storageArea && event.key === key) {
-                setStoredValue((event.newValue as TValue) ?? defaultValue);
+            if (event.key !== key) {
+                return;
+            }
+
+            if (window.localStorage === event.storageArea || options?.syncTabs) {
+                setStoredValue(event.newValue ? service.current.deserialize(event.newValue) : defaultValue);
             }
         },
-        [key]
+        [key, options]
     );
 
     useEventListener('storage', handleEvent);
 
-    return [storedValue, { setValue, removeValue }];
+    const methods = useMemo<IUseLocalStorageActions<TValue>>(
+        () => ({ setValue, removeValue }),
+        [setValue, removeValue]
+    );
+
+    return [storedValue, methods];
 }

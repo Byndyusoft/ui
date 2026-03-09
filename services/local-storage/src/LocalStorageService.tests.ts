@@ -1,5 +1,5 @@
 import { LocalStorageService } from './LocalStorageService';
-import { TDeserializer, TSerializer } from './LocalStorageService.types';
+import { TDeserializeValue, TSerializeValue } from './LocalStorageService.types';
 
 describe('services/local-storage', () => {
     const KEY = 'ls-test-key';
@@ -67,10 +67,10 @@ describe('services/local-storage', () => {
             foo: string;
         }
 
-        const serialize = vi.fn((value: IValue) => `(${value.foo})`) as TSerializer<IValue>;
-        const deserialize = vi.fn((raw: string) => ({ foo: raw.slice(1, -1) })) as TDeserializer<IValue>;
+        const serialize = vi.fn((value: IValue) => `(${value.foo})`) as TSerializeValue<IValue>;
+        const deserialize = vi.fn((raw: string) => ({ foo: raw.slice(1, -1) })) as TDeserializeValue<IValue>;
 
-        const service = new LocalStorageService<IValue>(KEY, { foo: 'default' }, serialize, deserialize);
+        const service = new LocalStorageService<IValue>(KEY, { foo: 'default' }, { serialize, deserialize });
 
         service.setValue({ foo: 'bar' });
 

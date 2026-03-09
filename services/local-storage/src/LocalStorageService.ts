@@ -1,26 +1,21 @@
-import { TDeserializer, TSerializer } from './LocalStorageService.types';
+import { IOptions, TDeserializeValue, TSerializeValue } from './LocalStorageService.types';
 import { defaultDeserializer, defaultSerializer, hasValue, removeValue, setValue, getValue, clear } from './utilities';
 
 export class LocalStorageService<TValue> {
     private readonly key: string;
     private readonly defaultValue: TValue;
-    private readonly serializer?: TSerializer<TValue>;
-    private readonly deserializer?: TDeserializer<TValue>;
+    readonly serialize: TSerializeValue<TValue>;
+    readonly deserialize: TDeserializeValue<TValue>;
 
-    constructor(
-        key: string,
-        defaultValue: TValue,
-        serializer: TSerializer<TValue> = defaultSerializer,
-        deserialize: TDeserializer<TValue> = defaultDeserializer
-    ) {
+    constructor(key: string, defaultValue: TValue, options?: IOptions<TValue>) {
         this.key = key;
         this.defaultValue = defaultValue;
-        this.serializer = serializer;
-        this.deserializer = deserialize;
+        this.serialize = options?.serialize ?? defaultSerializer;
+        this.deserialize = options?.deserialize ?? defaultDeserializer;
     }
 
     getValue(): TValue {
-        return getValue(this.key, this.defaultValue, this.deserializer);
+        return getValue(this.key, this.defaultValue, this.deserialize);
     }
 
     hasValue(): boolean {
@@ -32,7 +27,7 @@ export class LocalStorageService<TValue> {
     }
 
     setValue(value: TValue): void {
-        setValue(this.key, value, this.serializer);
+        setValue(this.key, value, this.serialize);
     }
 
     clear(): void {
