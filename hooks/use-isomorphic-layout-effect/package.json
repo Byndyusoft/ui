@@ -20,8 +20,7 @@
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "rimraf dist && rimraf .turbo && rimraf node_modules && rimraf package-lock.json",
-    "lint": "eslint src --config ../../eslint.config.js",
-    "test": "vitest run"
+    "lint": "eslint src --config ../../eslint.config.js"
   },
   "bugs": {
     "url": "https://github.com/Byndyusoft/ui/issues"
