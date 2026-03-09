@@ -1,6 +1,6 @@
 {
   "name": "@byndyusoft-ui/use-interval",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Byndyusoft UI React Hook",
   "keywords": [
     "byndyusoft",
@@ -38,6 +38,6 @@
   },
   "dependencies": {
     "@byndyusoft-ui/types": "^0.3.0",
-    "@byndyusoft-ui/use-latest-ref": "^1.0.0"
+    "@byndyusoft-ui/use-latest-ref": "^1.0.1"
   }
 }
