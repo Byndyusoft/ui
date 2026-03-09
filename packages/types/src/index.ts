@@ -7,7 +7,6 @@ export * from './IntervalId';
 export * from './Nullable';
 export * from './PlainObject';
 export * from './Predicate';
-export * from './StorageService';
 export * from './PropertyKey';
 export * from './TimeoutId';
 export * from './Tuple';
