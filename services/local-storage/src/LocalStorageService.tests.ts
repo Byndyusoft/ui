@@ -49,19 +49,6 @@ describe('services/local-storage', () => {
         expect(window.localStorage.getItem('other-key')).toBe('other');
     });
 
-    test('clears all keys in localStorage', () => {
-        const service = new LocalStorageService<string>(KEY, 'default');
-
-        window.localStorage.setItem('other-key', 'other');
-        service.setValue('value');
-
-        service.clear();
-
-        expect(window.localStorage.getItem(KEY)).toBeNull();
-        expect(window.localStorage.getItem('other-key')).toBeNull();
-        expect(window.localStorage.length).toBe(0);
-    });
-
     test('uses custom serializer and deserializer when provided', () => {
         interface IValue {
             foo: string;

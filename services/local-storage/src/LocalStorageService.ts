@@ -1,5 +1,5 @@
 import { IOptions, TDeserializeValue, TSerializeValue } from './LocalStorageService.types';
-import { defaultDeserializer, defaultSerializer, hasValue, removeValue, setValue, getValue, clear } from './utilities';
+import { defaultDeserializer, defaultSerializer, hasValue, removeValue, setValue, getValue } from './utilities';
 
 export class LocalStorageService<TValue> {
     private readonly key: string;
@@ -28,9 +28,5 @@ export class LocalStorageService<TValue> {
 
     setValue(value: TValue): void {
         setValue(this.key, value, this.serialize);
-    }
-
-    clear(): void {
-        clear();
     }
 }
