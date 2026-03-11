@@ -1,0 +1,36 @@
+{
+  "name": "@byndyusoft-ui/use-debounced-value",
+  "version": "0.0.0",
+  "description": "Byndyusoft UI React Hook",
+  "keywords": [
+    "byndyusoft",
+    "byndyusoft-ui",
+    "react",
+    "hook",
+    "debounce"
+  ],
+  "author": "Anastasia Vasenina <vasenina@byndyusoft.com>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-debounced-value#readme",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Byndyusoft/ui.git"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "clean": "rimraf dist",
+    "lint": "eslint src --config ../../eslint.config.js",
+    "test": "jest --config ../../jest.config.js --roots hooks/use-debounced-value/src"
+  },
+  "bugs": {
+    "url": "https://github.com/Byndyusoft/ui/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "@byndyusoft-ui/use-debounced-callback": "*"
+  }
+}

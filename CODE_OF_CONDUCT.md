@@ -76,7 +76,7 @@ use-hook-name // Название хука в kebab case
 |   ├── useHookName.utilities.ts // логика и методы хука
 |   ├── useHookName.tests.ts
 |   ├── useHookName.stories.tsx
-|   ├── useHookName.stories.module.css
+|   ├── useHookName.stories.css
 |   └── useHookName.docs.mdx // документация хука
 ├── README.md
 ├── package.json
@@ -85,7 +85,98 @@ use-hook-name // Название хука в kebab case
 └── tsconfig.json
 ```
 
-Шаблон файлов можно посмотреть в hygen-шаблоне хука: `[rootDir]/.templates/create/hook`
+#### use-hook-name/README.md
+
+````markdown
+# `@byndyusoft-ui/use-hook-name`
+
+A React hook that uses hook name. // hook description
+
+### Installation
+
+```sh
+npm i @byndyusoft-ui/use-hook-name
+# or
+yarn add @byndyusoft-ui/use-hook-name
+```
+
+### Usage
+
+```ts
+// Usage examples
+```
+
+### License
+
+Apache-2.0
+
+### Author
+
+Name Surname
+````
+
+#### use-hook-name/package.json
+
+```json
+{
+    "name": "@byndyusoft-ui/use-hook-name",
+    "version": "0.1.0",
+    "description": "Byndyusoft UI React Hook",
+    "keywords": ["byndyusoft", "byndyusoft-ui", "react", "hook", "hook-name"],
+    "author": "Ivan Frontendov <frontendov@byndyusoft.com>",
+    "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-hook-name#readme",
+    "license": "Apache-2.0",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Byndyusoft/ui.git"
+    },
+    "scripts": {
+        "build": "tsc --project tsconfig.build.json",
+        "clean": "rimraf dist",
+        "lint": "eslint src --config ../../eslint.config.js",
+        "test": "jest --config ../../jest.config.js --roots hooks/use-hook-name/src"
+    },
+    "bugs": {
+        "url": "https://github.com/Byndyusoft/ui/issues"
+    },
+    "publishConfig": {
+        "access": "public"
+    }
+}
+```
+
+#### use-hook-name/.npmignore
+
+```
+src
+```
+
+#### use-hook-name/tsconfig.build.json
+
+```json
+{
+    "extends": "./tsconfig.json",
+    "exclude": ["src/*.tests.ts", "src/*.stories.tsx"]
+}
+```
+
+#### use-hook-name/tsconfig.json
+
+```json
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "declaration": true,
+        "declarationDir": "dist",
+        "outDir": "dist",
+        "module": "commonjs",
+        "target": "es6"
+    },
+    "include": ["src"]
+}
+```
 
 ### Возвращаемые значения хука
 

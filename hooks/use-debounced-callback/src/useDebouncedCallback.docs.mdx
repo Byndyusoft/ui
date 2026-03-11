@@ -1,0 +1,19 @@
+import { Markdown, Source, Canvas, Meta } from '@storybook/blocks';
+import * as useDebouncedCallbackStories from './useDebouncedCallback.stories';
+import Readme from '../README.md';
+
+<Meta title="hooks/useDebouncedCallback" of={useDebouncedCallbackStories} />
+
+<Markdown>{Readme}</Markdown>
+
+## Guide
+
+To use the hook in your project you must:
+
+1. Import the hook where you need it:
+
+<Source language="javascript" code="import useDebouncedCallback from '@byndyusoft-ui/use-debounced-callback';" />
+
+2. Give callback and delay args.
+
+<Canvas sourceState="shown" of={useDebouncedCallbackStories.DebouncedColorChangeStory} />

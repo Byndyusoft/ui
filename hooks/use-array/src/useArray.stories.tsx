@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StoryObj } from '@storybook/react';
 import useArray from './useArray';
-import './useArrayStory.css';
+import styles from './useArray.stories.module.css';
 
 const Template = (): JSX.Element => {
     const [addValue, setAddValue] = useState(0);
@@ -18,81 +18,89 @@ const Template = (): JSX.Element => {
             <h1>List</h1>
             <strong>{list.length > 0 ? list.join(', ') : 'Empty'}</strong>
             <hr />
-            <div className="container">
-                <div className="row">
+            <div className={styles.container}>
+                <div className={styles.row}>
                     <input
-                        className="input"
+                        className={styles.input}
                         value={addValue}
                         type="numeric"
                         onChange={e => setAddValue(Number(e.target.value))}
                     />
-                    <button type="button" onClick={() => append(addValue)}>
+                    <button className={styles.button} type="button" onClick={() => append(addValue)}>
                         Append
                     </button>
                 </div>
-                <div className="row">
+                <div className={styles.row}>
                     <input
-                        className="input"
+                        className={styles.input}
                         value={prependValue}
                         type="numeric"
                         onChange={e => setPrependValue(Number(e.target.value))}
                     />
-                    <button onClick={() => prepend(prependValue)}>Prepend</button>
+                    <button className={styles.button} onClick={() => prepend(prependValue)}>
+                        Prepend
+                    </button>
                 </div>
-                <div className="row">
+                <div className={styles.row}>
                     <span>from</span>
                     <input
-                        className="input"
+                        className={styles.input}
                         value={fromValue}
                         type="numeric"
                         onChange={e => setFromValue(Number(e.target.value))}
                     />
                     <span>to</span>
                     <input
-                        className="input"
+                        className={styles.input}
                         value={lessValue}
                         type="numeric"
                         onChange={e => setLessValue(Number(e.target.value))}
                     />
-                    <button onClick={() => filter(a => a >= fromValue && a <= lessValue)}>Filter</button>
+                    <button className={styles.button} onClick={() => filter(a => a >= fromValue && a <= lessValue)}>
+                        Filter
+                    </button>
                 </div>
-                <div className="row">
+                <div className={styles.row}>
                     <span>index</span>
                     <input
-                        className="input"
+                        className={styles.input}
                         value={indexUpdateValue}
                         type="numeric"
                         onChange={e => setIndexUpdateValue(Number(e.target.value))}
                     />
                     <span>item</span>
                     <input
-                        className="input"
+                        className={styles.input}
                         value={updateValue}
                         type="numeric"
                         onChange={e => setUpdateValue(Number(e.target.value))}
                     />
-                    <button onClick={() => update(indexUpdateValue, updateValue)}>Update</button>
+                    <button className={styles.button} onClick={() => update(indexUpdateValue, updateValue)}>
+                        Update
+                    </button>
                 </div>
-                <div className="row">
+                <div className={styles.row}>
                     <input
-                        className="input"
+                        className={styles.input}
                         value={indexRemoveValue}
                         type="numeric"
                         onChange={e => setIndexRemoveValue(Number(e.target.value))}
                     />
-                    <button onClick={() => remove(indexRemoveValue)}>Remove</button>
+                    <button className={styles.button} onClick={() => remove(indexRemoveValue)}>
+                        Remove
+                    </button>
                 </div>
-                <div className="row">
-                    <button type="button" onClick={() => reset()}>
+                <div className={styles.row}>
+                    <button className={styles.button} type="button" onClick={() => reset()}>
                         Reset
                     </button>
-                    <button type="button" onClick={() => clear()}>
+                    <button className={styles.button} type="button" onClick={() => clear()}>
                         Clear
                     </button>
-                    <button type="button" onClick={() => sort((a, b) => a - b)}>
+                    <button className={styles.button} type="button" onClick={() => sort((a, b) => a - b)}>
                         Sort ASC
                     </button>
-                    <button type="button" onClick={() => sort((a, b) => b - a)}>
+                    <button className={styles.button} type="button" onClick={() => sort((a, b) => b - a)}>
                         Sort DES
                     </button>
                 </div>

@@ -1,0 +1,36 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.block {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 2rem;
+}
+
+.title {
+    width: 8rem;
+}
+
+.input {
+    max-height: 3.5rem;
+    width: 12rem;
+}
+
+.divider {
+    width: 100%;
+    height: 1px;
+    margin: 0.5rem 0;
+
+    background-color: gray;
+}
