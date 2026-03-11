@@ -52,7 +52,7 @@ const SetupMultipleInstances = (): JSX.Element => {
                 Block B
             </div>
             <div aria-label="outside">Outside</div>
-            {clicked != null && <span data-testid="clicked">{clicked}</span>}
+            {clicked !== null && <span data-testid="clicked">{clicked}</span>}
         </div>
     );
 };

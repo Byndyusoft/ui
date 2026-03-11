@@ -35,7 +35,9 @@ const ensureGlobalEventHandler = (): void => {
                     continue;
                 }
 
-                const isClickOutside = !refs.some(ref => ref?.current != null && ref.current.contains(target));
+                const isClickOutside = !refs.some(
+                    ref => ref !== null && ref.current !== null && ref.current.contains(target)
+                );
 
                 if (isClickOutside) {
                     handlerRef.current(event);
@@ -49,7 +51,7 @@ const ensureGlobalEventHandler = (): void => {
 
 // Функция для очистки глобального обработчика
 const cleanupGlobalEventHandler = (): void => {
-    if (globalEventHandler != null && globalRegistry.size === 0) {
+    if (globalEventHandler !== null && globalRegistry.size === 0) {
         document.removeEventListener('pointerdown', globalEventHandler);
         globalEventHandler = null;
     }
