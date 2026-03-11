@@ -1,17 +1,15 @@
 {
-  "name": "@byndyusoft-ui/use-intersection-observer",
+  "name": "@byndyusoft-ui/local-storage",
   "version": "0.0.1",
-  "description": "Byndyusoft UI React Hook",
+  "description": "Byndyusoft UI Local Storage Service",
   "keywords": [
     "byndyusoft",
     "byndyusoft-ui",
-    "react",
-    "hook",
-    "intersection-observer"
+    "local-storage"
   ],
-  "author": "Gleb Fomin <gleb.fom28@gmail.com>",
-  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-intersection-observer#readme",
-  "license": "Apache-2.0",
+  "author": "Eugene Abrosimov <sadcitizen@yandex.ru>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/services/local-storage#readme",
+  "license": "ISC",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
@@ -19,7 +17,7 @@
     "url": "git+https://github.com/Byndyusoft/ui.git"
   },
   "scripts": {
-    "build": "tsc --project tsconfig.build.json",
+    "build": "tsc",
     "clean": "rimraf dist && rimraf .turbo && rimraf node_modules && rimraf package-lock.json",
     "lint": "eslint src --config ../../eslint.config.js"
   },
@@ -28,5 +26,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@byndyusoft-ui/types": "^0.3.0"
   }
 }
