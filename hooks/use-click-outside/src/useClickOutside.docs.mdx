@@ -1,0 +1,33 @@
+import { Markdown, Meta, Canvas, Source } from '@storybook/blocks';
+import Readme from '../README.md?raw';
+import * as useClickOutsideStories from './useClickOutside.stories';
+
+<Meta title="hooks/useClickOutside" of={useClickOutsideStories} />
+
+<Markdown>{Readme}</Markdown>
+
+## Usage
+
+1. Import the hook:
+
+<Source language="javascript" code="import useClickOutside from '@byndyusoft-ui/use-click-outside';" />
+
+2. Call the hook with a handler and an array of refs for elements that should not trigger the handler when clicked inside. Pass options (e.g. `disabled`) if needed.
+
+**Multiple refs** — the handler runs only when the click is outside all of the given elements:
+
+<Canvas sourceState="shown" of={useClickOutsideStories.MultipleRefsStory} />
+
+**Disabled option** — when `disabled: true`, the handler is not called:
+
+<Canvas sourceState="shown" of={useClickOutsideStories.DisabledStory} />
+
+**Dropdown** — typical use case: button + panel; clicking outside both closes the panel:
+
+<Canvas sourceState="shown" of={useClickOutsideStories.DropdownStory} />
+
+## Notes
+
+- Uses the **pointerdown** event (mouse, touch, pen). The handler receives a `PointerEvent`.
+- The `refs` array may be stable (e.g. via `useMemo`) or recreated on every render — the hook keeps handler and refs up to date via refs and does not require strict stabilization.
+- Empty refs array: when clicking outside “nothing”, the handler is not called (no “inside” elements, so the “outside all” condition does not lead to a call).

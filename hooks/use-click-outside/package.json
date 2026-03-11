@@ -38,6 +38,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@byndyusoft-ui/use-event-listener": "^0.1.2"
+    "@byndyusoft-ui/use-latest-ref": "^1.0.0"
   }
 }
