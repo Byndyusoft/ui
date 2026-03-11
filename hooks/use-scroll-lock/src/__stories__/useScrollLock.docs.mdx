@@ -1,0 +1,13 @@
+import { Meta, Markdown, Story, Canvas } from '@storybook/addon-docs';
+import Readme from '../../README.md?raw';
+import * as useScrollLockStories from './useScrollLock.stories';
+
+<Meta title="hooks/useScrollLock" of={useScrollLockStories} />
+
+<Markdown>{Readme}</Markdown>
+
+## Story
+
+<Canvas withSource="open" of={useScrollLockStories.UseScrollLockWithTarget}>
+    <Story story={useScrollLockStories.UseScrollLockWithTarget} />
+</Canvas>

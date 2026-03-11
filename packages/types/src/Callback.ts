@@ -1,5 +1,5 @@
-import { IsTuple } from "./IsTuple";
-
-export type Callback<V = never, R = void> = IsTuple<V> extends true
-  ? (...args: V extends unknown[] ? V : []) => R
-  : (arg: V) => R;
+export type Callback<V = never, R = void> = [V] extends [never]
+    ? () => R
+    : V extends unknown[]
+    ? (...args: V) => R
+    : (arg: V) => R;

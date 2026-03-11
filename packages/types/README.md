@@ -65,14 +65,19 @@ callback(100); // return string
 ```
 
 ```typescript
-type TArgs = [number, number, number];
+type TArgs = [
+    number,
+    number,
+    number? // optional argument
+];
 type TReturn = boolean;
 
-const callback: Callback<TArgs, TReturn> = (num1, num2, num3) => {
+const callback: Callback<TArgs, TReturn> = (num1, num2, num3 = -5) => {
     return 0 < num1 + num2 + num3;
 };
 
-callback(1, 2, 3); // return boolean
+callback(1, 2); // return false
+callback(1, 2, 3); // return true
 ```
 
 ```typescript
@@ -172,22 +177,24 @@ import { IsTuple } from '@byndyusoft-ui/types';
 
 type Test1 = IsTuple<string>; // false
 type Test2 = IsTuple<Array<string>>; // false
-type Test3 = IsTuple<[string]>; // true
-type Test4 = IsTuple<[string, number]>; // true
+type Test3 = IsTuple<unknown[]>; // false
+type Test4 = IsTuple<[]>; // true
+type Test5 = IsTuple<[string]>; // true
+type Test6 = IsTuple<[string, number?]>; // true
 ```
 
 ### PlainObject
 
 ```typescript
 const date: object = new Date(); // ok
-const rgx: object = new RegExp('[a-z]'); // ok 
+const rgx: object = new RegExp('[a-z]'); // ok
 ```
 
 ```typescript
 import { PlainObject } from '@byndyusoft-ui/types';
 
 const date: PlainObject = new Date(); // Type 'Date' is not assignable to type 'PlainObject<unknown>'.
-const rgx: PlainObject = new RegExp('[a-z]'); // Type 'RegExp' is not assignable to type 'PlainObject<unknown>'. 
+const rgx: PlainObject = new RegExp('[a-z]'); // Type 'RegExp' is not assignable to type 'PlainObject<unknown>'.
 
 const a: PlainObject = { a: 'b', c: 'd' }; // ok
 ```

@@ -4,8 +4,7 @@
     "declaration": true,
     "declarationDir": "dist",
     "outDir": "dist",
-    "module": "commonjs",
-    "target": "es6"
+    "module": "commonjs"
   },
-  "include": ["src"]
+  "include": ["../../types.d.ts", "src"]
 }

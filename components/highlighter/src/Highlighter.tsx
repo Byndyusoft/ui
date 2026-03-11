@@ -21,7 +21,8 @@ const Highlighter = ({
     highlighter = renderMarkedHighlight
 }: IHighlighterProps): JSX.Element => {
     // If no highlight patterns are provided, return the original text
-    if (!searchValues || searchValues.length === 0) {
+    if (searchValues.length === 0) {
+        // eslint-disable-next-line react/jsx-no-useless-fragment
         return <>{text}</>;
     }
 
@@ -37,6 +38,7 @@ const Highlighter = ({
 
     // If no matches found, return the original text
     if (matches.length === 0) {
+        // eslint-disable-next-line react/jsx-no-useless-fragment
         return <>{text}</>;
     }
 
@@ -44,13 +46,14 @@ const Highlighter = ({
     const segments = splitTextIntoSegments(text, matches);
 
     // Highlight matches
-    const result: Array<string | ReactNode> = segments.map(part => {
-        return part.isMatch ? highlighter(part.segment) : part.segment;
-    });
+    const result: Array<string | ReactNode> = segments.map(part =>
+        part.isMatch ? highlighter(part.segment) : part.segment
+    );
 
     return (
         <>
             {result.map((val, i) => (
+                // eslint-disable-next-line react/no-array-index-key
                 <Fragment key={`${String(val)}_${i}`}>{val}</Fragment>
             ))}
         </>

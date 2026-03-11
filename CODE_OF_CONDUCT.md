@@ -2,12 +2,10 @@
 
 ## Структура документации
 
-1. Описание компонента или хука
-2. Установка
-3. Использование (с примерами кода)
-4. Лицензия
-
-[Пример документации хука](#use-hook-namereadmemd)
+1. Нейминг
+2. Описание компонента
+3. Описание хука
+4. Общие рекомендации
 
 ## Нейминг
 
@@ -34,8 +32,6 @@
 Если изменён объект внутри компонента, к примеру. То можно использовать такую форму записи:
 
 `fix(Dropdown/Item): change styles names`
-
-
 
 ## Компонент
 
@@ -66,6 +62,8 @@ component-name // Название компонента в kebab case
 └── tsconfig.json
 ```
 
+Шаблон файлов можно посмотреть в hygen-шаблоне компонента: `[rootDir]/.templates/create/component`
+
 ## Хук
 
 ### Структура хука
@@ -78,7 +76,7 @@ use-hook-name // Название хука в kebab case
 |   ├── useHookName.utilities.ts // логика и методы хука
 |   ├── useHookName.tests.ts
 |   ├── useHookName.stories.tsx
-|   ├── useHookName.stories.module.css // стили историй
+|   ├── useHookName.stories.css
 |   └── useHookName.docs.mdx // документация хука
 ├── README.md
 ├── package.json
@@ -159,8 +157,8 @@ src
 
 ```json
 {
-  "extends": "./tsconfig.json",
-  "exclude": ["src/*.tests.ts", "src/*.stories.tsx"]
+    "extends": "./tsconfig.json",
+    "exclude": ["src/*.tests.ts", "src/*.stories.tsx"]
 }
 ```
 
@@ -176,7 +174,7 @@ src
         "module": "commonjs",
         "target": "es6"
     },
-    "include": ["src", "src/*.stories.tsx"]
+    "include": ["src"]
 }
 ```
 
@@ -196,3 +194,9 @@ const [state, { mutateFn1, mutateFn2 }] = useHookName();
 
 Если пакет будет использоваться только в тестах или историях, то устанавливаем в package.json **проекта** в раздел **devDependencies**.\
 Если пакет нужен в самом компоненте, то устанавливаем в package.json **компонента** в раздел **peerDependencies**.
+
+## Общие рекомендации
+
+1. [Создавайте новые хуки и компоненты по hygen-шаблону](./README.md#create-a-new-entity)
+2. Библиотеки стилей следует импортировать в ts файл, а не в css/scss. Это необходимо, чтобы сборщик не положил их в бандл, и чтобы их импорт корректно сохранился в бандле
+3. Не забывайте указывать все зависимости пакета, в том числе и пакеты из этого репозитория, в package.json в peerDependencies и dependencies

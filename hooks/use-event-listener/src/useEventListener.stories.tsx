@@ -13,7 +13,16 @@ const MouseEventTemplate = (): JSX.Element => {
     useEventListener('mousemove', handler, ref);
 
     return (
-        <div ref={ref}>
+        <div
+            ref={ref}
+            style={{
+                width: '300px',
+                height: '200px',
+                padding: '25px',
+                cursor: 'pointer',
+                backgroundColor: 'lightblue'
+            }}
+        >
             Mouse coordinates: {coords.x}, {coords.y}
         </div>
     );
@@ -21,7 +30,7 @@ const MouseEventTemplate = (): JSX.Element => {
 
 export const MouseEventStory: TMouseEventTemplateStory = {
     name: 'Mouse event',
-    decorators: [() => <MouseEventTemplate />]
+    decorators: [(): JSX.Element => <MouseEventTemplate />]
 };
 
 type TKeyboardEventTemplateStory = StoryObj<typeof KeyboardEventTemplate>;
@@ -38,7 +47,7 @@ const KeyboardEventTemplate = (): JSX.Element => {
 
 export const KeyboardEventStory: TKeyboardEventTemplateStory = {
     name: 'Keyboard event',
-    decorators: [() => <KeyboardEventTemplate />]
+    decorators: [(): JSX.Element => <KeyboardEventTemplate />]
 };
 
 type THTMLElementTemplateStory = StoryObj<typeof HTMLElementTemplate>;
@@ -59,7 +68,7 @@ const HTMLElementTemplate = (): JSX.Element => {
 
 export const HTMLElementStory: THTMLElementTemplateStory = {
     name: 'HTML element',
-    decorators: [() => <HTMLElementTemplate />]
+    decorators: [(): JSX.Element => <HTMLElementTemplate />]
 };
 
 export default {

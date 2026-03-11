@@ -33,7 +33,7 @@ function useEventListener<
     KW extends keyof WindowEventMap,
     KH extends keyof HTMLElementEventMap,
     KM extends keyof MediaQueryListEventMap,
-    T extends HTMLElement | MediaQueryList | void = void
+    T extends HTMLElement | MediaQueryList | undefined = undefined
 >(
     eventName: KW | KH | KM,
     handler: (event: WindowEventMap[KW] | HTMLElementEventMap[KH] | MediaQueryListEventMap[KM] | Event) => void,
@@ -45,7 +45,8 @@ function useEventListener<
     useEffect(() => {
         const targetElement: T | Window = target?.current ?? window;
 
-        if (!(targetElement && targetElement.addEventListener)) return;
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        if (!targetElement?.addEventListener) return;
 
         const listener: typeof handler = event => savedHandler.current(event);
 

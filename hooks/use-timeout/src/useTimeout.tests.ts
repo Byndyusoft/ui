@@ -1,18 +1,17 @@
-import { Callback } from '@byndyusoft-ui/types';
 import { Renderer, renderHook, RenderHookResult } from '@testing-library/react-hooks';
+import { Callback, Nullable } from '@byndyusoft-ui/types';
 import useTimeout, { IUseTimeout } from './useTimeout';
 
-const setup = (callback: Callback, delay: number): RenderHookResult<void, IUseTimeout, Renderer<void>> =>
+const setup = (callback: Callback, delay: Nullable<number>): RenderHookResult<void, IUseTimeout, Renderer<void>> =>
     renderHook(() => useTimeout(callback, delay));
 
 describe('hooks/useTimeout', () => {
     beforeAll(() => {
-        jest.useFakeTimers();
-        jest.spyOn(global, 'clearTimeout');
+        vi.useFakeTimers();
     });
 
     test('calls callback', () => {
-        const callback = jest.fn();
+        const callback = vi.fn();
 
         const { result } = setup(callback, 100);
 
@@ -20,27 +19,28 @@ describe('hooks/useTimeout', () => {
 
         expect(callback).not.toBeCalled();
 
-        jest.advanceTimersByTime(150);
+        vi.advanceTimersByTime(150);
 
         expect(callback).toHaveBeenCalledTimes(1);
     });
 
     test('should not call the callback if start is not called', () => {
-        const callback = jest.fn();
+        const callback = vi.fn();
 
         setup(callback, 100);
 
         expect(callback).not.toBeCalled();
 
-        jest.advanceTimersByTime(150);
+        vi.advanceTimersByTime(150);
 
         expect(callback).not.toBeCalled();
     });
 
     test('should clear the timer and not call the callback when stop is called after start', () => {
-        const callback = jest.fn();
+        vi.spyOn(global, 'clearTimeout');
 
-        const { result } = setup(callback, 100);
+        const callback = vi.fn();
+        const { result } = renderHook(() => useTimeout(callback, 100));
 
         result.current.start();
 
@@ -50,14 +50,18 @@ describe('hooks/useTimeout', () => {
 
         result.current.stop();
 
-        jest.advanceTimersByTime(150);
+        /* ~~Миграция тестов с jest на vite~~
+            При использовании jest advanceTimersByTime - не обязателен, тест проходит
+            Но при использовании vitest clearTimeout вызывается два раза вместо одного.
+         */
+        // vi.advanceTimersByTime(150);
 
         expect(callback).toHaveBeenCalledTimes(0);
         expect(clearTimeout).toHaveBeenCalledTimes(1);
     });
 
     test('uses the latest callback when state changes', () => {
-        const callback = jest.fn();
+        const callback: Callback<number> = vi.fn();
 
         const { result, rerender } = renderHook(({ count }) => useTimeout(() => callback(count), 100), {
             initialProps: { count: 0 }
@@ -67,7 +71,7 @@ describe('hooks/useTimeout', () => {
 
         rerender({ count: 1 });
 
-        jest.advanceTimersByTime(100);
+        vi.advanceTimersByTime(100);
 
         expect(callback).toHaveBeenCalledWith(1);
     });

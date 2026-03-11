@@ -1,0 +1,22 @@
+:root {
+    --spacing-unit: 1rem;
+
+    --su025: calc(var(--spacing-unit) * 0.25);
+    --su050: calc(var(--spacing-unit) * 0.5);
+    --su075: calc(var(--spacing-unit) * 0.75);
+    --su100: calc(var(--spacing-unit) * 1);
+    --su125: calc(var(--spacing-unit) * 1.25);
+    --su150: calc(var(--spacing-unit) * 1.5);
+    --su175: calc(var(--spacing-unit) * 1.75);
+    --su200: calc(var(--spacing-unit) * 2);
+    --su250: calc(var(--spacing-unit) * 2.5);
+    --su300: calc(var(--spacing-unit) * 3);
+    --su350: calc(var(--spacing-unit) * 3.5);
+    --su400: calc(var(--spacing-unit) * 4);
+    --su500: calc(var(--spacing-unit) * 5);
+    --su600: calc(var(--spacing-unit) * 6);
+    --su700: calc(var(--spacing-unit) * 7);
+    --su800: calc(var(--spacing-unit) * 8);
+    --su900: calc(var(--spacing-unit) * 9);
+    --su1000: calc(var(--spacing-unit) * 10);
+}

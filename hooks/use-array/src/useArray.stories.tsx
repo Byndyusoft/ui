@@ -26,11 +26,7 @@ const Template = (): JSX.Element => {
                         type="numeric"
                         onChange={e => setAddValue(Number(e.target.value))}
                     />
-                    <button
-                        className={styles.button}
-                        type="button"
-                        onClick={() => append(addValue)}
-                    >
+                    <button className={styles.button} type="button" onClick={() => append(addValue)}>
                         Append
                     </button>
                 </div>
@@ -41,10 +37,7 @@ const Template = (): JSX.Element => {
                         type="numeric"
                         onChange={e => setPrependValue(Number(e.target.value))}
                     />
-                    <button
-                        className={styles.button}
-                        onClick={() => prepend(prependValue)}
-                    >
+                    <button className={styles.button} onClick={() => prepend(prependValue)}>
                         Prepend
                     </button>
                 </div>
@@ -63,10 +56,7 @@ const Template = (): JSX.Element => {
                         type="numeric"
                         onChange={e => setLessValue(Number(e.target.value))}
                     />
-                    <button
-                        className={styles.button}
-                        onClick={() => filter(a => a >= fromValue && a <= lessValue)}
-                    >
+                    <button className={styles.button} onClick={() => filter(a => a >= fromValue && a <= lessValue)}>
                         Filter
                     </button>
                 </div>
@@ -85,10 +75,7 @@ const Template = (): JSX.Element => {
                         type="numeric"
                         onChange={e => setUpdateValue(Number(e.target.value))}
                     />
-                    <button
-                        className={styles.button}
-                        onClick={() => update(indexUpdateValue, updateValue)}
-                    >
+                    <button className={styles.button} onClick={() => update(indexUpdateValue, updateValue)}>
                         Update
                     </button>
                 </div>
@@ -99,40 +86,21 @@ const Template = (): JSX.Element => {
                         type="numeric"
                         onChange={e => setIndexRemoveValue(Number(e.target.value))}
                     />
-                    <button
-                        className={styles.button}
-                        onClick={() => remove(indexRemoveValue)}
-                    >
+                    <button className={styles.button} onClick={() => remove(indexRemoveValue)}>
                         Remove
                     </button>
                 </div>
                 <div className={styles.row}>
-                    <button
-                        className={styles.button}
-                        type="button"
-                        onClick={() => reset()}
-                    >
+                    <button className={styles.button} type="button" onClick={() => reset()}>
                         Reset
                     </button>
-                    <button
-                        className={styles.button}
-                        type="button"
-                        onClick={() => clear()}
-                    >
+                    <button className={styles.button} type="button" onClick={() => clear()}>
                         Clear
                     </button>
-                    <button
-                        className={styles.button}
-                        type="button"
-                        onClick={() => sort((a, b) => a - b)}
-                    >
+                    <button className={styles.button} type="button" onClick={() => sort((a, b) => a - b)}>
                         Sort ASC
                     </button>
-                    <button
-                        className={styles.button}
-                        type="button"
-                        onClick={() => sort((a, b) => b - a)}
-                    >
+                    <button className={styles.button} type="button" onClick={() => sort((a, b) => b - a)}>
                         Sort DES
                     </button>
                 </div>
@@ -144,7 +112,7 @@ const Template = (): JSX.Element => {
 export const HookStory: StoryObj<typeof Template> = {
     name: 'Hook story',
     render: Template
-}
+};
 
 export default {
     title: 'hooks/useArray'

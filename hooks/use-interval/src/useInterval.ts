@@ -1,25 +1,32 @@
 import { useCallback, useEffect, useRef } from 'react';
+import { Callback, IntervalId, Nullable } from '@byndyusoft-ui/types';
 import useLatestRef from '@byndyusoft-ui/use-latest-ref';
 
-export default function useInterval(callback: () => void, delay: number | null): () => void {
-    const savedCallback = useLatestRef(callback);
-    const timer = useRef<ReturnType<typeof setInterval>>();
+export interface IUseInterval {
+    start: Callback;
+    stop: Callback;
+}
 
-    const clear = useCallback(() => {
+export default function useInterval(callback: Callback, delay: Nullable<number>): IUseInterval {
+    const savedCallback = useLatestRef(callback);
+    const timer = useRef<IntervalId>();
+
+    const stop = useCallback(() => {
         if (timer.current) {
             clearInterval(timer.current);
+            timer.current = undefined;
         }
     }, []);
 
-    useEffect(() => {
-        if (delay === null) {
-            return undefined;
+    const start = useCallback(() => {
+        stop();
+
+        if (delay !== null && delay >= 0) {
+            timer.current = setInterval(() => savedCallback.current(), delay);
         }
+    }, [delay, stop, savedCallback]);
 
-        timer.current = setInterval(() => savedCallback.current(), delay);
+    useEffect(() => stop, []);
 
-        return () => clear();
-    }, [delay, clear, savedCallback]);
-
-    return clear;
+    return { start, stop };
 }

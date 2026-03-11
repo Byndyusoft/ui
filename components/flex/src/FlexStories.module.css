@@ -1,0 +1,21 @@
+.flexContent {
+    background: burlywood;
+    min-height: 2rem;
+    line-height: 2rem;
+    padding: 0 1rem;
+    border-radius: 0.5rem;
+}
+
+.flexContentMid {
+    min-height: 4rem;
+    background: lightgreen;
+}
+
+.flexContentBig {
+    height: 6rem;
+    background: coral;
+}
+
+.templateContainer {
+    height: 300px;
+}

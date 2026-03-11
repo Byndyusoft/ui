@@ -1,60 +1,72 @@
 import { Renderer, renderHook, RenderHookResult } from '@testing-library/react-hooks';
-import useInterval from './useInterval';
+import { Callback, Nullable } from '@byndyusoft-ui/types';
+import useInterval, { IUseInterval } from './useInterval';
 
-const setup = (callback: () => void, delay: number | null): RenderHookResult<void, () => void, Renderer<void>> =>
+const setup = (callback: Callback, delay: Nullable<number>): RenderHookResult<void, IUseInterval, Renderer<void>> =>
     renderHook(() => useInterval(callback, delay));
 
 describe('hooks/useInterval', () => {
     beforeAll(() => {
-        jest.useFakeTimers();
-        jest.spyOn(global, 'clearInterval');
+        vi.useFakeTimers();
     });
 
     test('calls callback', () => {
-        const callback = jest.fn();
+        const callback = vi.fn();
+        const delay = 100;
 
-        setup(callback, 100);
+        const { result } = setup(callback, delay);
 
         expect(callback).not.toBeCalled();
 
-        jest.advanceTimersByTime(101);
+        result.current.start();
+
+        vi.advanceTimersByTime(101);
 
         expect(callback).toHaveBeenCalledTimes(1);
 
-        jest.advanceTimersByTime(100);
+        vi.advanceTimersByTime(100);
 
         expect(callback).toHaveBeenCalledTimes(2);
 
-        jest.advanceTimersByTime(100);
+        vi.advanceTimersByTime(100);
 
         expect(callback).toHaveBeenCalledTimes(3);
     });
 
     test('does not call callback if delay is null', () => {
-        const callback = jest.fn();
+        const callback = vi.fn();
+        const delay = null;
 
-        setup(callback, null);
+        setup(callback, delay);
 
         expect(callback).not.toBeCalled();
 
-        jest.advanceTimersByTime(150);
+        vi.advanceTimersByTime(150);
 
         expect(callback).not.toBeCalled();
     });
 
-    test('clears interval', () => {
-        const callback = jest.fn();
+    test('stops interval', () => {
+        vi.spyOn(global, 'clearInterval');
+        const callback = vi.fn();
+        const delay = 100;
 
-        const { result } = setup(callback, 100);
+        const { result } = setup(callback, delay);
         expect(clearInterval).toHaveBeenCalledTimes(0);
 
         expect(callback).not.toBeCalled();
 
-        result.current();
+        result.current.start();
 
-        jest.advanceTimersByTime(150);
+        vi.advanceTimersByTime(delay + 1);
 
-        expect(callback).toHaveBeenCalledTimes(0);
+        expect(callback).toHaveBeenCalledTimes(1);
+
+        result.current.stop();
+
+        vi.advanceTimersByTime(delay + 1);
+
+        expect(callback).toHaveBeenCalledTimes(1);
         expect(clearInterval).toHaveBeenCalledTimes(1);
     });
 });
