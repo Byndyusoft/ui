@@ -1,0 +1,93 @@
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.row > button {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition: border-color 0.25s;
+    white-space: nowrap;
+}
+.row > button:hover {
+    border-color: #646cff;
+}
+
+.row > .button_active {
+    background: #646cff;
+    color: white;
+}
+
+.notification {
+    box-sizing: border-box;
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 6px;
+    color: black;
+}
+
+.notification.success {
+    background: #48ffc8;
+}
+
+.notification.danger {
+    background: #ff484e;
+}
+
+.notification.info {
+    background: #48b9ff;
+}
+
+.notification.warning {
+    background: #ff8b48;
+}
+
+.notification.ordinary {
+    background: #d7d7d7;
+}
+
+.notification_close_btn {
+    box-sizing: border-box;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.code {
+    padding: 10px;
+    height: 250px;
+    border-radius: 5px;
+    overflow-x: auto;
+    font-family: 'Courier New, Courier, monospace', serif;
+    font-size: 16px;
+    background-color: #e6e6e6;
+    color: #333;
+}
