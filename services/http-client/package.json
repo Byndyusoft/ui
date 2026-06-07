@@ -1,0 +1,30 @@
+{
+  "name": "@byndyusoft-ui/http-client",
+  "version": "0.0.1",
+  "description": "Byndyusoft UI HTTP Client Service",
+  "keywords": [
+    "byndyusoft",
+    "byndyusoft-ui",
+    "http-client"
+  ],
+  "author": "Byndyusoft Frontend Developer <frontend@byndyusoft.com>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/services/http-client#readme",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Byndyusoft/ui.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf dist && rimraf .turbo && rimraf node_modules && rimraf package-lock.json",
+    "lint": "eslint src --config ../../eslint.config.js"
+  },
+  "bugs": {
+    "url": "https://github.com/Byndyusoft/ui/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
