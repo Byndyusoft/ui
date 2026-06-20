@@ -1,8 +1,8 @@
-import { HttpError } from './HttpError';
-
-export class NetworkError extends HttpError {
+export class NetworkError extends Error {
     constructor(message: string) {
         super(message);
-        this.name = 'NetworkError';
+        this.name = this.constructor.name;
+
+        Object.setPrototypeOf(this, new.target.prototype);
     }
 }

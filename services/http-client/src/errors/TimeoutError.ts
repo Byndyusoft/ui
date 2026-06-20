@@ -1,8 +1,8 @@
-import { HttpError } from './HttpError';
-
-export class TimeoutError extends HttpError {
+export class TimeoutError extends Error {
     constructor(message: string) {
         super(message);
-        this.name = 'TimeoutError';
+        this.name = this.constructor.name;
+
+        Object.setPrototypeOf(this, new.target.prototype);
     }
 }

@@ -1,8 +1,8 @@
-import { HttpError } from './HttpError';
-
-export class AbortError extends HttpError {
+export class AbortError extends Error {
     constructor(message: string) {
         super(message);
-        this.name = 'AbortError';
+        this.name = this.constructor.name;
+
+        Object.setPrototypeOf(this, new.target.prototype);
     }
 }
