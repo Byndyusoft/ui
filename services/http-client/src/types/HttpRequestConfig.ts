@@ -4,13 +4,13 @@ import { THttpParams } from './HttpParams';
 import { THttpResponseType } from './HttpResponseType';
 
 export interface IHttpRequestConfig<TData = unknown> {
-    url: string;
-    method: THttpMethod;
-    baseURL?: string;
-    headers?: THttpHeaders;
-    params?: THttpParams;
-    data?: TData;
-    signal?: AbortSignal;
-    timeout?: number;
-    responseType?: THttpResponseType;
+    readonly url: string;
+    readonly method: THttpMethod;
+    readonly baseURL?: string;
+    readonly headers?: THttpHeaders;
+    readonly params?: THttpParams;
+    readonly data?: TData;
+    readonly signal?: AbortSignal;
+    readonly timeout?: number;
+    readonly responseType?: THttpResponseType;
 }
