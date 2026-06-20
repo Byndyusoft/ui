@@ -1,0 +1,1 @@
+export type THttpParams = Record<string, string | string[]>;

@@ -1,0 +1,1 @@
+export type THttpResponseType = 'json' | 'text' | 'blob' | 'arraybuffer';
