@@ -1,15 +1,15 @@
-import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
 import { HttpClient } from '../../src/core/HttpClient';
 import { FetchAdapter } from '../../src/adapters/FetchAdapter';
 import { XhrAdapter } from '../../src/adapters/XhrAdapter';
 import { IHttpClientAdapter } from '../../src/types';
-
-const BASE_URL = 'https://api.test.com';
+import { handlers } from '../__handlers__/HttpClient.POST.handlers';
+import { BASE_URL } from '../__fixtures__';
 
 const server = setupServer();
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
+beforeEach(() => server.use(...handlers));
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
@@ -28,14 +28,6 @@ describe.each(adapters)('HttpClient.$name — POST', ({ create }) => {
     }
 
     test('sends JSON body with auto Content-Type', async () => {
-        server.use(
-            http.post(`${BASE_URL}/items`, async ({ request }) => {
-                const contentType = request.headers.get('content-type');
-                const body = await request.json();
-                return HttpResponse.json({ received: body, contentType });
-            })
-        );
-
         const client = createClient();
         const response = await client
             .post('/items')
@@ -47,14 +39,6 @@ describe.each(adapters)('HttpClient.$name — POST', ({ create }) => {
     });
 
     test('sends string body without overriding Content-Type', async () => {
-        server.use(
-            http.post(`${BASE_URL}/raw`, async ({ request }) => {
-                const contentType = request.headers.get('content-type');
-                const body = await request.text();
-                return HttpResponse.json({ received: body, contentType });
-            })
-        );
-
         const client = createClient();
         const response = await client
             .post('/raw')
@@ -67,13 +51,6 @@ describe.each(adapters)('HttpClient.$name — POST', ({ create }) => {
     });
 
     test('echoes body back', async () => {
-        server.use(
-            http.post(`${BASE_URL}/echo`, async ({ request }) => {
-                const body = await request.json();
-                return HttpResponse.json({ created: true, ...body });
-            })
-        );
-
         const client = createClient();
         const response = await client
             .post('/echo')

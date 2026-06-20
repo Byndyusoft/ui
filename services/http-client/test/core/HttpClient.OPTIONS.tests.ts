@@ -1,16 +1,16 @@
-import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
 import { HttpClient } from '../../src/core/HttpClient';
 import { FetchAdapter } from '../../src/adapters/FetchAdapter';
 import { XhrAdapter } from '../../src/adapters/XhrAdapter';
 import { HTTP_STATUS_CODES } from '../../src/constants';
 import { IHttpClientAdapter } from '../../src/types';
-
-const BASE_URL = 'https://api.test.com';
+import { handlers } from '../__handlers__/HttpClient.OPTIONS.handlers';
+import { BASE_URL } from '../__fixtures__';
 
 const server = setupServer();
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
+beforeEach(() => server.use(...handlers));
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
@@ -29,15 +29,6 @@ describe.each(adapters)('HttpClient.$name — OPTIONS', ({ create }) => {
     }
 
     test('returns Allow header', async () => {
-        server.use(
-            http.options(`${BASE_URL}/items`, () => {
-                return new HttpResponse(null, {
-                    status: 204,
-                    headers: { Allow: 'GET, POST, HEAD, OPTIONS' }
-                });
-            })
-        );
-
         const client = createClient();
         const response = await client.options('/items').responseType('text').execute();
 

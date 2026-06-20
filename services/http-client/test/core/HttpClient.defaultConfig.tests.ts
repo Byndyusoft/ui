@@ -1,4 +1,3 @@
-import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
 import { HttpClient } from '../../src/core/HttpClient';
 import { FetchAdapter } from '../../src/adapters/FetchAdapter';
@@ -6,12 +5,13 @@ import { XhrAdapter } from '../../src/adapters/XhrAdapter';
 import { HTTP_STATUS_CODES } from '../../src/constants';
 import { HttpError, NetworkError } from '../../src/errors';
 import { IHttpClientAdapter } from '../../src/types';
-
-const BASE_URL = 'https://api.test.com';
+import { handlers } from '../__handlers__/HttpClient.defaultConfig.handlers';
+import { BASE_URL } from '../__fixtures__';
 
 const server = setupServer();
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
+beforeEach(() => server.use(...handlers));
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
@@ -30,15 +30,6 @@ describe.each(adapters)('HttpClient.$name — default config', ({ create }) => {
     }
 
     test('merges default headers with request headers', async () => {
-        server.use(
-            http.get(`${BASE_URL}/test`, ({ request }) => {
-                return HttpResponse.json({
-                    def: request.headers.get('x-default'),
-                    custom: request.headers.get('x-custom')
-                });
-            })
-        );
-
         const client = createClient();
         const response = await client
             .get('/test')
@@ -50,30 +41,16 @@ describe.each(adapters)('HttpClient.$name — default config', ({ create }) => {
     });
 
     test('request headers override default headers', async () => {
-        server.use(
-            http.get(`${BASE_URL}/test`, ({ request }) => {
-                return HttpResponse.json({
-                    def: request.headers.get('x-default')
-                });
-            })
-        );
-
         const client = createClient();
         const response = await client
             .get('/test')
             .header('X-Default', 'overridden')
-            .execute<{ def: string | null }>();
+            .execute<{ def: string | null; custom: string | null }>();
 
         expect(response.data.def).toBe('overridden');
     });
 
     test('uses default baseUrl', async () => {
-        server.use(
-            http.get(`${BASE_URL}/base-test`, () => {
-                return HttpResponse.json({ ok: true });
-            })
-        );
-
         const client = createClient();
         const response = await client.get('/base-test').execute<{ ok: boolean }>();
 
@@ -81,12 +58,6 @@ describe.each(adapters)('HttpClient.$name — default config', ({ create }) => {
     });
 
     test('throws HttpError on 500', async () => {
-        server.use(
-            http.get(`${BASE_URL}/server-error`, () => {
-                return HttpResponse.json({ error: 'Internal error' }, { status: 500 });
-            })
-        );
-
         const client = createClient();
 
         try {
@@ -99,12 +70,6 @@ describe.each(adapters)('HttpClient.$name — default config', ({ create }) => {
     });
 
     test('throws NetworkError on network failure', async () => {
-        server.use(
-            http.get(`${BASE_URL}/network-error`, () => {
-                return HttpResponse.error();
-            })
-        );
-
         const client = createClient();
 
         try {

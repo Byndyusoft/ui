@@ -4,8 +4,7 @@ import { FetchAdapter } from '../../src/adapters/FetchAdapter';
 import { XhrAdapter } from '../../src/adapters/XhrAdapter';
 import { AbortError, TimeoutError } from '../../src/errors';
 import { IHttpClientAdapter } from '../../src/types';
-
-const BASE_URL = 'https://api.test.com';
+import { BASE_URL } from '../__fixtures__';
 
 const server = setupServer();
 

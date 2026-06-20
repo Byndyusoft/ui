@@ -1,15 +1,15 @@
-import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
 import { HttpClient } from '../../src/core/HttpClient';
 import { FetchAdapter } from '../../src/adapters/FetchAdapter';
 import { XhrAdapter } from '../../src/adapters/XhrAdapter';
 import { IHttpClientAdapter } from '../../src/types';
-
-const BASE_URL = 'https://api.test.com';
+import { handlers } from '../__handlers__/HttpClient.PATCH.handlers';
+import { BASE_URL } from '../__fixtures__';
 
 const server = setupServer();
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
+beforeEach(() => server.use(...handlers));
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
@@ -28,13 +28,6 @@ describe.each(adapters)('HttpClient.$name — PATCH', ({ create }) => {
     }
 
     test('sends JSON body and receives patched data', async () => {
-        server.use(
-            http.patch(`${BASE_URL}/items/1`, async ({ request }) => {
-                const body = await request.json();
-                return HttpResponse.json({ patched: true, ...body });
-            })
-        );
-
         const client = createClient();
         const response = await client
             .patch('/items/1')

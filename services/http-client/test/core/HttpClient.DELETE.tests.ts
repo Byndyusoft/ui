@@ -1,16 +1,16 @@
-import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
 import { HttpClient } from '../../src/core/HttpClient';
 import { FetchAdapter } from '../../src/adapters/FetchAdapter';
 import { XhrAdapter } from '../../src/adapters/XhrAdapter';
 import { HTTP_STATUS_CODES } from '../../src/constants';
 import { IHttpClientAdapter } from '../../src/types';
-
-const BASE_URL = 'https://api.test.com';
+import { handlers } from '../__handlers__/HttpClient.DELETE.handlers';
+import { BASE_URL } from '../__fixtures__';
 
 const server = setupServer();
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
+beforeEach(() => server.use(...handlers));
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
@@ -29,12 +29,6 @@ describe.each(adapters)('HttpClient.$name — DELETE', ({ create }) => {
     }
 
     test('returns 204 with undefined data', async () => {
-        server.use(
-            http.delete(`${BASE_URL}/items/1`, () => {
-                return new HttpResponse(null, { status: 204 });
-            })
-        );
-
         const client = createClient();
         const response = await client.delete('/items/1').responseType('text').execute();
 

@@ -1,4 +1,3 @@
-import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
 import { HttpClient } from '../../src/core/HttpClient';
 import { FetchAdapter } from '../../src/adapters/FetchAdapter';
@@ -6,12 +5,13 @@ import { XhrAdapter } from '../../src/adapters/XhrAdapter';
 import { HTTP_STATUS_CODES } from '../../src/constants';
 import { HttpError } from '../../src/errors';
 import { IHttpClientAdapter } from '../../src/types';
-
-const BASE_URL = 'https://api.test.com';
+import { handlers } from '../__handlers__/HttpClient.GET.handlers';
+import { BASE_URL } from '../__fixtures__';
 
 const server = setupServer();
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
+beforeEach(() => server.use(...handlers));
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
@@ -30,12 +30,6 @@ describe.each(adapters)('HttpClient.$name — GET', ({ create }) => {
     }
 
     test('returns parsed JSON with status and statusText', async () => {
-        server.use(
-            http.get(`${BASE_URL}/users/1`, () => {
-                return HttpResponse.json({ id: 1, name: 'John' });
-            })
-        );
-
         const client = createClient();
         const response = await client.get('/users/1').execute<{ id: number; name: string }>();
 
@@ -45,16 +39,6 @@ describe.each(adapters)('HttpClient.$name — GET', ({ create }) => {
     });
 
     test('sends query params including arrays', async () => {
-        server.use(
-            http.get(`${BASE_URL}/users`, ({ request }) => {
-                const url = new URL(request.url);
-                return HttpResponse.json({
-                    page: url.searchParams.get('page'),
-                    role: url.searchParams.getAll('role')
-                });
-            })
-        );
-
         const client = createClient();
         const response = await client
             .get('/users')
@@ -66,15 +50,6 @@ describe.each(adapters)('HttpClient.$name — GET', ({ create }) => {
     });
 
     test('sends custom headers', async () => {
-        server.use(
-            http.get(`${BASE_URL}/headers`, ({ request }) => {
-                return HttpResponse.json({
-                    auth: request.headers.get('authorization'),
-                    custom: request.headers.get('x-custom')
-                });
-            })
-        );
-
         const client = createClient();
         const response = await client
             .get('/headers')
@@ -87,12 +62,6 @@ describe.each(adapters)('HttpClient.$name — GET', ({ create }) => {
     });
 
     test('returns text when responseType is text', async () => {
-        server.use(
-            http.get(`${BASE_URL}/text`, () => {
-                return new HttpResponse('hello world', { headers: { 'Content-Type': 'text/plain' } });
-            })
-        );
-
         const client = createClient();
         const response = await client.get('/text').responseType('text').execute<string>();
 
@@ -100,12 +69,6 @@ describe.each(adapters)('HttpClient.$name — GET', ({ create }) => {
     });
 
     test('throws HttpError with statusCode and data on 404', async () => {
-        server.use(
-            http.get(`${BASE_URL}/not-found`, () => {
-                return HttpResponse.json({ error: 'Not found' }, { status: 404 });
-            })
-        );
-
         const client = createClient();
 
         try {
