@@ -19,12 +19,16 @@
   "scripts": {
     "build": "tsc",
     "clean": "rimraf dist && rimraf .turbo && rimraf node_modules && rimraf package-lock.json",
-    "lint": "eslint src --config ../../eslint.config.js"
+    "lint": "eslint src --config ../../eslint.config.js",
+    "test": "vitest run --root ../../ services/http-client"
   },
   "bugs": {
     "url": "https://github.com/Byndyusoft/ui/issues"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "msw": "^2.4.9"
   }
 }

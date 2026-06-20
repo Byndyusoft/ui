@@ -6,7 +6,7 @@ import { THttpResponseType } from './HttpResponseType';
 export interface IHttpRequestConfig<TData = unknown> {
     readonly url: string;
     readonly method: THttpMethod;
-    readonly baseURL?: string;
+    readonly baseUrl?: string;
     readonly headers?: THttpHeaders;
     readonly params?: THttpParams;
     readonly data?: TData;

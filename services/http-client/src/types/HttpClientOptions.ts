@@ -3,7 +3,7 @@ import { THttpHeaders } from './HttpHeaders';
 
 export interface IHttpClientOptions {
     adapter: IHttpClientAdapter;
-    baseURL?: string;
+    baseUrl?: string;
     headers?: THttpHeaders;
     timeout?: number;
 }

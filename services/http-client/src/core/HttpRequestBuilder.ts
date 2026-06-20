@@ -32,7 +32,7 @@ export class HttpRequestBuilder {
             throw new RequestBuilderError('Base URL must be a non-empty string');
         }
 
-        return this.mutateConfig({ baseURL: value });
+        return this.mutateConfig({ baseUrl: value });
     }
 
     public header(key: string, value: string): this {
@@ -68,6 +68,15 @@ export class HttpRequestBuilder {
     }
 
     public body(data: unknown): this {
+        if (this.config.method === 'GET' || this.config.method === 'HEAD') {
+            // Возможно ещё и для DELETE
+            throw new RequestBuilderError('Body is not allowed for GET or HEAD requests');
+        }
+
+        // if (typeof data !== 'object') {
+        //     throw new RequestBuilderError('Data must be an object');
+        // }
+
         return this.mutateConfig({ data });
     }
 
@@ -99,9 +108,113 @@ export class HttpRequestBuilder {
         return this.mutateConfig({ responseType });
     }
 
+    // public credentials(credentials: RequestCredentials): this {
+    //     this.config.credentials = credentials;
+    //     return this;
+    // }
+
+    // public mode(mode: RequestMode): this {
+    //     this.config.mode = mode;
+    //     return this;
+    // }
+
+    // public cache(cache: RequestCache): this {
+    //     this.config.cache = cache;
+    //     return this;
+    // }
+
+    // public redirect(redirect: RequestRedirect): this {
+    //     this.config.redirect = redirect;
+    //     return this;
+    // }
+
+    // public referrer(referrer: string): this {
+    //     this.config.referrer = referrer;
+    //     return this;
+    // }
+
+    // public integrity(integrity: string): this {
+    //     this.config.integrity = integrity;
+    //     return this;
+    // }
+
+    // public keepalive(keepalive: boolean): this {
+    //     this.config.keepalive = keepalive;
+    //     return this;
+    // }
+
+    // public keepalive(value: boolean): this {
+    //     this.config = { ...this.config, keepalive: value };
+
+    //     return this;
+    // }
+
+    // public cache(value: RequestCache): this {
+    //     this.config = { ...this.config, cache: value };
+
+    //     return this;
+    // }
+
+    // public credentials(value: RequestCredentials): this {
+    //     this.config = { ...this.config, credentials: value };
+
+    //     return this;
+    // }
+
+    // public mode(value: RequestMode): this {
+    //     this.config = { ...this.config, mode: value };
+
+    //     return this;
+    // }
+    //
+    // public redirect(value: RequestRedirect): this {
+    //     this.config = { ...this.config, redirect: value };
+
+    //     return this;
+    // }
+
+    // public referrer(value: string): this {
+    //     this.config = { ...this.config, referrer: value };
+
+    //     return this;
+    // }
+
+    // withCredentials(value: boolean): this {
+    //     this.config.withCredentials = value;
+    //     return this;
+    // }
+
+    // json(): this {
+    //     this.header("Content-Type", "application/json");
+    //     return this;
+    // }
+
+    // form(): this {
+    //     this.header("Content-Type", "application/x-www-form-urlencoded");
+    //     return this;
+    // }
+
+    // multipart(): this {
+    //     this.header("Content-Type", "multipart/form-data");
+    //     return this;
+    // }
+
+    // acceptJson(): this {
+    //     this.header("Accept", "application/json");
+    //     return this;
+    // }
+
     public execute<T>(): Promise<IHttpResponse<T>> {
         if (!this.config.url) {
             throw new RequestBuilderError('URL must be set before executing');
+        }
+
+        if (!this.config.method) {
+            throw new RequestBuilderError('Method must be set before executing');
+        }
+
+        if (!this.executor) {
+            throw new RequestBuilderError('Executor must be set before executing');
         }
 
         return this.executor(this.config) as Promise<IHttpResponse<T>>;

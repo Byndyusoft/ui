@@ -3,7 +3,7 @@ import { THttpHeaders } from './HttpHeaders';
 import { IHttpRequestConfig } from './HttpRequestConfig';
 
 export interface IHttpResponse<T = unknown> {
-    data: T;
+    data?: T;
     status: THttpStatusCode;
     statusText: string;
     headers: THttpHeaders;
