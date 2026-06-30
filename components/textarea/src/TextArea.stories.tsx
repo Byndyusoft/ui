@@ -49,18 +49,20 @@ const PlaygroundComponent = (args: ITextAreaProps): JSX.Element => {
     };
 
     return (
-        <div style={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column', gap: 8 }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column', gap: 16 }}>
             <span>{`value: ${value}`}</span>
 
             <TextArea {...args} ref={ref} value={value} onChange={handleChange} />
 
-            <button type="button" onClick={handleSetFocus}>
-                Set focus
-            </button>
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                <button type="button" onClick={handleSetFocus}>
+                    Set focus
+                </button>
 
-            <button type="button" onClick={handleSetValue}>
-                Set value
-            </button>
+                <button type="button" onClick={handleSetValue}>
+                    Set value
+                </button>
+            </div>
         </div>
     );
 };
