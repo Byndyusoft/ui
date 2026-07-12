@@ -1,4 +1,4 @@
-import { HTTP_RESPONSE_TYPES } from '../constants';
+import { REQUEST_BUILDER_ERROR_CODES } from '../constants';
 import { RequestBuilderError } from '../errors';
 import {
     THttpMethod,
@@ -7,105 +7,193 @@ import {
     THttpHeaders,
     THttpParams,
     THttpResponseType,
-    THttpParamValue
+    THttpParamValue,
+    THttpRequestExecutor
 } from '../types';
+import {
+    HEADER_VALUE_LINE_BREAK_PATTERN,
+    assertBodyAllowed,
+    assertNonBlankString,
+    assertValidBaseUrl,
+    assertValidHeader,
+    assertValidHeaders,
+    assertValidMethod,
+    assertValidParam,
+    assertValidParams,
+    assertValidResponseType,
+    assertValidSignal,
+    assertValidTimeout,
+    assertValidUrl
+} from '../asserts';
 
-type TExecutor = (config: IHttpRequestConfig) => Promise<IHttpResponse<unknown>>;
+type TBuilderConfigPatch = Partial<Omit<IHttpRequestConfig, 'method' | 'url'>>;
 
+function cloneParams(params: THttpParams): THttpParams {
+    const result: THttpParams = {};
+
+    for (const [key, value] of Object.entries(params)) {
+        result[key] = Array.isArray(value) ? [...value] : value;
+    }
+
+    return result;
+}
+
+function cloneConfig(config: IHttpRequestConfig): IHttpRequestConfig {
+    return {
+        ...config,
+        ...(config.headers === undefined ? {} : { headers: { ...config.headers } }),
+        ...(config.params === undefined ? {} : { params: cloneParams(config.params) })
+    };
+}
+
+/**
+ * Builds request configs immutably. Every configuration method returns a new builder instance.
+ */
 export class HttpRequestBuilder {
-    private executor: TExecutor;
+    private readonly executor: THttpRequestExecutor;
     private config: IHttpRequestConfig;
 
-    constructor(executor: TExecutor, method: THttpMethod, url: string) {
+    constructor(executor: THttpRequestExecutor, method: THttpMethod, url: string) {
+        if (typeof executor !== 'function') {
+            throw new RequestBuilderError('Executor must be a function', REQUEST_BUILDER_ERROR_CODES.INVALID_EXECUTOR);
+        }
+
+        assertValidMethod(method);
+        assertValidUrl(url);
+
         this.executor = executor;
         this.config = { method, url };
     }
 
-    private mutateConfig(partial: Partial<IHttpRequestConfig>): this {
-        this.config = { ...this.config, ...partial };
+    private withConfig(partial: TBuilderConfigPatch): HttpRequestBuilder {
+        const builder = new HttpRequestBuilder(this.executor, this.config.method, this.config.url);
+        builder.config = cloneConfig({ ...this.config, ...partial });
 
-        return this;
+        return builder;
     }
 
-    public baseURL(value: string): this {
-        if (!value) {
-            throw new RequestBuilderError('Base URL must be a non-empty string');
+    public build(): Readonly<IHttpRequestConfig> {
+        assertValidMethod(this.config.method);
+        assertValidUrl(this.config.url);
+
+        if (this.config.baseUrl !== undefined) {
+            assertValidBaseUrl(this.config.baseUrl);
         }
 
-        return this.mutateConfig({ baseUrl: value });
+        if (this.config.headers !== undefined) {
+            assertValidHeaders(this.config.headers);
+        }
+
+        if (this.config.params !== undefined) {
+            assertValidParams(this.config.params);
+        }
+
+        if (this.config.signal !== undefined) {
+            assertValidSignal(this.config.signal);
+        }
+
+        if (this.config.timeout !== undefined) {
+            assertValidTimeout(this.config.timeout);
+        }
+
+        if (this.config.responseType !== undefined) {
+            assertValidResponseType(this.config.responseType);
+        }
+
+        if (Object.prototype.hasOwnProperty.call(this.config, 'data')) {
+            assertBodyAllowed(this.config.method);
+        }
+
+        return cloneConfig(this.config);
     }
 
-    public header(key: string, value: string): this {
-        if (!key) {
-            throw new RequestBuilderError('Header key must be a non-empty string');
-        }
+    public baseUrl(value: string): HttpRequestBuilder {
+        assertValidBaseUrl(value);
 
-        return this.mutateConfig({ headers: { ...this.config.headers, [key]: value } });
+        return this.withConfig({ baseUrl: value });
     }
 
-    public headers(headers: THttpHeaders): this {
-        if (!headers || typeof headers !== 'object') {
-            throw new RequestBuilderError('Headers must be an object');
-        }
-
-        return this.mutateConfig({ headers: { ...this.config.headers, ...headers } });
+    /** @deprecated Use baseUrl instead. */
+    public baseURL(value: string): HttpRequestBuilder {
+        return this.baseUrl(value);
     }
 
-    public param(key: string, value: THttpParamValue): this {
-        if (!key) {
-            throw new RequestBuilderError('Param key must be a non-empty string');
-        }
+    public header(key: string, value: string): HttpRequestBuilder {
+        assertValidHeader(key, value);
 
-        return this.mutateConfig({ params: { ...this.config.params, [key]: value } });
+        return this.withConfig({ headers: { ...this.config.headers, [key]: value } });
     }
 
-    public params(params: THttpParams): this {
-        if (!params || typeof params !== 'object') {
-            throw new RequestBuilderError('Params must be an object');
-        }
+    public headers(headers: THttpHeaders): HttpRequestBuilder {
+        assertValidHeaders(headers);
 
-        return this.mutateConfig({ params: { ...this.config.params, ...params } });
+        return this.withConfig({ headers: { ...this.config.headers, ...headers } });
     }
 
-    public body(data: unknown): this {
-        if (this.config.method === 'GET' || this.config.method === 'HEAD') {
-            // Возможно ещё и для DELETE
-            throw new RequestBuilderError('Body is not allowed for GET or HEAD requests');
-        }
+    public param(key: string, value: THttpParamValue): HttpRequestBuilder {
+        assertValidParam(key, value);
+
+        return this.withConfig({
+            params: {
+                ...cloneParams(this.config.params ?? {}),
+                [key]: Array.isArray(value) ? [...value] : value
+            }
+        });
+    }
+
+    public params(params: THttpParams): HttpRequestBuilder {
+        assertValidParams(params);
+
+        return this.withConfig({
+            params: { ...cloneParams(this.config.params ?? {}), ...cloneParams(params) }
+        });
+    }
+
+    public body(data: unknown): HttpRequestBuilder {
+        // Возможно ещё и для DELETE
+        assertBodyAllowed(this.config.method);
 
         // if (typeof data !== 'object') {
         //     throw new RequestBuilderError('Data must be an object');
         // }
 
-        return this.mutateConfig({ data });
+        return this.withConfig({ data });
     }
 
-    public signal(signal: AbortSignal): this {
-        return this.mutateConfig({ signal });
+    public signal(signal: AbortSignal): HttpRequestBuilder {
+        assertValidSignal(signal);
+
+        return this.withConfig({ signal });
     }
 
-    public timeout(timeout: number): this {
-        if (!Number.isFinite(timeout) || timeout < 0) {
-            throw new RequestBuilderError('Timeout must be a finite non-negative number');
-        }
+    /** A zero timeout disables the request timeout, including a timeout inherited from the client config. */
+    public timeout(timeout: number): HttpRequestBuilder {
+        assertValidTimeout(timeout);
 
-        return this.mutateConfig({ timeout });
+        return this.withConfig({ timeout });
     }
 
-    public bearer(token: string): this {
-        if (!token) {
-            throw new RequestBuilderError('Bearer token must be a non-empty string');
+    public bearer(token: string): HttpRequestBuilder {
+        assertNonBlankString(
+            token,
+            'Bearer token must be a non-empty string',
+            REQUEST_BUILDER_ERROR_CODES.INVALID_BEARER_TOKEN
+        );
+
+        if (HEADER_VALUE_LINE_BREAK_PATTERN.test(token)) {
+            throw new RequestBuilderError(
+                'Bearer token must not contain line breaks',
+                REQUEST_BUILDER_ERROR_CODES.INVALID_BEARER_TOKEN
+            );
         }
 
         return this.header('Authorization', `Bearer ${token}`);
     }
 
-    public responseType(responseType: THttpResponseType): this {
-        if (!Object.values(HTTP_RESPONSE_TYPES).includes(responseType)) {
-            throw new RequestBuilderError('Response type must be a valid HTTP response type');
-        }
+    public responseType(responseType: THttpResponseType): HttpRequestBuilder {
+        assertValidResponseType(responseType);
 
-        return this.mutateConfig({ responseType });
+        return this.withConfig({ responseType });
     }
 
     // public credentials(credentials: RequestCredentials): this {
@@ -204,19 +292,7 @@ export class HttpRequestBuilder {
     //     return this;
     // }
 
-    public execute<T>(): Promise<IHttpResponse<T>> {
-        if (!this.config.url) {
-            throw new RequestBuilderError('URL must be set before executing');
-        }
-
-        if (!this.config.method) {
-            throw new RequestBuilderError('Method must be set before executing');
-        }
-
-        if (!this.executor) {
-            throw new RequestBuilderError('Executor must be set before executing');
-        }
-
-        return this.executor(this.config) as Promise<IHttpResponse<T>>;
+    public execute<T = unknown>(): Promise<IHttpResponse<T>> {
+        return this.executor<T>(this.build());
     }
 }

@@ -1,5 +1,12 @@
 import { HTTP_METHODS } from '../constants';
-import { THttpMethod, IHttpRequestConfig, IHttpResponse, IHttpClientOptions, IHttpClientAdapter } from '../types';
+import {
+    THttpMethod,
+    IHttpRequestConfig,
+    IHttpResponse,
+    IHttpClientOptions,
+    IHttpClientAdapter,
+    THttpRequestExecutor
+} from '../types';
 import { HttpRequestBuilder } from './HttpRequestBuilder';
 
 export class HttpClient {
@@ -17,7 +24,10 @@ export class HttpClient {
     }
 
     private request(method: THttpMethod, url: string): HttpRequestBuilder {
-        return new HttpRequestBuilder(config => this.execute(config), method, url);
+        const executor: THttpRequestExecutor = <T>(config: IHttpRequestConfig): Promise<IHttpResponse<T>> =>
+            this.execute<T>(config);
+
+        return new HttpRequestBuilder(executor, method, url);
     }
 
     public get(url: string): HttpRequestBuilder {
