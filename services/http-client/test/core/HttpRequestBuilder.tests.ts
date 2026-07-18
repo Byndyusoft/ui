@@ -8,6 +8,7 @@ import {
     THttpMethod,
     THttpParams,
     THttpRequestExecutor,
+    THttpResponseType,
     TRequestBuilderErrorCode
 } from '../../src/types';
 
@@ -199,7 +200,7 @@ describe('HttpRequestBuilder', () => {
         },
         {
             name: 'response type',
-            action: (builder: HttpRequestBuilder) => builder.responseType('invalid'),
+            action: (builder: HttpRequestBuilder) => builder.responseType('invalid' as THttpResponseType),
             code: REQUEST_BUILDER_ERROR_CODES.INVALID_RESPONSE_TYPE
         }
     ])('validates $name', ({ action, code }) => {

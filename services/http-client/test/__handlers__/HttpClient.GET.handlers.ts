@@ -25,6 +25,11 @@ export const handlers = [
         return new HttpResponse('hello world', { headers: { 'Content-Type': 'text/plain' } });
     }),
 
+    http.get(`${BASE_URL}/binary`, () => {
+        const bytes = new Uint8Array([1, 2, 3, 4]);
+        return new HttpResponse(bytes.buffer, { headers: { 'Content-Type': 'application/octet-stream' } });
+    }),
+
     http.get(`${BASE_URL}/not-found`, () => {
         return HttpResponse.json({ error: 'Not found' }, { status: 404 });
     })

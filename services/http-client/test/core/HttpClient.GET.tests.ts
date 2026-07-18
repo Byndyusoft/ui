@@ -2,7 +2,7 @@ import { setupServer } from 'msw/node';
 import { HttpClient } from '../../src/core/HttpClient';
 import { FetchAdapter } from '../../src/adapters/FetchAdapter';
 import { XhrAdapter } from '../../src/adapters/XhrAdapter';
-import { HTTP_STATUS_CODES } from '../../src/constants';
+import { HTTP_RESPONSE_TYPES, HTTP_STATUS_CODES } from '../../src/constants';
 import { HttpError } from '../../src/errors';
 import { IHttpClientAdapter } from '../../src/types';
 import { handlers } from '../__handlers__/HttpClient.GET.handlers';
@@ -66,6 +66,17 @@ describe.each(adapters)('HttpClient.$name — GET', ({ create }) => {
         const response = await client.get('/text').responseType('text').execute<string>();
 
         expect(response.data).toBe('hello world');
+    });
+
+    test('returns ArrayBuffer when responseType is arrayBuffer', async () => {
+        const client = createClient();
+        const response = await client
+            .get('/binary')
+            .responseType(HTTP_RESPONSE_TYPES.ARRAY_BUFFER)
+            .execute<ArrayBuffer>();
+
+        expect(response.data).toBeInstanceOf(ArrayBuffer);
+        expect(Array.from(new Uint8Array(response.data as ArrayBuffer))).toEqual([1, 2, 3, 4]);
     });
 
     test('throws HttpError with statusCode and data on 404', async () => {
