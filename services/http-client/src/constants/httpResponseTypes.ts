@@ -5,4 +5,4 @@ export const HTTP_RESPONSE_TYPES = {
     JSON: 'json',
     STREAM: 'stream',
     TEXT: 'text'
-};
+} as const;

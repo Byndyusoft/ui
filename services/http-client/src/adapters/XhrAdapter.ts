@@ -1,4 +1,4 @@
-import { HTTP_METHODS } from '../constants';
+import { HTTP_METHODS, HTTP_RESPONSE_TYPES } from '../constants';
 import { HttpError } from '../errors/HttpError';
 import { NetworkError } from '../errors/NetworkError';
 import { TimeoutError } from '../errors/TimeoutError';
@@ -51,12 +51,12 @@ function getResponseBody(xhr: XMLHttpRequest, responseType?: THttpResponseType):
     }
 
     switch (responseType) {
-        case 'arraybuffer':
-        case 'blob':
+        case HTTP_RESPONSE_TYPES.ARRAY_BUFFER:
+        case HTTP_RESPONSE_TYPES.BLOB:
             return xhr.response;
-        case 'text':
+        case HTTP_RESPONSE_TYPES.TEXT:
             return xhr.response;
-        case 'json':
+        case HTTP_RESPONSE_TYPES.JSON:
         default: {
             const text = xhr.response as string;
             if (!text) {
@@ -96,9 +96,10 @@ export class XhrAdapter implements IHttpClientAdapter {
                 xhr.timeout = timeout;
             }
 
-            if (responseType === 'arraybuffer') {
+            if (responseType === HTTP_RESPONSE_TYPES.ARRAY_BUFFER) {
+                // XHR accepts only the lowercase DOM enum value
                 xhr.responseType = 'arraybuffer';
-            } else if (responseType === 'blob') {
+            } else if (responseType === HTTP_RESPONSE_TYPES.BLOB) {
                 xhr.responseType = 'blob';
             } else {
                 xhr.responseType = 'text';
