@@ -6,6 +6,7 @@ export * from './HttpRequestConfig';
 export * from './HttpRequestExecutor';
 export * from './HttpResponse';
 export * from './HttpHeaders';
+export * from './HttpHooks';
 export * from './HttpParams';
 export * from './HttpResponseType';
 export * from './RequestBuilderErrorCode';

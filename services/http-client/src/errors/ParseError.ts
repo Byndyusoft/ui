@@ -1,8 +1,3 @@
-export class ParseError extends Error {
-    constructor(message: string) {
-        super(message);
-        this.name = this.constructor.name;
+import { HttpClientError } from './HttpClientError';
 
-        Object.setPrototypeOf(this, new.target.prototype);
-    }
-}
+export class ParseError extends HttpClientError {}

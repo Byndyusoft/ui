@@ -1,4 +1,5 @@
 export { AbortError } from './AbortError';
+export { HttpClientError } from './HttpClientError';
 export { HttpError } from './HttpError';
 export { NetworkError } from './NetworkError';
 export { ParseError } from './ParseError';

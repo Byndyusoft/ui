@@ -1,14 +1,13 @@
 import { REQUEST_BUILDER_ERROR_CODES } from '../constants';
 import { TRequestBuilderErrorCode } from '../types';
+import { HttpClientError } from './HttpClientError';
 
-export class RequestBuilderError extends Error {
+export class RequestBuilderError extends HttpClientError {
     public readonly code: TRequestBuilderErrorCode;
 
     constructor(message: string, code: TRequestBuilderErrorCode = REQUEST_BUILDER_ERROR_CODES.INVALID_CONFIG) {
         super(message);
-        this.name = this.constructor.name;
-        this.code = code;
 
-        Object.setPrototypeOf(this, new.target.prototype);
+        this.code = code;
     }
 }

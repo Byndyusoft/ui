@@ -97,7 +97,7 @@ export class XhrAdapter implements IHttpClientAdapter {
             }
 
             if (responseType === HTTP_RESPONSE_TYPES.ARRAY_BUFFER) {
-                // XHR accepts only the lowercase DOM enum value
+                // XHR принимает только DOM-значение в нижнем регистре
                 xhr.responseType = 'arraybuffer';
             } else if (responseType === HTTP_RESPONSE_TYPES.BLOB) {
                 xhr.responseType = 'blob';

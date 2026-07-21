@@ -1,6 +1,7 @@
 import { IHttpRequestConfig, THttpHeaders, THttpStatusCode } from '../types';
+import { HttpClientError } from './HttpClientError';
 
-export class ResponseError<T = unknown> extends Error {
+export class ResponseError<T = unknown> extends HttpClientError {
     public readonly statusCode: THttpStatusCode;
     public readonly statusText: string;
     public readonly headers: THttpHeaders;
@@ -16,14 +17,11 @@ export class ResponseError<T = unknown> extends Error {
         data?: T
     ) {
         super(message);
-        this.name = this.constructor.name;
 
         this.statusCode = statusCode;
         this.statusText = statusText;
         this.headers = headers;
         this.config = config;
         this.data = data;
-
-        Object.setPrototypeOf(this, new.target.prototype);
     }
 }
