@@ -8,11 +8,9 @@ import React, {
     useRef,
     useState
 } from 'react';
-import cn from 'classnames';
 import useLatestRef from '@byndyusoft-ui/use-latest-ref';
 import { TimeoutId } from '@byndyusoft-ui/types';
 import { ITextAreaProps } from './TextArea.types';
-import styles from './TextArea.module.css';
 
 const MIN_TEXTAREA_HEIGHT = 16;
 const DEFAULT_CHANGING_DELAY = 2000;
@@ -24,6 +22,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, ITextAreaProps>(
             isDisabled = false,
             minHeight = MIN_TEXTAREA_HEIGHT,
             rows,
+            style,
             value,
             withAutoHeight = false,
             onChange,
@@ -100,10 +99,19 @@ const TextArea = forwardRef<HTMLTextAreaElement, ITextAreaProps>(
         return (
             <textarea
                 {...rest}
-                className={cn(withAutoHeight && styles.withAutoHeight, className)}
+                className={className}
                 disabled={isDisabled}
                 ref={textAreaRef}
                 rows={withAutoHeight ? 1 : rows}
+                style={
+                    withAutoHeight
+                        ? {
+                              ...style,
+                              overflow: 'hidden',
+                              resize: 'none'
+                          }
+                        : style
+                }
                 value={tempValue}
                 onChange={handleChange}
                 onFocus={handleFocus}

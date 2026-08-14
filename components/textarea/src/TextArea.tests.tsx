@@ -1,7 +1,6 @@
 import React, { ChangeEvent, createRef } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import TextArea from './TextArea';
-import styles from './TextArea.module.css';
 
 describe('components/TextArea', () => {
     beforeEach(() => {
@@ -128,13 +127,16 @@ describe('components/TextArea', () => {
         expect(screen.getByLabelText('Description')).toHaveAttribute('rows', '1');
     });
 
-    test('adds auto height class when auto height is enabled', () => {
+    test('adds auto height styles when auto height is enabled', () => {
         render(<TextArea aria-label="Description" className="custom-class" withAutoHeight />);
 
         const textArea = screen.getByLabelText('Description');
 
-        expect(textArea).toHaveClass(styles.withAutoHeight);
         expect(textArea).toHaveClass('custom-class');
+        expect(textArea).toHaveStyle({
+            overflow: 'hidden',
+            resize: 'none'
+        });
     });
 
     test('sets auto height from scroll height', () => {
