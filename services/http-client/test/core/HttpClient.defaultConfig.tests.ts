@@ -60,6 +60,47 @@ describe.each(adapters)('HttpClient.$name — default config', ({ create }) => {
         expect(response.data?.authorization).toBe('Bearer request');
     });
 
+    test('sends default params with every request', async () => {
+        const client = new HttpClient({
+            adapter: create(),
+            baseUrl: BASE_URL,
+            params: { locale: 'ru', page: '1', role: ['admin', 'editor'] }
+        });
+
+        const response = await client
+            .get('/test')
+            .execute<{ locale: string | null; page: string | null; role: string[] }>();
+
+        expect(response.data).toMatchObject({ locale: 'ru', page: '1', role: ['admin', 'editor'] });
+    });
+
+    test('request params override default params with the same key', async () => {
+        const client = new HttpClient({
+            adapter: create(),
+            baseUrl: BASE_URL,
+            params: { locale: 'ru', page: '1', role: ['admin'] }
+        });
+
+        const response = await client
+            .get('/test')
+            .params({ page: '2', role: ['editor'] })
+            .execute<{ locale: string | null; page: string | null; role: string[] }>();
+
+        expect(response.data).toMatchObject({ locale: 'ru', page: '2', role: ['editor'] });
+    });
+
+    test('copies default params when the client is created', async () => {
+        const params = { locale: 'ru', role: ['admin'] };
+        const client = new HttpClient({ adapter: create(), baseUrl: BASE_URL, params });
+
+        params.locale = 'en';
+        params.role.push('editor');
+
+        const response = await client.get('/test').execute<{ locale: string | null; role: string[] }>();
+
+        expect(response.data).toMatchObject({ locale: 'ru', role: ['admin'] });
+    });
+
     test('uses default baseUrl', async () => {
         const client = createClient();
         const response = await client.get('/base-test').execute<{ ok: boolean }>();

@@ -12,7 +12,7 @@ import {
     THttpResponseErrorHook
 } from '../types';
 import { HttpRequestBuilder } from './HttpRequestBuilder';
-import { mergeHeaders } from '../utilities';
+import { mergeHeaders, mergeParams } from '../utilities';
 
 export class HttpClient {
     private readonly adapter: IHttpClientAdapter;
@@ -32,6 +32,7 @@ export class HttpClient {
         this.defaultConfig = {
             baseUrl: options.baseUrl,
             headers: options.headers,
+            params: mergeParams(options.params),
             timeout: options.timeout
         };
     }
@@ -112,7 +113,7 @@ export class HttpClient {
             baseUrl: config.baseUrl ?? this.defaultConfig.baseUrl,
             timeout: config.timeout ?? this.defaultConfig.timeout,
             headers: mergeHeaders(this.defaultConfig.headers, config.headers),
-            params: { ...this.defaultConfig.params, ...config.params }
+            params: mergeParams(this.defaultConfig.params, config.params)
         };
 
         if (onRequest !== undefined) {

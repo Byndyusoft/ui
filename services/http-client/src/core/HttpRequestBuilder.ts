@@ -25,25 +25,15 @@ import {
     assertValidTimeout,
     assertValidUrl
 } from '../asserts';
-import { mergeHeaders } from '../utilities';
+import { mergeHeaders, mergeParams } from '../utilities';
 
 type TBuilderConfigPatch = Partial<Omit<IHttpRequestConfig, 'method' | 'url'>>;
-
-function cloneParams(params: THttpParams): THttpParams {
-    const result: THttpParams = {};
-
-    for (const [key, value] of Object.entries(params)) {
-        result[key] = Array.isArray(value) ? [...value] : value;
-    }
-
-    return result;
-}
 
 function cloneConfig(config: IHttpRequestConfig): IHttpRequestConfig {
     return {
         ...config,
         ...(config.headers === undefined ? {} : { headers: { ...config.headers } }),
-        ...(config.params === undefined ? {} : { params: cloneParams(config.params) })
+        ...(config.params === undefined ? {} : { params: mergeParams(config.params) })
     };
 }
 
@@ -130,10 +120,7 @@ export class HttpRequestBuilder {
         assertValidParam(key, value);
 
         return this.withConfig({
-            params: {
-                ...cloneParams(this.config.params ?? {}),
-                [key]: Array.isArray(value) ? [...value] : value
-            }
+            params: mergeParams(this.config.params, { [key]: value })
         });
     }
 
@@ -141,7 +128,7 @@ export class HttpRequestBuilder {
         assertValidParams(params);
 
         return this.withConfig({
-            params: { ...cloneParams(this.config.params ?? {}), ...cloneParams(params) }
+            params: mergeParams(this.config.params, params)
         });
     }
 
