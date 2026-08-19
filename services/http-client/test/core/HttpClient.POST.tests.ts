@@ -34,8 +34,8 @@ describe.each(adapters)('HttpClient.$name — POST', ({ create }) => {
             .body({ name: 'New item' })
             .execute<{ received: { name: string }; contentType: string | null }>();
 
-        expect(response.data.received).toEqual({ name: 'New item' });
-        expect(response.data.contentType).toBe('application/json');
+        expect(response.data?.received).toEqual({ name: 'New item' });
+        expect(response.data?.contentType).toBe('application/json');
     });
 
     test('sends string body without overriding Content-Type', async () => {
@@ -46,8 +46,8 @@ describe.each(adapters)('HttpClient.$name — POST', ({ create }) => {
             .header('Content-Type', 'text/plain')
             .execute<{ received: string; contentType: string | null }>();
 
-        expect(response.data.received).toBe('plain text body');
-        expect(response.data.contentType).toBe('text/plain');
+        expect(response.data?.received).toBe('plain text body');
+        expect(response.data?.contentType).toBe('text/plain');
     });
 
     test('echoes body back', async () => {

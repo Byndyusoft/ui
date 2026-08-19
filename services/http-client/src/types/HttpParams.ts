@@ -1,3 +1,3 @@
-export type THttpParamValue = string | string[];
+export type THttpParamValue = string | Array<string>;
 
 export type THttpParams = Record<string, THttpParamValue>;

@@ -62,13 +62,16 @@ describe.each(adapters)('HttpClient.$name — abort', ({ name, create }) => {
                 setRequestHeader: vi.fn(),
                 send: vi.fn(),
                 abort: vi.fn(function (this: XMLHttpRequest) {
-                    this.onabort?.(new Event('abort'));
+                    this.onabort?.(new ProgressEvent('abort'));
                 }),
                 getAllResponseHeaders: vi.fn(() => ''),
                 getResponseHeader: vi.fn(() => null)
             } as unknown as XMLHttpRequest;
 
-            vi.stubGlobal('XMLHttpRequest', vi.fn(() => mockXHR));
+            vi.stubGlobal(
+                'XMLHttpRequest',
+                vi.fn(() => mockXHR)
+            );
         }
 
         const promise = client.get('/slow').signal(controller.signal).execute();
@@ -115,14 +118,17 @@ describe.each(adapters)('HttpClient.$name — timeout', ({ name, create }) => {
                 open: vi.fn(),
                 setRequestHeader: vi.fn(),
                 send: vi.fn(function (this: XMLHttpRequest) {
-                    setTimeout(() => this.ontimeout?.(new Event('timeout')), 0);
+                    setTimeout(() => this.ontimeout?.(new ProgressEvent('timeout')), 0);
                 }),
                 abort: vi.fn(),
                 getAllResponseHeaders: vi.fn(() => ''),
                 getResponseHeader: vi.fn(() => null)
             } as unknown as XMLHttpRequest;
 
-            vi.stubGlobal('XMLHttpRequest', vi.fn(() => mockXHR));
+            vi.stubGlobal(
+                'XMLHttpRequest',
+                vi.fn(() => mockXHR)
+            );
         }
 
         try {

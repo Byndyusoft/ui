@@ -36,8 +36,8 @@ describe.each(adapters)('HttpClient.$name — default config', ({ create }) => {
             .header('X-Custom', 'value')
             .execute<{ def: string | null; custom: string | null }>();
 
-        expect(response.data.def).toBe('default-header');
-        expect(response.data.custom).toBe('value');
+        expect(response.data?.def).toBe('default-header');
+        expect(response.data?.custom).toBe('value');
     });
 
     test('request headers override default headers', async () => {
@@ -47,14 +47,14 @@ describe.each(adapters)('HttpClient.$name — default config', ({ create }) => {
             .header('X-Default', 'overridden')
             .execute<{ def: string | null; custom: string | null }>();
 
-        expect(response.data.def).toBe('overridden');
+        expect(response.data?.def).toBe('overridden');
     });
 
     test('uses default baseUrl', async () => {
         const client = createClient();
         const response = await client.get('/base-test').execute<{ ok: boolean }>();
 
-        expect(response.data.ok).toBe(true);
+        expect(response.data?.ok).toBe(true);
     });
 
     test('throws HttpError on 500', async () => {

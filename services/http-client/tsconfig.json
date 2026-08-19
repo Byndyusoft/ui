@@ -1,16 +1,5 @@
 {
   "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "declaration": true,
-    "declarationDir": "dist",
-    "outDir": "dist",
-    "module": "commonjs"
-  },
-  "include": [
-    "../../types.d.ts",
-    "src"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["../../types.d.ts", "src", "test"],
+  "exclude": ["node_modules"]
 }

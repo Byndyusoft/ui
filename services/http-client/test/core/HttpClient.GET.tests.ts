@@ -45,8 +45,8 @@ describe.each(adapters)('HttpClient.$name — GET', ({ create }) => {
             .params({ page: '2', role: ['admin', 'user'] })
             .execute<{ page: string | null; role: string[] }>();
 
-        expect(response.data.page).toBe('2');
-        expect(response.data.role).toEqual(['admin', 'user']);
+        expect(response.data?.page).toBe('2');
+        expect(response.data?.role).toEqual(['admin', 'user']);
     });
 
     test('sends custom headers', async () => {
@@ -57,8 +57,8 @@ describe.each(adapters)('HttpClient.$name — GET', ({ create }) => {
             .header('X-Custom', 'value')
             .execute<{ auth: string | null; custom: string | null }>();
 
-        expect(response.data.auth).toBe('Bearer token');
-        expect(response.data.custom).toBe('value');
+        expect(response.data?.auth).toBe('Bearer token');
+        expect(response.data?.custom).toBe('value');
     });
 
     test('returns text when responseType is text', async () => {

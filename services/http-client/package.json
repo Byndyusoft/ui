@@ -17,10 +17,10 @@
     "url": "git+https://github.com/Byndyusoft/ui.git"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --project tsconfig.build.json",
     "clean": "rimraf dist && rimraf .turbo && rimraf node_modules && rimraf package-lock.json",
     "lint": "eslint src --config ../../eslint.config.js",
-    "test": "vitest run --root ../../ services/http-client"
+    "test": "vitest run --config vitest.config.mjs --typecheck"
   },
   "bugs": {
     "url": "https://github.com/Byndyusoft/ui/issues"

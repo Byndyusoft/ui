@@ -4,7 +4,7 @@ import { BASE_URL } from '../__fixtures__';
 export const handlers = [
     http.post(`${BASE_URL}/items`, async ({ request }) => {
         const contentType = request.headers.get('content-type');
-        const body = await request.json();
+        const body = (await request.json()) as Record<string, unknown>;
         return HttpResponse.json({ received: body, contentType });
     }),
 
@@ -15,7 +15,7 @@ export const handlers = [
     }),
 
     http.post(`${BASE_URL}/echo`, async ({ request }) => {
-        const body = await request.json();
+        const body = (await request.json()) as Record<string, unknown>;
         return HttpResponse.json({ created: true, ...body });
     })
 ];
