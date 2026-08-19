@@ -25,6 +25,7 @@ import {
     assertValidTimeout,
     assertValidUrl
 } from '../asserts';
+import { mergeHeaders } from '../utilities';
 
 type TBuilderConfigPatch = Partial<Omit<IHttpRequestConfig, 'method' | 'url'>>;
 
@@ -121,13 +122,13 @@ export class HttpRequestBuilder {
     public header(key: string, value: string): HttpRequestBuilder {
         assertValidHeader(key, value);
 
-        return this.withConfig({ headers: { ...this.config.headers, [key]: value } });
+        return this.withConfig({ headers: mergeHeaders(this.config.headers, { [key]: value }) });
     }
 
     public headers(headers: THttpHeaders): HttpRequestBuilder {
         assertValidHeaders(headers);
 
-        return this.withConfig({ headers: { ...this.config.headers, ...headers } });
+        return this.withConfig({ headers: mergeHeaders(this.config.headers, headers) });
     }
 
     public param(key: string, value: THttpParamValue): HttpRequestBuilder {

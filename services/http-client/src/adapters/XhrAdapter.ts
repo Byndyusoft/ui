@@ -9,27 +9,9 @@ import {
     IHttpResponse,
     THttpStatusCode,
     THttpHeaders,
-    THttpParams,
     THttpResponseType
 } from '../types';
-
-function buildUrl(baseURL: string | undefined, url: string, params?: THttpParams): string {
-    let fullUrl = baseURL ? `${baseURL}${url}` : url;
-
-    if (params && Object.keys(params).length > 0) {
-        const searchParams = new URLSearchParams();
-        for (const [key, value] of Object.entries(params)) {
-            const values = Array.isArray(value) ? value : [value];
-            for (const v of values) {
-                searchParams.append(key, v);
-            }
-        }
-        const separator = fullUrl.includes('?') ? '&' : '?';
-        fullUrl += separator + searchParams.toString();
-    }
-
-    return fullUrl;
-}
+import { buildUrl, hasHeader, mergeHeaders } from '../utilities';
 
 function parseResponseHeaders(rawHeaders: string): THttpHeaders {
     const result: THttpHeaders = {};
@@ -81,7 +63,7 @@ export class XhrAdapter implements IHttpClientAdapter {
             baseUrl: baseURL
         } = config;
 
-        const fullUrl = buildUrl(baseURL ?? undefined, url, params);
+        const fullUrl = buildUrl(baseURL, url, params);
 
         return new Promise<IHttpResponse<T>>((resolve, reject) => {
             if (userSignal?.aborted) {
@@ -105,10 +87,10 @@ export class XhrAdapter implements IHttpClientAdapter {
                 xhr.responseType = 'text';
             }
 
-            const requestHeaders: THttpHeaders = { ...headers };
+            const requestHeaders = mergeHeaders(headers);
             if (data !== undefined && method !== HTTP_METHODS.GET && method !== HTTP_METHODS.HEAD) {
                 if (typeof data !== 'string' && !(data instanceof ArrayBuffer) && !(data instanceof Blob)) {
-                    if (!requestHeaders['Content-Type']) {
+                    if (!hasHeader(requestHeaders, 'Content-Type')) {
                         requestHeaders['Content-Type'] = 'application/json';
                     }
                 }
