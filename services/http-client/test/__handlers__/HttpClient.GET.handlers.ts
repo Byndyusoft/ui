@@ -36,6 +36,13 @@ export const handlers = [
     }),
 
     http.get(`${BASE_URL}/not-found`, () => {
-        return HttpResponse.json({ error: 'Not found' }, { status: 404 });
+        return HttpResponse.json(
+            { error: 'Not found' },
+            { status: 404, statusText: 'Not Found', headers: { 'X-Request-Id': 'request-1' } }
+        );
+    }),
+
+    http.get(`${BASE_URL}/invalid-json`, () => {
+        return new HttpResponse('{ invalid json', { headers: { 'Content-Type': 'application/json' } });
     })
 ];

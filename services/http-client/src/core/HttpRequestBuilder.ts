@@ -114,11 +114,6 @@ export class HttpRequestBuilder {
         return this.withConfig({ baseUrl: value });
     }
 
-    /** @deprecated Use baseUrl instead. */
-    public baseURL(value: string): HttpRequestBuilder {
-        return this.baseUrl(value);
-    }
-
     public header(key: string, value: string): HttpRequestBuilder {
         assertValidHeader(key, value);
 

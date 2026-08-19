@@ -4,7 +4,7 @@ import { HttpClient } from '../../src/core/HttpClient';
 import { FetchAdapter } from '../../src/adapters/FetchAdapter';
 import { XhrAdapter } from '../../src/adapters/XhrAdapter';
 import { HTTP_METHODS, HTTP_STATUS_CODES } from '../../src/constants';
-import { AbortError, HttpError, NetworkError, RequestBuilderError } from '../../src/errors';
+import { AbortError, HttpResponseError, NetworkError, RequestBuilderError } from '../../src/errors';
 import { IHttpClientAdapter, IHttpClientOptions, IHttpRequestConfig, IHttpResponse } from '../../src/types';
 import { handlers } from '../__handlers__/HttpClient.hooks.handlers';
 import { BASE_URL } from '../__fixtures__';
@@ -148,7 +148,7 @@ describe.each(adapters)('HttpClient.$name — hooks', ({ create }) => {
         expect(onResponseError).toHaveBeenCalledWith(transformError);
     });
 
-    test('onResponseError receives HttpError with parsed data on 404, onResponse is not called', async () => {
+    test('onResponseError receives HttpResponseError with parsed data on 404, onResponse is not called', async () => {
         const onResponse = vi.fn((response: IHttpResponse<unknown>) => response);
         let caught: unknown;
         const client = createClient({
@@ -160,11 +160,11 @@ describe.each(adapters)('HttpClient.$name — hooks', ({ create }) => {
             }
         });
 
-        await expect(client.get('/not-found').execute()).rejects.toBeInstanceOf(HttpError);
+        await expect(client.get('/not-found').execute()).rejects.toBeInstanceOf(HttpResponseError);
         expect(onResponse).not.toHaveBeenCalled();
-        expect(caught).toBeInstanceOf(HttpError);
-        expect((caught as HttpError).statusCode).toBe(HTTP_STATUS_CODES.NOT_FOUND);
-        expect((caught as HttpError).data).toEqual({ error: 'Not found' });
+        expect(caught).toBeInstanceOf(HttpResponseError);
+        expect((caught as HttpResponseError).status).toBe(HTTP_STATUS_CODES.NOT_FOUND);
+        expect((caught as HttpResponseError).data).toEqual({ error: 'Not found' });
     });
 
     test('onResponseError receives NetworkError on a network failure', async () => {
@@ -314,8 +314,8 @@ describe.each(adapters)('HttpClient.$name — hooks', ({ create }) => {
             return undefined;
         });
 
-        await expect(client.get('/not-found').execute()).rejects.toBeInstanceOf(HttpError);
-        expect(caught).toBeInstanceOf(HttpError);
-        expect((caught as HttpError).statusCode).toBe(HTTP_STATUS_CODES.NOT_FOUND);
+        await expect(client.get('/not-found').execute()).rejects.toBeInstanceOf(HttpResponseError);
+        expect(caught).toBeInstanceOf(HttpResponseError);
+        expect((caught as HttpResponseError).status).toBe(HTTP_STATUS_CODES.NOT_FOUND);
     });
 });

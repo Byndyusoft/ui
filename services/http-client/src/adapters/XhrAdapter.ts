@@ -1,6 +1,8 @@
 import { HTTP_METHODS, HTTP_RESPONSE_TYPES } from '../constants';
-import { HttpError } from '../errors/HttpError';
+import { HttpClientError } from '../errors/HttpClientError';
+import { HttpResponseError } from '../errors/HttpResponseError';
 import { NetworkError } from '../errors/NetworkError';
+import { ParseError } from '../errors/ParseError';
 import { TimeoutError } from '../errors/TimeoutError';
 import { AbortError } from '../errors/AbortError';
 import {
@@ -44,7 +46,11 @@ function getResponseBody(xhr: XMLHttpRequest, responseType?: THttpResponseType):
             if (!text) {
                 return undefined;
             }
-            return JSON.parse(text);
+            try {
+                return JSON.parse(text);
+            } catch (error) {
+                throw new ParseError('Failed to parse response body as JSON', { cause: error });
+            }
         }
     }
 }
@@ -133,7 +139,11 @@ export class XhrAdapter implements IHttpClientAdapter {
                             config
                         });
                     } catch (error) {
-                        reject(new NetworkError((error as Error).message));
+                        reject(
+                            error instanceof HttpClientError
+                                ? error
+                                : new NetworkError((error as Error).message, { cause: error })
+                        );
                     }
                 } else {
                     let errorData: unknown;
@@ -153,9 +163,12 @@ export class XhrAdapter implements IHttpClientAdapter {
                     }
 
                     reject(
-                        new HttpError(
+                        new HttpResponseError(
                             `Request failed with status code ${xhr.status}`,
                             xhr.status as THttpStatusCode,
+                            xhr.statusText,
+                            parseResponseHeaders(xhr.getAllResponseHeaders()),
+                            config,
                             errorData
                         )
                     );

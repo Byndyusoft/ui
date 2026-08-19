@@ -3,7 +3,7 @@ import { HttpClient } from '../../src/core/HttpClient';
 import { FetchAdapter } from '../../src/adapters/FetchAdapter';
 import { XhrAdapter } from '../../src/adapters/XhrAdapter';
 import { HTTP_RESPONSE_TYPES, HTTP_STATUS_CODES } from '../../src/constants';
-import { HttpError } from '../../src/errors';
+import { HttpResponseError, ParseError } from '../../src/errors';
 import { IHttpClientAdapter } from '../../src/types';
 import { handlers } from '../__handlers__/HttpClient.GET.handlers';
 import { BASE_URL } from '../__fixtures__';
@@ -108,16 +108,33 @@ describe.each(adapters)('HttpClient.$name — GET', ({ create }) => {
         expect(Array.from(new Uint8Array(response.data as ArrayBuffer))).toEqual([1, 2, 3, 4]);
     });
 
-    test('throws HttpError with statusCode and data on 404', async () => {
+    test('throws HttpResponseError with response context and data on 404', async () => {
         const client = createClient();
 
         try {
             await client.get('/not-found').execute();
             expect.fail('Should have thrown');
         } catch (error) {
-            expect(error).toBeInstanceOf(HttpError);
-            expect((error as HttpError).statusCode).toBe(HTTP_STATUS_CODES.NOT_FOUND);
-            expect((error as HttpError).data).toEqual({ error: 'Not found' });
+            expect(error).toBeInstanceOf(HttpResponseError);
+            const responseError = error as HttpResponseError;
+
+            expect(responseError.status).toBe(HTTP_STATUS_CODES.NOT_FOUND);
+            expect(responseError.statusText).toBe('Not Found');
+            expect(responseError.headers['x-request-id']).toBe('request-1');
+            expect(responseError.config).toMatchObject({ method: 'GET', url: '/not-found', baseUrl: BASE_URL });
+            expect(responseError.data).toEqual({ error: 'Not found' });
+        }
+    });
+
+    test('throws ParseError with its cause for malformed JSON', async () => {
+        const client = createClient();
+
+        try {
+            await client.get('/invalid-json').execute();
+            expect.fail('Should have thrown');
+        } catch (error) {
+            expect(error).toBeInstanceOf(ParseError);
+            expect((error as ParseError).cause).toBeInstanceOf(SyntaxError);
         }
     });
 });

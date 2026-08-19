@@ -1,6 +1,6 @@
 import { describe, expectTypeOf, it } from 'vitest';
 import { HTTP_METHODS, HTTP_STATUS_CODES } from '../../src/constants';
-import { HttpClientError, HttpError } from '../../src/errors';
+import { HttpResponseError } from '../../src/errors';
 import {
     IHttpRequestConfig,
     IHttpResponse,
@@ -51,12 +51,12 @@ describe('THttpRequestErrorHook', () => {
 });
 
 describe('THttpResponseErrorHook', () => {
-    it('accepts the HttpClientError parameter', () => {
-        expectTypeOf<THttpResponseErrorHook>().parameter(0).toEqualTypeOf<HttpClientError>();
+    it('accepts errors from adapters and response hooks', () => {
+        expectTypeOf<THttpResponseErrorHook>().parameter(0).toEqualTypeOf<unknown>();
 
         const narrowed: THttpResponseErrorHook = error => {
-            if (error instanceof HttpError) {
-                expectTypeOf(error.statusCode).toEqualTypeOf<typeof error.statusCode>();
+            if (error instanceof HttpResponseError) {
+                expectTypeOf(error.status).toEqualTypeOf<typeof error.status>();
             }
         };
 

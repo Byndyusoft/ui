@@ -1,5 +1,4 @@
 import { HTTP_METHODS } from '../constants';
-import { HttpClientError } from '../errors';
 import {
     THttpMethod,
     IHttpRequestConfig,
@@ -155,7 +154,7 @@ export class HttpClient {
                 throw error;
             }
 
-            const recoveredResponse = await onResponseError(error as HttpClientError);
+            const recoveredResponse = await onResponseError(error);
 
             if (recoveredResponse === undefined) {
                 throw error;

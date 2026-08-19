@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-invalid-void-type --
  * void здесь намеренен: хуки ошибок могут ничего не возвращать,
  * и только void принимает функцию без return вроде `(error) => { log(error); }`. */
-import { HttpClientError } from '../errors/HttpClientError';
 import { IHttpRequestConfig } from './HttpRequestConfig';
 import { IHttpResponse } from './HttpResponse';
 
@@ -30,9 +29,8 @@ export type THttpResponseHook = (response: IHttpResponse) => IHttpResponse | Pro
 export type THttpResponseErrorHookResult = IHttpResponse | void;
 
 /**
- * Вызывается, когда адаптер отклонил промис (HttpError, NetworkError, TimeoutError, AbortError, ParseError)
- * или когда хук onResponse бросил ошибку.
+ * Вызывается, когда адаптер отклонил промис или когда хук onResponse бросил ошибку.
  */
 export type THttpResponseErrorHook = (
-    error: HttpClientError
+    error: unknown
 ) => THttpResponseErrorHookResult | Promise<THttpResponseErrorHookResult>;

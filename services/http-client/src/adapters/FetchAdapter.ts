@@ -1,6 +1,8 @@
 import { HTTP_METHODS, HTTP_RESPONSE_TYPES } from '../constants';
-import { HttpError } from '../errors/HttpError';
+import { HttpClientError } from '../errors/HttpClientError';
+import { HttpResponseError } from '../errors/HttpResponseError';
 import { NetworkError } from '../errors/NetworkError';
+import { ParseError } from '../errors/ParseError';
 import { TimeoutError } from '../errors/TimeoutError';
 import { AbortError } from '../errors/AbortError';
 import {
@@ -39,7 +41,11 @@ async function parseResponseBody<T>(response: Response, responseType?: THttpResp
             if (!text) {
                 return undefined as T;
             }
-            return JSON.parse(text) as T;
+            try {
+                return JSON.parse(text) as T;
+            } catch (error) {
+                throw new ParseError('Failed to parse response body as JSON', { cause: error });
+            }
         }
     }
 }
@@ -113,9 +119,12 @@ export class FetchAdapter implements IHttpClientAdapter {
                     errorData = undefined;
                 }
 
-                throw new HttpError(
+                throw new HttpResponseError(
                     `Request failed with status code ${response.status}`,
                     response.status as THttpStatusCode,
+                    response.statusText,
+                    extractResponseHeaders(response.headers),
+                    config,
                     errorData
                 );
             }
@@ -130,7 +139,7 @@ export class FetchAdapter implements IHttpClientAdapter {
                 config
             };
         } catch (error) {
-            if (error instanceof HttpError) {
+            if (error instanceof HttpClientError) {
                 throw error;
             }
 

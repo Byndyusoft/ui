@@ -3,7 +3,7 @@ import { HttpClient } from '../../src/core/HttpClient';
 import { FetchAdapter } from '../../src/adapters/FetchAdapter';
 import { XhrAdapter } from '../../src/adapters/XhrAdapter';
 import { HTTP_STATUS_CODES } from '../../src/constants';
-import { HttpError, NetworkError } from '../../src/errors';
+import { HttpResponseError, NetworkError } from '../../src/errors';
 import { IHttpClientAdapter } from '../../src/types';
 import { handlers } from '../__handlers__/HttpClient.defaultConfig.handlers';
 import { BASE_URL } from '../__fixtures__';
@@ -67,15 +67,15 @@ describe.each(adapters)('HttpClient.$name — default config', ({ create }) => {
         expect(response.data?.ok).toBe(true);
     });
 
-    test('throws HttpError on 500', async () => {
+    test('throws HttpResponseError on 500', async () => {
         const client = createClient();
 
         try {
             await client.get('/server-error').execute();
             expect.fail('Should have thrown');
         } catch (error) {
-            expect(error).toBeInstanceOf(HttpError);
-            expect((error as HttpError).statusCode).toBe(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
+            expect(error).toBeInstanceOf(HttpResponseError);
+            expect((error as HttpResponseError).status).toBe(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
         }
     });
 

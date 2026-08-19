@@ -71,12 +71,6 @@ describe('HttpRequestBuilder', () => {
         });
     });
 
-    test('keeps baseURL as an alias for baseUrl', () => {
-        const builder = new HttpRequestBuilder(createExecutor(), HTTP_METHODS.GET, '/items');
-
-        expect(builder.baseURL('https://example.test').build().baseUrl).toBe('https://example.test');
-    });
-
     test('creates independent branches and build snapshots', () => {
         const sourceHeaders: THttpHeaders = { 'X-Source': 'source' };
         const sourceParams: THttpParams = { role: ['admin'] };
