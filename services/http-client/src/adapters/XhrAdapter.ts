@@ -5,14 +5,7 @@ import { NetworkError } from '../errors/NetworkError';
 import { ParseError } from '../errors/ParseError';
 import { TimeoutError } from '../errors/TimeoutError';
 import { AbortError } from '../errors/AbortError';
-import {
-    IHttpClientAdapter,
-    IHttpRequestConfig,
-    IHttpResponse,
-    THttpStatusCode,
-    THttpHeaders,
-    THttpResponseType
-} from '../types';
+import { IHttpClientAdapter, IHttpRequestConfig, IHttpResponse, THttpHeaders, THttpResponseType } from '../types';
 import { buildUrl, getErrorMessage, hasHeader, mergeHeaders } from '../utilities';
 
 function parseResponseHeaders(rawHeaders: string): THttpHeaders {
@@ -133,7 +126,7 @@ export class XhrAdapter implements IHttpClientAdapter {
                         const responseData = getResponseBody(xhr, config, responseType) as T;
                         resolve({
                             data: responseData,
-                            status: xhr.status as THttpStatusCode,
+                            status: xhr.status,
                             statusText: xhr.statusText,
                             headers: parseResponseHeaders(xhr.getAllResponseHeaders()),
                             config
@@ -168,7 +161,7 @@ export class XhrAdapter implements IHttpClientAdapter {
                     reject(
                         new HttpResponseError(
                             `Request failed with status code ${xhr.status}`,
-                            xhr.status as THttpStatusCode,
+                            xhr.status,
                             xhr.statusText,
                             parseResponseHeaders(xhr.getAllResponseHeaders()),
                             config,

@@ -1,3 +1,2 @@
-import { HTTP_STATUS_CODES } from '../constants';
-
-export type THttpStatusCode = typeof HTTP_STATUS_CODES[keyof typeof HTTP_STATUS_CODES];
+/** Any valid HTTP response status, including non-standard codes returned by proxies or servers. */
+export type THttpStatusCode = number;

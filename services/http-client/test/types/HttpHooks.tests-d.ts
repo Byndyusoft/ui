@@ -18,6 +18,13 @@ const response: IHttpResponse = {
     config
 };
 
+const nonStandardStatusResponse: IHttpResponse = {
+    status: 499,
+    statusText: 'Client Closed Request',
+    headers: {},
+    config
+};
+
 describe('THttpRequestHook', () => {
     it('requires a config to be returned, sync or async', () => {
         const hooks: THttpRequestHook[] = [value => value, value => ({ ...value, headers: {} }), async value => value];
@@ -31,6 +38,15 @@ describe('THttpResponseHook', () => {
         const hooks: THttpResponseHook[] = [value => value, async value => value];
 
         expectTypeOf(hooks).toEqualTypeOf<THttpResponseHook[]>();
+    });
+});
+
+describe('HTTP status', () => {
+    it('allows status codes that are not included in HTTP_STATUS_CODES', () => {
+        const error = new HttpResponseError('request failed', 499, 'Client Closed Request', {}, config);
+
+        expectTypeOf(nonStandardStatusResponse.status).toEqualTypeOf<number>();
+        expectTypeOf(error.status).toEqualTypeOf<number>();
     });
 });
 

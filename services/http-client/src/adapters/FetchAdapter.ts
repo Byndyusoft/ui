@@ -5,14 +5,7 @@ import { NetworkError } from '../errors/NetworkError';
 import { ParseError } from '../errors/ParseError';
 import { TimeoutError } from '../errors/TimeoutError';
 import { AbortError } from '../errors/AbortError';
-import {
-    IHttpClientAdapter,
-    IHttpRequestConfig,
-    IHttpResponse,
-    THttpStatusCode,
-    THttpHeaders,
-    THttpResponseType
-} from '../types';
+import { IHttpClientAdapter, IHttpRequestConfig, IHttpResponse, THttpHeaders, THttpResponseType } from '../types';
 import { buildUrl, getErrorMessage, hasHeader, mergeHeaders } from '../utilities';
 
 function extractResponseHeaders(headers: Headers): THttpHeaders {
@@ -125,7 +118,7 @@ export class FetchAdapter implements IHttpClientAdapter {
 
                 throw new HttpResponseError(
                     `Request failed with status code ${response.status}`,
-                    response.status as THttpStatusCode,
+                    response.status,
                     response.statusText,
                     extractResponseHeaders(response.headers),
                     config,
@@ -137,7 +130,7 @@ export class FetchAdapter implements IHttpClientAdapter {
 
             return {
                 data: responseData,
-                status: response.status as THttpStatusCode,
+                status: response.status,
                 statusText: response.statusText,
                 headers: extractResponseHeaders(response.headers),
                 config
