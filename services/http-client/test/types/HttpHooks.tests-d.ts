@@ -57,6 +57,7 @@ describe('THttpResponseErrorHook', () => {
         const narrowed: THttpResponseErrorHook = error => {
             if (error instanceof HttpResponseError) {
                 expectTypeOf(error.status).toEqualTypeOf<typeof error.status>();
+                expectTypeOf(error.config).toEqualTypeOf<IHttpRequestConfig>();
             }
         };
 

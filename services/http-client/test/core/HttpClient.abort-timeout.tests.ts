@@ -21,13 +21,15 @@ describe.each(adapters)('HttpClient.$name — abort', ({ name, create }) => {
     test('throws AbortError when signal is already aborted', async () => {
         const client = new HttpClient({ adapter: create(), baseUrl: BASE_URL });
         const controller = new AbortController();
-        controller.abort();
+        controller.abort('Cancelled by the caller');
 
         try {
             await client.get('/').signal(controller.signal).execute();
             expect.fail('Should have thrown');
         } catch (error) {
             expect(error).toBeInstanceOf(AbortError);
+            expect((error as AbortError).config).toMatchObject({ url: '/', baseUrl: BASE_URL });
+            expect((error as AbortError).cause).toBe('Cancelled by the caller');
         }
     });
 
@@ -137,6 +139,7 @@ describe.each(adapters)('HttpClient.$name — timeout', ({ name, create }) => {
         } catch (error) {
             expect(error).toBeInstanceOf(TimeoutError);
             expect((error as TimeoutError).message).toContain('50');
+            expect((error as TimeoutError).config).toMatchObject({ url: '/slow', baseUrl: BASE_URL });
         } finally {
             vi.unstubAllGlobals();
         }

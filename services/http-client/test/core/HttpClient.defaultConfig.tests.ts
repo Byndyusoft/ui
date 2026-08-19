@@ -87,6 +87,7 @@ describe.each(adapters)('HttpClient.$name — default config', ({ create }) => {
             expect.fail('Should have thrown');
         } catch (error) {
             expect(error).toBeInstanceOf(NetworkError);
+            expect((error as NetworkError).config).toMatchObject({ url: '/network-error', baseUrl: BASE_URL });
         }
     });
 });

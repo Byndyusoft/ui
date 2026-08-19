@@ -134,7 +134,10 @@ describe.each(adapters)('HttpClient.$name — GET', ({ create }) => {
             expect.fail('Should have thrown');
         } catch (error) {
             expect(error).toBeInstanceOf(ParseError);
-            expect((error as ParseError).cause).toBeInstanceOf(SyntaxError);
+            const parseError = error as ParseError;
+
+            expect(parseError.cause).toBeInstanceOf(SyntaxError);
+            expect(parseError.config).toMatchObject({ url: '/invalid-json', baseUrl: BASE_URL });
         }
     });
 });

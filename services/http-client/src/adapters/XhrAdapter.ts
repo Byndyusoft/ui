@@ -13,7 +13,7 @@ import {
     THttpHeaders,
     THttpResponseType
 } from '../types';
-import { buildUrl, hasHeader, mergeHeaders } from '../utilities';
+import { buildUrl, getErrorMessage, hasHeader, mergeHeaders } from '../utilities';
 
 function parseResponseHeaders(rawHeaders: string): THttpHeaders {
     const result: THttpHeaders = {};
@@ -29,7 +29,7 @@ function parseResponseHeaders(rawHeaders: string): THttpHeaders {
     return result;
 }
 
-function getResponseBody(xhr: XMLHttpRequest, responseType?: THttpResponseType): unknown {
+function getResponseBody(xhr: XMLHttpRequest, config: IHttpRequestConfig, responseType?: THttpResponseType): unknown {
     if (xhr.status === 204) {
         return undefined;
     }
@@ -49,7 +49,7 @@ function getResponseBody(xhr: XMLHttpRequest, responseType?: THttpResponseType):
             try {
                 return JSON.parse(text);
             } catch (error) {
-                throw new ParseError('Failed to parse response body as JSON', { cause: error });
+                throw new ParseError('Failed to parse response body as JSON', { cause: error, config });
             }
         }
     }
@@ -73,7 +73,7 @@ export class XhrAdapter implements IHttpClientAdapter {
 
         return new Promise<IHttpResponse<T>>((resolve, reject) => {
             if (userSignal?.aborted) {
-                reject(new AbortError('Request was aborted'));
+                reject(new AbortError('Request was aborted', { cause: userSignal.reason, config }));
                 return;
             }
 
@@ -130,7 +130,7 @@ export class XhrAdapter implements IHttpClientAdapter {
 
                 if (xhr.status >= 200 && xhr.status < 300) {
                     try {
-                        const responseData = getResponseBody(xhr, responseType) as T;
+                        const responseData = getResponseBody(xhr, config, responseType) as T;
                         resolve({
                             data: responseData,
                             status: xhr.status as THttpStatusCode,
@@ -142,7 +142,10 @@ export class XhrAdapter implements IHttpClientAdapter {
                         reject(
                             error instanceof HttpClientError
                                 ? error
-                                : new NetworkError((error as Error).message, { cause: error })
+                                : new NetworkError(getErrorMessage(error, 'Network request failed'), {
+                                      cause: error,
+                                      config
+                                  })
                         );
                     }
                 } else {
@@ -175,19 +178,19 @@ export class XhrAdapter implements IHttpClientAdapter {
                 }
             };
 
-            xhr.onerror = () => {
+            xhr.onerror = event => {
                 cleanup();
-                reject(new NetworkError('Network request failed'));
+                reject(new NetworkError('Network request failed', { cause: event, config }));
             };
 
-            xhr.onabort = () => {
+            xhr.onabort = event => {
                 cleanup();
-                reject(new AbortError('Request was aborted'));
+                reject(new AbortError('Request was aborted', { cause: userSignal?.reason ?? event, config }));
             };
 
-            xhr.ontimeout = () => {
+            xhr.ontimeout = event => {
                 cleanup();
-                reject(new TimeoutError(`Request timed out after ${timeout}ms`));
+                reject(new TimeoutError(`Request timed out after ${timeout ?? 0}ms`, { cause: event, config }));
             };
 
             xhr.send(body);

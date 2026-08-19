@@ -66,8 +66,9 @@ describe('HttpClientError', () => {
 
     it('preserves the cause of a ParseError', () => {
         const cause = new SyntaxError('Unexpected token');
-        const error = new ParseError('Failed to parse response body as JSON', { cause });
+        const error = new ParseError('Failed to parse response body as JSON', { cause, config });
 
         expect(error.cause).toBe(cause);
+        expect(error.config).toBe(config);
     });
 });

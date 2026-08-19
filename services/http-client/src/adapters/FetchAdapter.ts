@@ -13,7 +13,7 @@ import {
     THttpHeaders,
     THttpResponseType
 } from '../types';
-import { buildUrl, hasHeader, mergeHeaders } from '../utilities';
+import { buildUrl, getErrorMessage, hasHeader, mergeHeaders } from '../utilities';
 
 function extractResponseHeaders(headers: Headers): THttpHeaders {
     const result: THttpHeaders = {};
@@ -23,7 +23,11 @@ function extractResponseHeaders(headers: Headers): THttpHeaders {
     return result;
 }
 
-async function parseResponseBody<T>(response: Response, responseType?: THttpResponseType): Promise<T> {
+async function parseResponseBody<T>(
+    response: Response,
+    config: IHttpRequestConfig,
+    responseType?: THttpResponseType
+): Promise<T> {
     if (response.status === 204 || response.headers.get('content-length') === '0') {
         return undefined as T;
     }
@@ -44,7 +48,7 @@ async function parseResponseBody<T>(response: Response, responseType?: THttpResp
             try {
                 return JSON.parse(text) as T;
             } catch (error) {
-                throw new ParseError('Failed to parse response body as JSON', { cause: error });
+                throw new ParseError('Failed to parse response body as JSON', { cause: error, config });
             }
         }
     }
@@ -90,7 +94,7 @@ export class FetchAdapter implements IHttpClientAdapter {
             if (userSignal) {
                 if (userSignal.aborted) {
                     clearTimeout(timeoutId);
-                    throw new AbortError('Request was aborted');
+                    throw new AbortError('Request was aborted', { cause: userSignal.reason, config });
                 }
                 userSignal.addEventListener('abort', () => ownController!.abort(), { once: true });
             }
@@ -129,7 +133,7 @@ export class FetchAdapter implements IHttpClientAdapter {
                 );
             }
 
-            const responseData = await parseResponseBody<T>(response, responseType);
+            const responseData = await parseResponseBody<T>(response, config, responseType);
 
             return {
                 data: responseData,
@@ -144,14 +148,14 @@ export class FetchAdapter implements IHttpClientAdapter {
             }
 
             if (userSignal?.aborted) {
-                throw new AbortError('Request was aborted');
+                throw new AbortError('Request was aborted', { cause: userSignal.reason ?? error, config });
             }
 
             if (timeout && error instanceof DOMException && error.name === 'AbortError') {
-                throw new TimeoutError(`Request timed out after ${timeout}ms`);
+                throw new TimeoutError(`Request timed out after ${timeout}ms`, { cause: error, config });
             }
 
-            throw new NetworkError((error as Error).message);
+            throw new NetworkError(getErrorMessage(error, 'Network request failed'), { cause: error, config });
         } finally {
             if (timeoutId !== undefined) {
                 clearTimeout(timeoutId);
