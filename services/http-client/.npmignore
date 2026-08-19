@@ -1,1 +1,8 @@
 src
+test
+tsconfig.json
+tsconfig.build.json
+vitest.config.mjs
+.turbo
+node_modules
+*.tgz
