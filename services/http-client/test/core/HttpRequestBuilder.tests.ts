@@ -128,6 +128,16 @@ describe('HttpRequestBuilder', () => {
             code: REQUEST_BUILDER_ERROR_CODES.INVALID_METHOD
         },
         {
+            name: 'CONNECT method',
+            action: () => new HttpRequestBuilder(createExecutor(), 'CONNECT' as THttpMethod, '/items'),
+            code: REQUEST_BUILDER_ERROR_CODES.INVALID_METHOD
+        },
+        {
+            name: 'TRACE method',
+            action: () => new HttpRequestBuilder(createExecutor(), 'TRACE' as THttpMethod, '/items'),
+            code: REQUEST_BUILDER_ERROR_CODES.INVALID_METHOD
+        },
+        {
             name: 'URL',
             action: () => new HttpRequestBuilder(createExecutor(), HTTP_METHODS.GET, '   '),
             code: REQUEST_BUILDER_ERROR_CODES.INVALID_URL

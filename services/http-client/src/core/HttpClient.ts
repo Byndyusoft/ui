@@ -91,16 +91,8 @@ export class HttpClient {
         return this.request(HTTP_METHODS.DELETE, url);
     }
 
-    public connect(url: string): HttpRequestBuilder {
-        return this.request(HTTP_METHODS.CONNECT, url);
-    }
-
     public options(url: string): HttpRequestBuilder {
         return this.request(HTTP_METHODS.OPTIONS, url);
-    }
-
-    public trace(url: string): HttpRequestBuilder {
-        return this.request(HTTP_METHODS.TRACE, url);
     }
 
     public patch(url: string): HttpRequestBuilder {
