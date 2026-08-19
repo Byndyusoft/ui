@@ -5,4 +5,5 @@ export { HttpResponseError, isHttpResponseError } from './HttpResponseError';
 export { NetworkError, isNetworkError } from './NetworkError';
 export { ParseError, isParseError } from './ParseError';
 export { RequestBuilderError, isRequestBuilderError } from './RequestBuilderError';
+export { RequestPreparationError, isRequestPreparationError } from './RequestPreparationError';
 export { TimeoutError, isTimeoutError } from './TimeoutError';

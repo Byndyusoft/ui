@@ -9,10 +9,12 @@ import {
     isNetworkError,
     isParseError,
     isRequestBuilderError,
+    isRequestPreparationError,
     isTimeoutError,
     NetworkError,
     ParseError,
     RequestBuilderError,
+    RequestPreparationError,
     TimeoutError
 } from '../../src/errors';
 
@@ -46,6 +48,10 @@ describe('error guards', () => {
 
         if (isRequestBuilderError(error)) {
             expectTypeOf(error).toEqualTypeOf<RequestBuilderError>();
+        }
+
+        if (isRequestPreparationError(error)) {
+            expectTypeOf(error).toEqualTypeOf<RequestPreparationError>();
         }
     });
 });

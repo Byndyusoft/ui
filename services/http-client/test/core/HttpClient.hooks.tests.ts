@@ -3,8 +3,14 @@ import { setupServer } from 'msw/node';
 import { HttpClient } from '../../src/core/HttpClient';
 import { FetchAdapter } from '../../src/adapters/FetchAdapter';
 import { XhrAdapter } from '../../src/adapters/XhrAdapter';
-import { HTTP_METHODS, HTTP_STATUS_CODES } from '../../src/constants';
-import { AbortError, HttpResponseError, NetworkError, RequestBuilderError } from '../../src/errors';
+import { HTTP_METHODS, HTTP_STATUS_CODES, REQUEST_BUILDER_ERROR_CODES } from '../../src/constants';
+import {
+    AbortError,
+    HttpResponseError,
+    NetworkError,
+    RequestBuilderError,
+    RequestPreparationError
+} from '../../src/errors';
 import { IHttpClientAdapter, IHttpClientOptions, IHttpRequestConfig, IHttpResponse } from '../../src/types';
 import { handlers } from '../__handlers__/HttpClient.hooks.handlers';
 import { BASE_URL } from '../__fixtures__';
@@ -63,6 +69,50 @@ describe.each(adapters)('HttpClient.$name — hooks', ({ create }) => {
         const response = await client.get('/echo-headers').execute<{ authorization: string | null }>();
 
         expect(response.data?.authorization).toBe('Bearer async-token');
+    });
+
+    test('passes an invalid config returned by onRequest to onRequestError', async () => {
+        let caught: unknown;
+        const client = createClient({
+            onRequest: config => ({ ...config, method: 'INVALID' } as unknown as IHttpRequestConfig),
+            onRequestError: error => {
+                caught = error;
+
+                return { method: HTTP_METHODS.GET, url: '/items', baseUrl: BASE_URL };
+            }
+        });
+
+        const response = await client.get('/items').execute<{ id: number }>();
+
+        expect(response.data?.id).toBe(1);
+        expect(caught).toMatchObject({
+            code: REQUEST_BUILDER_ERROR_CODES.INVALID_METHOD
+        });
+    });
+
+    test('rejects an invalid config returned by onRequestError without sending the request', async () => {
+        let hits = 0;
+        server.use(
+            http.get(`${BASE_URL}/items`, () => {
+                hits += 1;
+
+                return HttpResponse.json({});
+            })
+        );
+        const onResponseError = vi.fn();
+        const client = createClient({
+            onRequest: () => {
+                throw new Error('token storage failed');
+            },
+            onRequestError: () => ({ method: 'INVALID', url: '/items' } as unknown as IHttpRequestConfig),
+            onResponseError
+        });
+
+        await expect(client.get('/items').execute()).rejects.toMatchObject({
+            code: REQUEST_BUILDER_ERROR_CODES.INVALID_METHOD
+        });
+        expect(hits).toBe(0);
+        expect(onResponseError).not.toHaveBeenCalled();
     });
 
     test('does not call the adapter and propagates the error when onRequest throws', async () => {
@@ -179,6 +229,24 @@ describe.each(adapters)('HttpClient.$name — hooks', ({ create }) => {
 
         await expect(client.get('/network-error').execute()).rejects.toBeInstanceOf(NetworkError);
         expect(caught).toBeInstanceOf(NetworkError);
+    });
+
+    test('onResponseError receives RequestPreparationError when request serialization fails', async () => {
+        const body: { self?: unknown } = {};
+        body.self = body;
+        let caught: unknown;
+        const client = createClient({
+            onResponseError: error => {
+                caught = error;
+
+                return undefined;
+            }
+        });
+
+        await expect(client.post('/items').body(body).execute()).rejects.toBeInstanceOf(RequestPreparationError);
+        expect(caught).toBeInstanceOf(RequestPreparationError);
+        expect(caught).toMatchObject({ config: { method: HTTP_METHODS.POST, url: '/items', baseUrl: BASE_URL } });
+        expect((caught as RequestPreparationError).cause).toBeInstanceOf(TypeError);
     });
 
     test('onResponseError receives AbortError for an already aborted signal', async () => {
@@ -317,5 +385,33 @@ describe.each(adapters)('HttpClient.$name — hooks', ({ create }) => {
         await expect(client.get('/not-found').execute()).rejects.toBeInstanceOf(HttpResponseError);
         expect(caught).toBeInstanceOf(HttpResponseError);
         expect((caught as HttpResponseError).status).toBe(HTTP_STATUS_CODES.NOT_FOUND);
+    });
+});
+
+describe('XhrAdapter preparation errors', () => {
+    test('wraps a synchronous xhr.open failure', async () => {
+        const cause = new DOMException('Invalid URL', 'SyntaxError');
+        const xhr = {
+            open: vi.fn(() => {
+                throw cause;
+            })
+        } as unknown as XMLHttpRequest;
+        vi.stubGlobal(
+            'XMLHttpRequest',
+            vi.fn(() => xhr)
+        );
+
+        const client = new HttpClient({ adapter: new XhrAdapter(), baseUrl: BASE_URL });
+
+        try {
+            await client.get('/items').execute();
+            expect.fail('Should have thrown');
+        } catch (error) {
+            expect(error).toBeInstanceOf(RequestPreparationError);
+            expect((error as RequestPreparationError).cause).toBe(cause);
+            expect((error as RequestPreparationError).config).toMatchObject({ url: '/items', baseUrl: BASE_URL });
+        } finally {
+            vi.unstubAllGlobals();
+        }
     });
 });

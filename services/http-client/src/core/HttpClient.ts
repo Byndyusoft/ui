@@ -1,4 +1,5 @@
 import { HTTP_METHODS } from '../constants';
+import { assertValidRequestConfig } from '../asserts';
 import {
     THttpMethod,
     IHttpRequestConfig,
@@ -118,7 +119,9 @@ export class HttpClient {
 
         if (onRequest !== undefined) {
             try {
-                mergedConfig = await onRequest(mergedConfig);
+                const requestConfig = await onRequest(mergedConfig);
+                assertValidRequestConfig(requestConfig);
+                mergedConfig = requestConfig;
             } catch (error) {
                 if (onRequestError === undefined) {
                     throw error;
@@ -130,6 +133,7 @@ export class HttpClient {
                     throw error;
                 }
 
+                assertValidRequestConfig(recoveredConfig);
                 mergedConfig = recoveredConfig;
             }
         }

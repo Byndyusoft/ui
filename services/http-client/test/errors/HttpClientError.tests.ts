@@ -9,10 +9,12 @@ import {
     isNetworkError,
     isParseError,
     isRequestBuilderError,
+    isRequestPreparationError,
     isTimeoutError,
     NetworkError,
     ParseError,
     RequestBuilderError,
+    RequestPreparationError,
     TimeoutError
 } from '../../src/errors';
 import { IHttpRequestConfig } from '../../src/types';
@@ -32,6 +34,7 @@ const errors: Array<{ name: string; create: () => HttpClientError }> = [
         name: 'RequestBuilderError',
         create: () => new RequestBuilderError('invalid', REQUEST_BUILDER_ERROR_CODES.INVALID_URL)
     },
+    { name: 'RequestPreparationError', create: () => new RequestPreparationError('failed', { config }) },
     { name: 'TimeoutError', create: () => new TimeoutError('timed out') }
 ];
 
@@ -49,6 +52,11 @@ const errorGuards: Array<{ name: string; guard: (error: unknown) => boolean; cre
         name: 'RequestBuilderError',
         guard: isRequestBuilderError,
         create: () => new RequestBuilderError('invalid', REQUEST_BUILDER_ERROR_CODES.INVALID_URL)
+    },
+    {
+        name: 'RequestPreparationError',
+        guard: isRequestPreparationError,
+        create: () => new RequestPreparationError('failed', { config })
     },
     { name: 'TimeoutError', guard: isTimeoutError, create: () => new TimeoutError('timed out') }
 ];
@@ -103,6 +111,14 @@ describe('HttpClientError', () => {
     it('preserves the cause of a ParseError', () => {
         const cause = new SyntaxError('Unexpected token');
         const error = new ParseError('Failed to parse response body as JSON', { cause, config });
+
+        expect(error.cause).toBe(cause);
+        expect(error.config).toBe(config);
+    });
+
+    it('preserves the cause and config of a RequestPreparationError', () => {
+        const cause = new TypeError('Cannot serialize request body');
+        const error = new RequestPreparationError('Failed to prepare HTTP request', { cause, config });
 
         expect(error.cause).toBe(cause);
         expect(error.config).toBe(config);

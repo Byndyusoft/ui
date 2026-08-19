@@ -6,6 +6,7 @@ export * from './assertValidHeaders';
 export * from './assertValidMethod';
 export * from './assertValidParam';
 export * from './assertValidParams';
+export * from './assertValidRequestConfig';
 export * from './assertValidResponseType';
 export * from './assertValidSignal';
 export * from './assertValidTimeout';

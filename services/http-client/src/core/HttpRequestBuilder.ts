@@ -20,6 +20,7 @@ import {
     assertValidMethod,
     assertValidParam,
     assertValidParams,
+    assertValidRequestConfig,
     assertValidResponseType,
     assertValidSignal,
     assertValidTimeout,
@@ -64,36 +65,7 @@ export class HttpRequestBuilder {
     }
 
     public build(): Readonly<IHttpRequestConfig> {
-        assertValidMethod(this.config.method);
-        assertValidUrl(this.config.url);
-
-        if (this.config.baseUrl !== undefined) {
-            assertValidBaseUrl(this.config.baseUrl);
-        }
-
-        if (this.config.headers !== undefined) {
-            assertValidHeaders(this.config.headers);
-        }
-
-        if (this.config.params !== undefined) {
-            assertValidParams(this.config.params);
-        }
-
-        if (this.config.signal !== undefined) {
-            assertValidSignal(this.config.signal);
-        }
-
-        if (this.config.timeout !== undefined) {
-            assertValidTimeout(this.config.timeout);
-        }
-
-        if (this.config.responseType !== undefined) {
-            assertValidResponseType(this.config.responseType);
-        }
-
-        if (Object.prototype.hasOwnProperty.call(this.config, 'data')) {
-            assertBodyAllowed(this.config.method);
-        }
+        assertValidRequestConfig(this.config);
 
         return cloneConfig(this.config);
     }
