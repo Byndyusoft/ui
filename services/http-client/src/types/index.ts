@@ -3,6 +3,7 @@ export * from './HttpStatusCode';
 export * from './HttpClientAdapter';
 export * from './HttpClientOptions';
 export * from './HttpRequestConfig';
+export * from './HttpRequestBody';
 export * from './HttpRequestExecutor';
 export * from './HttpResponse';
 export * from './HttpHeaders';

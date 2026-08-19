@@ -7,7 +7,7 @@ import { RequestPreparationError } from '../errors/RequestPreparationError';
 import { TimeoutError } from '../errors/TimeoutError';
 import { AbortError } from '../errors/AbortError';
 import { IHttpClientAdapter, IHttpRequestConfig, IHttpResponse, THttpHeaders, THttpResponseType } from '../types';
-import { buildUrl, getErrorMessage, hasHeader, mergeHeaders } from '../utilities';
+import { buildUrl, getErrorMessage, mergeHeaders, prepareRequestBody } from '../utilities';
 
 function parseResponseHeaders(rawHeaders: string): THttpHeaders {
     const result: THttpHeaders = {};
@@ -182,24 +182,12 @@ export class XhrAdapter implements IHttpClientAdapter {
                 }
 
                 const requestHeaders = mergeHeaders(headers);
-                if (data !== undefined && method !== HTTP_METHODS.GET && method !== HTTP_METHODS.HEAD) {
-                    if (typeof data !== 'string' && !(data instanceof ArrayBuffer) && !(data instanceof Blob)) {
-                        if (!hasHeader(requestHeaders, 'Content-Type')) {
-                            requestHeaders['Content-Type'] = 'application/json';
-                        }
-                    }
-                }
+                const body =
+                    data !== undefined && method !== HTTP_METHODS.GET && method !== HTTP_METHODS.HEAD
+                        ? prepareRequestBody(data, requestHeaders)
+                        : undefined;
                 for (const [key, value] of Object.entries(requestHeaders)) {
                     xhr.setRequestHeader(key, value);
-                }
-
-                let body: string | ArrayBuffer | Blob | undefined;
-                if (data !== undefined && method !== HTTP_METHODS.GET && method !== HTTP_METHODS.HEAD) {
-                    if (typeof data === 'string' || data instanceof ArrayBuffer || data instanceof Blob) {
-                        body = data;
-                    } else {
-                        body = JSON.stringify(data);
-                    }
                 }
 
                 const onAbort = (): void => xhr.abort();

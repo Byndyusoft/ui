@@ -1,4 +1,5 @@
 import { setupServer } from 'msw/node';
+import { Blob as NodeBlob } from 'node:buffer';
 import { HttpClient } from '../../src/core/HttpClient';
 import { FetchAdapter } from '../../src/adapters/FetchAdapter';
 import { XhrAdapter } from '../../src/adapters/XhrAdapter';
@@ -48,6 +49,62 @@ describe.each(adapters)('HttpClient.$name — POST', ({ create }) => {
 
         expect(response.data?.received).toBe('plain text body');
         expect(response.data?.contentType).toBe('text/plain');
+    });
+
+    test('sends FormData without JSON serialization', async () => {
+        const client = createClient();
+        const formData = new FormData();
+        formData.append('name', 'Jane');
+        formData.append('role', 'admin');
+        formData.append('role', 'editor');
+
+        const response = await client
+            .post('/form-data')
+            .body(formData)
+            .execute<{ name: string; roles: string[]; contentType: string | null }>();
+
+        expect(response.data?.name).toBe('Jane');
+        expect(response.data?.roles).toEqual(['admin', 'editor']);
+        expect(response.data?.contentType).toMatch(/^multipart\/form-data; boundary=/);
+    });
+
+    test('sends URLSearchParams with form URL encoded Content-Type', async () => {
+        const client = createClient();
+        const params = new URLSearchParams();
+        params.append('name', 'Jane');
+        params.append('role', 'admin');
+        params.append('role', 'editor');
+
+        const response = await client
+            .post('/url-search-params')
+            .body(params)
+            .execute<{ name: string; roles: string[]; contentType: string | null }>();
+
+        expect(response.data).toEqual({
+            name: 'Jane',
+            roles: ['admin', 'editor'],
+            contentType: 'application/x-www-form-urlencoded;charset=UTF-8'
+        });
+    });
+
+    test('sends Blob body without JSON serialization', async () => {
+        const client = createClient();
+        const response = await client
+            .post('/binary')
+            .body(new NodeBlob([new Uint8Array([0, 1, 255])]))
+            .execute<{ received: number[] }>();
+
+        expect(response.data?.received).toEqual([0, 1, 255]);
+    });
+
+    test('sends typed array body without JSON serialization', async () => {
+        const client = createClient();
+        const response = await client
+            .post('/binary')
+            .body(new Uint8Array([0, 1, 255]))
+            .execute<{ received: number[] }>();
+
+        expect(response.data?.received).toEqual([0, 1, 255]);
     });
 
     test('does not add a duplicate Content-Type when it uses different casing', async () => {

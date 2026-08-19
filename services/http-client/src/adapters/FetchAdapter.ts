@@ -7,7 +7,7 @@ import { RequestPreparationError } from '../errors/RequestPreparationError';
 import { TimeoutError } from '../errors/TimeoutError';
 import { AbortError } from '../errors/AbortError';
 import { IHttpClientAdapter, IHttpRequestConfig, IHttpResponse, THttpHeaders, THttpResponseType } from '../types';
-import { buildUrl, getErrorMessage, hasHeader, mergeHeaders } from '../utilities';
+import { buildUrl, getErrorMessage, mergeHeaders, prepareRequestBody } from '../utilities';
 
 function extractResponseHeaders(headers: Headers): THttpHeaders {
     const result: THttpHeaders = {};
@@ -42,18 +42,10 @@ function prepareFetchRequest(config: IHttpRequestConfig): IPreparedFetchRequest 
     try {
         const fullUrl = buildUrl(baseURL, url, params);
         const requestHeaders = mergeHeaders(headers);
-        let body: BodyInit | undefined;
-
-        if (data !== undefined && method !== HTTP_METHODS.GET && method !== HTTP_METHODS.HEAD) {
-            if (typeof data === 'string' || data instanceof ArrayBuffer || data instanceof Blob) {
-                body = data as BodyInit;
-            } else {
-                body = JSON.stringify(data);
-                if (!hasHeader(requestHeaders, 'Content-Type')) {
-                    requestHeaders['Content-Type'] = 'application/json';
-                }
-            }
-        }
+        const body =
+            data !== undefined && method !== HTTP_METHODS.GET && method !== HTTP_METHODS.HEAD
+                ? prepareRequestBody(data, requestHeaders)
+                : undefined;
 
         if (timeout) {
             const controller = new AbortController();
