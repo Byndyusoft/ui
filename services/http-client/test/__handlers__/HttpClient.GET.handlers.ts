@@ -35,6 +35,16 @@ export const handlers = [
         return new HttpResponse(bytes.buffer, { headers: { 'Content-Type': 'application/octet-stream' } });
     }),
 
+    http.get(`${BASE_URL}/form-data`, () => {
+        return new HttpResponse('name=John&role=admin&role=editor', {
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        });
+    }),
+
+    http.get(`${BASE_URL}/stream`, () => {
+        return new HttpResponse('stream response', { headers: { 'Content-Type': 'text/plain' } });
+    }),
+
     http.get(`${BASE_URL}/not-found`, () => {
         return HttpResponse.json(
             { error: 'Not found' },

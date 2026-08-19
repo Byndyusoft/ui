@@ -32,6 +32,14 @@ async function parseResponseBody<T>(
             return response.blob() as Promise<T>;
         case HTTP_RESPONSE_TYPES.ARRAY_BUFFER:
             return response.arrayBuffer() as Promise<T>;
+        case HTTP_RESPONSE_TYPES.FORM_DATA:
+            try {
+                return (await response.formData()) as T;
+            } catch (error) {
+                throw new ParseError('Failed to parse response body as FormData', { cause: error, config });
+            }
+        case HTTP_RESPONSE_TYPES.STREAM:
+            return response.body as T;
         case HTTP_RESPONSE_TYPES.JSON:
         default: {
             const text = await response.text();

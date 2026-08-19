@@ -108,6 +108,29 @@ describe.each(adapters)('HttpClient.$name — GET', ({ create }) => {
         expect(Array.from(new Uint8Array(response.data as ArrayBuffer))).toEqual([1, 2, 3, 4]);
     });
 
+    test('returns FormData when responseType is formData', async () => {
+        const client = createClient();
+        const response = await client.get('/form-data').responseType(HTTP_RESPONSE_TYPES.FORM_DATA).execute<FormData>();
+
+        expect(response.data?.get('name')).toBe('John');
+        expect(response.data?.getAll('role')).toEqual(['admin', 'editor']);
+    });
+
+    test('returns a readable stream when responseType is stream', async () => {
+        const client = createClient();
+        const response = await client
+            .get('/stream')
+            .responseType(HTTP_RESPONSE_TYPES.STREAM)
+            .execute<ReadableStream<Uint8Array>>();
+
+        if (response.data === undefined) {
+            throw new Error('Expected stream response data');
+        }
+
+        expect(response.data).toBeInstanceOf(ReadableStream);
+        expect(await new Response(response.data).text()).toBe('stream response');
+    });
+
     test('throws HttpResponseError with response context and data on 404', async () => {
         const client = createClient();
 
