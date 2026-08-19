@@ -16,3 +16,7 @@ export class HttpClientError extends Error {
         Object.setPrototypeOf(this, new.target.prototype);
     }
 }
+
+export function isHttpClientError(error: unknown): error is HttpClientError {
+    return error instanceof HttpClientError;
+}

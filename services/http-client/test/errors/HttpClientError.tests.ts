@@ -3,6 +3,13 @@ import {
     AbortError,
     HttpClientError,
     HttpResponseError,
+    isAbortError,
+    isHttpClientError,
+    isHttpResponseError,
+    isNetworkError,
+    isParseError,
+    isRequestBuilderError,
+    isTimeoutError,
     NetworkError,
     ParseError,
     RequestBuilderError,
@@ -28,6 +35,24 @@ const errors: Array<{ name: string; create: () => HttpClientError }> = [
     { name: 'TimeoutError', create: () => new TimeoutError('timed out') }
 ];
 
+const errorGuards: Array<{ name: string; guard: (error: unknown) => boolean; create: () => HttpClientError }> = [
+    { name: 'AbortError', guard: isAbortError, create: () => new AbortError('aborted') },
+    {
+        name: 'HttpResponseError',
+        guard: isHttpResponseError,
+        create: () =>
+            new HttpResponseError('failed', HTTP_STATUS_CODES.BAD_REQUEST, 'Bad Request', {}, config, { error: 'bad' })
+    },
+    { name: 'NetworkError', guard: isNetworkError, create: () => new NetworkError('network down') },
+    { name: 'ParseError', guard: isParseError, create: () => new ParseError('invalid json') },
+    {
+        name: 'RequestBuilderError',
+        guard: isRequestBuilderError,
+        create: () => new RequestBuilderError('invalid', REQUEST_BUILDER_ERROR_CODES.INVALID_URL)
+    },
+    { name: 'TimeoutError', guard: isTimeoutError, create: () => new TimeoutError('timed out') }
+];
+
 describe('HttpClientError', () => {
     it.each(errors)('$name is catchable via instanceof HttpClientError and Error', ({ name, create }) => {
         const error = create();
@@ -41,6 +66,17 @@ describe('HttpClientError', () => {
         const error = create();
 
         expect(error).toBeInstanceOf(error.constructor as new (...args: never[]) => unknown);
+    });
+
+    it.each(errorGuards)('$name guard identifies its error type', ({ guard, create }) => {
+        const error = create();
+
+        expect(isHttpClientError(error)).toBe(true);
+        expect(guard(error)).toBe(true);
+    });
+
+    it.each(errorGuards)('$name guard rejects unrelated errors', ({ guard }) => {
+        expect(guard(new Error('unrelated'))).toBe(false);
     });
 
     it('preserves HttpResponseError fields', () => {

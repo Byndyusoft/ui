@@ -27,3 +27,7 @@ export class HttpResponseError<T = unknown> extends HttpClientError {
         this.data = data;
     }
 }
+
+export function isHttpResponseError(error: unknown): error is HttpResponseError {
+    return error instanceof HttpResponseError;
+}

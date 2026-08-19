@@ -11,3 +11,7 @@ export class RequestBuilderError extends HttpClientError {
         this.code = code;
     }
 }
+
+export function isRequestBuilderError(error: unknown): error is RequestBuilderError {
+    return error instanceof RequestBuilderError;
+}
