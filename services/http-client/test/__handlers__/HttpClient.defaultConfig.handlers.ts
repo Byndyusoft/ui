@@ -5,7 +5,8 @@ export const handlers = [
     http.get(`${BASE_URL}/test`, ({ request }) => {
         return HttpResponse.json({
             def: request.headers.get('x-default'),
-            custom: request.headers.get('x-custom')
+            custom: request.headers.get('x-custom'),
+            authorization: request.headers.get('authorization')
         });
     }),
 

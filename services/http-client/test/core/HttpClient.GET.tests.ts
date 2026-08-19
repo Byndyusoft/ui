@@ -49,6 +49,24 @@ describe.each(adapters)('HttpClient.$name — GET', ({ create }) => {
         expect(response.data?.role).toEqual(['admin', 'user']);
     });
 
+    test('preserves an existing query and appends params before a fragment', async () => {
+        const client = createClient();
+        const response = await client
+            .get('/users?source=existing#fragment')
+            .param('page', '2')
+            .execute<{ page: string | null; source: string | null }>();
+
+        expect(response.data?.source).toBe('existing');
+        expect(response.data?.page).toBe('2');
+    });
+
+    test('joins baseUrl and request paths without duplicate or missing slashes', async () => {
+        const client = new HttpClient({ adapter: create(), baseUrl: `${BASE_URL}/api/` });
+        const response = await client.get('/users').execute<{ scoped: boolean }>();
+
+        expect(response.data?.scoped).toBe(true);
+    });
+
     test('sends custom headers', async () => {
         const client = createClient();
         const response = await client
@@ -59,6 +77,17 @@ describe.each(adapters)('HttpClient.$name — GET', ({ create }) => {
 
         expect(response.data?.auth).toBe('Bearer token');
         expect(response.data?.custom).toBe('value');
+    });
+
+    test('overrides request headers case-insensitively', async () => {
+        const client = createClient();
+        const response = await client
+            .get('/headers')
+            .header('Authorization', 'Bearer first')
+            .header('authorization', 'Bearer second')
+            .execute<{ auth: string | null }>();
+
+        expect(response.data?.auth).toBe('Bearer second');
     });
 
     test('returns text when responseType is text', async () => {

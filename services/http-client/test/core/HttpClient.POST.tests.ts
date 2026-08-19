@@ -50,6 +50,20 @@ describe.each(adapters)('HttpClient.$name — POST', ({ create }) => {
         expect(response.data?.contentType).toBe('text/plain');
     });
 
+    test('does not add a duplicate Content-Type when it uses different casing', async () => {
+        const client = new HttpClient({
+            adapter: create(),
+            baseUrl: BASE_URL,
+            headers: { 'content-type': 'application/vnd.api+json' }
+        });
+        const response = await client
+            .post('/items')
+            .body({ name: 'New item' })
+            .execute<{ contentType: string | null }>();
+
+        expect(response.data?.contentType).toBe('application/vnd.api+json');
+    });
+
     test('echoes body back', async () => {
         const client = createClient();
         const response = await client

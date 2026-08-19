@@ -10,8 +10,13 @@ export const handlers = [
         const url = new URL(request.url);
         return HttpResponse.json({
             page: url.searchParams.get('page'),
-            role: url.searchParams.getAll('role')
+            role: url.searchParams.getAll('role'),
+            source: url.searchParams.get('source')
         });
+    }),
+
+    http.get(`${BASE_URL}/api/users`, () => {
+        return HttpResponse.json({ scoped: true });
     }),
 
     http.get(`${BASE_URL}/headers`, ({ request }) => {

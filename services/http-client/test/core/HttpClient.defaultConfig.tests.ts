@@ -25,7 +25,7 @@ describe.each(adapters)('HttpClient.$name — default config', ({ create }) => {
         return new HttpClient({
             adapter: create(),
             baseUrl: BASE_URL,
-            headers: { 'X-Default': 'default-header' }
+            headers: { 'X-Default': 'default-header', Authorization: 'Bearer default' }
         });
     }
 
@@ -48,6 +48,16 @@ describe.each(adapters)('HttpClient.$name — default config', ({ create }) => {
             .execute<{ def: string | null; custom: string | null }>();
 
         expect(response.data?.def).toBe('overridden');
+    });
+
+    test('request headers override default headers regardless of casing', async () => {
+        const client = createClient();
+        const response = await client
+            .get('/test')
+            .header('authorization', 'Bearer request')
+            .execute<{ authorization: string | null }>();
+
+        expect(response.data?.authorization).toBe('Bearer request');
     });
 
     test('uses default baseUrl', async () => {
