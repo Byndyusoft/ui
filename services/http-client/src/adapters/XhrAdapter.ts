@@ -125,205 +125,219 @@ async function getResponseBody<T>(
     }
 }
 
+interface IPreparedXhrRequest {
+    readonly xhr: XMLHttpRequest;
+    readonly body: ReturnType<typeof prepareRequestBody> | undefined;
+    cleanup(): void;
+}
+
+function setResponseType(xhr: XMLHttpRequest, responseType: THttpResponseType | undefined): void {
+    if (responseType === HTTP_RESPONSE_TYPES.ARRAY_BUFFER) {
+        // XHR принимает только DOM-значение в нижнем регистре
+        xhr.responseType = 'arraybuffer';
+    } else if (responseType === HTTP_RESPONSE_TYPES.BLOB || responseType === HTTP_RESPONSE_TYPES.FORM_DATA) {
+        xhr.responseType = 'blob';
+    } else {
+        xhr.responseType = 'text';
+    }
+}
+
+function assertStreamingSupported(responseType: THttpResponseType | undefined, config: IHttpRequestConfig): void {
+    if (
+        responseType === HTTP_RESPONSE_TYPES.STREAM &&
+        (typeof ReadableStream === 'undefined' || typeof TextEncoder === 'undefined')
+    ) {
+        throw new RequestPreparationError('Streaming responses are not supported in this environment', { config });
+    }
+}
+
+function createResponse<T>(xhr: XMLHttpRequest, config: IHttpRequestConfig, data: T): IHttpResponse<T> {
+    return {
+        data,
+        status: xhr.status,
+        statusText: xhr.statusText,
+        headers: parseResponseHeaders(xhr.getAllResponseHeaders()),
+        config
+    };
+}
+
+function getErrorData(xhr: XMLHttpRequest): unknown {
+    try {
+        if (xhr.responseType !== 'text') {
+            return undefined;
+        }
+
+        const text = xhr.responseText;
+        if (!text) {
+            return undefined;
+        }
+
+        try {
+            return JSON.parse(text);
+        } catch {
+            return text;
+        }
+    } catch {
+        return undefined;
+    }
+}
+
+function createResponseError(xhr: XMLHttpRequest, config: IHttpRequestConfig): HttpResponseError {
+    return new HttpResponseError(
+        `Request failed with status code ${xhr.status}`,
+        xhr.status,
+        xhr.statusText,
+        parseResponseHeaders(xhr.getAllResponseHeaders()),
+        config,
+        getErrorData(xhr)
+    );
+}
+
+function prepareXhrRequest(config: IHttpRequestConfig): IPreparedXhrRequest {
+    const {
+        url,
+        method,
+        headers = {},
+        params,
+        data,
+        signal: userSignal,
+        timeout,
+        responseType,
+        baseUrl: baseURL
+    } = config;
+    const fullUrl = buildUrl(baseURL, url, params);
+
+    if (userSignal?.aborted) {
+        throw new AbortError('Request was aborted', { cause: userSignal.reason, config });
+    }
+
+    assertStreamingSupported(responseType, config);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open(method, fullUrl, true);
+
+    if (timeout !== undefined && timeout > 0) {
+        xhr.timeout = timeout;
+    }
+
+    setResponseType(xhr, responseType);
+
+    const requestHeaders = mergeHeaders(headers);
+    const body =
+        data !== undefined && method !== HTTP_METHODS.GET && method !== HTTP_METHODS.HEAD
+            ? prepareRequestBody(data, requestHeaders)
+            : undefined;
+    for (const [key, value] of Object.entries(requestHeaders)) {
+        xhr.setRequestHeader(key, value);
+    }
+
+    const onAbort = (): void => xhr.abort();
+    userSignal?.addEventListener('abort', onAbort, { once: true });
+
+    return {
+        xhr,
+        body,
+        cleanup() {
+            userSignal?.removeEventListener('abort', onAbort);
+        }
+    };
+}
+
+function configureXhrEventHandlers<T>(
+    request: IPreparedXhrRequest,
+    config: IHttpRequestConfig,
+    resolve: (value: IHttpResponse<T> | PromiseLike<IHttpResponse<T>>) => void,
+    reject: (reason?: unknown) => void
+): void {
+    const { xhr } = request;
+    const { signal: userSignal, timeout, responseType } = config;
+    let responseStream: IXhrResponseStream | undefined;
+    let streamResponseResolved = false;
+    const isSuccessful = (): boolean => xhr.status >= 200 && xhr.status < 300;
+    const resolveStream = (): void => {
+        if (streamResponseResolved || !isSuccessful()) {
+            return;
+        }
+
+        responseStream = createResponseStream(xhr);
+        streamResponseResolved = true;
+        resolve(createResponse(xhr, config, responseStream.data as T));
+    };
+    const rejectOrFailStream = (error: HttpClientError): void => {
+        request.cleanup();
+
+        if (streamResponseResolved) {
+            responseStream?.error(error);
+            return;
+        }
+
+        reject(error);
+    };
+
+    if (responseType === HTTP_RESPONSE_TYPES.STREAM) {
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === XMLHttpRequest.HEADERS_RECEIVED) {
+                resolveStream();
+            }
+        };
+
+        xhr.onprogress = () => {
+            responseStream?.append();
+        };
+    }
+
+    xhr.onload = async () => {
+        request.cleanup();
+
+        if (!isSuccessful()) {
+            reject(createResponseError(xhr, config));
+            return;
+        }
+
+        if (responseType === HTTP_RESPONSE_TYPES.STREAM) {
+            resolveStream();
+            responseStream?.append();
+            responseStream?.close();
+
+            return;
+        }
+
+        try {
+            const responseData = await getResponseBody<T>(xhr, config, responseType);
+            resolve(createResponse(xhr, config, responseData));
+        } catch (error) {
+            reject(
+                error instanceof HttpClientError
+                    ? error
+                    : new NetworkError(getErrorMessage(error, 'Network request failed'), { cause: error, config })
+            );
+        }
+    };
+
+    xhr.onerror = event => {
+        rejectOrFailStream(new NetworkError('Network request failed', { cause: event, config }));
+    };
+
+    xhr.onabort = event => {
+        rejectOrFailStream(new AbortError('Request was aborted', { cause: userSignal?.reason ?? event, config }));
+    };
+
+    xhr.ontimeout = event => {
+        rejectOrFailStream(new TimeoutError(`Request timed out after ${timeout ?? 0}ms`, { cause: event, config }));
+    };
+}
+
 export class XhrAdapter implements IHttpClientAdapter {
     request<T>(config: IHttpRequestConfig): Promise<IHttpResponse<T>> {
-        const {
-            url,
-            method,
-            headers = {},
-            params,
-            data,
-            signal: userSignal,
-            timeout,
-            responseType,
-            baseUrl: baseURL
-        } = config;
-
         return new Promise<IHttpResponse<T>>((resolve, reject) => {
-            let cleanup: () => void = () => undefined;
+            let request: IPreparedXhrRequest | undefined;
 
             try {
-                const fullUrl = buildUrl(baseURL, url, params);
-
-                if (userSignal?.aborted) {
-                    reject(new AbortError('Request was aborted', { cause: userSignal.reason, config }));
-                    return;
-                }
-
-                if (
-                    responseType === HTTP_RESPONSE_TYPES.STREAM &&
-                    (typeof ReadableStream === 'undefined' || typeof TextEncoder === 'undefined')
-                ) {
-                    reject(
-                        new RequestPreparationError('Streaming responses are not supported in this environment', {
-                            config
-                        })
-                    );
-                    return;
-                }
-
-                const xhr = new XMLHttpRequest();
-                xhr.open(method, fullUrl, true);
-
-                if (timeout !== undefined && timeout > 0) {
-                    xhr.timeout = timeout;
-                }
-
-                if (responseType === HTTP_RESPONSE_TYPES.ARRAY_BUFFER) {
-                    // XHR принимает только DOM-значение в нижнем регистре
-                    xhr.responseType = 'arraybuffer';
-                } else if (
-                    responseType === HTTP_RESPONSE_TYPES.BLOB ||
-                    responseType === HTTP_RESPONSE_TYPES.FORM_DATA
-                ) {
-                    xhr.responseType = 'blob';
-                } else {
-                    xhr.responseType = 'text';
-                }
-
-                const requestHeaders = mergeHeaders(headers);
-                const body =
-                    data !== undefined && method !== HTTP_METHODS.GET && method !== HTTP_METHODS.HEAD
-                        ? prepareRequestBody(data, requestHeaders)
-                        : undefined;
-                for (const [key, value] of Object.entries(requestHeaders)) {
-                    xhr.setRequestHeader(key, value);
-                }
-
-                const onAbort = (): void => xhr.abort();
-                if (userSignal) {
-                    userSignal.addEventListener('abort', onAbort, { once: true });
-                }
-
-                cleanup = (): void => {
-                    if (userSignal) {
-                        userSignal.removeEventListener('abort', onAbort);
-                    }
-                };
-
-                let responseStream: IXhrResponseStream | undefined;
-                let streamResponseResolved = false;
-                const isSuccessful = (): boolean => xhr.status >= 200 && xhr.status < 300;
-                const resolveStream = (): void => {
-                    if (streamResponseResolved || !isSuccessful()) {
-                        return;
-                    }
-
-                    responseStream = createResponseStream(xhr);
-                    streamResponseResolved = true;
-                    resolve({
-                        data: responseStream.data as T,
-                        status: xhr.status,
-                        statusText: xhr.statusText,
-                        headers: parseResponseHeaders(xhr.getAllResponseHeaders()),
-                        config
-                    });
-                };
-
-                if (responseType === HTTP_RESPONSE_TYPES.STREAM) {
-                    xhr.onreadystatechange = () => {
-                        if (xhr.readyState === XMLHttpRequest.HEADERS_RECEIVED) {
-                            resolveStream();
-                        }
-                    };
-
-                    xhr.onprogress = () => {
-                        responseStream?.append();
-                    };
-                }
-
-                const rejectOrFailStream = (error: HttpClientError): void => {
-                    cleanup();
-
-                    if (streamResponseResolved) {
-                        responseStream?.error(error);
-                        return;
-                    }
-
-                    reject(error);
-                };
-
-                xhr.onload = async () => {
-                    cleanup();
-
-                    if (isSuccessful()) {
-                        if (responseType === HTTP_RESPONSE_TYPES.STREAM) {
-                            resolveStream();
-                            responseStream?.append();
-                            responseStream?.close();
-
-                            return;
-                        }
-
-                        try {
-                            const responseData = await getResponseBody<T>(xhr, config, responseType);
-
-                            resolve({
-                                data: responseData,
-                                status: xhr.status,
-                                statusText: xhr.statusText,
-                                headers: parseResponseHeaders(xhr.getAllResponseHeaders()),
-                                config
-                            });
-                        } catch (error) {
-                            reject(
-                                error instanceof HttpClientError
-                                    ? error
-                                    : new NetworkError(getErrorMessage(error, 'Network request failed'), {
-                                          cause: error,
-                                          config
-                                      })
-                            );
-                        }
-                    } else {
-                        let errorData: unknown;
-                        try {
-                            if (xhr.responseType === 'text') {
-                                const text = xhr.responseText;
-                                if (text) {
-                                    try {
-                                        errorData = JSON.parse(text);
-                                    } catch {
-                                        errorData = text;
-                                    }
-                                }
-                            }
-                        } catch {
-                            errorData = undefined;
-                        }
-
-                        reject(
-                            new HttpResponseError(
-                                `Request failed with status code ${xhr.status}`,
-                                xhr.status,
-                                xhr.statusText,
-                                parseResponseHeaders(xhr.getAllResponseHeaders()),
-                                config,
-                                errorData
-                            )
-                        );
-                    }
-                };
-
-                xhr.onerror = event => {
-                    rejectOrFailStream(new NetworkError('Network request failed', { cause: event, config }));
-                };
-
-                xhr.onabort = event => {
-                    rejectOrFailStream(
-                        new AbortError('Request was aborted', { cause: userSignal?.reason ?? event, config })
-                    );
-                };
-
-                xhr.ontimeout = event => {
-                    rejectOrFailStream(
-                        new TimeoutError(`Request timed out after ${timeout ?? 0}ms`, { cause: event, config })
-                    );
-                };
-
-                xhr.send(body);
+                request = prepareXhrRequest(config);
+                configureXhrEventHandlers(request, config, resolve, reject);
+                request.xhr.send(request.body);
             } catch (error) {
-                cleanup();
+                request?.cleanup();
                 reject(
                     error instanceof HttpClientError
                         ? error

@@ -50,7 +50,7 @@ function serializeParams(params: THttpParams | undefined): string {
         const values = Array.isArray(value) ? value : [value];
 
         for (const item of values) {
-            searchParams.append(key, item);
+            searchParams.append(key, String(item));
         }
     }
 

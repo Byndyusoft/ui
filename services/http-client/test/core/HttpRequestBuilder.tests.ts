@@ -179,7 +179,7 @@ describe('HttpRequestBuilder', () => {
         },
         {
             name: 'param value',
-            action: (builder: HttpRequestBuilder) => builder.param('page', 1 as unknown as string),
+            action: (builder: HttpRequestBuilder) => builder.param('page', Number.NaN),
             code: REQUEST_BUILDER_ERROR_CODES.INVALID_PARAM
         },
         {

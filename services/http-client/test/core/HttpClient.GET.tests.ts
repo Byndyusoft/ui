@@ -49,6 +49,20 @@ describe.each(adapters)('HttpClient.$name — GET', ({ create }) => {
         expect(response.data?.role).toEqual(['admin', 'user']);
     });
 
+    test('sends numeric and boolean query params', async () => {
+        const client = createClient();
+        const response = await client
+            .get('/users')
+            .params({ page: 2, active: true, value: [0, false, 'all'] })
+            .execute<{ page: string | null; active: string | null; value: string[] }>();
+
+        expect(response.data).toMatchObject({
+            page: '2',
+            active: 'true',
+            value: ['0', 'false', 'all']
+        });
+    });
+
     test('preserves an existing query and appends params before a fragment', async () => {
         const client = createClient();
         const response = await client

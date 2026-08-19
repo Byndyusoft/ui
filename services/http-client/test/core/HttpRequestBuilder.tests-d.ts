@@ -1,7 +1,7 @@
 import { describe, expectTypeOf, it } from 'vitest';
 import { HTTP_METHODS, HTTP_STATUS_CODES } from '../../src/constants';
 import { HttpRequestBuilder } from '../../src/core/HttpRequestBuilder';
-import { IHttpRequestConfig, IHttpResponse, THttpRequestExecutor } from '../../src/types';
+import { IHttpRequestConfig, IHttpResponse, THttpParams, THttpRequestExecutor } from '../../src/types';
 
 const executor: THttpRequestExecutor = <T>(config: IHttpRequestConfig): Promise<IHttpResponse<T>> =>
     Promise.resolve({
@@ -30,5 +30,14 @@ describe('HttpRequestBuilder types', () => {
         expectTypeOf(getBuilder.body({ value: true })).toEqualTypeOf<HttpRequestBuilder>();
         expectTypeOf(headBuilder.body({ value: true })).toEqualTypeOf<HttpRequestBuilder>();
         expectTypeOf(postBuilder.body({ value: true })).toEqualTypeOf<HttpRequestBuilder>();
+    });
+
+    it('allows primitive query params', () => {
+        const params: THttpParams = { page: 2, active: true, role: ['admin', false] };
+        const builder = new HttpRequestBuilder(executor, HTTP_METHODS.GET, '/items');
+
+        expectTypeOf(params).toEqualTypeOf<THttpParams>();
+        expectTypeOf(builder.param('page', 2)).toEqualTypeOf<HttpRequestBuilder>();
+        expectTypeOf(builder.param('active', true)).toEqualTypeOf<HttpRequestBuilder>();
     });
 });

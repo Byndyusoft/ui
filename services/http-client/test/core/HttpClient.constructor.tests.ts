@@ -47,7 +47,7 @@ describe('HttpClient constructor', () => {
         },
         {
             name: 'params',
-            options: { ...createOptions(), params: { page: 1 } },
+            options: { ...createOptions(), params: { page: Number.NaN } },
             code: REQUEST_BUILDER_ERROR_CODES.INVALID_PARAM
         },
         {

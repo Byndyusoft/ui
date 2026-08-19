@@ -11,6 +11,8 @@ export const handlers = [
         return HttpResponse.json({
             page: url.searchParams.get('page'),
             role: url.searchParams.getAll('role'),
+            active: url.searchParams.get('active'),
+            value: url.searchParams.getAll('value'),
             source: url.searchParams.get('source')
         });
     }),
