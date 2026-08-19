@@ -1,5 +1,5 @@
 import { HTTP_METHODS } from '../constants';
-import { assertValidRequestConfig } from '../asserts';
+import { assertValidHttpClientOptions, assertValidRequestConfig } from '../asserts';
 import {
     THttpMethod,
     IHttpRequestConfig,
@@ -24,6 +24,8 @@ export class HttpClient {
     private onResponseErrorHook?: THttpResponseErrorHook;
 
     constructor(options: IHttpClientOptions) {
+        assertValidHttpClientOptions(options);
+
         this.adapter = options.adapter;
         this.onRequestHook = options.onRequest;
         this.onRequestErrorHook = options.onRequestError;

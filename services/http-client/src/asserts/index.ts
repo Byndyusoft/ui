@@ -3,6 +3,7 @@ export * from './assertNonBlankString';
 export * from './assertValidBaseUrl';
 export * from './assertValidHeader';
 export * from './assertValidHeaders';
+export * from './assertValidHttpClientOptions';
 export * from './assertValidMethod';
 export * from './assertValidParam';
 export * from './assertValidParams';
