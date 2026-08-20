@@ -94,4 +94,29 @@ describe('HttpClient constructor', () => {
 
         expect(() => new HttpClient(options)).not.toThrow();
     });
+
+    test('uses FetchAdapter when adapter is omitted', async () => {
+        const fetchMock = vi.fn(() =>
+            Promise.resolve(
+                new Response(JSON.stringify({ ok: true }), {
+                    status: 200,
+                    statusText: 'OK',
+                    headers: { 'Content-Type': 'application/json' }
+                })
+            )
+        );
+        vi.stubGlobal('fetch', fetchMock);
+
+        try {
+            const response = await new HttpClient({}).get('https://example.test/health').execute<{ ok: boolean }>();
+
+            expect(response.data).toEqual({ ok: true });
+            expect(fetchMock).toHaveBeenCalledWith(
+                'https://example.test/health',
+                expect.objectContaining({ method: 'GET' })
+            );
+        } finally {
+            vi.unstubAllGlobals();
+        }
+    });
 });

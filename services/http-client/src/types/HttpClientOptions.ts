@@ -4,7 +4,8 @@ import { THttpRequestErrorHook, THttpRequestHook, THttpResponseErrorHook, THttpR
 import { THttpParams } from './HttpParams';
 
 export interface IHttpClientOptions {
-    adapter: IHttpClientAdapter;
+    /** Uses FetchAdapter when omitted. */
+    adapter?: IHttpClientAdapter;
     baseUrl?: string;
     headers?: THttpHeaders;
     params?: THttpParams;

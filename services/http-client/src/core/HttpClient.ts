@@ -1,5 +1,6 @@
 import { HTTP_METHODS } from '../constants';
 import { assertValidHttpClientOptions, assertValidRequestConfig } from '../asserts';
+import { FetchAdapter } from '../adapters';
 import {
     THttpMethod,
     IHttpRequestConfig,
@@ -26,7 +27,7 @@ export class HttpClient {
     constructor(options: IHttpClientOptions) {
         assertValidHttpClientOptions(options);
 
-        this.adapter = options.adapter;
+        this.adapter = options.adapter ?? new FetchAdapter();
         this.onRequestHook = options.onRequest;
         this.onRequestErrorHook = options.onRequestError;
         this.onResponseHook = options.onResponse;

@@ -35,7 +35,9 @@ export function assertValidHttpClientOptions(options: unknown): asserts options 
     const { adapter, baseUrl, headers, params, timeout, onRequest, onRequestError, onResponse, onResponseError } =
         options;
 
-    assertValidAdapter(adapter);
+    if (adapter !== undefined) {
+        assertValidAdapter(adapter);
+    }
 
     if (baseUrl !== undefined) {
         assertValidBaseUrl(baseUrl);
