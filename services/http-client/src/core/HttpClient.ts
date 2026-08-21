@@ -45,28 +45,28 @@ export class HttpClient {
         };
     }
 
-    /** Устанавливает хук onRequest, заменяя заданный через опции конструктора. Возвращает клиент для чейнинга. */
+    /** Sets the onRequest hook, replacing the hook configured through constructor options. Returns this client for chaining. */
     public onRequest(hook: THttpRequestHook): this {
         this.onRequestHook = hook;
 
         return this;
     }
 
-    /** Устанавливает хук onRequestError, заменяя заданный через опции конструктора. Возвращает клиент для чейнинга. */
+    /** Sets the onRequestError hook, replacing the hook configured through constructor options. Returns this client for chaining. */
     public onRequestError(hook: THttpRequestErrorHook): this {
         this.onRequestErrorHook = hook;
 
         return this;
     }
 
-    /** Устанавливает хук onResponse, заменяя заданный через опции конструктора. Возвращает клиент для чейнинга. */
+    /** Sets the onResponse hook, replacing the hook configured through constructor options. Returns this client for chaining. */
     public onResponse(hook: THttpResponseHook): this {
         this.onResponseHook = hook;
 
         return this;
     }
 
-    /** Устанавливает хук onResponseError, заменяя заданный через опции конструктора. Возвращает клиент для чейнинга. */
+    /** Sets the onResponseError hook, replacing the hook configured through constructor options. Returns this client for chaining. */
     public onResponseError(hook: THttpResponseErrorHook): this {
         this.onResponseErrorHook = hook;
 

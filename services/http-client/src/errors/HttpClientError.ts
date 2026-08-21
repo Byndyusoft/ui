@@ -4,7 +4,7 @@ export interface IHttpClientErrorOptions extends ErrorOptions {
     config?: IHttpRequestConfig;
 }
 
-/** Базовый класс всех ошибок http-клиента. Позволяет поймать любую ошибку клиента одной проверкой instanceof. */
+/** Base class for all HTTP client errors. Supports catching any client error with a single instanceof check. */
 export class HttpClientError extends Error {
     public readonly config?: IHttpRequestConfig;
 

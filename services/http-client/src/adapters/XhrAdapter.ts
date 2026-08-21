@@ -151,7 +151,7 @@ interface IPreparedXhrRequest {
 
 function setResponseType(xhr: XMLHttpRequest, responseType: THttpResponseType | undefined): void {
     if (responseType === HTTP_RESPONSE_TYPES.ARRAY_BUFFER) {
-        // XHR принимает только DOM-значение в нижнем регистре
+        // XHR accepts only a lowercase DOM value.
         xhr.responseType = 'arraybuffer';
     } else if (responseType === HTTP_RESPONSE_TYPES.BLOB || responseType === HTTP_RESPONSE_TYPES.FORM_DATA) {
         xhr.responseType = 'blob';
