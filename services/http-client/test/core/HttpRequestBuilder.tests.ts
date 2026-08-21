@@ -183,6 +183,11 @@ describe('HttpRequestBuilder', () => {
             code: REQUEST_BUILDER_ERROR_CODES.INVALID_PARAM
         },
         {
+            name: 'param object value',
+            action: (builder: HttpRequestBuilder) => builder.param('page', {} as never),
+            code: REQUEST_BUILDER_ERROR_CODES.INVALID_PARAM
+        },
+        {
             name: 'params object',
             action: (builder: HttpRequestBuilder) => builder.params([] as unknown as THttpParams),
             code: REQUEST_BUILDER_ERROR_CODES.INVALID_PARAMS
@@ -223,6 +228,15 @@ describe('HttpRequestBuilder', () => {
         const builder = new HttpRequestBuilder(createExecutor(), HTTP_METHODS.DELETE, '/items/1');
 
         expect(builder.body({ hard: true }).build().data).toEqual({ hard: true });
+    });
+
+    test('accepts nullish params and drops them on merge override', () => {
+        const builder = new HttpRequestBuilder(createExecutor(), HTTP_METHODS.GET, '/items')
+            .params({ page: 1, locale: 'ru', role: ['admin', null, 'user'] })
+            .param('locale', null)
+            .params({ role: undefined });
+
+        expect(builder.build().params).toEqual({ page: 1 });
     });
 
     test('keeps the default error code for backwards-compatible construction', () => {

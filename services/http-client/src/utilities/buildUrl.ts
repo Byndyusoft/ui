@@ -47,9 +47,17 @@ function serializeParams(params: THttpParams | undefined): string {
     const searchParams = new URLSearchParams();
 
     for (const [key, value] of Object.entries(params)) {
+        if (value === null || value === undefined) {
+            continue;
+        }
+
         const values = Array.isArray(value) ? value : [value];
 
         for (const item of values) {
+            if (item === null || item === undefined) {
+                continue;
+            }
+
             searchParams.append(key, String(item));
         }
     }

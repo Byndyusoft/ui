@@ -63,6 +63,22 @@ describe.each(adapters)('HttpClient.$name — GET', ({ create }) => {
         });
     });
 
+    test('omits null and undefined query params', async () => {
+        const client = createClient();
+        const response = await client
+            .get('/users')
+            .params({ page: 2, active: null, source: undefined, value: [1, null, undefined, 2] })
+            .execute<{ page: string | null; active: string | null; source: string | null; value: string[]; keys: string[] }>();
+
+        expect(response.data).toMatchObject({
+            page: '2',
+            active: null,
+            source: null,
+            value: ['1', '2']
+        });
+        expect(response.data?.keys).toEqual(['page', 'value', 'value']);
+    });
+
     test('preserves an existing query and appends params before a fragment', async () => {
         const client = createClient();
         const response = await client

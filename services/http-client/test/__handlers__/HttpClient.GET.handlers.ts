@@ -13,7 +13,8 @@ export const handlers = [
             role: url.searchParams.getAll('role'),
             active: url.searchParams.get('active'),
             value: url.searchParams.getAll('value'),
-            source: url.searchParams.get('source')
+            source: url.searchParams.get('source'),
+            keys: [...url.searchParams.keys()]
         });
     }),
 
