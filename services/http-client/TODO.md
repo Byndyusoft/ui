@@ -12,11 +12,11 @@
 
 ### P1-1 — Типизировать тело HTTP-ошибки
 
-`HttpResponseError<T>` уже параметризован, но адаптеры создают его с `unknown`, а guard не позволяет вызывающему коду указать ожидаемый тип. Нужен явный сценарий для `400` и `422`, например `isHttpResponseError<ValidationError>(error)`, плюс type-tests.
+`HttpResponseError<T>` уже параметризован, но адаптеры создают его с `unknown`, а guard не позволяет вызывающему коду указать ожидаемый тип. Вариант с доверенным generic-guard, например `isHttpResponseError<ValidationError>(error)`, зафиксирован в D-004 со статусом «не принято». После выбора контракта нужны явные сценарии для `400` и `422` и type-тесты.
 
 ### P1-2 — Вывод типа данных ответа из `responseType`
 
-`responseType('blob').execute()` возвращает `unknown` — каждый вызов требует явного дженерика, а рассинхрон `responseType('blob')` + `execute<string>()` не ловится компилятором. Нужен `THttpResponseData<TResponseType, TJson>` + дженерик-builder (`HttpRequestBuilder<TResponseType>`), покрыть type-тестами. Сделать до README, чтобы документировать финальный API.
+`responseType('blob').execute()` возвращает `unknown`, а рассинхрон `responseType('blob')` + `execute<string>()` не ловится компилятором. Вариант, при котором JSON сохраняет явный `execute<T>()`, а `text`, `blob`, `arrayBuffer`, `formData` и `stream` получают тип из `responseType`, зафиксирован в D-003 со статусом «не принято». После выбора контракта понадобятся type-тесты. Сделать до README, чтобы документировать финальный API.
 
 ## P2
 

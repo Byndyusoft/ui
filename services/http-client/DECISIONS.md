@@ -48,3 +48,101 @@ Fetch- и XHR-специфичные параметры передаются в 
 ### Когда пересматривать
 
 При изменении основной аудитории документации или языка работы команды.
+
+## D-003 — Типизация данных ответа через `responseType`
+
+Статус: не принято
+Дата: 2026-08-21
+
+### Решение
+
+JSON-ответы продолжают типизироваться явно через `execute<T>()`. Для детерминированных `responseType` (`text`, `blob`, `arrayBuffer`, `formData`, `stream`) тип данных выводится из выбранного `responseType` и не зависит от переданного generic.
+
+Предполагаемая модель типов:
+
+```ts
+type THttpResponseData<TResponseType, TJson> = TResponseType extends 'text'
+    ? string
+    : TResponseType extends 'blob'
+    ? Blob
+    : TResponseType extends 'arrayBuffer'
+    ? ArrayBuffer
+    : TResponseType extends 'formData'
+    ? FormData
+    : TResponseType extends 'stream'
+    ? ReadableStream<Uint8Array>
+    : TJson;
+```
+
+Примеры ожидаемого API:
+
+```ts
+httpClient.get('/users').execute<User[]>(); // Promise<IHttpResponse<User[]>>
+httpClient.get('/report').responseType('blob').execute(); // Promise<IHttpResponse<Blob>>
+httpClient.get('/status').responseType('text').execute(); // Promise<IHttpResponse<string>>
+```
+
+### Причина
+
+Полное неявное выведение типа JSON противоречит ранее принятому подходу с явным указанием типа ответа. Вместе с тем browser-типы уже однозначно определены платформой. Их вывод исключит рассинхрон, при котором `.responseType('blob').execute<string>()` ошибочно обещает строку.
+
+### Последствия
+
+-   `HttpRequestBuilder` будет параметризован выбранным `responseType` только на уровне TypeScript.
+-   Fluent-методы должны сохранять параметр response type.
+-   Runtime-конфигурация запросов и адаптеры не изменятся.
+-   Для JSON сохраняется явный `execute<T>()`; для прочих поддерживаемых типов итоговый тип задаётся `responseType`.
+
+### Когда пересматривать
+
+При появлении пользовательских парсеров ответа или при решении перейти к полностью неявному выведению JSON-типа.
+
+## D-004 — Типизация тела HTTP-ошибки через generic-guard
+
+Статус: не принято
+Дата: 2026-08-21
+
+### Решение
+
+Предлагается разрешить вызывающему коду указывать ожидаемый тип тела HTTP-ошибки через generic-параметр `isHttpResponseError<T>()`:
+
+```ts
+export function isHttpResponseError<T = unknown>(error: unknown): error is HttpResponseError<T> {
+    return error instanceof HttpResponseError;
+}
+```
+
+Пример ожидаемого API:
+
+```ts
+interface IValidationError {
+    message: string;
+    errors: Record<string, string[]>;
+}
+
+try {
+    await httpClient.post('/users').body(data).execute<User>();
+} catch (error) {
+    if (isHttpResponseError<IValidationError>(error) && (error.status === 400 || error.status === 422)) {
+        const validation = error.data; // IValidationError | undefined
+    }
+}
+```
+
+Вызов guard без generic-параметра должен сохранять текущий тип `HttpResponseError<unknown>`.
+
+### Причина
+
+Fetch- и XHR-адаптеры могут разобрать тело ошибки как JSON или текст, но не могут определить его прикладную схему. TypeScript также не поддерживает отдельный тип отклонения для `Promise`, поэтому generic ошибки в `execute<TResponse, TError>()` не типизирует переменную в `catch`. Указание ожидаемой схемы непосредственно при обработке ошибки локализует типовое утверждение в месте использования.
+
+### Последствия
+
+-   Адаптеры продолжат создавать `HttpResponseError<unknown>`; их runtime-поведение не изменится.
+-   Generic-параметр guard будет доверенным TypeScript-сужением и не станет проверять структуру `data` во время выполнения.
+-   `data` после сужения сохранит возможность отсутствия: `T | undefined`.
+-   Проверка `instanceof` останется единственным runtime-критерием принадлежности к `HttpResponseError`.
+-   Понадобятся type-тесты для вызовов guard с generic-параметром и без него, а также runtime-тест ответа `400` или `422` с JSON-телом.
+
+### Когда пересматривать
+
+При необходимости гарантировать схему тела ошибки во время выполнения, поддержать разные схемы для разных статусов или перейти к API с пользовательским валидатором данных.
