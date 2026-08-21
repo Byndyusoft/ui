@@ -107,12 +107,17 @@ async function parseResponseBody<T>(
             try {
                 return (await response.formData()) as T;
             } catch (error) {
-                throw new ParseError('Failed to parse response body as FormData', { cause: error, config });
+                throw new ParseError('Failed to parse response body as FormData', {
+                    cause: error,
+                    config,
+                    responseType: HTTP_RESPONSE_TYPES.FORM_DATA
+                });
             }
         case HTTP_RESPONSE_TYPES.STREAM:
             return response.body as T;
         case HTTP_RESPONSE_TYPES.JSON:
         default: {
+            const resolvedResponseType = responseType ?? HTTP_RESPONSE_TYPES.JSON;
             const text = await response.text();
             if (!text) {
                 return undefined as T;
@@ -120,7 +125,12 @@ async function parseResponseBody<T>(
             try {
                 return JSON.parse(text) as T;
             } catch (error) {
-                throw new ParseError('Failed to parse response body as JSON', { cause: error, config });
+                throw new ParseError('Failed to parse response body as JSON', {
+                    cause: error,
+                    config,
+                    responseType: resolvedResponseType,
+                    raw: text
+                });
             }
         }
     }
@@ -190,7 +200,11 @@ export class FetchAdapter implements IHttpClientAdapter {
             }
 
             if (request.timeout && error instanceof DOMException && error.name === 'AbortError') {
-                throw new TimeoutError(`Request timed out after ${request.timeout}ms`, { cause: error, config });
+                throw new TimeoutError(`Request timed out after ${request.timeout}ms`, {
+                    cause: error,
+                    config,
+                    timeout: request.timeout
+                });
             }
 
             throw new NetworkError(getErrorMessage(error, 'Network request failed'), { cause: error, config });

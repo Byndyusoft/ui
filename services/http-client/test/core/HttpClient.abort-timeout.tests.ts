@@ -139,6 +139,7 @@ describe.each(adapters)('HttpClient.$name — timeout', ({ name, create }) => {
         } catch (error) {
             expect(error).toBeInstanceOf(TimeoutError);
             expect((error as TimeoutError).message).toContain('50');
+            expect((error as TimeoutError).timeout).toBe(50);
             expect((error as TimeoutError).config).toMatchObject({ url: '/slow', baseUrl: BASE_URL });
         } finally {
             vi.unstubAllGlobals();

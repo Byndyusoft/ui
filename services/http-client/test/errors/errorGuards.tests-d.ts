@@ -17,6 +17,7 @@ import {
     RequestPreparationError,
     TimeoutError
 } from '../../src/errors';
+import { THttpResponseType } from '../../src/types';
 
 describe('error guards', () => {
     it('narrow unknown errors to their concrete types', () => {
@@ -36,6 +37,7 @@ describe('error guards', () => {
 
         if (isTimeoutError(error)) {
             expectTypeOf(error).toEqualTypeOf<TimeoutError>();
+            expectTypeOf(error.timeout).toEqualTypeOf<number | undefined>();
         }
 
         if (isAbortError(error)) {
@@ -44,6 +46,8 @@ describe('error guards', () => {
 
         if (isParseError(error)) {
             expectTypeOf(error).toEqualTypeOf<ParseError>();
+            expectTypeOf(error.responseType).toEqualTypeOf<THttpResponseType | undefined>();
+            expectTypeOf(error.raw).toEqualTypeOf<string | undefined>();
         }
 
         if (isRequestBuilderError(error)) {

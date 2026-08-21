@@ -108,11 +108,25 @@ describe('HttpClientError', () => {
         expect(new RequestBuilderError('invalid').code).toBe(REQUEST_BUILDER_ERROR_CODES.INVALID_CONFIG);
     });
 
-    it('preserves the cause of a ParseError', () => {
+    it('preserves ParseError fields', () => {
         const cause = new SyntaxError('Unexpected token');
-        const error = new ParseError('Failed to parse response body as JSON', { cause, config });
+        const error = new ParseError('Failed to parse response body as JSON', {
+            cause,
+            config,
+            responseType: 'json',
+            raw: '{ invalid'
+        });
 
         expect(error.cause).toBe(cause);
+        expect(error.config).toBe(config);
+        expect(error.responseType).toBe('json');
+        expect(error.raw).toBe('{ invalid');
+    });
+
+    it('preserves TimeoutError timeout', () => {
+        const error = new TimeoutError('Request timed out after 50ms', { config, timeout: 50 });
+
+        expect(error.timeout).toBe(50);
         expect(error.config).toBe(config);
     });
 

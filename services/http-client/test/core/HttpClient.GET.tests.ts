@@ -191,6 +191,8 @@ describe.each(adapters)('HttpClient.$name — GET', ({ create }) => {
 
             expect(parseError.cause).toBeInstanceOf(SyntaxError);
             expect(parseError.config).toMatchObject({ url: '/invalid-json', baseUrl: BASE_URL });
+            expect(parseError.responseType).toBe('json');
+            expect(parseError.raw).toBe('{ invalid json');
         }
     });
 });

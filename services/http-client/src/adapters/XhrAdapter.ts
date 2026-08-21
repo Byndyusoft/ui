@@ -108,10 +108,15 @@ async function getResponseBody<T>(
 
                 return (await response.formData()) as T;
             } catch (error) {
-                throw new ParseError('Failed to parse response body as FormData', { cause: error, config });
+                throw new ParseError('Failed to parse response body as FormData', {
+                    cause: error,
+                    config,
+                    responseType: HTTP_RESPONSE_TYPES.FORM_DATA
+                });
             }
         case HTTP_RESPONSE_TYPES.JSON:
         default: {
+            const resolvedResponseType = responseType ?? HTTP_RESPONSE_TYPES.JSON;
             const text = xhr.response as string;
             if (!text) {
                 return undefined as T;
@@ -119,7 +124,12 @@ async function getResponseBody<T>(
             try {
                 return JSON.parse(text) as T;
             } catch (error) {
-                throw new ParseError('Failed to parse response body as JSON', { cause: error, config });
+                throw new ParseError('Failed to parse response body as JSON', {
+                    cause: error,
+                    config,
+                    responseType: resolvedResponseType,
+                    raw: text
+                });
             }
         }
     }
@@ -323,7 +333,15 @@ function configureXhrEventHandlers<T>(
     };
 
     xhr.ontimeout = event => {
-        rejectOrFailStream(new TimeoutError(`Request timed out after ${timeout ?? 0}ms`, { cause: event, config }));
+        const timeoutMs = timeout ?? 0;
+
+        rejectOrFailStream(
+            new TimeoutError(`Request timed out after ${timeoutMs}ms`, {
+                cause: event,
+                config,
+                timeout: timeoutMs
+            })
+        );
     };
 }
 
