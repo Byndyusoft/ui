@@ -33,6 +33,10 @@ export const handlers = [
         return new HttpResponse('hello world', { headers: { 'Content-Type': 'text/plain' } });
     }),
 
+    http.get(`${BASE_URL}/empty`, () => {
+        return new HttpResponse(null, { headers: { 'Content-Length': '0' } });
+    }),
+
     http.get(`${BASE_URL}/binary`, () => {
         const bytes = new Uint8Array([1, 2, 3, 4]);
         return new HttpResponse(bytes.buffer, { headers: { 'Content-Type': 'application/octet-stream' } });

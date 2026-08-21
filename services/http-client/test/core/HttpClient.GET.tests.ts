@@ -68,7 +68,13 @@ describe.each(adapters)('HttpClient.$name — GET', ({ name, create }) => {
         const response = await client
             .get('/users')
             .params({ page: 2, active: null, source: undefined, value: [1, null, undefined, 2] })
-            .execute<{ page: string | null; active: string | null; source: string | null; value: string[]; keys: string[] }>();
+            .execute<{
+                page: string | null;
+                active: string | null;
+                source: string | null;
+                value: string[];
+                keys: string[];
+            }>();
 
         expect(response.data).toMatchObject({
             page: '2',
@@ -127,6 +133,13 @@ describe.each(adapters)('HttpClient.$name — GET', ({ name, create }) => {
         expect(response.data).toBe('hello world');
     });
 
+    test('returns undefined for an empty response with Content-Length 0', async () => {
+        const client = createClient();
+        const response = await client.get('/empty').execute();
+
+        expect(response.data).toBeUndefined();
+    });
+
     test('returns ArrayBuffer when responseType is arrayBuffer', async () => {
         const client = createClient();
         const response = await client
@@ -170,15 +183,15 @@ describe.each(adapters)('HttpClient.$name — GET', ({ name, create }) => {
 
         vi.stubGlobal(
             'fetch',
-            vi.fn(async () => {
-                return {
+            vi.fn(() =>
+                Promise.resolve({
                     ok: true,
                     status: 200,
                     statusText: 'OK',
                     headers: new Headers(),
                     body: null
-                } as unknown as Response;
-            })
+                } as unknown as Response)
+            )
         );
 
         try {
@@ -212,6 +225,21 @@ describe.each(adapters)('HttpClient.$name — GET', ({ name, create }) => {
             expect(responseError.data).toEqual({ error: 'Not found' });
         }
     });
+
+    test.each([HTTP_RESPONSE_TYPES.BLOB, HTTP_RESPONSE_TYPES.FORM_DATA])(
+        'parses error data with %s responseType',
+        async responseType => {
+            const client = createClient();
+
+            try {
+                await client.get('/not-found').responseType(responseType).execute();
+                expect.fail('Should have thrown');
+            } catch (error) {
+                expect(error).toBeInstanceOf(HttpResponseError);
+                expect((error as HttpResponseError).data).toEqual({ error: 'Not found' });
+            }
+        }
+    );
 
     test('throws ParseError with its cause for malformed JSON', async () => {
         const client = createClient();

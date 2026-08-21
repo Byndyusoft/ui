@@ -2,7 +2,7 @@ import { FetchAdapter } from '../../src/adapters/FetchAdapter';
 import { XhrAdapter } from '../../src/adapters/XhrAdapter';
 import { HTTP_RESPONSE_TYPES, HTTP_STATUS_CODES, REQUEST_BUILDER_ERROR_CODES } from '../../src/constants';
 import { HttpClient } from '../../src/core/HttpClient';
-import { RequestBuilderError } from '../../src/errors';
+import { RequestBuilderError, RequestPreparationError } from '../../src/errors';
 import { IFetchAdapterOptions, TRequestBuilderErrorCode } from '../../src/types';
 
 function createMockXhr(response: unknown = 'response'): {
@@ -167,6 +167,26 @@ describe('adapter constructor options', () => {
                 timeout: 50,
                 withCredentials: false
             });
+        } finally {
+            vi.unstubAllGlobals();
+        }
+    });
+
+    test('rejects XHR FormData responses when Response.formData is unavailable', async () => {
+        const mockXhr = createMockXhr();
+        const xhrFactory = vi.fn(() => mockXhr.xhr);
+        vi.stubGlobal('XMLHttpRequest', xhrFactory);
+        vi.stubGlobal('Response', undefined);
+
+        try {
+            await expect(
+                new HttpClient({ adapter: new XhrAdapter() })
+                    .get('https://api.example.test/items')
+                    .responseType(HTTP_RESPONSE_TYPES.FORM_DATA)
+                    .execute()
+            ).rejects.toBeInstanceOf(RequestPreparationError);
+
+            expect(xhrFactory).not.toHaveBeenCalled();
         } finally {
             vi.unstubAllGlobals();
         }

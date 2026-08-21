@@ -92,12 +92,39 @@ async function readBlob(blob: Blob): Promise<ArrayBuffer> {
     });
 }
 
+async function readBlobAsText(blob: Blob): Promise<string> {
+    if (typeof blob.text === 'function') {
+        return blob.text();
+    }
+
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            if (typeof reader.result !== 'string') {
+                reject(new TypeError('Failed to read response Blob as text'));
+                return;
+            }
+
+            resolve(reader.result);
+        };
+        reader.onerror = () => {
+            reject(reader.error ?? new TypeError('Failed to read response Blob as text'));
+        };
+        reader.readAsText(blob);
+    });
+}
+
+function hasEmptyResponseBody(xhr: XMLHttpRequest): boolean {
+    return xhr.status === 204 || xhr.getResponseHeader('content-length') === '0';
+}
+
 async function getResponseBody<T>(
     xhr: XMLHttpRequest,
     config: IHttpRequestConfig,
     responseType?: THttpResponseType
 ): Promise<T> {
-    if (xhr.status === 204) {
+    if (hasEmptyResponseBody(xhr)) {
         return undefined as T;
     }
 
@@ -169,6 +196,18 @@ function assertStreamingSupported(responseType: THttpResponseType | undefined, c
     }
 }
 
+function assertFormDataResponseSupported(
+    responseType: THttpResponseType | undefined,
+    config: IHttpRequestConfig
+): void {
+    if (
+        responseType === HTTP_RESPONSE_TYPES.FORM_DATA &&
+        (typeof Response === 'undefined' || typeof Response.prototype.formData !== 'function')
+    ) {
+        throw new RequestPreparationError('FormData responses are not supported in this environment', { config });
+    }
+}
+
 function createResponse<T>(xhr: XMLHttpRequest, config: IHttpRequestConfig, data: T): IHttpResponse<T> {
     return {
         data,
@@ -179,19 +218,39 @@ function createResponse<T>(xhr: XMLHttpRequest, config: IHttpRequestConfig, data
     };
 }
 
-function getErrorData(xhr: XMLHttpRequest): unknown {
-    try {
-        if (xhr.responseType !== 'text') {
+async function getErrorResponseText(xhr: XMLHttpRequest): Promise<string | undefined> {
+    if (xhr.responseType === 'blob') {
+        const blob: unknown = xhr.response;
+
+        if (!(blob instanceof Blob)) {
             return undefined;
         }
 
-        const text = xhr.responseText;
+        return readBlobAsText(blob);
+    }
+
+    if (xhr.responseType === 'arraybuffer') {
+        const arrayBuffer: unknown = xhr.response;
+
+        if (typeof TextDecoder === 'undefined' || !(arrayBuffer instanceof ArrayBuffer)) {
+            return undefined;
+        }
+
+        return new TextDecoder().decode(arrayBuffer);
+    }
+
+    return xhr.responseText;
+}
+
+async function getErrorData(xhr: XMLHttpRequest): Promise<unknown> {
+    try {
+        const text = await getErrorResponseText(xhr);
         if (!text) {
             return undefined;
         }
 
         try {
-            return JSON.parse(text);
+            return JSON.parse(text) as unknown;
         } catch {
             return text;
         }
@@ -200,14 +259,14 @@ function getErrorData(xhr: XMLHttpRequest): unknown {
     }
 }
 
-function createResponseError(xhr: XMLHttpRequest, config: IHttpRequestConfig): HttpResponseError {
+async function createResponseError(xhr: XMLHttpRequest, config: IHttpRequestConfig): Promise<HttpResponseError> {
     return new HttpResponseError(
         `Request failed with status code ${xhr.status}`,
         xhr.status,
         xhr.statusText,
         parseResponseHeaders(xhr.getAllResponseHeaders()),
         config,
-        getErrorData(xhr)
+        await getErrorData(xhr)
     );
 }
 
@@ -243,6 +302,7 @@ function prepareXhrRequest(config: IHttpRequestConfig, options: IXhrAdapterOptio
     }
 
     assertStreamingSupported(responseType, config);
+    assertFormDataResponseSupported(responseType, config);
 
     const xhr = new XMLHttpRequest();
     xhr.open(method, fullUrl, true);
@@ -326,7 +386,7 @@ function configureXhrEventHandlers<T>(
         request.cleanup();
 
         if (!isSuccessful()) {
-            reject(createResponseError(xhr, config));
+            reject(await createResponseError(xhr, config));
             return;
         }
 
