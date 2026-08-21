@@ -225,6 +225,7 @@ function prepareXhrRequest(config: IHttpRequestConfig): IPreparedXhrRequest {
 
     const xhr = new XMLHttpRequest();
     xhr.open(method, fullUrl, true);
+    xhr.withCredentials = config.withCredentials === true;
 
     if (timeout !== undefined && timeout > 0) {
         xhr.timeout = timeout;

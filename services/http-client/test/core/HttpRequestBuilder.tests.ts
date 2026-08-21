@@ -49,6 +49,7 @@ describe('HttpRequestBuilder', () => {
             .body({ name: 'Item' })
             .signal(controller.signal)
             .timeout(0)
+            .withCredentials(true)
             .bearer('token')
             .responseType(HTTP_RESPONSE_TYPES.JSON);
 
@@ -67,6 +68,7 @@ describe('HttpRequestBuilder', () => {
             data: { name: 'Item' },
             signal: controller.signal,
             timeout: 0,
+            withCredentials: true,
             responseType: HTTP_RESPONSE_TYPES.JSON
         });
     });
@@ -201,6 +203,11 @@ describe('HttpRequestBuilder', () => {
             name: 'timeout',
             action: (builder: HttpRequestBuilder) => builder.timeout(Number.POSITIVE_INFINITY),
             code: REQUEST_BUILDER_ERROR_CODES.INVALID_TIMEOUT
+        },
+        {
+            name: 'with credentials',
+            action: (builder: HttpRequestBuilder) => builder.withCredentials('true' as unknown as boolean),
+            code: REQUEST_BUILDER_ERROR_CODES.INVALID_WITH_CREDENTIALS
         },
         {
             name: 'bearer token',

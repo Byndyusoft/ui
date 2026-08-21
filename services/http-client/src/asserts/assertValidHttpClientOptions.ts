@@ -5,6 +5,7 @@ import { assertValidBaseUrl } from './assertValidBaseUrl';
 import { assertValidHeaders } from './assertValidHeaders';
 import { assertValidParams } from './assertValidParams';
 import { assertValidTimeout } from './assertValidTimeout';
+import { assertValidWithCredentials } from './assertValidWithCredentials';
 import { isRecord } from './isRecord';
 
 function assertValidAdapter(adapter: unknown): asserts adapter is IHttpClientAdapter {
@@ -32,8 +33,18 @@ export function assertValidHttpClientOptions(options: unknown): asserts options 
         throw new RequestBuilderError('Client options must be an object', REQUEST_BUILDER_ERROR_CODES.INVALID_CONFIG);
     }
 
-    const { adapter, baseUrl, headers, params, timeout, onRequest, onRequestError, onResponse, onResponseError } =
-        options;
+    const {
+        adapter,
+        baseUrl,
+        headers,
+        params,
+        timeout,
+        withCredentials,
+        onRequest,
+        onRequestError,
+        onResponse,
+        onResponseError
+    } = options;
 
     if (adapter !== undefined) {
         assertValidAdapter(adapter);
@@ -53,6 +64,10 @@ export function assertValidHttpClientOptions(options: unknown): asserts options 
 
     if (timeout !== undefined) {
         assertValidTimeout(timeout);
+    }
+
+    if (withCredentials !== undefined) {
+        assertValidWithCredentials(withCredentials);
     }
 
     if (onRequest !== undefined) {

@@ -30,6 +30,7 @@ describe('HttpRequestBuilder types', () => {
         expectTypeOf(getBuilder.body({ value: true })).toEqualTypeOf<HttpRequestBuilder>();
         expectTypeOf(headBuilder.body({ value: true })).toEqualTypeOf<HttpRequestBuilder>();
         expectTypeOf(postBuilder.body({ value: true })).toEqualTypeOf<HttpRequestBuilder>();
+        expectTypeOf(postBuilder.withCredentials(true)).toEqualTypeOf<HttpRequestBuilder>();
     });
 
     it('allows primitive query params', () => {

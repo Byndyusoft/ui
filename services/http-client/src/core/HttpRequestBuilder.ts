@@ -24,7 +24,8 @@ import {
     assertValidResponseType,
     assertValidSignal,
     assertValidTimeout,
-    assertValidUrl
+    assertValidUrl,
+    assertValidWithCredentials
 } from '../asserts';
 import { mergeHeaders, mergeParams } from '../utilities';
 
@@ -128,6 +129,13 @@ export class HttpRequestBuilder {
         return this.withConfig({ timeout });
     }
 
+    /** Includes credentials in cross-origin requests. */
+    public withCredentials(withCredentials: boolean): HttpRequestBuilder {
+        assertValidWithCredentials(withCredentials);
+
+        return this.withConfig({ withCredentials });
+    }
+
     public bearer(token: string): HttpRequestBuilder {
         assertNonBlankString(
             token,
@@ -150,11 +158,6 @@ export class HttpRequestBuilder {
 
         return this.withConfig({ responseType });
     }
-
-    // public credentials(credentials: RequestCredentials): this {
-    //     this.config.credentials = credentials;
-    //     return this;
-    // }
 
     // public mode(mode: RequestMode): this {
     //     this.config.mode = mode;
@@ -198,12 +201,6 @@ export class HttpRequestBuilder {
     //     return this;
     // }
 
-    // public credentials(value: RequestCredentials): this {
-    //     this.config = { ...this.config, credentials: value };
-
-    //     return this;
-    // }
-
     // public mode(value: RequestMode): this {
     //     this.config = { ...this.config, mode: value };
 
@@ -219,11 +216,6 @@ export class HttpRequestBuilder {
     // public referrer(value: string): this {
     //     this.config = { ...this.config, referrer: value };
 
-    //     return this;
-    // }
-
-    // withCredentials(value: boolean): this {
-    //     this.config.withCredentials = value;
     //     return this;
     // }
 

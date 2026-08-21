@@ -10,6 +10,8 @@ export interface IHttpClientOptions {
     headers?: THttpHeaders;
     params?: THttpParams;
     timeout?: number;
+    /** Sends cookies and HTTP credentials with cross-origin requests. */
+    withCredentials?: boolean;
     onRequest?: THttpRequestHook;
     onRequestError?: THttpRequestErrorHook;
     onResponse?: THttpResponseHook;

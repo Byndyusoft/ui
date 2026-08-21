@@ -12,4 +12,5 @@ export * from './assertValidResponseType';
 export * from './assertValidSignal';
 export * from './assertValidTimeout';
 export * from './assertValidUrl';
+export * from './assertValidWithCredentials';
 export * from './headerValueLineBreakPattern';

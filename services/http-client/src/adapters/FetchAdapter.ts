@@ -155,6 +155,7 @@ export class FetchAdapter implements IHttpClientAdapter {
                 method: config.method,
                 headers: request.requestHeaders,
                 body: request.body,
+                credentials: config.withCredentials === true ? 'include' : 'same-origin',
                 signal: request.signal
             });
 

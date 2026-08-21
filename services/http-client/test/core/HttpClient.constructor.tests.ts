@@ -56,6 +56,11 @@ describe('HttpClient constructor', () => {
             code: REQUEST_BUILDER_ERROR_CODES.INVALID_TIMEOUT
         },
         {
+            name: 'with credentials',
+            options: { ...createOptions(), withCredentials: 'true' },
+            code: REQUEST_BUILDER_ERROR_CODES.INVALID_WITH_CREDENTIALS
+        },
+        {
             name: 'onRequest hook',
             options: { ...createOptions(), onRequest: true },
             code: REQUEST_BUILDER_ERROR_CODES.INVALID_HOOK
@@ -86,6 +91,7 @@ describe('HttpClient constructor', () => {
             headers: { 'X-Default': 'value' },
             params: { locale: 'ru' },
             timeout: 1000,
+            withCredentials: true,
             onRequest: config => config,
             onRequestError: () => undefined,
             onResponse: response => response,

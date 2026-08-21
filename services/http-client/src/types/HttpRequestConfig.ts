@@ -12,5 +12,6 @@ export interface IHttpRequestConfig<TData = unknown> {
     readonly data?: TData;
     readonly signal?: AbortSignal;
     readonly timeout?: number;
+    readonly withCredentials?: boolean;
     readonly responseType?: THttpResponseType;
 }

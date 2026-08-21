@@ -18,7 +18,10 @@ import { mergeHeaders, mergeParams } from '../utilities';
 
 export class HttpClient {
     private readonly adapter: IHttpClientAdapter;
-    private readonly defaultConfig: Pick<IHttpRequestConfig, 'baseUrl' | 'headers' | 'timeout' | 'params'>;
+    private readonly defaultConfig: Pick<
+        IHttpRequestConfig,
+        'baseUrl' | 'headers' | 'timeout' | 'withCredentials' | 'params'
+    >;
     private onRequestHook?: THttpRequestHook;
     private onRequestErrorHook?: THttpRequestErrorHook;
     private onResponseHook?: THttpResponseHook;
@@ -37,7 +40,8 @@ export class HttpClient {
             baseUrl: options.baseUrl,
             headers: options.headers,
             params: mergeParams(options.params),
-            timeout: options.timeout
+            timeout: options.timeout,
+            withCredentials: options.withCredentials
         };
     }
 
@@ -116,6 +120,7 @@ export class HttpClient {
             ...config,
             baseUrl: config.baseUrl ?? this.defaultConfig.baseUrl,
             timeout: config.timeout ?? this.defaultConfig.timeout,
+            withCredentials: config.withCredentials ?? this.defaultConfig.withCredentials,
             headers: mergeHeaders(this.defaultConfig.headers, config.headers),
             params: mergeParams(this.defaultConfig.params, config.params)
         };
