@@ -6,7 +6,15 @@ import { ParseError } from '../errors/ParseError';
 import { RequestPreparationError } from '../errors/RequestPreparationError';
 import { TimeoutError } from '../errors/TimeoutError';
 import { AbortError } from '../errors/AbortError';
-import { IHttpClientAdapter, IHttpRequestConfig, IHttpResponse, THttpHeaders, THttpResponseType } from '../types';
+import {
+    IHttpClientAdapter,
+    IHttpRequestConfig,
+    IHttpResponse,
+    IXhrAdapterOptions,
+    THttpHeaders,
+    THttpResponseType
+} from '../types';
+import { assertValidXhrAdapterOptions } from '../asserts';
 import { buildUrl, getErrorMessage, mergeHeaders, prepareRequestBody } from '../utilities';
 
 function parseResponseHeaders(rawHeaders: string): THttpHeaders {
@@ -203,7 +211,20 @@ function createResponseError(xhr: XMLHttpRequest, config: IHttpRequestConfig): H
     );
 }
 
-function prepareXhrRequest(config: IHttpRequestConfig): IPreparedXhrRequest {
+function resolveRequestConfig(config: IHttpRequestConfig, options: IXhrAdapterOptions): IHttpRequestConfig {
+    return {
+        ...config,
+        ...(config.responseType === undefined && options.responseType !== undefined
+            ? { responseType: options.responseType }
+            : {}),
+        ...(config.timeout === undefined && options.timeout !== undefined ? { timeout: options.timeout } : {}),
+        ...(config.withCredentials === undefined && options.withCredentials !== undefined
+            ? { withCredentials: options.withCredentials }
+            : {})
+    };
+}
+
+function prepareXhrRequest(config: IHttpRequestConfig, options: IXhrAdapterOptions): IPreparedXhrRequest {
     const {
         url,
         method,
@@ -226,6 +247,10 @@ function prepareXhrRequest(config: IHttpRequestConfig): IPreparedXhrRequest {
     const xhr = new XMLHttpRequest();
     xhr.open(method, fullUrl, true);
     xhr.withCredentials = config.withCredentials === true;
+
+    if (options.mimeType !== undefined) {
+        xhr.overrideMimeType(options.mimeType);
+    }
 
     if (timeout !== undefined && timeout > 0) {
         xhr.timeout = timeout;
@@ -347,20 +372,33 @@ function configureXhrEventHandlers<T>(
 }
 
 export class XhrAdapter implements IHttpClientAdapter {
+    private readonly options: IXhrAdapterOptions;
+
+    constructor(options: IXhrAdapterOptions = {}) {
+        assertValidXhrAdapterOptions(options);
+
+        this.options = { ...options };
+    }
+
     request<T>(config: IHttpRequestConfig): Promise<IHttpResponse<T>> {
+        const resolvedConfig = resolveRequestConfig(config, this.options);
+
         return new Promise<IHttpResponse<T>>((resolve, reject) => {
             let request: IPreparedXhrRequest | undefined;
 
             try {
-                request = prepareXhrRequest(config);
-                configureXhrEventHandlers(request, config, resolve, reject);
+                request = prepareXhrRequest(resolvedConfig, this.options);
+                configureXhrEventHandlers(request, resolvedConfig, resolve, reject);
                 request.xhr.send(request.body);
             } catch (error) {
                 request?.cleanup();
                 reject(
                     error instanceof HttpClientError
                         ? error
-                        : new RequestPreparationError('Failed to prepare HTTP request', { cause: error, config })
+                        : new RequestPreparationError('Failed to prepare HTTP request', {
+                              cause: error,
+                              config: resolvedConfig
+                          })
                 );
             }
         });

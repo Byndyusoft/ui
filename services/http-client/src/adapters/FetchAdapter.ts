@@ -6,7 +6,15 @@ import { ParseError } from '../errors/ParseError';
 import { RequestPreparationError } from '../errors/RequestPreparationError';
 import { TimeoutError } from '../errors/TimeoutError';
 import { AbortError } from '../errors/AbortError';
-import { IHttpClientAdapter, IHttpRequestConfig, IHttpResponse, THttpHeaders, THttpResponseType } from '../types';
+import {
+    IFetchAdapterOptions,
+    IHttpClientAdapter,
+    IHttpRequestConfig,
+    IHttpResponse,
+    THttpHeaders,
+    THttpResponseType
+} from '../types';
+import { assertValidFetchAdapterOptions } from '../asserts';
 import { buildUrl, getErrorMessage, mergeHeaders, prepareRequestBody } from '../utilities';
 
 function extractResponseHeaders(headers: Headers): THttpHeaders {
@@ -87,6 +95,21 @@ function prepareFetchRequest(config: IHttpRequestConfig): IPreparedFetchRequest 
     }
 }
 
+function resolveCredentials(
+    withCredentials: boolean | undefined,
+    adapterCredentials: RequestCredentials | undefined
+): RequestCredentials {
+    if (withCredentials === true) {
+        return 'include';
+    }
+
+    if (withCredentials === false) {
+        return 'same-origin';
+    }
+
+    return adapterCredentials ?? 'same-origin';
+}
+
 async function parseResponseBody<T>(
     response: Response,
     config: IHttpRequestConfig,
@@ -137,6 +160,14 @@ async function parseResponseBody<T>(
 }
 
 export class FetchAdapter implements IHttpClientAdapter {
+    private readonly options: IFetchAdapterOptions;
+
+    constructor(options: IFetchAdapterOptions = {}) {
+        assertValidFetchAdapterOptions(options);
+
+        this.options = { ...options };
+    }
+
     async request<T>(config: IHttpRequestConfig): Promise<IHttpResponse<T>> {
         let request: IPreparedFetchRequest;
 
@@ -152,10 +183,11 @@ export class FetchAdapter implements IHttpClientAdapter {
 
         try {
             const response = await fetch(request.fullUrl, {
+                ...this.options,
                 method: config.method,
                 headers: request.requestHeaders,
                 body: request.body,
-                credentials: config.withCredentials === true ? 'include' : 'same-origin',
+                credentials: resolveCredentials(config.withCredentials, this.options.credentials),
                 signal: request.signal
             });
 

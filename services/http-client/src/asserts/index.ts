@@ -1,4 +1,5 @@
 export * from './assertBodyAllowed';
+export * from './assertValidFetchAdapterOptions';
 export * from './assertNonBlankString';
 export * from './assertValidBaseUrl';
 export * from './assertValidHeader';
@@ -13,4 +14,5 @@ export * from './assertValidSignal';
 export * from './assertValidTimeout';
 export * from './assertValidUrl';
 export * from './assertValidWithCredentials';
+export * from './assertValidXhrAdapterOptions';
 export * from './headerValueLineBreakPattern';
