@@ -5,7 +5,7 @@ import { isRecord } from './isRecord';
 
 const FETCH_CACHE_VALUES = ['default', 'no-store', 'reload', 'no-cache', 'force-cache', 'only-if-cached'];
 const FETCH_CREDENTIALS_VALUES = ['omit', 'same-origin', 'include'];
-const FETCH_MODE_VALUES = ['cors', 'navigate', 'no-cors', 'same-origin'];
+const FETCH_MODE_VALUES = ['cors', 'no-cors', 'same-origin'];
 const FETCH_REDIRECT_VALUES = ['error', 'follow', 'manual'];
 const FETCH_REFERRER_POLICY_VALUES = [
     '',
@@ -61,6 +61,10 @@ export function assertValidFetchAdapterOptions(options: unknown): asserts option
 
     if (mode !== undefined) {
         assertValidEnum(mode, FETCH_MODE_VALUES, 'mode');
+    }
+
+    if (cache === 'only-if-cached' && mode !== 'same-origin') {
+        throwInvalidOptions('cache "only-if-cached" requires mode "same-origin"');
     }
 
     if (redirect !== undefined) {

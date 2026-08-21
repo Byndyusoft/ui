@@ -3,7 +3,7 @@ import { XhrAdapter } from '../../src/adapters/XhrAdapter';
 import { HTTP_RESPONSE_TYPES, HTTP_STATUS_CODES, REQUEST_BUILDER_ERROR_CODES } from '../../src/constants';
 import { HttpClient } from '../../src/core/HttpClient';
 import { RequestBuilderError } from '../../src/errors';
-import { TRequestBuilderErrorCode } from '../../src/types';
+import { IFetchAdapterOptions, TRequestBuilderErrorCode } from '../../src/types';
 
 function createMockXhr(response: unknown = 'response'): {
     xhr: XMLHttpRequest;
@@ -103,6 +103,10 @@ describe('adapter constructor options', () => {
         }
     });
 
+    test('accepts only-if-cached with same-origin mode', () => {
+        expect(() => new FetchAdapter({ cache: 'only-if-cached', mode: 'same-origin' })).not.toThrow();
+    });
+
     test('uses XHR adapter defaults when the request does not set them', async () => {
         const mockXhr = createMockXhr();
         vi.stubGlobal(
@@ -175,8 +179,18 @@ describe('adapter constructor options', () => {
             code: REQUEST_BUILDER_ERROR_CODES.INVALID_FETCH_ADAPTER_OPTIONS
         },
         {
-            name: 'Fetch mode',
-            action: () => new FetchAdapter({ mode: 'unsupported' as RequestMode }),
+            name: 'unsupported Fetch mode',
+            action: () => new FetchAdapter({ mode: 'unsupported' } as unknown as IFetchAdapterOptions),
+            code: REQUEST_BUILDER_ERROR_CODES.INVALID_FETCH_ADAPTER_OPTIONS
+        },
+        {
+            name: 'navigate Fetch mode',
+            action: () => new FetchAdapter({ mode: 'navigate' } as unknown as IFetchAdapterOptions),
+            code: REQUEST_BUILDER_ERROR_CODES.INVALID_FETCH_ADAPTER_OPTIONS
+        },
+        {
+            name: 'only-if-cached Fetch cache without same-origin mode',
+            action: () => new FetchAdapter({ cache: 'only-if-cached' }),
             code: REQUEST_BUILDER_ERROR_CODES.INVALID_FETCH_ADAPTER_OPTIONS
         },
         {

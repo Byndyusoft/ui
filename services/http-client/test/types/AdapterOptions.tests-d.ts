@@ -21,5 +21,6 @@ describe('adapter option types', () => {
 
         expectTypeOf(new FetchAdapter(fetchOptions)).toEqualTypeOf<FetchAdapter>();
         expectTypeOf(new XhrAdapter(xhrOptions)).toEqualTypeOf<XhrAdapter>();
+        expectTypeOf<NonNullable<IFetchAdapterOptions['mode']>>().toEqualTypeOf<'cors' | 'no-cors' | 'same-origin'>();
     });
 });
