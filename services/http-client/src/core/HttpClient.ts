@@ -38,7 +38,7 @@ export class HttpClient {
 
         this.defaultConfig = {
             baseUrl: options.baseUrl,
-            headers: options.headers,
+            headers: mergeHeaders(options.headers),
             params: mergeParams(options.params),
             timeout: options.timeout,
             withCredentials: options.withCredentials

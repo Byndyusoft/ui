@@ -18,15 +18,11 @@
 
 `responseType('blob').execute()` возвращает `unknown` — каждый вызов требует явного дженерика, а рассинхрон `responseType('blob')` + `execute<string>()` не ловится компилятором. Нужен `THttpResponseData<TResponseType, TJson>` + дженерик-builder (`HttpRequestBuilder<TResponseType>`), покрыть type-тестами. Сделать до README, чтобы документировать финальный API.
 
-### P1-3 — Клонировать default `headers` в конструкторе клиента
-
-`params` копируются через `mergeParams`, а `headers` сохраняются по ссылке — внешняя мутация объекта влияет на клиент. Нужно `headers: mergeHeaders(options.headers)` (или аналог) и тест на иммутабельность.
-
-### P1-4 — Выровнять parity Fetch ↔ XHR
+### P1-3 — Выровнять parity Fetch ↔ XHR
 
 XHR не учитывает `Content-Length: 0` (Fetch уже учитывает). `getErrorData` читает тело ошибки только при `responseType === 'text'`, поэтому 4xx/5xx при `blob`/`formData` почти всегда без `data`. Выровнять семантику empty body и error body + тесты на оба адаптера. Смежное ограничение XHR: парсинг `formData` построен на глобальном `Response` — в окружениях без fetch-API падает без fail-fast; нужен guard с `RequestPreparationError` или явная документация.
 
-### P1-5 — Уточнить валидацию опций `FetchAdapter`
+### P1-4 — Уточнить валидацию опций `FetchAdapter`
 
 Нужно отклонять значения и сочетания, которые Fetch не поддерживает при программном запросе: например, `mode: 'navigate'` и `cache: 'only-if-cached'` без `mode: 'same-origin'`. Ошибка должна возникать при создании адаптера, а не во время отправки запроса. Нужны также тесты на эти комбинации.
 
@@ -85,7 +81,7 @@ XHR не учитывает `Content-Length: 0` (Fetch уже учитывает
 ## Рекомендуемый порядок
 
 1. P0: README + changeset (после P1 «вывод типа данных ответа», чтобы документировать финальный API)
-2. P1: typed errors + headers clone + adapter parity + Fetch options validation
+2. P1: typed errors + adapter parity + Fetch options validation
 3. P2: package.json модернизация вместе с релизной подготовкой
 4. P2: retry / progress / validateStatus по продуктовым нуждам
 5. P2–P3: DX и полировка фоном
@@ -104,3 +100,4 @@ XHR не учитывает `Content-Length: 0` (Fetch уже учитывает
 10. Adapter options (`FetchAdapterOptions`, `XhrAdapterOptions`)
 11. Удалены устаревшие закомментированные методы из `HttpRequestBuilder`
 12. Publish hygiene: `files: ["dist"]`, `.npmignore`
+13. Default `headers` клонируются в конструкторе `HttpClient`.

@@ -4,7 +4,7 @@ import { FetchAdapter } from '../../src/adapters/FetchAdapter';
 import { XhrAdapter } from '../../src/adapters/XhrAdapter';
 import { HTTP_STATUS_CODES } from '../../src/constants';
 import { HttpResponseError, NetworkError } from '../../src/errors';
-import { IHttpClientAdapter } from '../../src/types';
+import { IHttpClientAdapter, THttpHeaders } from '../../src/types';
 import { handlers } from '../__handlers__/HttpClient.defaultConfig.handlers';
 import { BASE_URL } from '../__fixtures__';
 
@@ -99,6 +99,19 @@ describe.each(adapters)('HttpClient.$name — default config', ({ create }) => {
         const response = await client.get('/test').execute<{ locale: string | null; role: string[] }>();
 
         expect(response.data).toMatchObject({ locale: 'ru', role: ['admin'] });
+    });
+
+    test('copies default headers when the client is created', async () => {
+        const headers: THttpHeaders = { 'X-Default': 'default-header' };
+        const client = new HttpClient({ adapter: create(), baseUrl: BASE_URL, headers });
+
+        headers['X-Default'] = 'changed-after-creation';
+        headers['X-Added'] = 'must-not-be-sent';
+
+        const response = await client.get('/test').execute<{ def: string | null; custom: string | null }>();
+
+        expect(response.data?.def).toBe('default-header');
+        expect(response.data?.custom).toBeNull();
     });
 
     test('uses default baseUrl', async () => {
