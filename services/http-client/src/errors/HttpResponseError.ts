@@ -18,7 +18,7 @@ export class HttpResponseError<T = unknown> extends HttpClientError {
         data?: T,
         options?: ErrorOptions
     ) {
-        super(message, options);
+        super(message, { ...options, config });
 
         this.status = status;
         this.statusText = statusText;

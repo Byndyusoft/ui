@@ -137,6 +137,13 @@ async function parseResponseBody<T>(
                 });
             }
         case HTTP_RESPONSE_TYPES.STREAM:
+            if (response.body === null) {
+                throw new ParseError('Streaming response body is not available', {
+                    config,
+                    responseType: HTTP_RESPONSE_TYPES.STREAM
+                });
+            }
+
             return response.body as T;
         case HTTP_RESPONSE_TYPES.JSON:
         default: {

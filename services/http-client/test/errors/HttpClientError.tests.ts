@@ -87,7 +87,7 @@ describe('HttpClientError', () => {
         expect(guard(new Error('unrelated'))).toBe(false);
     });
 
-    it('preserves HttpResponseError fields', () => {
+    it('preserves HttpResponseError fields and base config', () => {
         const headers = { 'x-a': 'b' };
         const error = new HttpResponseError('failed', HTTP_STATUS_CODES.NOT_FOUND, 'Not Found', headers, config, {
             error: 'Not found'
@@ -99,6 +99,7 @@ describe('HttpClientError', () => {
         expect(error.headers).toBe(headers);
         expect(error.config).toBe(config);
         expect(error.data).toEqual({ error: 'Not found' });
+        expect((error as HttpClientError).config).toBe(config);
     });
 
     it('preserves RequestBuilderError code including the default', () => {

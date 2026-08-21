@@ -20,7 +20,7 @@ const adapters: Array<{ name: string; create: () => IHttpClientAdapter }> = [
     { name: 'XhrAdapter', create: () => new XhrAdapter() }
 ];
 
-describe.each(adapters)('HttpClient.$name — GET', ({ create }) => {
+describe.each(adapters)('HttpClient.$name — GET', ({ name, create }) => {
     function createClient(): HttpClient {
         return new HttpClient({
             adapter: create(),
@@ -159,6 +159,40 @@ describe.each(adapters)('HttpClient.$name — GET', ({ create }) => {
 
         expect(response.data).toBeInstanceOf(ReadableStream);
         expect(await new Response(response.data).text()).toBe('stream response');
+    });
+
+    test('throws ParseError when Fetch stream body is null', async () => {
+        if (name !== 'FetchAdapter') {
+            return;
+        }
+
+        const client = createClient();
+
+        vi.stubGlobal(
+            'fetch',
+            vi.fn(async () => {
+                return {
+                    ok: true,
+                    status: 200,
+                    statusText: 'OK',
+                    headers: new Headers(),
+                    body: null
+                } as unknown as Response;
+            })
+        );
+
+        try {
+            await client.get('/stream').responseType(HTTP_RESPONSE_TYPES.STREAM).execute();
+            expect.fail('Should have thrown');
+        } catch (error) {
+            expect(error).toBeInstanceOf(ParseError);
+            const parseError = error as ParseError;
+
+            expect(parseError.responseType).toBe(HTTP_RESPONSE_TYPES.STREAM);
+            expect(parseError.config).toMatchObject({ url: '/stream', baseUrl: BASE_URL });
+        } finally {
+            vi.unstubAllGlobals();
+        }
     });
 
     test('throws HttpResponseError with response context and data on 404', async () => {
