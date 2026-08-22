@@ -4,7 +4,7 @@ import { FetchAdapter } from '../../src/adapters/FetchAdapter';
 import { XhrAdapter } from '../../src/adapters/XhrAdapter';
 import { HTTP_STATUS_CODES } from '../../src/constants';
 import { HttpResponseError, NetworkError } from '../../src/errors';
-import { IHttpClientAdapter, THttpHeaders } from '../../src/types';
+import { IHttpClientAdapter, IHttpRequestConfig, THttpHeaders } from '../../src/types';
 import { handlers } from '../__handlers__/HttpClient.defaultConfig.handlers';
 import { BASE_URL } from '../__fixtures__';
 
@@ -87,6 +87,27 @@ describe.each(adapters)('HttpClient.$name — default config', ({ create }) => {
             .execute<{ locale: string | null; page: string | null; role: string[] }>();
 
         expect(response.data).toMatchObject({ locale: 'ru', page: '2', role: ['editor'] });
+    });
+
+    test.each([
+        { name: 'params are absent', params: undefined },
+        { name: 'only nullish params are provided', params: { page: null, role: [undefined, null] } }
+    ])('sets merged params to undefined when $name', async ({ params }) => {
+        let receivedConfig: IHttpRequestConfig | undefined;
+        const client = new HttpClient({
+            adapter: create(),
+            baseUrl: BASE_URL,
+            params,
+            onRequest: config => {
+                receivedConfig = config;
+
+                return config;
+            }
+        });
+
+        await client.get('/test').execute();
+
+        expect(receivedConfig?.params).toBeUndefined();
     });
 
     test('copies default params when the client is created', async () => {

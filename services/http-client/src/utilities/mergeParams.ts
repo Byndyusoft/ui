@@ -4,8 +4,11 @@ function isPresentParamPrimitive(value: unknown): value is THttpParamPrimitive {
     return value !== null && value !== undefined;
 }
 
-/** Merges query params from left to right. `null` / `undefined` remove a key; nullish array items are dropped. */
-export function mergeParams(...sources: Array<THttpParams | undefined>): THttpParams {
+/**
+ * Merges query params from left to right. `null` / `undefined` remove a key; nullish array items are dropped.
+ * Returns undefined when no params remain.
+ */
+export function mergeParams(...sources: Array<THttpParams | undefined>): THttpParams | undefined {
     const result: THttpParams = {};
 
     for (const source of sources) {
@@ -35,5 +38,5 @@ export function mergeParams(...sources: Array<THttpParams | undefined>): THttpPa
         }
     }
 
-    return result;
+    return Object.keys(result).length === 0 ? undefined : result;
 }

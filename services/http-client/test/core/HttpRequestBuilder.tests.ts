@@ -246,6 +246,15 @@ describe('HttpRequestBuilder', () => {
         expect(builder.build().params).toEqual({ page: 1 });
     });
 
+    test('sets params to undefined when no values remain after merge', () => {
+        const builder = new HttpRequestBuilder(createExecutor(), HTTP_METHODS.GET, '/items')
+            .params({ page: 1, role: [null, undefined] })
+            .param('page', null);
+        const config = builder.build();
+
+        expect(config.params).toBeUndefined();
+    });
+
     test('keeps the default error code for backwards-compatible construction', () => {
         expect(new RequestBuilderError('Invalid config').code).toBe(REQUEST_BUILDER_ERROR_CODES.INVALID_CONFIG);
     });
