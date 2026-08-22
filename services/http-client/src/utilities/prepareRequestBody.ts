@@ -20,6 +20,13 @@ function isUrlSearchParams(value: THttpRequestBody): value is URLSearchParams {
     return hasTag(value, '[object URLSearchParams]');
 }
 
+/**
+ * Converts request data into a transport-compatible body.
+ * Mutates the provided headers by adding a default Content-Type for JSON and URLSearchParams bodies when absent.
+ * FormData is returned without setting Content-Type so the transport can add its boundary.
+ *
+ * @throws TypeError when data cannot be serialized as JSON.
+ */
 export function prepareRequestBody(data: unknown, headers: THttpHeaders): THttpRequestBody {
     if (isRequestBody(data)) {
         if (isUrlSearchParams(data) && !hasHeader(headers, 'Content-Type')) {

@@ -6,7 +6,7 @@
 
 ### P0-1 — Релизная гигиена: README + changeset + версия
 
-`homepage` в package.json указывает на несуществующий `#readme`, `.changeset/` пуст, версия `0.0.1` → `0.1.0` при первом publish. Нужны README с примерами (настройка Fetch/XHR, приоритеты конфигурации client → builder → adapter, `withCredentials`, ограничения CORS, таблица ошибок, hooks) и changeset перед паблишем. В README отдельно зафиксировать: маппинг `withCredentials` → fetch `credentials` (`true` → `include`, `false` → `same-origin`, `undefined` → `credentials` адаптера ?? `same-origin`) согласно D-001; контракт `body()` (допустимые типы, автосериализация объектов в JSON с авто-`Content-Type`); ограничение `redirect: 'manual'` (opaque-redirect приходит как `HttpResponseError` со статусом `0`, продолжить редирект вручную нельзя).
+`homepage` в package.json указывает на несуществующий `#readme`, `.changeset/` пуст, версия `0.0.1` → `0.1.0` при первом publish. Нужны README с примерами (настройка Fetch/XHR, приоритеты конфигурации client → builder → adapter, `withCredentials`, ограничения CORS, таблица ошибок, hooks) и changeset перед паблишем. В README отдельно зафиксировать: маппинг `withCredentials` → fetch `credentials` (`true` → `include`, `false` → `same-origin`, `undefined` → `credentials` адаптера ?? `same-origin`) согласно D-001; контракт `body()` (допустимые типы, автосериализация объектов в JSON с авто-`Content-Type`, `body(undefined)` выбрасывает `RequestBuilderError`, `body(null)` отправляет JSON `null`) согласно D-006; ограничение `redirect: 'manual'` (opaque-redirect приходит как `HttpResponseError` со статусом `0`, продолжить редирект вручную нельзя).
 
 ## P1
 
@@ -36,15 +36,11 @@
 
 Согласно D-005, повторы будут реализованы в отдельном opt-in классе для оркестрации запросов, без встраивания retry-логики в `HttpClient`, адаптеры или hooks. Нужно спроектировать лимит попыток, exponential backoff, поддержку `Retry-After`, отмену через `AbortSignal`, перечень временных сетевых сбоев и статусов (`408`, `429`, часть `5xx`), а также безопасное поведение для мутаций.
 
-### P2-5 — Юнит-тесты утилит
-
-Изолированно покрыть `buildUrl`, `mergeHeaders`, `mergeParams`, `prepareRequestBody` (включая FormData без Content-Type, URLSearchParams, circular JSON). Заодно зафиксировать контракт `prepareRequestBody`, который мутирует переданный `headers` (JSDoc или возврат пары значений), и поведение `body(undefined)`: ключ `data` в config создаётся, но адаптеры тело не отправляют.
-
-### P2-6 — Зафиксировать edge-cases XHR stream
+### P2-5 — Зафиксировать edge-cases XHR stream
 
 Поведение abort/timeout после resolve stream и 4xx при `responseType: 'stream'` должно быть явным контрактом (reject promise vs `stream.error`) с тестами. Смежное: расходящаяся семантика timeout для STREAM — fetch-таймер живёт до получения заголовков, `xhr.timeout` покрывает всю загрузку; задокументировать или унифицировать. Также задокументировать, что XHR-stream не настоящий стрим: ответ целиком накапливается в `responseText`, что ограничивает размер стриминговых ответов по памяти.
 
-### P2-7 — Добавить браузерные интеграционные тесты
+### P2-6 — Добавить браузерные интеграционные тесты
 
 Проверить в настоящих браузерах credentialed CORS, preflight, cookies с `SameSite`/`Secure`, redirects и `keepalive`. Тесты jsdom и mock-адаптеров не воспроизводят эти особенности платформы. Актуально после появления реальных пользователей credentials-API.
 
@@ -89,3 +85,5 @@
 15. Валидация `FetchAdapter`: исключён `mode: 'navigate'`; `cache: 'only-if-cached'` требует `mode: 'same-origin'`.
 16. Parity Fetch/XHR: `Content-Length: 0`, error body при `blob`/`formData` и fail-fast для недоступного `Response.formData`.
 17. Пустые `params` нормализуются в `undefined` вместо `{}`.
+18. Утилиты покрыты изолированными тестами и английскими JSDoc; зафиксирована мутация headers в `prepareRequestBody`.
+19. Согласно D-006, `body(undefined)` выбрасывает `RequestBuilderError` с кодом `INVALID_BODY`, а `body(null)` отправляет JSON `null`.

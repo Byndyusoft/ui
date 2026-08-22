@@ -237,6 +237,18 @@ describe('HttpRequestBuilder', () => {
         expect(builder.body({ hard: true }).build().data).toEqual({ hard: true });
     });
 
+    test('rejects an explicitly undefined body', () => {
+        const builder = new HttpRequestBuilder(createExecutor(), HTTP_METHODS.POST, '/items');
+
+        expectRequestBuilderError(() => builder.body(undefined), REQUEST_BUILDER_ERROR_CODES.INVALID_BODY);
+    });
+
+    test('allows null as an explicit JSON body', () => {
+        const builder = new HttpRequestBuilder(createExecutor(), HTTP_METHODS.POST, '/items');
+
+        expect(builder.body(null).build().data).toBeNull();
+    });
+
     test('accepts nullish params and drops them on merge override', () => {
         const builder = new HttpRequestBuilder(createExecutor(), HTTP_METHODS.GET, '/items')
             .params({ page: 1, locale: 'ru', role: ['admin', null, 'user'] })

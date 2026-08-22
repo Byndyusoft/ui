@@ -51,6 +51,16 @@ describe.each(adapters)('HttpClient.$name — POST', ({ create }) => {
         expect(response.data?.contentType).toBe('text/plain');
     });
 
+    test('sends null as an explicit JSON body', async () => {
+        const client = createClient();
+        const response = await client
+            .post('/raw')
+            .body(null)
+            .execute<{ received: string; contentType: string | null }>();
+
+        expect(response.data).toEqual({ received: 'null', contentType: 'application/json' });
+    });
+
     test('sends FormData without JSON serialization', async () => {
         const client = createClient();
         const formData = new FormData();

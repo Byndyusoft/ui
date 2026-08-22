@@ -12,7 +12,7 @@ import {
 } from '../types';
 import {
     HEADER_VALUE_LINE_BREAK_PATTERN,
-    assertBodyAllowed,
+    assertValidBody,
     assertNonBlankString,
     assertValidBaseUrl,
     assertValidHeader,
@@ -106,7 +106,7 @@ export class HttpRequestBuilder {
     }
 
     public body(data: unknown): HttpRequestBuilder {
-        assertBodyAllowed(this.config.method);
+        assertValidBody(this.config.method, data);
 
         return this.withConfig({ data });
     }

@@ -1,7 +1,7 @@
 import { REQUEST_BUILDER_ERROR_CODES } from '../constants';
 import { RequestBuilderError } from '../errors';
 import { IHttpRequestConfig } from '../types';
-import { assertBodyAllowed } from './assertBodyAllowed';
+import { assertValidBody } from './assertValidBody';
 import { assertValidBaseUrl } from './assertValidBaseUrl';
 import { assertValidHeaders } from './assertValidHeaders';
 import { assertValidMethod } from './assertValidMethod';
@@ -19,7 +19,7 @@ export function assertValidRequestConfig(config: unknown): asserts config is IHt
         throw new RequestBuilderError('Request config must be an object', REQUEST_BUILDER_ERROR_CODES.INVALID_CONFIG);
     }
 
-    const { method, url, baseUrl, headers, params, signal, timeout, withCredentials, responseType } = config;
+    const { method, url, baseUrl, headers, params, data, signal, timeout, withCredentials, responseType } = config;
 
     assertValidMethod(method);
     assertValidUrl(url);
@@ -53,6 +53,6 @@ export function assertValidRequestConfig(config: unknown): asserts config is IHt
     }
 
     if (Object.prototype.hasOwnProperty.call(config, 'data')) {
-        assertBodyAllowed(method);
+        assertValidBody(method, data);
     }
 }

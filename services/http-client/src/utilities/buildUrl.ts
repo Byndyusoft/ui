@@ -103,7 +103,10 @@ function resolveAbsoluteUrl(base: URL, url: string): string {
     return base.toString();
 }
 
-/** Resolves a request URL and appends params before its fragment. */
+/**
+ * Resolves a request URL against an optional base URL, preserves existing query values and fragments,
+ * and appends serialized params before the fragment.
+ */
 export function buildUrl(baseUrl: string | undefined, url: string, params?: THttpParams): string {
     const absoluteUrl = getAbsoluteUrl(url);
 

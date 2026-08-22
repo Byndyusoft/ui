@@ -90,6 +90,21 @@ describe.each(adapters)('HttpClient.$name — hooks', ({ create }) => {
         });
     });
 
+    test('rejects data: undefined returned by onRequest', async () => {
+        let caught: unknown;
+        const client = createClient({
+            onRequest: config => ({ ...config, data: undefined }),
+            onRequestError: error => {
+                caught = error;
+            }
+        });
+
+        await expect(client.post('/items').body({ valid: true }).execute()).rejects.toMatchObject({
+            code: REQUEST_BUILDER_ERROR_CODES.INVALID_BODY
+        });
+        expect(caught).toMatchObject({ code: REQUEST_BUILDER_ERROR_CODES.INVALID_BODY });
+    });
+
     test('rejects an invalid config returned by onRequestError without sending the request', async () => {
         let hits = 0;
         server.use(
