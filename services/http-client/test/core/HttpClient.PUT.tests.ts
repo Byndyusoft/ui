@@ -32,7 +32,8 @@ describe.each(adapters)('HttpClient.$name — PUT', ({ create }) => {
         const response = await client
             .put('/items/1')
             .body({ name: 'Updated' })
-            .execute<{ updated: boolean; name: string }>();
+            .asJson<{ updated: boolean; name: string }>()
+            .execute();
 
         expect(response.data).toEqual({ updated: true, name: 'Updated' });
     });

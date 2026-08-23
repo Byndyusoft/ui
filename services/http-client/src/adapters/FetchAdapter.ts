@@ -126,16 +126,6 @@ async function parseResponseBody<T>(
             return response.blob() as Promise<T>;
         case HTTP_RESPONSE_TYPES.ARRAY_BUFFER:
             return response.arrayBuffer() as Promise<T>;
-        case HTTP_RESPONSE_TYPES.FORM_DATA:
-            try {
-                return (await response.formData()) as T;
-            } catch (error) {
-                throw new ParseError('Failed to parse response body as FormData', {
-                    cause: error,
-                    config,
-                    responseType: HTTP_RESPONSE_TYPES.FORM_DATA
-                });
-            }
         case HTTP_RESPONSE_TYPES.STREAM:
             if (response.body === null) {
                 throw new ParseError('Streaming response body is not available', {

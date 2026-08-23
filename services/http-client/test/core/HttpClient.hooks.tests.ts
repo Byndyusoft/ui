@@ -49,7 +49,8 @@ describe.each(adapters)('HttpClient.$name — hooks', ({ create }) => {
         const response = await client
             .get('/echo-headers')
             .header('X-Custom', 'value')
-            .execute<{ authorization: string | null }>();
+            .asJson<{ authorization: string | null }>()
+            .execute();
 
         expect(receivedConfig?.baseUrl).toBe(BASE_URL);
         expect(receivedConfig?.timeout).toBe(5000);
@@ -66,7 +67,7 @@ describe.each(adapters)('HttpClient.$name — hooks', ({ create }) => {
                 })
         });
 
-        const response = await client.get('/echo-headers').execute<{ authorization: string | null }>();
+        const response = await client.get('/echo-headers').asJson<{ authorization: string | null }>().execute();
 
         expect(response.data?.authorization).toBe('Bearer async-token');
     });
@@ -82,7 +83,7 @@ describe.each(adapters)('HttpClient.$name — hooks', ({ create }) => {
             }
         });
 
-        const response = await client.get('/items').execute<{ id: number }>();
+        const response = await client.get('/items').asJson<{ id: number }>().execute();
 
         expect(response.data?.id).toBe(1);
         expect(caught).toMatchObject({
@@ -166,7 +167,7 @@ describe.each(adapters)('HttpClient.$name — hooks', ({ create }) => {
             }
         });
 
-        const response = await client.get('/items').execute<{ id: number }>();
+        const response = await client.get('/items').asJson<{ id: number }>().execute();
 
         expect(response.data?.id).toBe(1);
     });
@@ -191,7 +192,7 @@ describe.each(adapters)('HttpClient.$name — hooks', ({ create }) => {
         const onResponseError = vi.fn();
         const client = createClient({ onResponse, onResponseError });
 
-        const response = await client.get('/items').execute<{ wrapped: { id: number; name: string } }>();
+        const response = await client.get('/items').asJson<{ wrapped: { id: number; name: string } }>().execute();
 
         expect(onResponse).toHaveBeenCalledTimes(1);
         expect(response.data?.wrapped).toEqual({ id: 1, name: 'John' });
@@ -294,7 +295,7 @@ describe.each(adapters)('HttpClient.$name — hooks', ({ create }) => {
             })
         });
 
-        const response = await client.get('/not-found').execute<{ recovered: boolean }>();
+        const response = await client.get('/not-found').asJson<{ recovered: boolean }>().execute();
 
         expect(response.data).toEqual({ recovered: true });
         expect(onResponse).not.toHaveBeenCalled();
@@ -331,7 +332,7 @@ describe.each(adapters)('HttpClient.$name — hooks', ({ create }) => {
             headers: { ...config.headers, Authorization: 'Bearer instance-token' }
         }));
 
-        const response = await client.get('/echo-headers').execute<{ authorization: string | null }>();
+        const response = await client.get('/echo-headers').asJson<{ authorization: string | null }>().execute();
 
         expect(response.data?.authorization).toBe('Bearer instance-token');
     });
@@ -349,7 +350,7 @@ describe.each(adapters)('HttpClient.$name — hooks', ({ create }) => {
             headers: { ...config.headers, Authorization: 'Bearer override-token' }
         }));
 
-        const response = await client.get('/echo-headers').execute<{ authorization: string | null }>();
+        const response = await client.get('/echo-headers').asJson<{ authorization: string | null }>().execute();
 
         expect(response.data?.authorization).toBe('Bearer override-token');
     });
@@ -365,7 +366,7 @@ describe.each(adapters)('HttpClient.$name — hooks', ({ create }) => {
 
         expect(chained).toBe(client);
 
-        const response = await client.get('/items').execute<{ chained: boolean }>();
+        const response = await client.get('/items').asJson<{ chained: boolean }>().execute();
 
         expect(response.data).toEqual({ chained: true });
     });
@@ -373,7 +374,7 @@ describe.each(adapters)('HttpClient.$name — hooks', ({ create }) => {
     test('applies instance hooks to subsequent requests only', async () => {
         const client = createClient();
 
-        const before = await client.get('/echo-headers').execute<{ authorization: string | null }>();
+        const before = await client.get('/echo-headers').asJson<{ authorization: string | null }>().execute();
 
         expect(before.data?.authorization).toBeNull();
 
@@ -382,7 +383,7 @@ describe.each(adapters)('HttpClient.$name — hooks', ({ create }) => {
             headers: { ...config.headers, Authorization: 'Bearer late-token' }
         }));
 
-        const after = await client.get('/echo-headers').execute<{ authorization: string | null }>();
+        const after = await client.get('/echo-headers').asJson<{ authorization: string | null }>().execute();
 
         expect(after.data?.authorization).toBe('Bearer late-token');
     });

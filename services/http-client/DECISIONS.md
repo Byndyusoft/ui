@@ -121,7 +121,7 @@ interface IValidationError {
 }
 
 try {
-    await httpClient.post('/users').body(data).execute<User>();
+    await httpClient.post('/users').body(data).asJson<User>().execute();
 } catch (error) {
     if (isHttpResponseError<IValidationError>(error) && (error.status === 400 || error.status === 422)) {
         const validation = error.data; // IValidationError | undefined
@@ -200,3 +200,46 @@ Fetch- и XHR-адаптеры могут разобрать тело ошибк
 ### Когда пересматривать
 
 При появлении отдельного явного API для очистки ранее установленного тела или подтверждённого сценария, где `undefined` должен означать отсутствие тела.
+
+## D-007 — Выбор формата ответа до выполнения запроса
+
+Статус: принято
+Дата: 2026-08-23
+
+### Решение
+
+Формат и тип данных успешного ответа выбираются в `HttpRequestBuilder` до вызова `execute()`:
+
+```ts
+httpClient.get('/users').asJson<User[]>().execute();
+httpClient.get('/status').asText().execute();
+httpClient.get('/report').asBlob().execute();
+httpClient.get('/archive').asArrayBuffer().execute();
+httpClient.get('/events').asStream().execute();
+```
+
+Generic-параметр JSON переносится в `asJson<T>()`. Метод `execute()` не принимает generic и возвращает `IHttpResponse<TResponse>` с типом, выбранным builder. Вызов без селектора остаётся допустимым и возвращает `IHttpResponse<unknown>`.
+
+Публичный метод `responseType()` удаляется. Поле `responseType` сохраняется во внутренней конфигурации запроса и в настройках XHR-адаптера.
+
+Формат ответа `formData` удаляется. Передача `FormData` в `body()` продолжает поддерживаться.
+
+### Причина
+
+Выбор формата до выполнения соответствует текущей архитектуре: Fetch- и XHR-адаптеры получают `responseType`, читают тело и возвращают уже декодированный `IHttpResponse<T>`. Такой API не допускает рассинхрон вида `responseType('blob').execute<string>()`, но не требует вводить транспортно-независимую модель непрочитанного ответа.
+
+Отдельные методы проще условных типов: только JSON требует прикладного generic, а типы текста, бинарных данных и потока известны заранее. `FormData` практически не используется как формат ответа и создавал дополнительную ветку преобразования в XHR.
+
+### Последствия
+
+-   Все методы настройки builder сохраняют выбранный тип ответа.
+-   Повторный вызов форматного метода заменяет предыдущий формат и тип.
+-   `execute<T>()` больше не поддерживается; JSON типизируется через `asJson<T>()`.
+-   `asText()`, `asBlob()`, `asArrayBuffer()` и `asStream()` не принимают generic.
+-   Адаптеры продолжают декодировать тело до завершения `execute()`.
+-   Ошибки декодирования продолжают проходить через существующую модель `ParseError` и response hooks.
+-   Тип тела `HttpResponseError` не связан с типом успешного ответа и проектируется отдельно в P1-1.
+
+### Когда пересматривать
+
+При появлении пользовательских декодеров, востребованного формата ответа без отдельного метода или необходимости получать непрочитанное тело независимо от транспорта.

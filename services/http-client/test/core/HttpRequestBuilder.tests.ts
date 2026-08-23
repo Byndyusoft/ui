@@ -8,7 +8,6 @@ import {
     THttpMethod,
     THttpParams,
     THttpRequestExecutor,
-    THttpResponseType,
     TRequestBuilderErrorCode
 } from '../../src/types';
 
@@ -51,7 +50,7 @@ describe('HttpRequestBuilder', () => {
             .timeout(0)
             .withCredentials(true)
             .bearer('token')
-            .responseType(HTTP_RESPONSE_TYPES.JSON);
+            .asJson<unknown>();
 
         expect(initialBuilder.build()).toEqual({ method: HTTP_METHODS.POST, url: '/items' });
         expect(configuredBuilder).not.toBe(initialBuilder);
@@ -110,10 +109,17 @@ describe('HttpRequestBuilder', () => {
         const configs: IHttpRequestConfig[] = [];
         const builder = new HttpRequestBuilder(createExecutor(configs), HTTP_METHODS.GET, '/items').param('page', '1');
 
-        const response = await builder.execute<{ id: number }>();
+        const response = await builder.asJson<{ id: number }>().execute();
 
         expect(response.status).toBe(HTTP_STATUS_CODES.OK);
-        expect(configs).toEqual([{ method: HTTP_METHODS.GET, url: '/items', params: { page: '1' } }]);
+        expect(configs).toEqual([
+            {
+                method: HTTP_METHODS.GET,
+                url: '/items',
+                params: { page: '1' },
+                responseType: HTTP_RESPONSE_TYPES.JSON
+            }
+        ]);
         expect(response.config).toBe(configs[0]);
     });
 
@@ -213,11 +219,6 @@ describe('HttpRequestBuilder', () => {
             name: 'bearer token',
             action: (builder: HttpRequestBuilder) => builder.bearer('   '),
             code: REQUEST_BUILDER_ERROR_CODES.INVALID_BEARER_TOKEN
-        },
-        {
-            name: 'response type',
-            action: (builder: HttpRequestBuilder) => builder.responseType('invalid' as THttpResponseType),
-            code: REQUEST_BUILDER_ERROR_CODES.INVALID_RESPONSE_TYPE
         }
     ])('validates $name', ({ action, code }) => {
         const builder = new HttpRequestBuilder(createExecutor(), HTTP_METHODS.POST, '/items');

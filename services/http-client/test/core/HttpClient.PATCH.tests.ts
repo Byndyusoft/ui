@@ -32,7 +32,8 @@ describe.each(adapters)('HttpClient.$name — PATCH', ({ create }) => {
         const response = await client
             .patch('/items/1')
             .body({ name: 'Patched' })
-            .execute<{ patched: boolean; name: string }>();
+            .asJson<{ patched: boolean; name: string }>()
+            .execute();
 
         expect(response.data).toEqual({ patched: true, name: 'Patched' });
     });

@@ -33,7 +33,8 @@ describe.each(adapters)('HttpClient.$name — POST', ({ create }) => {
         const response = await client
             .post('/items')
             .body({ name: 'New item' })
-            .execute<{ received: { name: string }; contentType: string | null }>();
+            .asJson<{ received: { name: string }; contentType: string | null }>()
+            .execute();
 
         expect(response.data?.received).toEqual({ name: 'New item' });
         expect(response.data?.contentType).toBe('application/json');
@@ -45,7 +46,8 @@ describe.each(adapters)('HttpClient.$name — POST', ({ create }) => {
             .post('/raw')
             .body('plain text body')
             .header('Content-Type', 'text/plain')
-            .execute<{ received: string; contentType: string | null }>();
+            .asJson<{ received: string; contentType: string | null }>()
+            .execute();
 
         expect(response.data?.received).toBe('plain text body');
         expect(response.data?.contentType).toBe('text/plain');
@@ -56,7 +58,8 @@ describe.each(adapters)('HttpClient.$name — POST', ({ create }) => {
         const response = await client
             .post('/raw')
             .body(null)
-            .execute<{ received: string; contentType: string | null }>();
+            .asJson<{ received: string; contentType: string | null }>()
+            .execute();
 
         expect(response.data).toEqual({ received: 'null', contentType: 'application/json' });
     });
@@ -71,7 +74,8 @@ describe.each(adapters)('HttpClient.$name — POST', ({ create }) => {
         const response = await client
             .post('/form-data')
             .body(formData)
-            .execute<{ name: string; roles: string[]; contentType: string | null }>();
+            .asJson<{ name: string; roles: string[]; contentType: string | null }>()
+            .execute();
 
         expect(response.data?.name).toBe('Jane');
         expect(response.data?.roles).toEqual(['admin', 'editor']);
@@ -88,7 +92,8 @@ describe.each(adapters)('HttpClient.$name — POST', ({ create }) => {
         const response = await client
             .post('/url-search-params')
             .body(params)
-            .execute<{ name: string; roles: string[]; contentType: string | null }>();
+            .asJson<{ name: string; roles: string[]; contentType: string | null }>()
+            .execute();
 
         expect(response.data).toEqual({
             name: 'Jane',
@@ -102,7 +107,8 @@ describe.each(adapters)('HttpClient.$name — POST', ({ create }) => {
         const response = await client
             .post('/binary')
             .body(new NodeBlob([new Uint8Array([0, 1, 255])]))
-            .execute<{ received: number[] }>();
+            .asJson<{ received: number[] }>()
+            .execute();
 
         expect(response.data?.received).toEqual([0, 1, 255]);
     });
@@ -112,7 +118,8 @@ describe.each(adapters)('HttpClient.$name — POST', ({ create }) => {
         const response = await client
             .post('/binary')
             .body(new Uint8Array([0, 1, 255]))
-            .execute<{ received: number[] }>();
+            .asJson<{ received: number[] }>()
+            .execute();
 
         expect(response.data?.received).toEqual([0, 1, 255]);
     });
@@ -126,7 +133,8 @@ describe.each(adapters)('HttpClient.$name — POST', ({ create }) => {
         const response = await client
             .post('/items')
             .body({ name: 'New item' })
-            .execute<{ contentType: string | null }>();
+            .asJson<{ contentType: string | null }>()
+            .execute();
 
         expect(response.data?.contentType).toBe('application/vnd.api+json');
     });
@@ -136,7 +144,8 @@ describe.each(adapters)('HttpClient.$name — POST', ({ create }) => {
         const response = await client
             .post('/echo')
             .body({ name: 'Jane' })
-            .execute<{ created: boolean; name: string }>();
+            .asJson<{ created: boolean; name: string }>()
+            .execute();
 
         expect(response.data).toEqual({ created: true, name: 'Jane' });
     });

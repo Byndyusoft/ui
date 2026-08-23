@@ -31,7 +31,7 @@ describe.each(adapters)('HttpClient.$name — GET', ({ name, create }) => {
 
     test('returns parsed JSON with status and statusText', async () => {
         const client = createClient();
-        const response = await client.get('/users/1').execute<{ id: number; name: string }>();
+        const response = await client.get('/users/1').asJson<{ id: number; name: string }>().execute();
 
         expect(response.data).toEqual({ id: 1, name: 'John' });
         expect(response.status).toBe(HTTP_STATUS_CODES.OK);
@@ -43,7 +43,8 @@ describe.each(adapters)('HttpClient.$name — GET', ({ name, create }) => {
         const response = await client
             .get('/users')
             .params({ page: '2', role: ['admin', 'user'] })
-            .execute<{ page: string | null; role: string[] }>();
+            .asJson<{ page: string | null; role: string[] }>()
+            .execute();
 
         expect(response.data?.page).toBe('2');
         expect(response.data?.role).toEqual(['admin', 'user']);
@@ -54,7 +55,8 @@ describe.each(adapters)('HttpClient.$name — GET', ({ name, create }) => {
         const response = await client
             .get('/users')
             .params({ page: 2, active: true, value: [0, false, 'all'] })
-            .execute<{ page: string | null; active: string | null; value: string[] }>();
+            .asJson<{ page: string | null; active: string | null; value: string[] }>()
+            .execute();
 
         expect(response.data).toMatchObject({
             page: '2',
@@ -68,13 +70,14 @@ describe.each(adapters)('HttpClient.$name — GET', ({ name, create }) => {
         const response = await client
             .get('/users')
             .params({ page: 2, active: null, source: undefined, value: [1, null, undefined, 2] })
-            .execute<{
+            .asJson<{
                 page: string | null;
                 active: string | null;
                 source: string | null;
                 value: string[];
                 keys: string[];
-            }>();
+            }>()
+            .execute();
 
         expect(response.data).toMatchObject({
             page: '2',
@@ -90,7 +93,8 @@ describe.each(adapters)('HttpClient.$name — GET', ({ name, create }) => {
         const response = await client
             .get('/users?source=existing#fragment')
             .param('page', '2')
-            .execute<{ page: string | null; source: string | null }>();
+            .asJson<{ page: string | null; source: string | null }>()
+            .execute();
 
         expect(response.data?.source).toBe('existing');
         expect(response.data?.page).toBe('2');
@@ -98,7 +102,7 @@ describe.each(adapters)('HttpClient.$name — GET', ({ name, create }) => {
 
     test('joins baseUrl and request paths without duplicate or missing slashes', async () => {
         const client = new HttpClient({ adapter: create(), baseUrl: `${BASE_URL}/api/` });
-        const response = await client.get('/users').execute<{ scoped: boolean }>();
+        const response = await client.get('/users').asJson<{ scoped: boolean }>().execute();
 
         expect(response.data?.scoped).toBe(true);
     });
@@ -109,7 +113,8 @@ describe.each(adapters)('HttpClient.$name — GET', ({ name, create }) => {
             .get('/headers')
             .header('Authorization', 'Bearer token')
             .header('X-Custom', 'value')
-            .execute<{ auth: string | null; custom: string | null }>();
+            .asJson<{ auth: string | null; custom: string | null }>()
+            .execute();
 
         expect(response.data?.auth).toBe('Bearer token');
         expect(response.data?.custom).toBe('value');
@@ -121,14 +126,15 @@ describe.each(adapters)('HttpClient.$name — GET', ({ name, create }) => {
             .get('/headers')
             .header('Authorization', 'Bearer first')
             .header('authorization', 'Bearer second')
-            .execute<{ auth: string | null }>();
+            .asJson<{ auth: string | null }>()
+            .execute();
 
         expect(response.data?.auth).toBe('Bearer second');
     });
 
     test('returns text when responseType is text', async () => {
         const client = createClient();
-        const response = await client.get('/text').responseType('text').execute<string>();
+        const response = await client.get('/text').asText().execute();
 
         expect(response.data).toBe('hello world');
     });
@@ -142,29 +148,26 @@ describe.each(adapters)('HttpClient.$name — GET', ({ name, create }) => {
 
     test('returns ArrayBuffer when responseType is arrayBuffer', async () => {
         const client = createClient();
-        const response = await client
-            .get('/binary')
-            .responseType(HTTP_RESPONSE_TYPES.ARRAY_BUFFER)
-            .execute<ArrayBuffer>();
+        const response = await client.get('/binary').asArrayBuffer().execute();
 
         expect(response.data).toBeInstanceOf(ArrayBuffer);
         expect(Array.from(new Uint8Array(response.data as ArrayBuffer))).toEqual([1, 2, 3, 4]);
     });
 
-    test('returns FormData when responseType is formData', async () => {
+    test('returns Blob when responseType is blob', async () => {
         const client = createClient();
-        const response = await client.get('/form-data').responseType(HTTP_RESPONSE_TYPES.FORM_DATA).execute<FormData>();
+        const response = await client.get('/binary').asBlob().execute();
 
-        expect(response.data?.get('name')).toBe('John');
-        expect(response.data?.getAll('role')).toEqual(['admin', 'editor']);
+        if (response.data === undefined) {
+            throw new Error('Expected Blob response data');
+        }
+
+        expect(response.data).toMatchObject({ size: 4, type: 'application/octet-stream' });
     });
 
     test('returns a readable stream when responseType is stream', async () => {
         const client = createClient();
-        const response = await client
-            .get('/stream')
-            .responseType(HTTP_RESPONSE_TYPES.STREAM)
-            .execute<ReadableStream<Uint8Array>>();
+        const response = await client.get('/stream').asStream().execute();
 
         if (response.data === undefined) {
             throw new Error('Expected stream response data');
@@ -195,7 +198,7 @@ describe.each(adapters)('HttpClient.$name — GET', ({ name, create }) => {
         );
 
         try {
-            await client.get('/stream').responseType(HTTP_RESPONSE_TYPES.STREAM).execute();
+            await client.get('/stream').asStream().execute();
             expect.fail('Should have thrown');
         } catch (error) {
             expect(error).toBeInstanceOf(ParseError);
@@ -226,20 +229,17 @@ describe.each(adapters)('HttpClient.$name — GET', ({ name, create }) => {
         }
     });
 
-    test.each([HTTP_RESPONSE_TYPES.BLOB, HTTP_RESPONSE_TYPES.FORM_DATA])(
-        'parses error data with %s responseType',
-        async responseType => {
-            const client = createClient();
+    test('parses error data for a blob response', async () => {
+        const client = createClient();
 
-            try {
-                await client.get('/not-found').responseType(responseType).execute();
-                expect.fail('Should have thrown');
-            } catch (error) {
-                expect(error).toBeInstanceOf(HttpResponseError);
-                expect((error as HttpResponseError).data).toEqual({ error: 'Not found' });
-            }
+        try {
+            await client.get('/not-found').asBlob().execute();
+            expect.fail('Should have thrown');
+        } catch (error) {
+            expect(error).toBeInstanceOf(HttpResponseError);
+            expect((error as HttpResponseError).data).toEqual({ error: 'Not found' });
         }
-    );
+    });
 
     test('throws ParseError with its cause for malformed JSON', async () => {
         const client = createClient();

@@ -30,7 +30,7 @@ describe.each(adapters)('HttpClient.$name — HEAD', ({ create }) => {
 
     test('returns headers without body', async () => {
         const client = createClient();
-        const response = await client.head('/items').responseType('text').execute();
+        const response = await client.head('/items').asText().execute();
 
         expect(response.status).toBe(HTTP_STATUS_CODES.OK);
         expect(response.headers['x-total']).toBe('42');

@@ -75,7 +75,7 @@ export class HttpClient {
 
     private request(method: THttpMethod, url: string): HttpRequestBuilder {
         const executor: THttpRequestExecutor = <T>(config: IHttpRequestConfig): Promise<IHttpResponse<T>> =>
-            this.execute<T>(config);
+            this.executeRequest<T>(config);
 
         return new HttpRequestBuilder(executor, method, url);
     }
@@ -108,7 +108,7 @@ export class HttpClient {
         return this.request(HTTP_METHODS.PATCH, url);
     }
 
-    private async execute<T>(config: IHttpRequestConfig): Promise<IHttpResponse<T>> {
+    private async executeRequest<T>(config: IHttpRequestConfig): Promise<IHttpResponse<T>> {
         const {
             onRequestHook: onRequest,
             onRequestErrorHook: onRequestError,

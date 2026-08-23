@@ -12,14 +12,39 @@ const executor: THttpRequestExecutor = <T>(config: IHttpRequestConfig): Promise<
     });
 
 describe('HttpRequestBuilder types', () => {
-    it('preserves the response type', () => {
+    it('selects the response data type before execution', () => {
         const getBuilder = new HttpRequestBuilder(executor, HTTP_METHODS.GET, '/items');
         const postBuilder = new HttpRequestBuilder(executor, HTTP_METHODS.POST, '/items');
 
         expectTypeOf(getBuilder).toEqualTypeOf<HttpRequestBuilder>();
         expectTypeOf(postBuilder).toEqualTypeOf<HttpRequestBuilder>();
         expectTypeOf(postBuilder.build()).toEqualTypeOf<Readonly<IHttpRequestConfig>>();
-        expectTypeOf(postBuilder.execute<{ id: number }>()).toEqualTypeOf<Promise<IHttpResponse<{ id: number }>>>();
+        expectTypeOf(postBuilder.execute()).toEqualTypeOf<Promise<IHttpResponse<unknown>>>();
+        expectTypeOf(postBuilder.asJson<{ id: number }>().execute()).toEqualTypeOf<
+            Promise<IHttpResponse<{ id: number }>>
+        >();
+        expectTypeOf(postBuilder.asText().execute()).toEqualTypeOf<Promise<IHttpResponse<string>>>();
+        expectTypeOf(postBuilder.asBlob().execute()).toEqualTypeOf<Promise<IHttpResponse<Blob>>>();
+        expectTypeOf(postBuilder.asArrayBuffer().execute()).toEqualTypeOf<Promise<IHttpResponse<ArrayBuffer>>>();
+        expectTypeOf(postBuilder.asStream().execute()).toEqualTypeOf<
+            Promise<IHttpResponse<ReadableStream<Uint8Array>>>
+        >();
+
+        if (false) {
+            // @ts-expect-error The response type must be selected before execute.
+            postBuilder.execute<{ id: number }>();
+        }
+    });
+
+    it('preserves and replaces the selected response type across the immutable chain', () => {
+        const builder = new HttpRequestBuilder(executor, HTTP_METHODS.POST, '/items')
+            .asJson<{ id: number }>()
+            .header('X-Test', 'value')
+            .body({ name: 'Item' })
+            .timeout(1000);
+
+        expectTypeOf(builder.execute()).toEqualTypeOf<Promise<IHttpResponse<{ id: number }>>>();
+        expectTypeOf(builder.asBlob().execute()).toEqualTypeOf<Promise<IHttpResponse<Blob>>>();
     });
 
     it('allows body calls for every method at compile time', () => {

@@ -114,7 +114,10 @@ describe('HttpClient constructor', () => {
         vi.stubGlobal('fetch', fetchMock);
 
         try {
-            const response = await new HttpClient({}).get('https://example.test/health').execute<{ ok: boolean }>();
+            const response = await new HttpClient({})
+                .get('https://example.test/health')
+                .asJson<{ ok: boolean }>()
+                .execute();
 
             expect(response.data).toEqual({ ok: true });
             expect(fetchMock).toHaveBeenCalledWith(

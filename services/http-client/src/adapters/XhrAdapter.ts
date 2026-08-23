@@ -69,29 +69,6 @@ function createResponseStream(xhr: XMLHttpRequest): IXhrResponseStream {
     };
 }
 
-async function readBlob(blob: Blob): Promise<ArrayBuffer> {
-    if (typeof blob.arrayBuffer === 'function') {
-        return blob.arrayBuffer();
-    }
-
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-
-        reader.onload = () => {
-            if (typeof reader.result === 'string' || reader.result === null) {
-                reject(new TypeError('Failed to read response Blob as an ArrayBuffer'));
-                return;
-            }
-
-            resolve(reader.result);
-        };
-        reader.onerror = () => {
-            reject(reader.error ?? new TypeError('Failed to read response Blob as an ArrayBuffer'));
-        };
-        reader.readAsArrayBuffer(blob);
-    });
-}
-
 async function readBlobAsText(blob: Blob): Promise<string> {
     if (typeof blob.text === 'function') {
         return blob.text();
@@ -119,11 +96,7 @@ function hasEmptyResponseBody(xhr: XMLHttpRequest): boolean {
     return xhr.status === 204 || xhr.getResponseHeader('content-length') === '0';
 }
 
-async function getResponseBody<T>(
-    xhr: XMLHttpRequest,
-    config: IHttpRequestConfig,
-    responseType?: THttpResponseType
-): Promise<T> {
+function getResponseBody<T>(xhr: XMLHttpRequest, config: IHttpRequestConfig, responseType?: THttpResponseType): T {
     if (hasEmptyResponseBody(xhr)) {
         return undefined as T;
     }
@@ -134,21 +107,6 @@ async function getResponseBody<T>(
             return xhr.response as T;
         case HTTP_RESPONSE_TYPES.TEXT:
             return xhr.response as T;
-        case HTTP_RESPONSE_TYPES.FORM_DATA:
-            try {
-                const body = xhr.response as Blob;
-                const response = new Response(await readBlob(body), {
-                    headers: parseResponseHeaders(xhr.getAllResponseHeaders())
-                });
-
-                return (await response.formData()) as T;
-            } catch (error) {
-                throw new ParseError('Failed to parse response body as FormData', {
-                    cause: error,
-                    config,
-                    responseType: HTTP_RESPONSE_TYPES.FORM_DATA
-                });
-            }
         case HTTP_RESPONSE_TYPES.JSON:
         default: {
             const resolvedResponseType = responseType ?? HTTP_RESPONSE_TYPES.JSON;
@@ -180,7 +138,7 @@ function setResponseType(xhr: XMLHttpRequest, responseType: THttpResponseType | 
     if (responseType === HTTP_RESPONSE_TYPES.ARRAY_BUFFER) {
         // XHR accepts only a lowercase DOM value.
         xhr.responseType = 'arraybuffer';
-    } else if (responseType === HTTP_RESPONSE_TYPES.BLOB || responseType === HTTP_RESPONSE_TYPES.FORM_DATA) {
+    } else if (responseType === HTTP_RESPONSE_TYPES.BLOB) {
         xhr.responseType = 'blob';
     } else {
         xhr.responseType = 'text';
@@ -193,18 +151,6 @@ function assertStreamingSupported(responseType: THttpResponseType | undefined, c
         (typeof ReadableStream === 'undefined' || typeof TextEncoder === 'undefined')
     ) {
         throw new RequestPreparationError('Streaming responses are not supported in this environment', { config });
-    }
-}
-
-function assertFormDataResponseSupported(
-    responseType: THttpResponseType | undefined,
-    config: IHttpRequestConfig
-): void {
-    if (
-        responseType === HTTP_RESPONSE_TYPES.FORM_DATA &&
-        (typeof Response === 'undefined' || typeof Response.prototype.formData !== 'function')
-    ) {
-        throw new RequestPreparationError('FormData responses are not supported in this environment', { config });
     }
 }
 
@@ -302,8 +248,6 @@ function prepareXhrRequest(config: IHttpRequestConfig, options: IXhrAdapterOptio
     }
 
     assertStreamingSupported(responseType, config);
-    assertFormDataResponseSupported(responseType, config);
-
     const xhr = new XMLHttpRequest();
     xhr.open(method, fullUrl, true);
     xhr.withCredentials = config.withCredentials === true;
@@ -399,7 +343,7 @@ function configureXhrEventHandlers<T>(
         }
 
         try {
-            const responseData = await getResponseBody<T>(xhr, config, responseType);
+            const responseData = getResponseBody<T>(xhr, config, responseType);
             resolve(createResponse(xhr, config, responseData));
         } catch (error) {
             reject(

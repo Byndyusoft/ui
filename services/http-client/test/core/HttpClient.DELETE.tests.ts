@@ -30,7 +30,7 @@ describe.each(adapters)('HttpClient.$name — DELETE', ({ create }) => {
 
     test('returns 204 with undefined data', async () => {
         const client = createClient();
-        const response = await client.delete('/items/1').responseType('text').execute();
+        const response = await client.delete('/items/1').asText().execute();
 
         expect(response.status).toBe(HTTP_STATUS_CODES.NO_CONTENT);
         expect(response.data).toBeUndefined();

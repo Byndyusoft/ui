@@ -1,4 +1,4 @@
-import { REQUEST_BUILDER_ERROR_CODES } from '../constants';
+import { HTTP_RESPONSE_TYPES, REQUEST_BUILDER_ERROR_CODES } from '../constants';
 import { RequestBuilderError } from '../errors';
 import {
     THttpMethod,
@@ -6,7 +6,6 @@ import {
     IHttpResponse,
     THttpHeaders,
     THttpParams,
-    THttpResponseType,
     THttpParamValue,
     THttpRequestExecutor
 } from '../types';
@@ -21,7 +20,6 @@ import {
     assertValidParam,
     assertValidParams,
     assertValidRequestConfig,
-    assertValidResponseType,
     assertValidSignal,
     assertValidTimeout,
     assertValidUrl,
@@ -42,7 +40,7 @@ function cloneConfig(config: IHttpRequestConfig): IHttpRequestConfig {
 /**
  * Builds request configs immutably. Every configuration method returns a new builder instance.
  */
-export class HttpRequestBuilder {
+export class HttpRequestBuilder<TResponse = unknown> {
     private readonly executor: THttpRequestExecutor;
     private config: IHttpRequestConfig;
 
@@ -58,8 +56,8 @@ export class HttpRequestBuilder {
         this.config = { method, url };
     }
 
-    private withConfig(partial: TBuilderConfigPatch): HttpRequestBuilder {
-        const builder = new HttpRequestBuilder(this.executor, this.config.method, this.config.url);
+    private withConfig<TNextResponse = TResponse>(partial: TBuilderConfigPatch): HttpRequestBuilder<TNextResponse> {
+        const builder = new HttpRequestBuilder<TNextResponse>(this.executor, this.config.method, this.config.url);
         builder.config = cloneConfig({ ...this.config, ...partial });
 
         return builder;
@@ -71,25 +69,25 @@ export class HttpRequestBuilder {
         return cloneConfig(this.config);
     }
 
-    public baseUrl(value: string): HttpRequestBuilder {
+    public baseUrl(value: string): HttpRequestBuilder<TResponse> {
         assertValidBaseUrl(value);
 
         return this.withConfig({ baseUrl: value });
     }
 
-    public header(key: string, value: string): HttpRequestBuilder {
+    public header(key: string, value: string): HttpRequestBuilder<TResponse> {
         assertValidHeader(key, value);
 
         return this.withConfig({ headers: mergeHeaders(this.config.headers, { [key]: value }) });
     }
 
-    public headers(headers: THttpHeaders): HttpRequestBuilder {
+    public headers(headers: THttpHeaders): HttpRequestBuilder<TResponse> {
         assertValidHeaders(headers);
 
         return this.withConfig({ headers: mergeHeaders(this.config.headers, headers) });
     }
 
-    public param(key: string, value: THttpParamValue): HttpRequestBuilder {
+    public param(key: string, value: THttpParamValue): HttpRequestBuilder<TResponse> {
         assertValidParam(key, value);
 
         return this.withConfig({
@@ -97,7 +95,7 @@ export class HttpRequestBuilder {
         });
     }
 
-    public params(params: THttpParams): HttpRequestBuilder {
+    public params(params: THttpParams): HttpRequestBuilder<TResponse> {
         assertValidParams(params);
 
         return this.withConfig({
@@ -105,33 +103,33 @@ export class HttpRequestBuilder {
         });
     }
 
-    public body(data: unknown): HttpRequestBuilder {
+    public body(data: unknown): HttpRequestBuilder<TResponse> {
         assertValidBody(this.config.method, data);
 
         return this.withConfig({ data });
     }
 
-    public signal(signal: AbortSignal): HttpRequestBuilder {
+    public signal(signal: AbortSignal): HttpRequestBuilder<TResponse> {
         assertValidSignal(signal);
 
         return this.withConfig({ signal });
     }
 
     /** A zero timeout disables the request timeout, including a timeout inherited from the client config. */
-    public timeout(timeout: number): HttpRequestBuilder {
+    public timeout(timeout: number): HttpRequestBuilder<TResponse> {
         assertValidTimeout(timeout);
 
         return this.withConfig({ timeout });
     }
 
     /** Includes credentials in cross-origin requests. */
-    public withCredentials(withCredentials: boolean): HttpRequestBuilder {
+    public withCredentials(withCredentials: boolean): HttpRequestBuilder<TResponse> {
         assertValidWithCredentials(withCredentials);
 
         return this.withConfig({ withCredentials });
     }
 
-    public bearer(token: string): HttpRequestBuilder {
+    public bearer(token: string): HttpRequestBuilder<TResponse> {
         assertNonBlankString(
             token,
             'Bearer token must be a non-empty string',
@@ -148,13 +146,27 @@ export class HttpRequestBuilder {
         return this.header('Authorization', `Bearer ${token}`);
     }
 
-    public responseType(responseType: THttpResponseType): HttpRequestBuilder {
-        assertValidResponseType(responseType);
-
-        return this.withConfig({ responseType });
+    public asJson<T>(): HttpRequestBuilder<T> {
+        return this.withConfig<T>({ responseType: HTTP_RESPONSE_TYPES.JSON });
     }
 
-    public execute<T = unknown>(): Promise<IHttpResponse<T>> {
-        return this.executor<T>(this.build());
+    public asText(): HttpRequestBuilder<string> {
+        return this.withConfig<string>({ responseType: HTTP_RESPONSE_TYPES.TEXT });
+    }
+
+    public asBlob(): HttpRequestBuilder<Blob> {
+        return this.withConfig<Blob>({ responseType: HTTP_RESPONSE_TYPES.BLOB });
+    }
+
+    public asArrayBuffer(): HttpRequestBuilder<ArrayBuffer> {
+        return this.withConfig<ArrayBuffer>({ responseType: HTTP_RESPONSE_TYPES.ARRAY_BUFFER });
+    }
+
+    public asStream(): HttpRequestBuilder<ReadableStream<Uint8Array>> {
+        return this.withConfig<ReadableStream<Uint8Array>>({ responseType: HTTP_RESPONSE_TYPES.STREAM });
+    }
+
+    public execute(): Promise<IHttpResponse<TResponse>> {
+        return this.executor<TResponse>(this.build());
     }
 }

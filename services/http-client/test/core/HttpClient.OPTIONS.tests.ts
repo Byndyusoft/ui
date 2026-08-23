@@ -30,7 +30,7 @@ describe.each(adapters)('HttpClient.$name — OPTIONS', ({ create }) => {
 
     test('returns Allow header', async () => {
         const client = createClient();
-        const response = await client.options('/items').responseType('text').execute();
+        const response = await client.options('/items').asText().execute();
 
         expect(response.status).toBe(HTTP_STATUS_CODES.NO_CONTENT);
         expect(response.headers['allow']).toBe('GET, POST, HEAD, OPTIONS');

@@ -34,7 +34,8 @@ describe.each(adapters)('HttpClient.$name — default config', ({ create }) => {
         const response = await client
             .get('/test')
             .header('X-Custom', 'value')
-            .execute<{ def: string | null; custom: string | null }>();
+            .asJson<{ def: string | null; custom: string | null }>()
+            .execute();
 
         expect(response.data?.def).toBe('default-header');
         expect(response.data?.custom).toBe('value');
@@ -45,7 +46,8 @@ describe.each(adapters)('HttpClient.$name — default config', ({ create }) => {
         const response = await client
             .get('/test')
             .header('X-Default', 'overridden')
-            .execute<{ def: string | null; custom: string | null }>();
+            .asJson<{ def: string | null; custom: string | null }>()
+            .execute();
 
         expect(response.data?.def).toBe('overridden');
     });
@@ -55,7 +57,8 @@ describe.each(adapters)('HttpClient.$name — default config', ({ create }) => {
         const response = await client
             .get('/test')
             .header('authorization', 'Bearer request')
-            .execute<{ authorization: string | null }>();
+            .asJson<{ authorization: string | null }>()
+            .execute();
 
         expect(response.data?.authorization).toBe('Bearer request');
     });
@@ -69,7 +72,8 @@ describe.each(adapters)('HttpClient.$name — default config', ({ create }) => {
 
         const response = await client
             .get('/test')
-            .execute<{ locale: string | null; page: string | null; role: string[] }>();
+            .asJson<{ locale: string | null; page: string | null; role: string[] }>()
+            .execute();
 
         expect(response.data).toMatchObject({ locale: 'ru', page: '1', role: ['admin', 'editor'] });
     });
@@ -84,7 +88,8 @@ describe.each(adapters)('HttpClient.$name — default config', ({ create }) => {
         const response = await client
             .get('/test')
             .params({ page: '2', role: ['editor'] })
-            .execute<{ locale: string | null; page: string | null; role: string[] }>();
+            .asJson<{ locale: string | null; page: string | null; role: string[] }>()
+            .execute();
 
         expect(response.data).toMatchObject({ locale: 'ru', page: '2', role: ['editor'] });
     });
@@ -117,7 +122,7 @@ describe.each(adapters)('HttpClient.$name — default config', ({ create }) => {
         params.locale = 'en';
         params.role.push('editor');
 
-        const response = await client.get('/test').execute<{ locale: string | null; role: string[] }>();
+        const response = await client.get('/test').asJson<{ locale: string | null; role: string[] }>().execute();
 
         expect(response.data).toMatchObject({ locale: 'ru', role: ['admin'] });
     });
@@ -129,7 +134,7 @@ describe.each(adapters)('HttpClient.$name — default config', ({ create }) => {
         headers['X-Default'] = 'changed-after-creation';
         headers['X-Added'] = 'must-not-be-sent';
 
-        const response = await client.get('/test').execute<{ def: string | null; custom: string | null }>();
+        const response = await client.get('/test').asJson<{ def: string | null; custom: string | null }>().execute();
 
         expect(response.data?.def).toBe('default-header');
         expect(response.data?.custom).toBeNull();
@@ -137,7 +142,7 @@ describe.each(adapters)('HttpClient.$name — default config', ({ create }) => {
 
     test('uses default baseUrl', async () => {
         const client = createClient();
-        const response = await client.get('/base-test').execute<{ ok: boolean }>();
+        const response = await client.get('/base-test').asJson<{ ok: boolean }>().execute();
 
         expect(response.data?.ok).toBe(true);
     });
