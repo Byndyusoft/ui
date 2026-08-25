@@ -2,17 +2,7 @@
 
 Связанные архитектурные решения зафиксированы в [DECISIONS.md](./DECISIONS.md).
 
-## P0
-
-### P0-1 — Релизная гигиена: changeset + версия
-
-README создан и описывает публичный API, адаптеры, приоритеты конфигурации, CORS, body, ошибки и hooks. Перед первым publish остаются changeset и повышение версии `0.0.1` → `0.1.0`.
-
 ## P2
-
-### P2-1 — Модернизация package.json
-
-Сборка только CJS: нет `exports`-map (dual ESM/CJS для Vite-потребителей), `sideEffects: false`, `engines` (Node 20). Без ESM-входа недоступен tree-shaking.
 
 ### P2-3 — Добавить `validateStatus`
 
@@ -38,10 +28,8 @@ README создан и описывает публичный API, адаптер
 
 ## Рекомендуемый порядок
 
-1. P0: changeset + версия
-2. P2: package.json модернизация вместе с релизной подготовкой
-3. P2: retry / validateStatus по продуктовым нуждам
-4. P2–P3: DX и полировка фоном
+1. P2: retry / validateStatus по продуктовым нуждам
+2. P2–P3: DX и полировка фоном
 
 ## Не планируется
 
@@ -76,3 +64,5 @@ README создан и описывает публичный API, адаптер
 23. Согласно D-011, `XhrAdapter` поддерживает adapter-wide callbacks `onDownloadProgress` и `onUploadProgress`; upload listener подключается только для запросов с телом.
 24. Согласно D-012, `HttpClient.withAdapter()` создаёт независимый scoped-клиент со снимком текущих defaults и hooks.
 25. P3-3: команда запуска тестов отдельного workspace в корневом `AGENTS.md` исправлена на `npm test -w <package-name>`.
+26. Согласно D-013, пакет публикует ESM и CommonJS через `exports`, поддерживает tree-shaking, помечен `sideEffects: false` и требует Node.js 20 или новее.
+27. P0-1: minor changeset применён, версия пакета повышена до `0.1.0`, создан русскоязычный `CHANGELOG.md`; публикация в npm не выполнялась.
