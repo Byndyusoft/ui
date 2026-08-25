@@ -1,5 +1,5 @@
 import { HTTP_METHODS } from '../constants';
-import { assertValidHttpClientOptions, assertValidRequestConfig } from '../asserts';
+import { assertValidAdapter, assertValidHttpClientOptions, assertValidRequestConfig } from '../asserts';
 import { FetchAdapter } from '../adapters';
 import {
     THttpMethod,
@@ -43,6 +43,20 @@ export class HttpClient {
             timeout: options.timeout,
             withCredentials: options.withCredentials
         };
+    }
+
+    /** Creates an independent client with the current defaults and hooks, using the provided adapter. */
+    public withAdapter(adapter: IHttpClientAdapter): HttpClient {
+        assertValidAdapter(adapter);
+
+        return new HttpClient({
+            ...this.defaultConfig,
+            adapter,
+            onRequest: this.onRequestHook,
+            onRequestError: this.onRequestErrorHook,
+            onResponse: this.onResponseHook,
+            onResponseError: this.onResponseErrorHook
+        });
     }
 
     /** Sets the onRequest hook, replacing the hook configured through constructor options. Returns this client for chaining. */

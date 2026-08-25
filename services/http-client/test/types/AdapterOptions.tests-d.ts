@@ -1,4 +1,11 @@
-import { FetchAdapter, IFetchAdapterOptions, IXhrAdapterOptions, XhrAdapter } from '../../src';
+import {
+    FetchAdapter,
+    HttpClient,
+    IFetchAdapterOptions,
+    IHttpRequestConfig,
+    IXhrAdapterOptions,
+    XhrAdapter
+} from '../../src';
 
 describe('adapter option types', () => {
     it('accepts supported Fetch and XHR options', () => {
@@ -16,11 +23,21 @@ describe('adapter option types', () => {
             mimeType: 'application/json',
             responseType: 'text',
             timeout: 1000,
-            withCredentials: true
+            withCredentials: true,
+            onDownloadProgress: (event, config) => {
+                expectTypeOf(event).toEqualTypeOf<ProgressEvent>();
+                expectTypeOf(config).toEqualTypeOf<Readonly<IHttpRequestConfig>>();
+            },
+            onUploadProgress: (event, config) => {
+                expectTypeOf(event).toEqualTypeOf<ProgressEvent>();
+                expectTypeOf(config).toEqualTypeOf<Readonly<IHttpRequestConfig>>();
+            }
         };
+        const client = new HttpClient({ adapter: new FetchAdapter() });
 
         expectTypeOf(new FetchAdapter(fetchOptions)).toEqualTypeOf<FetchAdapter>();
         expectTypeOf(new XhrAdapter(xhrOptions)).toEqualTypeOf<XhrAdapter>();
+        expectTypeOf(client.withAdapter(new XhrAdapter(xhrOptions))).toEqualTypeOf<HttpClient>();
         expectTypeOf<NonNullable<IFetchAdapterOptions['mode']>>().toEqualTypeOf<'cors' | 'no-cors' | 'same-origin'>();
     });
 });

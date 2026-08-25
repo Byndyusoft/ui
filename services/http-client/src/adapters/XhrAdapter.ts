@@ -286,11 +286,13 @@ function prepareXhrRequest(config: IHttpRequestConfig, options: IXhrAdapterOptio
 function configureXhrEventHandlers<T>(
     request: IPreparedXhrRequest,
     config: IHttpRequestConfig,
+    options: IXhrAdapterOptions,
     resolve: (value: IHttpResponse<T> | PromiseLike<IHttpResponse<T>>) => void,
     reject: (reason?: unknown) => void
 ): void {
     const { xhr } = request;
     const { signal: userSignal, timeout, responseType } = config;
+    const { onDownloadProgress, onUploadProgress } = options;
     let responseStream: IXhrResponseStream | undefined;
     let streamResponseResolved = false;
     const isSuccessful = (): boolean => xhr.status >= 200 && xhr.status < 300;
@@ -320,9 +322,18 @@ function configureXhrEventHandlers<T>(
                 resolveStream();
             }
         };
+    }
 
-        xhr.onprogress = () => {
+    if (responseType === HTTP_RESPONSE_TYPES.STREAM || onDownloadProgress !== undefined) {
+        xhr.onprogress = event => {
             responseStream?.append();
+            onDownloadProgress?.(event, config);
+        };
+    }
+
+    if (request.body !== undefined && onUploadProgress !== undefined) {
+        xhr.upload.onprogress = event => {
+            onUploadProgress(event, config);
         };
     }
 
@@ -392,7 +403,7 @@ export class XhrAdapter implements IHttpClientAdapter {
 
             try {
                 request = prepareXhrRequest(resolvedConfig, this.options);
-                configureXhrEventHandlers(request, resolvedConfig, resolve, reject);
+                configureXhrEventHandlers(request, resolvedConfig, this.options, resolve, reject);
                 request.xhr.send(request.body);
             } catch (error) {
                 request?.cleanup();

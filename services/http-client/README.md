@@ -94,12 +94,41 @@ const httpClient = new HttpClient({
     adapter: new XhrAdapter({
         mimeType: 'application/json',
         timeout: 10_000,
-        withCredentials: true
+        withCredentials: true,
+        onDownloadProgress: (event, config) => {
+            console.log(config.url, event.loaded, event.total);
+        }
     })
 });
 ```
 
-XHR полезен для сценариев, которым нужны возможности `XMLHttpRequest`. Текущий `asStream()` для XHR не является настоящим сетевым стримом: полученный текст накапливается в памяти.
+XHR полезен для сценариев, которым нужны возможности `XMLHttpRequest`. `onDownloadProgress` и `onUploadProgress` получают нативный `ProgressEvent` и итоговую конфигурацию запроса. События передаются без throttling; если `lengthComputable === false`, значение `total` нельзя считать достоверным.
+
+Callbacks задаются на весь экземпляр адаптера. Для изолированной загрузки можно создать scoped-клиент:
+
+```ts
+interface IUploadResult {
+    id: string;
+}
+
+const uploadClient = httpClient.withAdapter(
+    new XhrAdapter({
+        onUploadProgress: (event, config) => {
+            if (event.lengthComputable) {
+                console.log(config.url, event.loaded / event.total);
+            }
+        }
+    })
+);
+
+await uploadClient.post('/files').body(file).asJson<IUploadResult>().execute();
+```
+
+`withAdapter()` возвращает новый клиент со снимком текущих defaults и hooks. Исходный клиент и его адаптер не изменяются; последующая замена hooks в одном клиенте не влияет на другой.
+
+Upload listener подключается только при наличии `onUploadProgress` и фактического тела запроса. Для cross-origin запроса такая подписка принудительно включает CORS preflight согласно [спецификации XMLHttpRequest](<https://xhr.spec.whatwg.org/#the-send()-method>), поэтому сервер должен корректно обрабатывать `OPTIONS`. FetchAdapter не предоставляет стандартный upload progress.
+
+Текущий `asStream()` для XHR не является настоящим сетевым стримом: полученный текст накапливается в памяти. Download progress и stream могут использоваться одновременно.
 
 ## Приоритет конфигурации
 

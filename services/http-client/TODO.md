@@ -14,10 +14,6 @@ README создан и описывает публичный API, адаптер
 
 Сборка только CJS: нет `exports`-map (dual ESM/CJS для Vite-потребителей), `sideEffects: false`, `engines` (Node 20). Без ESM-входа недоступен tree-shaking.
 
-### P2-2 — Добавить progress API для XHR
-
-Выделить публичный контракт для `onDownloadProgress` и `onUploadProgress`. Нужно документировать, что upload-progress является преимуществом XHR и не имеет стандартного аналога в Fetch.
-
 ### P2-3 — Добавить `validateStatus`
 
 Сейчас любой статус вне 2xx → `HttpResponseError`. Нужна опция `validateStatus?: (status) => boolean` (client/request), чтобы 404/304 и т.п. можно было считать успехом.
@@ -40,10 +36,6 @@ README создан и описывает публичный API, адаптер
 
 Сейчас на каждую фазу можно назначить лишь один хук, а следующий вызов заменяет предыдущий. При совместном использовании auth, tracing и логирования потребуется композиция хуков с предсказуемым порядком и правилами восстановления.
 
-### P3-2 — Convenience-методы builder
-
-Опциональный сахар: `json()`, `acceptJson()`, `multipart()` поверх headers.
-
 ### P3-3 — Чистка конфигурации
 
 `.npmignore` избыточен при `files: ["dist"]` — удалить. Поправить команду запуска тестов пакета в корневом AGENTS.md (`vitest run --root ../../ --project <name>` не работает; рабочий вариант — `npm test -w @byndyusoft-ui/http-client`).
@@ -52,8 +44,14 @@ README создан и описывает публичный API, адаптер
 
 1. P0: changeset + версия
 2. P2: package.json модернизация вместе с релизной подготовкой
-3. P2: retry / progress / validateStatus по продуктовым нуждам
+3. P2: retry / validateStatus по продуктовым нуждам
 4. P2–P3: DX и полировка фоном
+
+## Не планируется
+
+### P3-2 — Convenience-методы builder
+
+Явно не берём в работу как необязательный синтаксический сахар. Для настройки заголовков достаточно `header()` и `headers()`, а решение можно пересмотреть только при появлении подтверждённых повторяющихся сценариев. Причины зафиксированы в D-010.
 
 ## Закрыто
 
@@ -79,3 +77,5 @@ README создан и описывает публичный API, адаптер
 20. Согласно D-007, формат ответа выбирается через `asJson<T>()`, `asText()`, `asBlob()`, `asArrayBuffer()` или `asStream()`, а `execute()` не принимает generic.
 21. Формат ответа `formData` удалён; отправка `FormData` через `body()` сохранена.
 22. Согласно D-009, тело `HttpResponseError` типизируется композицией `isHttpResponseError(error) && isData(error.data)` без усложнения публичного guard; сценарии `400` и `422` покрыты type- и runtime-тестами.
+23. Согласно D-011, `XhrAdapter` поддерживает adapter-wide callbacks `onDownloadProgress` и `onUploadProgress`; upload listener подключается только для запросов с телом.
+24. Согласно D-012, `HttpClient.withAdapter()` создаёт независимый scoped-клиент со снимком текущих defaults и hooks.

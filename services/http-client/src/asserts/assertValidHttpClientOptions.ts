@@ -1,25 +1,13 @@
 import { REQUEST_BUILDER_ERROR_CODES } from '../constants';
 import { RequestBuilderError } from '../errors';
-import { IHttpClientAdapter, IHttpClientOptions } from '../types';
+import { IHttpClientOptions } from '../types';
+import { assertValidAdapter } from './assertValidAdapter';
 import { assertValidBaseUrl } from './assertValidBaseUrl';
 import { assertValidHeaders } from './assertValidHeaders';
 import { assertValidParams } from './assertValidParams';
 import { assertValidTimeout } from './assertValidTimeout';
 import { assertValidWithCredentials } from './assertValidWithCredentials';
 import { isRecord } from './isRecord';
-
-function assertValidAdapter(adapter: unknown): asserts adapter is IHttpClientAdapter {
-    if (
-        adapter === null ||
-        (typeof adapter !== 'object' && typeof adapter !== 'function') ||
-        typeof (adapter as IHttpClientAdapter).request !== 'function'
-    ) {
-        throw new RequestBuilderError(
-            'Adapter must implement a request method',
-            REQUEST_BUILDER_ERROR_CODES.INVALID_ADAPTER
-        );
-    }
-}
 
 function assertValidHook(hook: unknown, name: string): asserts hook is (...args: never[]) => unknown {
     if (typeof hook !== 'function') {

@@ -1,4 +1,5 @@
 export * from './assertValidBody';
+export * from './assertValidAdapter';
 export * from './assertValidFetchAdapterOptions';
 export * from './assertNonBlankString';
 export * from './assertValidBaseUrl';

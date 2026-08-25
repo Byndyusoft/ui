@@ -8,16 +8,22 @@ import { IFetchAdapterOptions, IXhrAdapterOptions, TRequestBuilderErrorCode } fr
 function createMockXhr(response: unknown = 'response'): {
     xhr: XMLHttpRequest;
     overrideMimeType: ReturnType<typeof vi.fn>;
+    setReadyState(value: number): void;
+    setResponseText(value: string): void;
 } {
     const overrideMimeType = vi.fn();
-    const xhr = {
+    const state = {
         status: HTTP_STATUS_CODES.OK,
         statusText: 'OK',
         response,
         responseText: typeof response === 'string' ? response : '',
         responseType: '',
+        readyState: XMLHttpRequest.DONE,
         timeout: 0,
         withCredentials: false,
+        upload: { onprogress: null },
+        onprogress: null,
+        onreadystatechange: null,
         onload: null,
         onerror: null,
         onabort: null,
@@ -29,13 +35,23 @@ function createMockXhr(response: unknown = 'response'): {
         abort: vi.fn(),
         getAllResponseHeaders: vi.fn(() => ''),
         getResponseHeader: vi.fn(() => null)
-    } as unknown as XMLHttpRequest;
+    };
+    const xhr = state as unknown as XMLHttpRequest;
 
     xhr.send = vi.fn(() => {
         xhr.onload?.(new ProgressEvent('load'));
     });
 
-    return { xhr, overrideMimeType };
+    return {
+        xhr,
+        overrideMimeType,
+        setReadyState(value) {
+            state.readyState = value;
+        },
+        setResponseText(value) {
+            state.responseText = value;
+        }
+    };
 }
 
 function expectRequestBuilderError(action: () => unknown, code: TRequestBuilderErrorCode): void {
@@ -172,6 +188,140 @@ describe('adapter constructor options', () => {
         }
     });
 
+    test('reports XHR upload and download progress with the resolved request config', async () => {
+        const mockXhr = createMockXhr();
+        const onDownloadProgress = vi.fn();
+        const onUploadProgress = vi.fn();
+        const uploadEvent = new ProgressEvent('progress', {
+            lengthComputable: true,
+            loaded: 25,
+            total: 100
+        });
+        const downloadEvent = new ProgressEvent('progress', {
+            lengthComputable: true,
+            loaded: 50,
+            total: 100
+        });
+        vi.stubGlobal(
+            'XMLHttpRequest',
+            vi.fn(() => mockXhr.xhr)
+        );
+        mockXhr.xhr.send = vi.fn(() => {
+            mockXhr.xhr.upload.onprogress?.call(mockXhr.xhr, uploadEvent);
+            mockXhr.xhr.onprogress?.call(mockXhr.xhr, downloadEvent);
+            mockXhr.xhr.onload?.call(mockXhr.xhr, new ProgressEvent('load'));
+        });
+
+        try {
+            const adapter = new XhrAdapter({ onDownloadProgress, onUploadProgress });
+
+            await new HttpClient({ adapter, timeout: 1000 })
+                .post('https://api.example.test/items')
+                .body('payload')
+                .asText()
+                .execute();
+
+            expect(onUploadProgress).toHaveBeenCalledWith(
+                uploadEvent,
+                expect.objectContaining({
+                    method: 'POST',
+                    url: 'https://api.example.test/items',
+                    data: 'payload',
+                    responseType: HTTP_RESPONSE_TYPES.TEXT,
+                    timeout: 1000
+                })
+            );
+            expect(onDownloadProgress).toHaveBeenCalledWith(
+                downloadEvent,
+                expect.objectContaining({
+                    method: 'POST',
+                    url: 'https://api.example.test/items',
+                    data: 'payload',
+                    responseType: HTTP_RESPONSE_TYPES.TEXT,
+                    timeout: 1000
+                })
+            );
+        } finally {
+            vi.unstubAllGlobals();
+        }
+    });
+
+    test('does not attach an upload progress listener to a request without a body', async () => {
+        const mockXhr = createMockXhr();
+        vi.stubGlobal(
+            'XMLHttpRequest',
+            vi.fn(() => mockXhr.xhr)
+        );
+
+        try {
+            const adapter = new XhrAdapter({ onUploadProgress: vi.fn() });
+
+            await new HttpClient({ adapter }).get('https://api.example.test/items').asText().execute();
+
+            expect(mockXhr.xhr.upload.onprogress).toBeNull();
+        } finally {
+            vi.unstubAllGlobals();
+        }
+    });
+
+    test('does not attach an upload progress listener when the callback is omitted', async () => {
+        const mockXhr = createMockXhr();
+        vi.stubGlobal(
+            'XMLHttpRequest',
+            vi.fn(() => mockXhr.xhr)
+        );
+
+        try {
+            await new HttpClient({ adapter: new XhrAdapter() })
+                .post('https://api.example.test/items')
+                .body('payload')
+                .asText()
+                .execute();
+
+            expect(mockXhr.xhr.upload.onprogress).toBeNull();
+        } finally {
+            vi.unstubAllGlobals();
+        }
+    });
+
+    test('reports download progress while preserving the XHR stream response', async () => {
+        const mockXhr = createMockXhr('');
+        const onDownloadProgress = vi.fn();
+        const downloadEvent = new ProgressEvent('progress', {
+            lengthComputable: true,
+            loaded: 6,
+            total: 6
+        });
+        vi.stubGlobal(
+            'XMLHttpRequest',
+            vi.fn(() => mockXhr.xhr)
+        );
+        mockXhr.xhr.send = vi.fn(() => {
+            mockXhr.setReadyState(XMLHttpRequest.HEADERS_RECEIVED);
+            mockXhr.xhr.onreadystatechange?.call(mockXhr.xhr, new Event('readystatechange'));
+            mockXhr.setResponseText('stream');
+            mockXhr.xhr.onprogress?.call(mockXhr.xhr, downloadEvent);
+            mockXhr.setReadyState(XMLHttpRequest.DONE);
+            mockXhr.xhr.onload?.call(mockXhr.xhr, new ProgressEvent('load'));
+        });
+
+        try {
+            const response = await new HttpClient({ adapter: new XhrAdapter({ onDownloadProgress }) })
+                .get('https://api.example.test/items')
+                .asStream()
+                .execute();
+
+            if (response.data === undefined) {
+                throw new Error('Expected stream response data');
+            }
+
+            expect(onDownloadProgress).toHaveBeenCalledWith(downloadEvent, response.config);
+            expect(await new Response(response.data).text()).toBe('stream');
+        } finally {
+            vi.unstubAllGlobals();
+        }
+    });
+
     test.each([
         {
             name: 'Fetch options object',
@@ -207,6 +357,16 @@ describe('adapter constructor options', () => {
             name: 'XHR response type',
             action: () => new XhrAdapter({ responseType: 'invalid' } as unknown as IXhrAdapterOptions),
             code: REQUEST_BUILDER_ERROR_CODES.INVALID_RESPONSE_TYPE
+        },
+        {
+            name: 'XHR download progress callback',
+            action: () => new XhrAdapter({ onDownloadProgress: true } as unknown as IXhrAdapterOptions),
+            code: REQUEST_BUILDER_ERROR_CODES.INVALID_XHR_ADAPTER_OPTIONS
+        },
+        {
+            name: 'XHR upload progress callback',
+            action: () => new XhrAdapter({ onUploadProgress: true } as unknown as IXhrAdapterOptions),
+            code: REQUEST_BUILDER_ERROR_CODES.INVALID_XHR_ADAPTER_OPTIONS
         }
     ])('rejects invalid $name', ({ action, code }) => {
         expectRequestBuilderError(action, code);

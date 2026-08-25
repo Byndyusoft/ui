@@ -16,7 +16,7 @@ export function assertValidXhrAdapterOptions(options: unknown): asserts options 
         throwInvalidOptions('XHR adapter options must be an object');
     }
 
-    const { mimeType, responseType, timeout, withCredentials } = options;
+    const { mimeType, responseType, timeout, withCredentials, onDownloadProgress, onUploadProgress } = options;
 
     if (mimeType !== undefined && (typeof mimeType !== 'string' || mimeType.trim().length === 0)) {
         throwInvalidOptions('mimeType must be a non-empty string');
@@ -32,5 +32,13 @@ export function assertValidXhrAdapterOptions(options: unknown): asserts options 
 
     if (withCredentials !== undefined) {
         assertValidWithCredentials(withCredentials);
+    }
+
+    if (onDownloadProgress !== undefined && typeof onDownloadProgress !== 'function') {
+        throwInvalidOptions('onDownloadProgress must be a function');
+    }
+
+    if (onUploadProgress !== undefined && typeof onUploadProgress !== 'function') {
+        throwInvalidOptions('onUploadProgress must be a function');
     }
 }
