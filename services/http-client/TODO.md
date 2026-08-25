@@ -36,10 +36,6 @@ README создан и описывает публичный API, адаптер
 
 Сейчас на каждую фазу можно назначить лишь один хук, а следующий вызов заменяет предыдущий. При совместном использовании auth, tracing и логирования потребуется композиция хуков с предсказуемым порядком и правилами восстановления.
 
-### P3-3 — Чистка конфигурации
-
-`.npmignore` избыточен при `files: ["dist"]` — удалить. Поправить команду запуска тестов пакета в корневом AGENTS.md (`vitest run --root ../../ --project <name>` не работает; рабочий вариант — `npm test -w @byndyusoft-ui/http-client`).
-
 ## Рекомендуемый порядок
 
 1. P0: changeset + версия
@@ -66,7 +62,7 @@ README создан и описывает публичный API, адаптер
 9. Default `FetchAdapter`, `withCredentials` (client / builder / оба адаптера)
 10. Adapter options (`FetchAdapterOptions`, `XhrAdapterOptions`)
 11. Удалены устаревшие закомментированные методы из `HttpRequestBuilder`
-12. Publish hygiene: `files: ["dist"]`, `.npmignore`
+12. Publish hygiene: публикация ограничена `files: ["dist"]`, избыточный `.npmignore` удалён.
 13. Default `headers` клонируются в конструкторе `HttpClient`.
 14. Языковое соглашение: комментарии и JSDoc исходников — английский; пользовательские документы пакета — русский (D-002).
 15. Валидация `FetchAdapter`: исключён `mode: 'navigate'`; `cache: 'only-if-cached'` требует `mode: 'same-origin'`.
@@ -79,3 +75,4 @@ README создан и описывает публичный API, адаптер
 22. Согласно D-009, тело `HttpResponseError` типизируется композицией `isHttpResponseError(error) && isData(error.data)` без усложнения публичного guard; сценарии `400` и `422` покрыты type- и runtime-тестами.
 23. Согласно D-011, `XhrAdapter` поддерживает adapter-wide callbacks `onDownloadProgress` и `onUploadProgress`; upload listener подключается только для запросов с телом.
 24. Согласно D-012, `HttpClient.withAdapter()` создаёт независимый scoped-клиент со снимком текущих defaults и hooks.
+25. P3-3: команда запуска тестов отдельного workspace в корневом `AGENTS.md` исправлена на `npm test -w <package-name>`.
