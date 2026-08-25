@@ -53,6 +53,20 @@ export const handlers = [
         );
     }),
 
+    http.get(`${BASE_URL}/bad-request`, () => {
+        return HttpResponse.json(
+            { message: 'Validation failed', errors: { name: ['Required'] } },
+            { status: 400, statusText: 'Bad Request' }
+        );
+    }),
+
+    http.get(`${BASE_URL}/unprocessable-entity`, () => {
+        return HttpResponse.json(
+            { message: 'Validation failed', errors: { name: ['Required'] } },
+            { status: 422, statusText: 'Unprocessable Entity' }
+        );
+    }),
+
     http.get(`${BASE_URL}/invalid-json`, () => {
         return new HttpResponse('{ invalid json', { headers: { 'Content-Type': 'application/json' } });
     })

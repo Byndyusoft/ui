@@ -8,12 +8,6 @@
 
 README создан и описывает публичный API, адаптеры, приоритеты конфигурации, CORS, body, ошибки и hooks. Перед первым publish остаются changeset и повышение версии `0.0.1` → `0.1.0`.
 
-## P1
-
-### P1-1 — Типизировать тело HTTP-ошибки
-
-`HttpResponseError<T>` уже параметризован, но адаптеры создают его с `unknown`, а guard не позволяет вызывающему коду указать ожидаемый тип. Вариант с доверенным generic-guard, например `isHttpResponseError<ValidationError>(error)`, зафиксирован в D-004 со статусом «не принято». После выбора контракта нужны явные сценарии для `400` и `422` и type-тесты.
-
 ## P2
 
 ### P2-1 — Модернизация package.json
@@ -57,10 +51,9 @@ README создан и описывает публичный API, адаптер
 ## Рекомендуемый порядок
 
 1. P0: changeset + версия
-2. P1: typed errors
-3. P2: package.json модернизация вместе с релизной подготовкой
-4. P2: retry / progress / validateStatus по продуктовым нуждам
-5. P2–P3: DX и полировка фоном
+2. P2: package.json модернизация вместе с релизной подготовкой
+3. P2: retry / progress / validateStatus по продуктовым нуждам
+4. P2–P3: DX и полировка фоном
 
 ## Закрыто
 
@@ -85,3 +78,4 @@ README создан и описывает публичный API, адаптер
 19. Согласно D-006, `body(undefined)` выбрасывает `RequestBuilderError` с кодом `INVALID_BODY`, а `body(null)` отправляет JSON `null`.
 20. Согласно D-007, формат ответа выбирается через `asJson<T>()`, `asText()`, `asBlob()`, `asArrayBuffer()` или `asStream()`, а `execute()` не принимает generic.
 21. Формат ответа `formData` удалён; отправка `FormData` через `body()` сохранена.
+22. Согласно D-009, тело `HttpResponseError` типизируется композицией `isHttpResponseError(error) && isData(error.data)` без усложнения публичного guard; сценарии `400` и `422` покрыты type- и runtime-тестами.

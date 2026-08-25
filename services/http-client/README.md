@@ -140,14 +140,31 @@ const response = await httpClient.get('/profile').withCredentials(true).asJson<I
 ```ts
 import { isHttpResponseError } from '@byndyusoft-ui/http-client';
 
+interface IValidationError {
+    message: string;
+    errors: Record<string, string[]>;
+}
+
+function isValidationError(data: unknown): data is IValidationError {
+    if (typeof data !== 'object' || data === null) {
+        return false;
+    }
+
+    const candidate = data as Partial<IValidationError>;
+
+    return typeof candidate.message === 'string' && typeof candidate.errors === 'object';
+}
+
 try {
     await httpClient.get('/users/1').asJson<IUser>().execute();
 } catch (error) {
-    if (isHttpResponseError(error)) {
-        console.error(error.status, error.data);
+    if (isHttpResponseError(error) && isValidationError(error.data) && (error.status === 400 || error.status === 422)) {
+        console.error(error.data.message, error.data.errors);
     }
 }
 ```
+
+`isHttpResponseError(error)` проверяет класс ошибки и открывает доступ к `data` типа `unknown`. Схема тела принадлежит конкретному API, поэтому проверяется отдельным пользовательским type guard. После обеих проверок `error.data` имеет точный тип `IValidationError` без `undefined`.
 
 ## Hooks
 

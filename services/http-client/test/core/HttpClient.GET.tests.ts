@@ -3,7 +3,7 @@ import { HttpClient } from '../../src/core/HttpClient';
 import { FetchAdapter } from '../../src/adapters/FetchAdapter';
 import { XhrAdapter } from '../../src/adapters/XhrAdapter';
 import { HTTP_RESPONSE_TYPES, HTTP_STATUS_CODES } from '../../src/constants';
-import { HttpResponseError, ParseError } from '../../src/errors';
+import { HttpResponseError, isHttpResponseError, ParseError } from '../../src/errors';
 import { IHttpClientAdapter } from '../../src/types';
 import { handlers } from '../__handlers__/HttpClient.GET.handlers';
 import { BASE_URL } from '../__fixtures__';
@@ -19,6 +19,21 @@ const adapters: Array<{ name: string; create: () => IHttpClientAdapter }> = [
     { name: 'FetchAdapter', create: () => new FetchAdapter() },
     { name: 'XhrAdapter', create: () => new XhrAdapter() }
 ];
+
+interface IValidationError {
+    message: string;
+    errors: Record<string, string[]>;
+}
+
+function isValidationError(data: unknown): data is IValidationError {
+    if (typeof data !== 'object' || data === null) {
+        return false;
+    }
+
+    const { message, errors } = data as Record<string, unknown>;
+
+    return typeof message === 'string' && typeof errors === 'object' && errors !== null;
+}
 
 describe.each(adapters)('HttpClient.$name — GET', ({ name, create }) => {
     function createClient(): HttpClient {
@@ -226,6 +241,28 @@ describe.each(adapters)('HttpClient.$name — GET', ({ name, create }) => {
             expect(responseError.headers['x-request-id']).toBe('request-1');
             expect(responseError.config).toMatchObject({ method: 'GET', url: '/not-found', baseUrl: BASE_URL });
             expect(responseError.data).toEqual({ error: 'Not found' });
+        }
+    });
+
+    test.each([
+        { path: '/bad-request', status: HTTP_STATUS_CODES.BAD_REQUEST },
+        { path: '/unprocessable-entity', status: HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY }
+    ])('validates typed error data for status $status', async ({ path, status }) => {
+        const client = createClient();
+
+        try {
+            await client.get(path).execute();
+            expect.fail('Should have thrown');
+        } catch (error) {
+            if (!isHttpResponseError(error) || !isValidationError(error.data)) {
+                throw error;
+            }
+
+            expect(error.status).toBe(status);
+            expect(error.data).toEqual({
+                message: 'Validation failed',
+                errors: { name: ['Required'] }
+            });
         }
     });
 

@@ -19,6 +19,15 @@ import {
 } from '../../src/errors';
 import { THttpResponseType } from '../../src/types';
 
+interface IValidationError {
+    message: string;
+    errors: Record<string, string[]>;
+}
+
+function isValidationError(data: unknown): data is IValidationError {
+    return typeof data === 'object' && data !== null;
+}
+
 describe('error guards', () => {
     it('narrow unknown errors to their concrete types', () => {
         const error: unknown = new Error('unknown');
@@ -29,6 +38,12 @@ describe('error guards', () => {
 
         if (isHttpResponseError(error)) {
             expectTypeOf(error).toEqualTypeOf<HttpResponseError>();
+            expectTypeOf(error.data).toEqualTypeOf<unknown>();
+        }
+
+        if (isHttpResponseError(error) && isValidationError(error.data)) {
+            expectTypeOf(error).toEqualTypeOf<HttpResponseError>();
+            expectTypeOf(error.data).toEqualTypeOf<IValidationError>();
         }
 
         if (isNetworkError(error)) {
