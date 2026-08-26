@@ -23,6 +23,7 @@ import {
     assertValidSignal,
     assertValidTimeout,
     assertValidUrl,
+    assertValidValidateStatus,
     assertValidWithCredentials
 } from '../asserts';
 import { mergeHeaders, mergeParams } from '../utilities';
@@ -120,6 +121,15 @@ export class HttpRequestBuilder<TResponse = unknown> {
         assertValidTimeout(timeout);
 
         return this.withConfig({ timeout });
+    }
+
+    /** Determines whether a response status should be treated as successful. */
+    public validateStatus(
+        validateStatus: NonNullable<IHttpRequestConfig['validateStatus']>
+    ): HttpRequestBuilder<TResponse> {
+        assertValidValidateStatus(validateStatus);
+
+        return this.withConfig({ validateStatus });
     }
 
     /** Includes credentials in cross-origin requests. */

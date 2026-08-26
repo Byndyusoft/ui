@@ -2,6 +2,7 @@ import { THttpMethod } from './HttpMethod';
 import { THttpHeaders } from './HttpHeaders';
 import { THttpParams } from './HttpParams';
 import { THttpResponseType } from './HttpResponseType';
+import { TValidateStatus } from './ValidateStatus';
 
 export interface IHttpRequestConfig<TData = unknown> {
     readonly url: string;
@@ -12,6 +13,7 @@ export interface IHttpRequestConfig<TData = unknown> {
     readonly data?: TData;
     readonly signal?: AbortSignal;
     readonly timeout?: number;
+    readonly validateStatus?: TValidateStatus;
     readonly withCredentials?: boolean;
     readonly responseType?: THttpResponseType;
 }

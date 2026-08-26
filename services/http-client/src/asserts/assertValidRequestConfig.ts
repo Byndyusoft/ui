@@ -11,6 +11,7 @@ import { assertValidSignal } from './assertValidSignal';
 import { assertValidTimeout } from './assertValidTimeout';
 import { assertValidUrl } from './assertValidUrl';
 import { assertValidWithCredentials } from './assertValidWithCredentials';
+import { assertValidValidateStatus } from './assertValidValidateStatus';
 import { isRecord } from './isRecord';
 
 /** Validates a complete request config, including values returned by request hooks. */
@@ -19,7 +20,19 @@ export function assertValidRequestConfig(config: unknown): asserts config is IHt
         throw new RequestBuilderError('Request config must be an object', REQUEST_BUILDER_ERROR_CODES.INVALID_CONFIG);
     }
 
-    const { method, url, baseUrl, headers, params, data, signal, timeout, withCredentials, responseType } = config;
+    const {
+        method,
+        url,
+        baseUrl,
+        headers,
+        params,
+        data,
+        signal,
+        timeout,
+        validateStatus,
+        withCredentials,
+        responseType
+    } = config;
 
     assertValidMethod(method);
     assertValidUrl(url);
@@ -42,6 +55,10 @@ export function assertValidRequestConfig(config: unknown): asserts config is IHt
 
     if (timeout !== undefined) {
         assertValidTimeout(timeout);
+    }
+
+    if (validateStatus !== undefined) {
+        assertValidValidateStatus(validateStatus);
     }
 
     if (withCredentials !== undefined) {

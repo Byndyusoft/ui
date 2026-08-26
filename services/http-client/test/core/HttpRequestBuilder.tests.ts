@@ -38,6 +38,7 @@ describe('HttpRequestBuilder', () => {
     test('builds a request config through an immutable chain', () => {
         const executor = createExecutor();
         const controller = new AbortController();
+        const validateStatus = (status: number): boolean => status < 500;
         const initialBuilder = new HttpRequestBuilder(executor, HTTP_METHODS.POST, '/items');
         const configuredBuilder = initialBuilder
             .baseUrl('https://example.test')
@@ -48,6 +49,7 @@ describe('HttpRequestBuilder', () => {
             .body({ name: 'Item' })
             .signal(controller.signal)
             .timeout(0)
+            .validateStatus(validateStatus)
             .withCredentials(true)
             .bearer('token')
             .asJson<unknown>();
@@ -67,6 +69,7 @@ describe('HttpRequestBuilder', () => {
             data: { name: 'Item' },
             signal: controller.signal,
             timeout: 0,
+            validateStatus,
             withCredentials: true,
             responseType: HTTP_RESPONSE_TYPES.JSON
         });
@@ -214,6 +217,12 @@ describe('HttpRequestBuilder', () => {
             name: 'with credentials',
             action: (builder: HttpRequestBuilder) => builder.withCredentials('true' as unknown as boolean),
             code: REQUEST_BUILDER_ERROR_CODES.INVALID_WITH_CREDENTIALS
+        },
+        {
+            name: 'validate status',
+            action: (builder: HttpRequestBuilder) =>
+                builder.validateStatus(true as unknown as (status: number) => boolean),
+            code: REQUEST_BUILDER_ERROR_CODES.INVALID_VALIDATE_STATUS
         },
         {
             name: 'bearer token',

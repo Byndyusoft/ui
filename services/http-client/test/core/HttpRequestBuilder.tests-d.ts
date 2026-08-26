@@ -1,7 +1,7 @@
 import { describe, expectTypeOf, it } from 'vitest';
 import { HTTP_METHODS, HTTP_STATUS_CODES } from '../../src/constants';
 import { HttpRequestBuilder } from '../../src/core/HttpRequestBuilder';
-import { IHttpRequestConfig, IHttpResponse, THttpParams, THttpRequestExecutor } from '../../src/types';
+import { IHttpRequestConfig, IHttpResponse, THttpParams, THttpRequestExecutor, TValidateStatus } from '../../src/types';
 
 const executor: THttpRequestExecutor = <T>(config: IHttpRequestConfig): Promise<IHttpResponse<T>> =>
     Promise.resolve({
@@ -44,6 +44,9 @@ describe('HttpRequestBuilder types', () => {
             .timeout(1000);
 
         expectTypeOf(builder.execute()).toEqualTypeOf<Promise<IHttpResponse<{ id: number }>>>();
+        expectTypeOf(builder.validateStatus(status => status === 201).execute()).toEqualTypeOf<
+            Promise<IHttpResponse<{ id: number }>>
+        >();
         expectTypeOf(builder.asBlob().execute()).toEqualTypeOf<Promise<IHttpResponse<Blob>>>();
     });
 
@@ -56,6 +59,13 @@ describe('HttpRequestBuilder types', () => {
         expectTypeOf(headBuilder.body({ value: true })).toEqualTypeOf<HttpRequestBuilder>();
         expectTypeOf(postBuilder.body({ value: true })).toEqualTypeOf<HttpRequestBuilder>();
         expectTypeOf(postBuilder.withCredentials(true)).toEqualTypeOf<HttpRequestBuilder>();
+        expectTypeOf(postBuilder.validateStatus(status => status === 200)).toEqualTypeOf<HttpRequestBuilder>();
+    });
+
+    it('exports the validateStatus predicate type', () => {
+        const validateStatus: TValidateStatus = status => status >= 200 && status < 400;
+
+        expectTypeOf(validateStatus).toEqualTypeOf<TValidateStatus>();
     });
 
     it('allows primitive query params', () => {

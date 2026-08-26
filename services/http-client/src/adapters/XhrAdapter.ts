@@ -15,7 +15,7 @@ import {
     THttpResponseType
 } from '../types';
 import { assertValidXhrAdapterOptions } from '../asserts';
-import { buildUrl, getErrorMessage, mergeHeaders, prepareRequestBody } from '../utilities';
+import { buildUrl, getErrorMessage, isStatusAccepted, mergeHeaders, prepareRequestBody } from '../utilities';
 
 function parseResponseHeaders(rawHeaders: string): THttpHeaders {
     const result: THttpHeaders = {};
@@ -295,7 +295,22 @@ function configureXhrEventHandlers<T>(
     const { onDownloadProgress, onUploadProgress } = options;
     let responseStream: IXhrResponseStream | undefined;
     let streamResponseResolved = false;
-    const isSuccessful = (): boolean => xhr.status >= 200 && xhr.status < 300;
+    let statusValidation: { accepted: boolean } | { error: unknown } | undefined;
+    const isSuccessful = (): boolean => {
+        if (statusValidation === undefined) {
+            try {
+                statusValidation = { accepted: isStatusAccepted(xhr.status, config.validateStatus) };
+            } catch (error) {
+                statusValidation = { error };
+            }
+        }
+
+        if ('error' in statusValidation) {
+            throw statusValidation.error;
+        }
+
+        return statusValidation.accepted;
+    };
     const resolveStream = (): void => {
         if (streamResponseResolved || !isSuccessful()) {
             return;
@@ -319,7 +334,13 @@ function configureXhrEventHandlers<T>(
     if (responseType === HTTP_RESPONSE_TYPES.STREAM) {
         xhr.onreadystatechange = () => {
             if (xhr.readyState === XMLHttpRequest.HEADERS_RECEIVED) {
-                resolveStream();
+                try {
+                    resolveStream();
+                } catch (error) {
+                    request.cleanup();
+                    reject(error);
+                    xhr.abort();
+                }
             }
         };
     }
@@ -340,7 +361,16 @@ function configureXhrEventHandlers<T>(
     xhr.onload = async () => {
         request.cleanup();
 
-        if (!isSuccessful()) {
+        let successful: boolean;
+
+        try {
+            successful = isSuccessful();
+        } catch (error) {
+            reject(error);
+            return;
+        }
+
+        if (!successful) {
             reject(await createResponseError(xhr, config));
             return;
         }

@@ -159,6 +159,50 @@ describe.each(adapters)('HttpClient.$name — default config', ({ create }) => {
         }
     });
 
+    test('uses client validateStatus to accept a response outside 2xx', async () => {
+        const validateStatus = vi.fn((status: number) => status === HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
+        const client = new HttpClient({ adapter: create(), baseUrl: BASE_URL, validateStatus });
+
+        const response = await client.get('/server-error').asJson<{ error: string }>().execute();
+
+        expect(response.status).toBe(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
+        expect(response.data).toEqual({ error: 'Internal error' });
+        expect(validateStatus).toHaveBeenCalledWith(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
+    });
+
+    test('request validateStatus overrides the client predicate', async () => {
+        const clientValidateStatus = vi.fn(() => true);
+        const requestValidateStatus = vi.fn(() => false);
+        const client = new HttpClient({
+            adapter: create(),
+            baseUrl: BASE_URL,
+            validateStatus: clientValidateStatus
+        });
+
+        await expect(
+            client.get('/server-error').validateStatus(requestValidateStatus).execute()
+        ).rejects.toBeInstanceOf(HttpResponseError);
+        expect(requestValidateStatus).toHaveBeenCalledWith(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
+        expect(clientValidateStatus).not.toHaveBeenCalled();
+    });
+
+    test('propagates an error thrown by validateStatus through onResponseError', async () => {
+        const validationError = new Error('Status validation failed');
+        const onResponseError = vi.fn(() => undefined);
+        const client = new HttpClient({
+            adapter: create(),
+            baseUrl: BASE_URL,
+            validateStatus: () => {
+                throw validationError;
+            },
+            onResponseError
+        });
+
+        await expect(client.get('/test').execute()).rejects.toBe(validationError);
+        expect(onResponseError).toHaveBeenCalledOnce();
+        expect(onResponseError).toHaveBeenCalledWith(validationError);
+    });
+
     test('throws NetworkError on network failure', async () => {
         const client = createClient();
 

@@ -35,12 +35,14 @@ describe('HttpClient.withAdapter', () => {
     test('creates an independent client with the provided adapter and inherited defaults', async () => {
         const original = createCapturingAdapter();
         const replacement = createCapturingAdapter();
+        const validateStatus = (status: number): boolean => status < 500;
         const client = new HttpClient({
             adapter: original.adapter,
             baseUrl: 'https://api.example.test',
             headers: { 'X-Default': 'default' },
             params: { locale: 'ru' },
             timeout: 1000,
+            validateStatus,
             withCredentials: true
         });
 
@@ -58,6 +60,7 @@ describe('HttpClient.withAdapter', () => {
                 headers: { 'X-Default': 'default' },
                 params: { locale: 'ru' },
                 timeout: 1000,
+                validateStatus,
                 withCredentials: true
             })
         ]);

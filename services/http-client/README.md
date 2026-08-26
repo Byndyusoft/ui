@@ -79,6 +79,7 @@ const httpClient = new HttpClient({
     headers: { Accept: 'application/json' },
     params: { locale: 'ru' },
     timeout: 10_000,
+    validateStatus: status => status >= 200 && status < 400,
     withCredentials: true
 });
 ```
@@ -90,6 +91,7 @@ const httpClient = new HttpClient({
 | `headers`         | заголовки всех запросов                              | отсутствуют           |
 | `params`          | query-параметры всех запросов                        | отсутствуют           |
 | `timeout`         | таймаут в миллисекундах                              | не задан на клиенте   |
+| `validateStatus`  | определяет успешность HTTP-статуса                   | статусы `200–299`     |
 | `withCredentials` | отправка credentials                                 | зависит от адаптера   |
 | `onRequest`       | преобразование итоговой конфигурации перед адаптером | отсутствует           |
 | `onRequestError`  | восстановление после ошибки request-hook             | отсутствует           |
@@ -124,6 +126,7 @@ const response = await request.execute();
 | `body(data)`                      | задаёт тело запроса                                          |
 | `signal(signal)`                  | привязывает пользовательский `AbortSignal`                   |
 | `timeout(milliseconds)`           | задаёт таймаут; `0` отключает также унаследованный таймаут   |
+| `validateStatus(predicate)`       | определяет успешность статуса конкретного ответа             |
 | `withCredentials(value)`          | управляет credentials конкретного запроса                    |
 | `bearer(token)`                   | устанавливает `Authorization: Bearer <token>`                |
 | `asJson<T>()` и остальные `as*()` | выбирают формат чтения и тип успешного ответа                |
@@ -160,6 +163,34 @@ const response = await httpClient
 Пользовательский `Content-Type` никогда не заменяется автоматически. Для `FormData` его не следует устанавливать вручную, иначе в заголовке может отсутствовать корректный boundary.
 
 `body(undefined)` синхронно выбрасывает `RequestBuilderError`. Тело также запрещено для `GET` и `HEAD`. Ошибка `JSON.stringify`, например циклическая ссылка или несериализуемое значение, преобразуется адаптером в `RequestPreparationError` с исходной причиной в `cause`.
+
+## Проверка HTTP-статуса
+
+По умолчанию Fetch- и XHR-адаптеры считают успешными статусы от `200` до `299`. Настройка `validateStatus` позволяет изменить это правило для всего клиента или одного запроса:
+
+```ts
+const httpClient = new HttpClient({
+    baseUrl: 'https://api.example.com',
+    validateStatus: status => status >= 200 && status < 400
+});
+
+const response = await httpClient
+    .get('/users/42')
+    .validateStatus(status => status === 200 || status === 404)
+    .asJson<IUser | null>()
+    .execute();
+```
+
+Предикат запроса заменяет предикат клиента. Чтобы для отдельного запроса вернуть стандартное поведение поверх клиентской настройки, его нужно задать явно:
+
+```ts
+const response = await httpClient
+    .get('/health')
+    .validateStatus(status => status >= 200 && status < 300)
+    .execute();
+```
+
+Предикат вызывается один раз с числовым статусом ответа. Если он возвращает `true`, тело разбирается в выбранном через `as*()` формате и ответ проходит через `onResponse`. Если он возвращает `false`, адаптер создаёт `HttpResponseError`, а тело ошибки пытается разобрать как JSON или текст. Исключение из предиката передаётся без замены в `onResponseError` и вызывающему коду.
 
 ## Отмена и таймауты
 
@@ -293,6 +324,8 @@ class LoggingAdapter implements IHttpClientAdapter {
 const httpClient = new HttpClient({ adapter: new LoggingAdapter() });
 ```
 
+`validateStatus` входит в конфигурацию запроса и исполняется транспортом. Пользовательский адаптер, который не делегирует выполнение Fetch- или XHR-адаптеру, должен самостоятельно применить предикат и сформировать `HttpResponseError` для отклонённого статуса.
+
 ## Приоритет конфигурации
 
 Общие настройки разрешаются в следующем порядке:
@@ -301,7 +334,7 @@ const httpClient = new HttpClient({ adapter: new LoggingAdapter() });
 2. Настройки `HttpClient`.
 3. Значения по умолчанию адаптера.
 
-Для XHR такой порядок применяется к `timeout`, `responseType` и `withCredentials`. Заголовки, params и `baseUrl` не имеют значений по умолчанию на уровне адаптера. Специфичные для Fetch и XHR параметры задаются только в конструкторах соответствующих адаптеров.
+Предикат `validateStatus` запроса имеет приоритет над предикатом клиента; при отсутствии обоих используется диапазон `200–299`. Для XHR общий порядок применяется также к `timeout`, `responseType` и `withCredentials`. Заголовки, params и `baseUrl` не имеют значений по умолчанию на уровне адаптера. Специфичные для Fetch и XHR параметры задаются только в конструкторах соответствующих адаптеров.
 
 ## Credentials и CORS
 
@@ -327,7 +360,7 @@ const response = await httpClient.get('/profile').withCredentials(true).asJson<I
 | ------------------------- | ------------------------------------------ | ----------------------------------------- |
 | `RequestBuilderError`     | некорректные настройки builder             | `code`                                    |
 | `RequestPreparationError` | не удалось подготовить транспортный запрос | `cause`, `config`                         |
-| `HttpResponseError`       | HTTP-статус вне диапазона 2xx              | `status`, `statusText`, `headers`, `data` |
+| `HttpResponseError`       | статус отклонён функцией `validateStatus`  | `status`, `statusText`, `headers`, `data` |
 | `ParseError`              | не удалось декодировать успешный ответ     | `responseType`, `raw`, `cause`, `config`  |
 | `NetworkError`            | сетевая ошибка                             | `cause`, `config`                         |
 | `AbortError`              | запрос отменён через `AbortSignal`         | `cause`, `config`                         |
@@ -337,7 +370,7 @@ const response = await httpClient.get('/profile').withCredentials(true).asJson<I
 
 Коды ошибок builder экспортируются в `REQUEST_BUILDER_ERROR_CODES` и доступны через `RequestBuilderError.code`.
 
-При ответе вне 2xx адаптер пытается разобрать тело как JSON, затем как текст. Пустое или недоступное тело даёт `data === undefined`. Тип данных ошибки не связан с типом успешного ответа и проверяется отдельно:
+При отклонённом статусе адаптер пытается разобрать тело как JSON, затем как текст. Пустое или недоступное тело даёт `data === undefined`. Тип данных ошибки не связан с типом успешного ответа и проверяется отдельно:
 
 ```ts
 import { isHttpResponseError } from '@byndyusoft-ui/http-client';
@@ -419,13 +452,12 @@ httpClient
 
 ## Публичные типы и константы
 
-Основные типы доступны из корня пакета: `IHttpClientOptions`, `IHttpClientAdapter`, `IHttpRequestConfig`, `IHttpResponse`, `IFetchAdapterOptions`, `IXhrAdapterOptions`, `THttpHeaders`, `THttpParams`, `THttpRequestBody`, `THttpMethod`, `THttpResponseType`, типы hooks и опций ошибок.
+Основные типы доступны из корня пакета: `IHttpClientOptions`, `IHttpClientAdapter`, `IHttpRequestConfig`, `IHttpResponse`, `IFetchAdapterOptions`, `IXhrAdapterOptions`, `THttpHeaders`, `THttpParams`, `THttpRequestBody`, `THttpMethod`, `THttpResponseType`, `TValidateStatus`, типы hooks и опций ошибок.
 
 Также экспортируются `HTTP_METHODS`, `HTTP_STATUS_CODES`, `HTTP_RESPONSE_TYPES` и `REQUEST_BUILDER_ERROR_CODES`. Внутренние asserts и utilities не входят в корневой публичный API.
 
 ## Ограничения текущей версии
 
--   Успешными считаются только статусы 2xx. Пользовательский `validateStatus` пока не поддерживается.
 -   Встроенных повторных запросов нет; retry должен выполняться отдельным слоем оркестрации.
 -   Для каждой фазы хранится только один hook, а повторное назначение заменяет предыдущий.
 -   `asJson<T>()` задаёт ожидаемый TypeScript-тип, но не проверяет схему данных во время выполнения.

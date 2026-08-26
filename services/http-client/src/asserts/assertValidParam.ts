@@ -14,7 +14,9 @@ function isValidParamValue(value: unknown): value is THttpParamValue {
         return true;
     }
 
-    return Array.isArray(value) && value.every(item => item === null || item === undefined || isValidParamPrimitive(item));
+    return (
+        Array.isArray(value) && value.every(item => item === null || item === undefined || isValidParamPrimitive(item))
+    );
 }
 
 export function assertValidParam(key: unknown, value: unknown): asserts value is THttpParamValue {

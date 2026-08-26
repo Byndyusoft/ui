@@ -15,7 +15,7 @@ import {
     THttpResponseType
 } from '../types';
 import { assertValidFetchAdapterOptions } from '../asserts';
-import { buildUrl, getErrorMessage, mergeHeaders, prepareRequestBody } from '../utilities';
+import { buildUrl, getErrorMessage, isStatusAccepted, mergeHeaders, prepareRequestBody } from '../utilities';
 
 function extractResponseHeaders(headers: Headers): THttpHeaders {
     const result: THttpHeaders = {};
@@ -110,6 +110,26 @@ function resolveCredentials(
     return adapterCredentials ?? 'same-origin';
 }
 
+function createFetchError(error: unknown, request: IPreparedFetchRequest, config: IHttpRequestConfig): HttpClientError {
+    if (error instanceof HttpClientError) {
+        return error;
+    }
+
+    if (request.userSignal?.aborted) {
+        return new AbortError('Request was aborted', { cause: request.userSignal.reason ?? error, config });
+    }
+
+    if (request.timeout && error instanceof DOMException && error.name === 'AbortError') {
+        return new TimeoutError(`Request timed out after ${request.timeout}ms`, {
+            cause: error,
+            config,
+            timeout: request.timeout
+        });
+    }
+
+    return new NetworkError(getErrorMessage(error, 'Network request failed'), { cause: error, config });
+}
+
 async function parseResponseBody<T>(
     response: Response,
     config: IHttpRequestConfig,
@@ -178,8 +198,10 @@ export class FetchAdapter implements IHttpClientAdapter {
             throw new RequestPreparationError('Failed to prepare HTTP request', { cause: error, config });
         }
 
+        let response: Response;
+
         try {
-            const response = await fetch(request.fullUrl, {
+            response = await fetch(request.fullUrl, {
                 ...this.options,
                 method: config.method,
                 headers: request.requestHeaders,
@@ -187,8 +209,22 @@ export class FetchAdapter implements IHttpClientAdapter {
                 credentials: resolveCredentials(config.withCredentials, this.options.credentials),
                 signal: request.signal
             });
+        } catch (error) {
+            request.cleanup();
+            throw createFetchError(error, request, config);
+        }
 
-            if (!response.ok) {
+        let statusAccepted: boolean;
+
+        try {
+            statusAccepted = isStatusAccepted(response.status, config.validateStatus);
+        } catch (error) {
+            request.cleanup();
+            throw error;
+        }
+
+        try {
+            if (!statusAccepted) {
                 let errorData: unknown;
                 try {
                     const text = await response.text();
@@ -221,23 +257,7 @@ export class FetchAdapter implements IHttpClientAdapter {
                 config
             };
         } catch (error) {
-            if (error instanceof HttpClientError) {
-                throw error;
-            }
-
-            if (request.userSignal?.aborted) {
-                throw new AbortError('Request was aborted', { cause: request.userSignal.reason ?? error, config });
-            }
-
-            if (request.timeout && error instanceof DOMException && error.name === 'AbortError') {
-                throw new TimeoutError(`Request timed out after ${request.timeout}ms`, {
-                    cause: error,
-                    config,
-                    timeout: request.timeout
-                });
-            }
-
-            throw new NetworkError(getErrorMessage(error, 'Network request failed'), { cause: error, config });
+            throw createFetchError(error, request, config);
         } finally {
             request.cleanup();
         }

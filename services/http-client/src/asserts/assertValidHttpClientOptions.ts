@@ -7,6 +7,7 @@ import { assertValidHeaders } from './assertValidHeaders';
 import { assertValidParams } from './assertValidParams';
 import { assertValidTimeout } from './assertValidTimeout';
 import { assertValidWithCredentials } from './assertValidWithCredentials';
+import { assertValidValidateStatus } from './assertValidValidateStatus';
 import { isRecord } from './isRecord';
 
 function assertValidHook(hook: unknown, name: string): asserts hook is (...args: never[]) => unknown {
@@ -27,6 +28,7 @@ export function assertValidHttpClientOptions(options: unknown): asserts options 
         headers,
         params,
         timeout,
+        validateStatus,
         withCredentials,
         onRequest,
         onRequestError,
@@ -52,6 +54,10 @@ export function assertValidHttpClientOptions(options: unknown): asserts options 
 
     if (timeout !== undefined) {
         assertValidTimeout(timeout);
+    }
+
+    if (validateStatus !== undefined) {
+        assertValidValidateStatus(validateStatus);
     }
 
     if (withCredentials !== undefined) {

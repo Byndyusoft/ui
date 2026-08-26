@@ -106,6 +106,16 @@ describe.each(adapters)('HttpClient.$name — hooks', ({ create }) => {
         expect(caught).toMatchObject({ code: REQUEST_BUILDER_ERROR_CODES.INVALID_BODY });
     });
 
+    test('rejects an invalid validateStatus returned by onRequest', async () => {
+        const client = createClient({
+            onRequest: config => ({ ...config, validateStatus: true } as unknown as IHttpRequestConfig)
+        });
+
+        await expect(client.get('/items').execute()).rejects.toMatchObject({
+            code: REQUEST_BUILDER_ERROR_CODES.INVALID_VALIDATE_STATUS
+        });
+    });
+
     test('rejects an invalid config returned by onRequestError without sending the request', async () => {
         let hits = 0;
         server.use(

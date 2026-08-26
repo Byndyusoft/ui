@@ -13,3 +13,4 @@ export * from './HttpParams';
 export * from './HttpResponseType';
 export * from './RequestBuilderErrorCode';
 export * from './XhrAdapterOptions';
+export * from './ValidateStatus';

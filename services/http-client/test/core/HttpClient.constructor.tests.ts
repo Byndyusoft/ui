@@ -56,6 +56,11 @@ describe('HttpClient constructor', () => {
             code: REQUEST_BUILDER_ERROR_CODES.INVALID_TIMEOUT
         },
         {
+            name: 'validate status',
+            options: { ...createOptions(), validateStatus: true },
+            code: REQUEST_BUILDER_ERROR_CODES.INVALID_VALIDATE_STATUS
+        },
+        {
             name: 'with credentials',
             options: { ...createOptions(), withCredentials: 'true' },
             code: REQUEST_BUILDER_ERROR_CODES.INVALID_WITH_CREDENTIALS
@@ -91,6 +96,7 @@ describe('HttpClient constructor', () => {
             headers: { 'X-Default': 'value' },
             params: { locale: 'ru' },
             timeout: 1000,
+            validateStatus: status => status >= 200 && status < 400,
             withCredentials: true,
             onRequest: config => config,
             onRequestError: () => undefined,
