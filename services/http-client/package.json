@@ -1,0 +1,52 @@
+{
+  "name": "@byndyusoft-ui/http-client",
+  "version": "0.1.0",
+  "description": "Byndyusoft UI HTTP Client Service",
+  "keywords": [
+    "byndyusoft",
+    "byndyusoft-ui",
+    "http-client"
+  ],
+  "author": "Byndyusoft Frontend Developer <frontend@byndyusoft.com>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/services/http-client#readme",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Byndyusoft/ui.git"
+  },
+  "scripts": {
+    "build": "rimraf dist && tsc --project tsconfig.build.json && rollup --config && rimraf dist/declarations && npm run test:package",
+    "clean": "rimraf dist && rimraf .turbo && rimraf node_modules && rimraf package-lock.json",
+    "lint": "eslint src --config ../../eslint.config.js",
+    "test": "vitest run --config vitest.config.mjs --typecheck",
+    "test:package": "node scripts/verify-package.mjs"
+  },
+  "bugs": {
+    "url": "https://github.com/Byndyusoft/ui/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "msw": "^2.4.9"
+  }
+}
