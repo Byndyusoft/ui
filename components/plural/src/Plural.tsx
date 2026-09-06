@@ -1,21 +1,17 @@
 import React from 'react';
-import { IPluralProps, TPluralForms, TPluralLocale } from './Plural.types';
-import { defaultPluralLocale, getPluralForm } from './Plural.utilities';
+import { TPluralLocale, TPluralProps } from './Plural.types';
+import { getPluralForm } from './Plural.utilities';
 
-const Plural = <TLocale extends TPluralLocale = typeof defaultPluralLocale>({
-    count,
-    forms,
-    locale
-}: IPluralProps<TLocale>): JSX.Element => {
-    if (locale) {
-        return React.createElement(React.Fragment, null, getPluralForm(count, forms, locale));
+const Plural = (props: TPluralProps<TPluralLocale>): JSX.Element => {
+    if (props.locale) {
+        return React.createElement(
+            React.Fragment,
+            null,
+            getPluralForm(...([props.count, props.forms, props.locale] as Parameters<typeof getPluralForm>))
+        );
     }
 
-    return React.createElement(
-        React.Fragment,
-        null,
-        getPluralForm(count, forms as TPluralForms<typeof defaultPluralLocale>)
-    );
+    return React.createElement(React.Fragment, null, getPluralForm(props.count, props.forms));
 };
 
 export default Plural;

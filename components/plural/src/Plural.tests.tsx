@@ -9,6 +9,11 @@ const ruForms = {
     other: 'проекта'
 };
 
+const enForms = {
+    one: 'project',
+    other: 'projects'
+};
+
 describe('components/Plural', () => {
     test('использует русскую локаль по умолчанию', () => {
         render(<Plural count={2} forms={ruForms} />);
@@ -17,7 +22,7 @@ describe('components/Plural', () => {
     });
 
     test('использует переданную локаль', () => {
-        render(<Plural count={2} forms={{ one: 'project', other: 'projects' }} locale="en" />);
+        render(<Plural count={2} forms={enForms} locale="en" />);
 
         expect(screen.getByText('projects')).toBeInTheDocument();
     });

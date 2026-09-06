@@ -1,9 +1,9 @@
 import React from 'react';
 import { StoryObj } from '@storybook/react';
-import { IPluralProps } from '../Plural.types';
+import { TPluralProps } from '../Plural.types';
 import Plural from '../Plural';
 
-export const RuStory: StoryObj<(args: IPluralProps) => JSX.Element> = {
+export const RuStory: StoryObj<(args: TPluralProps) => JSX.Element> = {
     name: 'ru',
     render: (args): JSX.Element => <Plural {...args} />,
     args: {
@@ -18,7 +18,7 @@ export const RuStory: StoryObj<(args: IPluralProps) => JSX.Element> = {
     }
 };
 
-export const EnStory: StoryObj<(args: IPluralProps<'en'>) => JSX.Element> = {
+export const EnStory: StoryObj<(args: TPluralProps<'en'>) => JSX.Element> = {
     name: 'en',
     render: (args): JSX.Element => <Plural {...args} />,
     args: {

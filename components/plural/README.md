@@ -51,6 +51,34 @@ import Plural from '@byndyusoft-ui/plural';
 
 Для `en` нужно передать формы `one` и `other`.
 
+Если `locale` определяется динамически, например через `Math.random()` или пользовательские настройки, нужно передавать формы, связанные с конкретной веткой локали:
+
+```tsx
+const locale = Math.random() > 0.5 ? 'ru' : 'en';
+
+return locale === 'ru' ? (
+    <Plural
+        count={count}
+        locale="ru"
+        forms={{
+            one: 'проект',
+            few: 'проекта',
+            many: 'проектов',
+            other: 'проекта'
+        }}
+    />
+) : (
+    <Plural
+        count={count}
+        locale="en"
+        forms={{
+            one: 'project',
+            other: 'projects'
+        }}
+    />
+);
+```
+
 ## Разметка в формах
 
 В `forms` можно передавать не только строки, но и любую React-разметку:
@@ -79,14 +107,3 @@ getPluralCategories('ru');
 getPluralCategories('en');
 // ['one', 'other']
 ```
-
-Эти значения можно использовать при расширении `IPluralCategoriesByLocale`:
-
-```ts
-export interface IPluralCategoriesByLocale {
-    ru: 'one' | 'few' | 'many' | 'other';
-    en: 'one' | 'other';
-}
-```
-
-**Важно:** `getPluralCategories` возвращает категории во время выполнения кода. TypeScript не может автоматически превратить этот результат в тип, поэтому для строгой типизации **локали нужно описывать вручную**.

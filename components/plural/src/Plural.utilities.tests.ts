@@ -55,8 +55,13 @@ describe('components/Plural/utilities', () => {
             });
         });
 
-        test('использует other как runtime fallback', () => {
+        test('использует other как резервное значение во время выполнения', () => {
             expect(getPluralForm(2, { other: 'items' } as never, 'ru')).toBe('items');
+        });
+
+        test('не использует other как резервное значение для пустых ReactNode-значений', () => {
+            expect(getPluralForm(1, { one: null, other: 'items' }, 'en')).toBeNull();
+            expect(getPluralForm(1, { one: undefined, other: 'items' }, 'en')).toBeUndefined();
         });
     });
 });
