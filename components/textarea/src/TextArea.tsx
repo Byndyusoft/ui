@@ -1,14 +1,6 @@
-import React, {
-    ChangeEvent,
-    FocusEvent,
-    forwardRef,
-    useEffect,
-    useImperativeHandle,
-    useLayoutEffect,
-    useRef,
-    useState
-} from 'react';
+import React, { ChangeEvent, FocusEvent, forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import useLatestRef from '@byndyusoft-ui/use-latest-ref';
+import useIsomorphicLayoutEffect from '@byndyusoft-ui/use-isomorphic-layout-effect';
 import { TimeoutId } from '@byndyusoft-ui/types';
 import { ITextAreaProps } from './TextArea.types';
 
@@ -88,7 +80,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, ITextAreaProps>(
 
         useImperativeHandle(ref, () => textAreaRef.current as HTMLTextAreaElement);
 
-        useLayoutEffect(() => {
+        useIsomorphicLayoutEffect(() => {
             const textArea = textAreaRef.current;
 
             if (withAutoHeight && textArea) {
