@@ -11,8 +11,18 @@
   "author": "Byndyusoft Frontend Developer <frontend@byndyusoft.com>",
   "homepage": "https://github.com/Byndyusoft/ui/tree/master/components/textarea#readme",
   "license": "Apache-2.0",
+  "type": "module",
   "main": "dist/index.js",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "files": [
     "dist/**/*"
   ],
