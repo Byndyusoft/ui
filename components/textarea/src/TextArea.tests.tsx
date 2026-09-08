@@ -121,6 +121,35 @@ describe('components/TextArea', () => {
         expect(screen.getByLabelText('Description')).toHaveValue('Updated');
     });
 
+    test('does not change displayed value in controlled mode without value prop update', () => {
+        const onChange = vi.fn();
+
+        render(<TextArea aria-label="Description" value="Initial" onChange={onChange} />);
+
+        const textArea = screen.getByLabelText('Description');
+
+        fireEvent.change(textArea, { target: { value: 'Changed' } });
+
+        expect(onChange).toHaveBeenCalledTimes(1);
+        expect(textArea).toHaveValue('Initial');
+    });
+
+    test('uses defaultValue in uncontrolled mode', () => {
+        render(<TextArea aria-label="Description" defaultValue="Initial" />);
+
+        expect(screen.getByLabelText('Description')).toHaveValue('Initial');
+    });
+
+    test('changes displayed value in uncontrolled mode', () => {
+        render(<TextArea aria-label="Description" defaultValue="Initial" />);
+
+        const textArea = screen.getByLabelText('Description');
+
+        fireEvent.change(textArea, { target: { value: 'Changed' } });
+
+        expect(textArea).toHaveValue('Changed');
+    });
+
     test('sets rows to one when auto height is enabled', () => {
         render(<TextArea aria-label="Description" rows={4} withAutoHeight />);
 

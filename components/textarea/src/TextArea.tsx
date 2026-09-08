@@ -24,6 +24,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, ITextAreaProps>(
             rows,
             style,
             value,
+            defaultValue,
             withAutoHeight = false,
             onChange,
             onFocus,
@@ -34,7 +35,9 @@ const TextArea = forwardRef<HTMLTextAreaElement, ITextAreaProps>(
         ref
     ) => {
         const textAreaRef = useRef<HTMLTextAreaElement>(null);
-        const [tempValue, setTempValue] = useState(typeof value === 'string' ? value : '');
+        const isControlled = value !== undefined;
+        const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
+        const autoHeightValue = isControlled ? value : uncontrolledValue;
 
         const timeoutId = useRef<TimeoutId>();
         const lastChangeEvent = useRef<ChangeEvent<HTMLTextAreaElement>>();
@@ -43,7 +46,11 @@ const TextArea = forwardRef<HTMLTextAreaElement, ITextAreaProps>(
         const handleChange = (event: ChangeEvent<HTMLTextAreaElement>): void => {
             clearTimeout(timeoutId.current);
             lastChangeEvent.current = event;
-            setTempValue(event.target.value);
+
+            if (!isControlled) {
+                setUncontrolledValue(event.target.value);
+            }
+
             onChange?.(event);
             timeoutId.current = setTimeout(() => {
                 timeoutId.current = undefined;
@@ -88,17 +95,12 @@ const TextArea = forwardRef<HTMLTextAreaElement, ITextAreaProps>(
                 textArea.style.height = 'inherit';
                 textArea.style.height = `${Math.max(textArea.scrollHeight, minHeight)}px`;
             }
-        }, [tempValue, minHeight, withAutoHeight]);
-
-        useEffect(() => {
-            if (typeof value === 'string') {
-                setTempValue(value);
-            }
-        }, [value]);
+        }, [autoHeightValue, minHeight, withAutoHeight]);
 
         return (
             <textarea
                 {...rest}
+                {...(isControlled ? { value } : { defaultValue })}
                 className={className}
                 disabled={isDisabled}
                 ref={textAreaRef}
@@ -112,7 +114,6 @@ const TextArea = forwardRef<HTMLTextAreaElement, ITextAreaProps>(
                           }
                         : style
                 }
-                value={tempValue}
                 onChange={handleChange}
                 onFocus={handleFocus}
             />
