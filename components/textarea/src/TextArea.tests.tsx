@@ -9,10 +9,11 @@ describe('components/TextArea', () => {
 
     afterEach(() => {
         vi.restoreAllMocks();
+        vi.unstubAllGlobals();
         vi.useRealTimers();
     });
 
-    test('renders textarea with passed attributes', () => {
+    test('рендерит textarea с переданными атрибутами', () => {
         render(<TextArea aria-label="Description" className="custom-class" placeholder="Type here" rows={4} />);
 
         const textArea = screen.getByLabelText('Description');
@@ -23,13 +24,13 @@ describe('components/TextArea', () => {
         expect(textArea).toHaveAttribute('rows', '4');
     });
 
-    test('uses isDisabled prop as disabled attribute', () => {
+    test('использует prop isDisabled как disabled-атрибут', () => {
         render(<TextArea aria-label="Description" isDisabled />);
 
         expect(screen.getByLabelText('Description')).toBeDisabled();
     });
 
-    test('calls onChange and onStopChanging after delay', () => {
+    test('вызывает onChange и onStopChanging после задержки', () => {
         const onChange = vi.fn();
         const onStopChanging = vi.fn();
 
@@ -52,7 +53,7 @@ describe('components/TextArea', () => {
         expect(onStopChanging).toHaveBeenCalledTimes(1);
     });
 
-    test('uses default changing delay', () => {
+    test('использует задержку изменения по умолчанию', () => {
         const onStopChanging = vi.fn();
 
         render(<TextArea aria-label="Description" onStopChanging={onStopChanging} />);
@@ -68,7 +69,7 @@ describe('components/TextArea', () => {
         expect(onStopChanging).toHaveBeenCalledTimes(1);
     });
 
-    test('resets stop changing timer on each change', () => {
+    test('сбрасывает таймер остановки изменения при каждом изменении', () => {
         const onStopChanging = vi.fn((event: ChangeEvent<HTMLTextAreaElement>) => event.target.value);
 
         render(<TextArea aria-label="Description" changingDelay={300} onStopChanging={onStopChanging} />);
@@ -86,7 +87,7 @@ describe('components/TextArea', () => {
         expect(onStopChanging).toHaveReturnedWith('Second');
     });
 
-    test('calls onStopChanging with latest event on unmount', () => {
+    test('вызывает onStopChanging с последним событием при размонтировании', () => {
         const onStopChanging = vi.fn((event: ChangeEvent<HTMLTextAreaElement>) => event.target.value);
 
         const { unmount } = render(
@@ -101,7 +102,7 @@ describe('components/TextArea', () => {
         expect(onStopChanging).toHaveReturnedWith('Text');
     });
 
-    test('sets focus through forwarded ref', () => {
+    test('устанавливает фокус через проброшенный ref', () => {
         const ref = createRef<HTMLTextAreaElement>();
 
         render(<TextArea aria-label="Description" ref={ref} />);
@@ -111,7 +112,7 @@ describe('components/TextArea', () => {
         expect(screen.getByLabelText('Description')).toHaveFocus();
     });
 
-    test('does not reset text selection on focus', () => {
+    test('не сбрасывает выделение текста при фокусе', () => {
         const ref = createRef<HTMLTextAreaElement>();
 
         render(<TextArea aria-label="Description" ref={ref} defaultValue="Initial text" />);
@@ -123,7 +124,7 @@ describe('components/TextArea', () => {
         expect(ref.current?.selectionEnd).toBe(7);
     });
 
-    test('updates textarea value when value prop changes', () => {
+    test('обновляет значение textarea при изменении prop value', () => {
         const { rerender } = render(<TextArea aria-label="Description" value="Initial" />);
 
         expect(screen.getByLabelText('Description')).toHaveValue('Initial');
@@ -133,7 +134,7 @@ describe('components/TextArea', () => {
         expect(screen.getByLabelText('Description')).toHaveValue('Updated');
     });
 
-    test('does not change displayed value in controlled mode without value prop update', () => {
+    test('не меняет отображаемое значение в controlled-режиме без обновления prop value', () => {
         const onChange = vi.fn();
 
         render(<TextArea aria-label="Description" value="Initial" onChange={onChange} />);
@@ -146,13 +147,13 @@ describe('components/TextArea', () => {
         expect(textArea).toHaveValue('Initial');
     });
 
-    test('uses defaultValue in uncontrolled mode', () => {
+    test('использует defaultValue в uncontrolled-режиме', () => {
         render(<TextArea aria-label="Description" defaultValue="Initial" />);
 
         expect(screen.getByLabelText('Description')).toHaveValue('Initial');
     });
 
-    test('changes displayed value in uncontrolled mode', () => {
+    test('меняет отображаемое значение в uncontrolled-режиме', () => {
         render(<TextArea aria-label="Description" defaultValue="Initial" />);
 
         const textArea = screen.getByLabelText('Description');
@@ -162,25 +163,25 @@ describe('components/TextArea', () => {
         expect(textArea).toHaveValue('Changed');
     });
 
-    test('sets rows to one when auto height is enabled', () => {
+    test('устанавливает rows равным одному при включенной авто-высоте', () => {
         render(<TextArea aria-label="Description" rows={4} withAutoHeight />);
 
         expect(screen.getByLabelText('Description')).toHaveAttribute('rows', '1');
     });
 
-    test('adds auto height styles when auto height is enabled', () => {
+    test('добавляет стили авто-высоты при включенной авто-высоте', () => {
         render(<TextArea aria-label="Description" className="custom-class" withAutoHeight />);
 
         const textArea = screen.getByLabelText('Description');
 
         expect(textArea).toHaveClass('custom-class');
         expect(textArea).toHaveStyle({
-            overflow: 'hidden',
+            overflowX: 'hidden',
             resize: 'none'
         });
     });
 
-    test('sets auto height from scroll height', () => {
+    test('устанавливает авто-высоту по scrollHeight', () => {
         vi.spyOn(HTMLTextAreaElement.prototype, 'scrollHeight', 'get').mockReturnValue(40);
 
         render(<TextArea aria-label="Description" minHeight={20} value="Text" withAutoHeight />);
@@ -188,11 +189,95 @@ describe('components/TextArea', () => {
         expect(screen.getByLabelText('Description')).toHaveStyle({ height: '40px' });
     });
 
-    test('sets auto height from min height when scroll height is lower', () => {
+    test('устанавливает авто-высоту по minHeight, когда scrollHeight меньше', () => {
         vi.spyOn(HTMLTextAreaElement.prototype, 'scrollHeight', 'get').mockReturnValue(10);
 
         render(<TextArea aria-label="Description" minHeight={20} value="Text" withAutoHeight />);
 
         expect(screen.getByLabelText('Description')).toHaveStyle({ height: '20px' });
+    });
+
+    test('не наследует высоту родителя перед измерением авто-высоты', () => {
+        vi.spyOn(HTMLTextAreaElement.prototype, 'scrollHeight', 'get').mockImplementation(function getScrollHeight(
+            this: HTMLTextAreaElement
+        ) {
+            // eslint-disable-next-line no-invalid-this
+            return this.style.height === 'inherit' ? 80 : 40;
+        });
+
+        render(<TextArea aria-label="Description" minHeight={20} value="Text" withAutoHeight />);
+
+        expect(screen.getByLabelText('Description')).toHaveStyle({ height: '40px' });
+    });
+
+    test('скрывает вертикальный overflow, когда контент авто-высоты помещается', () => {
+        vi.spyOn(HTMLTextAreaElement.prototype, 'scrollHeight', 'get').mockReturnValue(40);
+        vi.spyOn(HTMLTextAreaElement.prototype, 'clientHeight', 'get').mockReturnValue(40);
+
+        render(<TextArea aria-label="Description" value="Text" withAutoHeight />);
+
+        expect(screen.getByLabelText('Description')).toHaveStyle({ overflowY: 'hidden' });
+    });
+
+    test('разрешает вертикальную прокрутку, когда контент авто-высоты ограничен', () => {
+        vi.spyOn(HTMLTextAreaElement.prototype, 'scrollHeight', 'get').mockReturnValue(80);
+        vi.spyOn(HTMLTextAreaElement.prototype, 'clientHeight', 'get').mockReturnValue(40);
+
+        render(<TextArea aria-label="Description" value="Text" withAutoHeight />);
+
+        expect(screen.getByLabelText('Description')).toHaveStyle({ overflowY: 'auto' });
+    });
+
+    test('обновляет авто-высоту при изменении размера textarea', () => {
+        let scrollHeight = 40;
+        const observe = vi.fn();
+        const disconnect = vi.fn();
+        const cancelAnimationFrame = vi.fn();
+        let resizeObserverCallback: ResizeObserverCallback | undefined;
+        let animationFrameCallback: FrameRequestCallback | undefined;
+
+        vi.spyOn(HTMLTextAreaElement.prototype, 'scrollHeight', 'get').mockImplementation(() => scrollHeight);
+        vi.spyOn(HTMLTextAreaElement.prototype, 'clientHeight', 'get').mockImplementation(() => scrollHeight);
+        vi.stubGlobal(
+            'requestAnimationFrame',
+            vi.fn((callback: FrameRequestCallback) => {
+                animationFrameCallback = callback;
+
+                return 1;
+            })
+        );
+        vi.stubGlobal('cancelAnimationFrame', cancelAnimationFrame);
+        vi.stubGlobal(
+            'ResizeObserver',
+            vi.fn((callback: ResizeObserverCallback) => {
+                resizeObserverCallback = callback;
+
+                return {
+                    disconnect,
+                    observe,
+                    unobserve: vi.fn()
+                };
+            })
+        );
+
+        render(<TextArea aria-label="Description" value="Text" withAutoHeight />);
+
+        const textArea = screen.getByLabelText('Description');
+
+        expect(observe).toHaveBeenCalledWith(textArea);
+        expect(textArea).toHaveStyle({ height: '40px' });
+
+        scrollHeight = 80;
+        resizeObserverCallback?.([], {} as ResizeObserver);
+        resizeObserverCallback?.([], {} as ResizeObserver);
+
+        expect(requestAnimationFrame).toHaveBeenCalledTimes(1);
+        expect(textArea).toHaveStyle({ height: '40px' });
+
+        animationFrameCallback?.(0);
+
+        expect(textArea).toHaveStyle({ height: '80px' });
+        expect(disconnect).not.toHaveBeenCalled();
+        expect(cancelAnimationFrame).not.toHaveBeenCalled();
     });
 });

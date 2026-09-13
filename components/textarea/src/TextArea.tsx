@@ -1,4 +1,4 @@
-import React, { ChangeEvent, forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import React, { ChangeEvent, forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import useLatestRef from '@byndyusoft-ui/use-latest-ref';
 import useIsomorphicLayoutEffect from '@byndyusoft-ui/use-isomorphic-layout-effect';
 import { TimeoutId } from '@byndyusoft-ui/types';
@@ -32,7 +32,31 @@ const TextArea = forwardRef<HTMLTextAreaElement, ITextAreaProps>(
 
         const timeoutId = useRef<TimeoutId>();
         const lastChangeEvent = useRef<ChangeEvent<HTMLTextAreaElement>>();
+        const animationFrameId = useRef<number>();
         const onStopChangingRef = useLatestRef(onStopChanging);
+
+        const updateAutoHeight = useCallback((): void => {
+            const textArea = textAreaRef.current;
+
+            if (!withAutoHeight || !textArea) {
+                return;
+            }
+
+            textArea.style.height = 'auto';
+            textArea.style.height = `${Math.max(textArea.scrollHeight, minHeight)}px`;
+            textArea.style.overflowY = textArea.scrollHeight > textArea.clientHeight ? 'auto' : 'hidden';
+        }, [minHeight, withAutoHeight]);
+
+        const scheduleAutoHeight = useCallback((): void => {
+            if (animationFrameId.current !== undefined) {
+                return;
+            }
+
+            animationFrameId.current = requestAnimationFrame(() => {
+                animationFrameId.current = undefined;
+                updateAutoHeight();
+            });
+        }, [updateAutoHeight]);
 
         const handleChange = (event: ChangeEvent<HTMLTextAreaElement>): void => {
             clearTimeout(timeoutId.current);
@@ -68,14 +92,33 @@ const TextArea = forwardRef<HTMLTextAreaElement, ITextAreaProps>(
 
         useImperativeHandle(ref, () => textAreaRef.current as HTMLTextAreaElement);
 
+        useIsomorphicLayoutEffect(updateAutoHeight, [autoHeightValue, updateAutoHeight]);
+
         useIsomorphicLayoutEffect(() => {
             const textArea = textAreaRef.current;
 
-            if (withAutoHeight && textArea) {
-                textArea.style.height = 'inherit';
-                textArea.style.height = `${Math.max(textArea.scrollHeight, minHeight)}px`;
+            if (
+                !withAutoHeight ||
+                !textArea ||
+                typeof ResizeObserver === 'undefined' ||
+                typeof requestAnimationFrame === 'undefined'
+            ) {
+                return;
             }
-        }, [autoHeightValue, minHeight, withAutoHeight]);
+
+            const resizeObserver = new ResizeObserver(scheduleAutoHeight);
+
+            resizeObserver.observe(textArea);
+
+            return () => {
+                resizeObserver.disconnect();
+
+                if (animationFrameId.current !== undefined) {
+                    cancelAnimationFrame(animationFrameId.current);
+                    animationFrameId.current = undefined;
+                }
+            };
+        }, [scheduleAutoHeight, withAutoHeight]);
 
         return (
             <textarea
@@ -89,7 +132,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, ITextAreaProps>(
                     withAutoHeight
                         ? {
                               ...style,
-                              overflow: 'hidden',
+                              overflowX: 'hidden',
                               resize: 'none'
                           }
                         : style
