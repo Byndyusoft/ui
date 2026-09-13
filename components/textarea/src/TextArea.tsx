@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FocusEvent, forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import React, { ChangeEvent, forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import useLatestRef from '@byndyusoft-ui/use-latest-ref';
 import useIsomorphicLayoutEffect from '@byndyusoft-ui/use-isomorphic-layout-effect';
 import { TimeoutId } from '@byndyusoft-ui/types';
@@ -19,7 +19,6 @@ const TextArea = forwardRef<HTMLTextAreaElement, ITextAreaProps>(
             defaultValue,
             withAutoHeight = false,
             onChange,
-            onFocus,
             onStopChanging,
             changingDelay = DEFAULT_CHANGING_DELAY,
             ...rest
@@ -67,17 +66,6 @@ const TextArea = forwardRef<HTMLTextAreaElement, ITextAreaProps>(
             [onStopChangingRef]
         );
 
-        const handleFocus = (event: FocusEvent<HTMLTextAreaElement>): void => {
-            const textArea = textAreaRef.current;
-
-            if (textArea) {
-                const { length } = textArea.value;
-                textArea.setSelectionRange(length, length);
-            }
-
-            onFocus?.(event);
-        };
-
         useImperativeHandle(ref, () => textAreaRef.current as HTMLTextAreaElement);
 
         useIsomorphicLayoutEffect(() => {
@@ -107,7 +95,6 @@ const TextArea = forwardRef<HTMLTextAreaElement, ITextAreaProps>(
                         : style
                 }
                 onChange={handleChange}
-                onFocus={handleFocus}
             />
         );
     }

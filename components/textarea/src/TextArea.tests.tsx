@@ -111,6 +111,18 @@ describe('components/TextArea', () => {
         expect(screen.getByLabelText('Description')).toHaveFocus();
     });
 
+    test('does not reset text selection on focus', () => {
+        const ref = createRef<HTMLTextAreaElement>();
+
+        render(<TextArea aria-label="Description" ref={ref} defaultValue="Initial text" />);
+
+        ref.current?.setSelectionRange(0, 7);
+        ref.current?.focus();
+
+        expect(ref.current?.selectionStart).toBe(0);
+        expect(ref.current?.selectionEnd).toBe(7);
+    });
+
     test('updates textarea value when value prop changes', () => {
         const { rerender } = render(<TextArea aria-label="Description" value="Initial" />);
 
