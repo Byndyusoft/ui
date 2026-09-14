@@ -1,0 +1,22 @@
+import { Markdown, Source, Canvas, Meta, ArgTypes } from '@storybook/blocks';
+
+import TextArea from './TextArea';
+import * as TextAreaStories from './TextArea.stories';
+
+<Meta title="components/TextArea" of={TextAreaStories} />
+
+## Usage
+
+To use the component in your project you must:
+
+1. Import the component where you need it:
+
+<Source language="javascript" code="import TextArea from '@byndyusoft-ui/textarea';" />
+
+2. Call the component and give it the desired props, for example:
+
+<Canvas sourceState="shown" of={TextAreaStories.Default} />
+
+## Props
+
+<ArgTypes of={TextArea} />
