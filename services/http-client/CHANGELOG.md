@@ -1,10 +1,10 @@
 # @byndyusoft-ui/http-client
 
-## 0.1.0
+## 0.1.0-alpha.0
 
 ### Minor Changes
 
--   Подготовлен первый публичный релиз HTTP-клиента:
+-   Подготовлен первый публичный альфа-релиз HTTP-клиента:
 
     -   добавлены неизменяемый request builder и явный выбор формата ответа через `asJson<T>()`, `asText()`, `asBlob()`, `asArrayBuffer()` и `asStream()`;
     -   FetchAdapter установлен по умолчанию, а Fetch- и XHR-адаптеры получили отдельные настройки, credentials/CORS-контракт и типизированные progress callbacks;

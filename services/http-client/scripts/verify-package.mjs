@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { rollup } from 'rollup';
@@ -13,20 +13,26 @@ const esmPackage = await import(packageName);
 const cjsPackage = require(packageName);
 const packageJson = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'));
 const declarations = await readFile(new URL('../dist/index.d.ts', import.meta.url), 'utf8');
+const esmFiles = await readdir(new URL('../dist/esm', import.meta.url), { recursive: true });
+const cjsFiles = await readdir(new URL('../dist/cjs', import.meta.url), { recursive: true });
 
-assert.match(require.resolve(packageName), /\/dist\/index\.cjs$/);
+assert.match(require.resolve(packageName), /\/dist\/cjs\/index\.cjs$/);
 assert.deepEqual(packageJson.exports['.'], {
     types: './dist/index.d.ts',
-    import: './dist/index.js',
-    require: './dist/index.cjs'
+    import: './dist/esm/index.js',
+    require: './dist/cjs/index.cjs'
 });
 assert.equal(packageJson.engines.node, '>=20');
 assert.equal(packageJson.sideEffects, false);
 assert.equal(packageJson.type, 'module');
 assert.doesNotMatch(declarations, /from\s+['"]\.\//);
+assert(esmFiles.filter(path => path.endsWith('.js')).length > 1, 'ESM modules were bundled into one file');
+assert(cjsFiles.filter(path => path.endsWith('.cjs')).length > 1, 'CommonJS modules were bundled into one file');
+assert(esmFiles.includes('core/HttpClient.js'));
+assert(cjsFiles.includes('core/HttpClient.cjs'));
 
-await assert.rejects(import(`${packageName}/dist/index.js`), { code: 'ERR_PACKAGE_PATH_NOT_EXPORTED' });
-assert.throws(() => require(`${packageName}/dist/index.cjs`), { code: 'ERR_PACKAGE_PATH_NOT_EXPORTED' });
+await assert.rejects(import(`${packageName}/dist/esm/index.js`), { code: 'ERR_PACKAGE_PATH_NOT_EXPORTED' });
+assert.throws(() => require(`${packageName}/dist/cjs/index.cjs`), { code: 'ERR_PACKAGE_PATH_NOT_EXPORTED' });
 
 for (const exportName of requiredExports) {
     assert.notEqual(esmPackage[exportName], undefined, `Missing ${exportName} in the ESM entry`);
@@ -46,7 +52,7 @@ const typeResolution = typescript.resolveModuleName(
 assert.notEqual(typeResolution, undefined, 'TypeScript cannot resolve the package declarations');
 assert.match(typeResolution.resolvedFileName, /\/dist\/index\.d\.ts$/);
 
-const esmEntryPath = fileURLToPath(new URL('../dist/index.js', import.meta.url));
+const esmEntryPath = fileURLToPath(new URL('../dist/esm/index.js', import.meta.url));
 const virtualEntryId = '\0http-client-tree-shaking-check';
 const bundle = await rollup({
     input: virtualEntryId,

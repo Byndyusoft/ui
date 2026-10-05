@@ -6,13 +6,21 @@ const javascriptConfig = {
     input: 'src/index.ts',
     output: [
         {
-            file: 'dist/index.js',
-            format: 'esm'
+            dir: 'dist/esm',
+            entryFileNames: '[name].js',
+            chunkFileNames: '[name].js',
+            format: 'esm',
+            preserveModules: true,
+            preserveModulesRoot: 'src'
         },
         {
+            dir: 'dist/cjs',
+            entryFileNames: '[name].cjs',
+            chunkFileNames: '[name].cjs',
             exports: 'named',
-            file: 'dist/index.cjs',
-            format: 'cjs'
+            format: 'cjs',
+            preserveModules: true,
+            preserveModulesRoot: 'src'
         }
     ],
     plugins: [

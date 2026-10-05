@@ -65,6 +65,6 @@
 24. Согласно D-012, `HttpClient.withAdapter()` создаёт независимый scoped-клиент со снимком текущих defaults и hooks.
 25. P3-3: команда запуска тестов отдельного workspace в корневом `AGENTS.md` исправлена на `npm test -w <package-name>`.
 26. Согласно D-013, пакет публикует ESM и CommonJS через `exports`, поддерживает tree-shaking, помечен `sideEffects: false` и требует Node.js 20 или новее.
-27. P0-1: minor changeset применён, версия пакета повышена до `0.1.0`, создан русскоязычный `CHANGELOG.md`; публикация в npm не выполнялась.
+27. P0-1: minor changeset применён, создан русскоязычный `CHANGELOG.md`; для первого предварительного выпуска установлена версия `0.1.0-alpha.0` и npm-тег `alpha`; публикация в npm не выполнялась.
 28. README дополнен полным пользовательским контрактом: окружения, client/builder API, response, URL/params/body, timeout/abort, настройки адаптеров, custom adapter, ошибки, hooks, публичные типы и ограничения.
 29. Согласно D-014, `validateStatus` поддерживается на уровне клиента и запроса с приоритетом request → client → стандартный диапазон `200–299`; контракт реализован одинаково в Fetch и XHR.
