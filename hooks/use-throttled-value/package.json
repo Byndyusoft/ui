@@ -1,6 +1,6 @@
 {
   "name": "@byndyusoft-ui/use-throttled-value",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "React-хук Byndyusoft UI для состояния с ограниченной частотой обновлений",
   "keywords": [
     "byndyusoft",
@@ -40,7 +40,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@byndyusoft-ui/use-throttled-callback": "0.2.0"
+    "@byndyusoft-ui/use-throttled-callback": "0.3.0"
   },
   "files": [
     "dist/**/*"

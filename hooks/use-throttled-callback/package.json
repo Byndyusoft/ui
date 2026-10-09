@@ -1,6 +1,6 @@
 {
   "name": "@byndyusoft-ui/use-throttled-callback",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "React-хук Byndyusoft UI для ограничения частоты вызовов обработчика",
   "keywords": [
     "byndyusoft",
