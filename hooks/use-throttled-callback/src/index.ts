@@ -1,3 +1,2 @@
-export { default } from './useThrottledCallback';
-
-export type { IThrottledCallbackOptions } from './useThrottledCallback';
+export { default, default as useThrottledCallback } from './useThrottledCallback';
+export type { IThrottledCallback, IThrottledCallbackOptions } from './useThrottledCallback.types';
