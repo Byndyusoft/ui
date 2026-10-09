@@ -1,7 +1,8 @@
 {
-  "name": "@byndyusoft-ui/textarea",
+  "name": "@byndyusoft-ui/text-area",
   "version": "0.0.1",
-  "description": "Byndyusoft UI TextArea React Component",
+  "private": true,
+  "description": "Компонент TextArea библиотеки Byndyusoft UI",
   "keywords": [
     "byndyusoft",
     "byndyusoft-ui",
@@ -9,7 +10,7 @@
     "textarea"
   ],
   "author": "Byndyusoft Frontend Developer <frontend@byndyusoft.com>",
-  "homepage": "https://github.com/Byndyusoft/ui/tree/master/components/textarea#readme",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/components/text-area#readme",
   "license": "Apache-2.0",
   "type": "module",
   "main": "dist/index.js",
@@ -52,8 +53,10 @@
     "react": ">=17"
   },
   "dependencies": {
-    "@byndyusoft-ui/types": "^0.3.0",
+    "@byndyusoft-ui/use-debounced-callback": "^0.0.1",
     "@byndyusoft-ui/use-isomorphic-layout-effect": "^0.0.0",
-    "@byndyusoft-ui/use-latest-ref": "^1.0.1"
+    "@byndyusoft-ui/use-latest-ref": "^1.0.1",
+    "@byndyusoft-ui/use-resize-observer": "^0.0.1",
+    "@byndyusoft-ui/use-throttled-callback": "^0.3.0"
   }
 }

@@ -12,7 +12,7 @@ export default {
                 'src/**/__stories__',
                 'src/**/*.docs.*',
                 'src/**/*.tests.*',
-                'src/**/__tests__'
+                'src/**/__tests__/**'
             ]
         })
     ]
