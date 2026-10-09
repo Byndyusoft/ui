@@ -1,0 +1,77 @@
+/**
+ * Container
+ */
+.container {
+    position: relative;
+
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    width: fit-content;
+
+    user-select: none;
+    cursor: pointer;
+}
+
+.containerDisabled {
+    cursor: default;
+}
+
+/**
+ * Label
+ */
+.label {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.labelDisabled {
+    color: #7a7f82;
+}
+
+/**
+ * Indicator
+ */
+.indicator {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    flex-grow: 0;
+    flex-shrink: 0;
+    justify-content: center;
+
+    width: 1rem;
+    height: 1rem;
+
+    border: 1px solid #21272b;
+    border-radius: 0.125rem;
+    color: #fff;
+}
+
+.indicator:not(.indicatorDisabled):hover {
+    background-color: #e0e0e0;
+}
+
+.indicatorDisabled {
+    border-color: #adb0b2;
+}
+
+.indicatorChecked,
+.indicatorIndeterminate {
+    border: none;
+    background-color: #2b83ba;
+}
+
+.indicatorChecked:not(.indicatorDisabled):hover,
+.indicatorIndeterminate:not(.indicatorDisabled):hover {
+    background-color: #3b99d4;
+}
+
+.indicatorChecked.indicatorDisabled,
+.indicatorIndeterminate.indicatorDisabled {
+    background-color: #adb0b2;
+}
+
+.input:focus-visible + .indicator {
+    box-shadow: 0 0 0 2px #ffd86a;
+}
