@@ -1,7 +1,6 @@
 {
   "name": "@byndyusoft-ui/text-area",
   "version": "0.0.1",
-  "private": true,
   "description": "Компонент TextArea библиотеки Byndyusoft UI",
   "keywords": [
     "byndyusoft",
