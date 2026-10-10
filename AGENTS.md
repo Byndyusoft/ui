@@ -18,6 +18,21 @@ Byndyusoft UI — монорепозиторий публикуемых React-к
 -   `.github/workflows` — проверки CI и чек-листа PR.
 -   `.helm`, `deploy`, `nginx`, `Dockerfile`, `Makefile`, `Jenkinsfile` — инфраструктура публикации Storybook.
 
+## Скиллы репозитория
+
+Общие для Codex и OpenCode скиллы хранятся в `.agents/skills/<имя>/SKILL.md`.
+Оба инструмента обнаруживают этот каталог; отдельные копии в `.opencode/skills` не нужны.
+Подключай скиллы по области задачи:
+
+-   [fe-typescript](.agents/skills/fe-typescript/SKILL.md) — публичные типы, props, generic API,
+    декларации и тесты типов пакетов.
+-   [fe-component](.agents/skills/fe-component/SKILL.md) — пакеты компонентов, DOM-поведение,
+    ref, стили, тесты и Storybook.
+-   [fe-hook](.agents/skills/fe-hook/SKILL.md) — пакеты хуков, состояние, callback,
+    подписки, таймеры и SSR.
+-   [fe-naming](.agents/skills/fe-naming/SKILL.md) — имена переменных, параметров, props,
+    типов, файлов и сущностей.
+
 ## Перед изменениями
 
 1. Прочитай `package.json`, README, конфигурацию сборки, исходники и тесты целевого пакета.

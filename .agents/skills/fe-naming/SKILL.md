@@ -1,0 +1,88 @@
+---
+name: fe-naming
+description: Именование в TypeScript и React-коде Byndyusoft UI. Используй при выборе или ревью имён переменных, параметров, props, callback, состояния, ref, типов, компонентов, хуков и файлов, а также при исправлении предупреждений naming-convention.
+---
+
+# Именование
+
+Подбирай имена по смыслу и принятым подходам целевого пакета.
+Не переименовывай существующий публичный API ради косметического соответствия:
+сначала учитывай потребителей и совместимость. Общие правила работы — в
+[AGENTS.md](../../../AGENTS.md).
+
+## Правила конфигурации
+
+Корневой `eslint.config.js` подключает `@byndyusoft/eslint-config/typescript-style-frontend`.
+Его `@typescript-eslint/naming-convention` задаёт предупреждения для:
+
+| Сущность            | Правило                    | Пример                                         |
+| ------------------- | -------------------------- | ---------------------------------------------- |
+| Интерфейс           | PascalCase с префиксом `I` | `ITextInputProps`, `IThrottledCallbackOptions` |
+| Type alias          | PascalCase с префиксом `T` | `TNumberParts`, `TUseArray`                    |
+| Enum и его элементы | PascalCase                 | `InputMode`, `InputMode.Numeric`               |
+
+Общая stylistic-конфигурация также предупреждает о нарушении camelCase.
+Префиксы boolean, callback и ref ниже — соглашения по коду и рекомендации,
+а не включённые обязательные ESLint-правила.
+
+В `packages/types` есть исторические экспорты `Callback`, `Nullable`, `Tuple` и другие
+без префикса `T`; сохраняй их имена. Проверяй действующую конфигурацию и контракт;
+не переноси backend-правила из неиспользуемого `typescript-style-backend`.
+
+## Переменные и параметры
+
+| Назначение                    | Подход                                 | Примеры                                            |
+| ----------------------------- | -------------------------------------- | -------------------------------------------------- |
+| Значение, параметр, объект    | camelCase, предметное имя              | `targetElement`, `initialValue`, `observerOptions` |
+| Коллекция                     | Множественное число или роль коллекции | `entries`, `observedElements`, `spacingPropsNames` |
+| Один элемент                  | Единственное число                     | `entry`, `element`, `item`                         |
+| Boolean-состояние             | Читаемое условие                       | `isDisabled`, `isContentWide`, `hasValue`          |
+| Флаг возможности/поведения    | Имя, передающее смысл                  | `withAutoHeight`, `leading`, `trailing`            |
+| React state и setter          | Согласованная пара                     | `value` / `setValue`, `isOpen` / `setIsOpen`       |
+| Предыдущее/следующее значение | Укажи роль во времени                  | `previousValue`, `nextValue`, `initialValue`       |
+| Ref на ресурс или данные      | Суффикс `Ref`, если он поясняет роль   | `callbackRef`, `observerRef`, `elementRef`         |
+| Параметр DOM-ref              | Сохраняй понятный контекст             | `ref`, `refs`, `target`                            |
+| DOM-событие                   | Обычно `event`                         | `event.target.value`                               |
+| Функция-параметр              | Назови её задачу                       | `callback`, `predicate`, `comparator`, `handler`   |
+
+-   Используй английские имена идентификаторов. Тексты документации и тестов могут быть русскими.
+-   Для функций выбирай действие: `getValue`, `setValue`, `removeValue`, `clear`, `reset`,
+    `start`, `stop`, `cancel`, `flush`; для проверки — читаемый predicate вроде `hasValue`.
+-   `onChange`, `onResize` обозначают callback, который передаёт потребитель;
+    `handleChange`, `handleResize` — внутреннюю реакцию на событие.
+    Не добавляй `handle` к любой функции: `save`, `execute`, `cancel` уже передают действие.
+-   Параметры времени и размеров должны иметь понятные единицы. Сохраняй существующие
+    `delay`, `debounceDelay`, `throttleDelay` с документацией в миллисекундах.
+    В новом неоднозначном контексте допустимы `delayMs`, `widthPx`.
+-   Избегай `data`, `obj`, `val`, `tmp`, если есть предметное имя. Короткие `index`, `key`,
+    `args`, `ref` уместны в небольшом очевидном контексте.
+-   Для generic используй `T` для одного значения или осмысленные имена вроде `TArgs`,
+    `TResult`, `TElement`. Это рекомендация читаемости; правило префикса type alias
+    не задаёт правило для generic-параметров.
+-   Не требуй UPPER_SNAKE_CASE от каждого `const`: в коде есть `spacingUnits` и
+    `spacingPropsNames`. Для констант следуй соседним файлам и принятому стилю пакета.
+
+## Файлы и сущности
+
+| Сущность               | Формат                 | Пример                                                   |
+| ---------------------- | ---------------------- | -------------------------------------------------------- |
+| Каталог/имя workspace  | kebab-case             | `components/text-input`, `@byndyusoft-ui/text-input`     |
+| Компонент или класс    | PascalCase             | `TextInput`, `LocalStorageService`                       |
+| Хук                    | `use` + PascalCase     | `useDebouncedCallback`                                   |
+| Каталог hook-пакета    | `use-` + kebab-case    | `hooks/use-debounced-callback`                           |
+| Реализация             | Имя сущности           | `TextInput.tsx`, `useDebouncedCallback.ts`               |
+| Типы и утилиты         | Имя сущности + роль    | `TextInput.types.ts`, `Plural.utilities.ts`              |
+| Тесты                  | Имя сущности + суффикс | `TextInput.tests.tsx`, `useDebouncedCallback.tests-d.ts` |
+| Истории и документация | Имя сущности + суффикс | `TextInput.stories.tsx`, `TextInput.docs.mdx`            |
+
+Не перемещай существующие истории и тесты только ради выравнивания структуры:
+в репозитории используются как файлы рядом с реализацией, так и `__stories__`/`__tests__`.
+Сохраняй регистр импортов — TypeScript проверяет `forceConsistentCasingInFileNames`.
+
+## Проверка переименования
+
+Перед переименованием найди объявления, импорты, реэкспорты, обращения в тестах,
+Storybook и README. Учитывай публичные props и ключи объектов отдельно от локальных переменных.
+Для локального переименования проверь затронутый пакет; при изменении публичного имени
+проверь потребителей, тесты типов, документацию и необходимость changeset.
+Не расширяй задачу до массового переименования исторических исключений.
