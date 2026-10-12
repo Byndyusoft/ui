@@ -1,0 +1,41 @@
+{
+  "publishedSince": "2026-10-05T05:58:34.000Z",
+  "checkedAt": "2026-10-12T05:58:34.000Z",
+  "packages": [
+    {
+      "name": "@byndyusoft-ui/use-debounced-callback",
+      "previousVersion": "0.0.1",
+      "publishedAt": "2026-10-09T07:45:47.272Z"
+    },
+    {
+      "name": "@byndyusoft-ui/use-debounced-value",
+      "previousVersion": "0.0.1",
+      "publishedAt": "2026-10-09T07:46:51.369Z"
+    },
+    {
+      "name": "@byndyusoft-ui/use-resize-observer",
+      "previousVersion": "0.0.1",
+      "publishedAt": "2026-10-09T06:59:29.801Z"
+    },
+    {
+      "name": "@byndyusoft-ui/use-throttled-callback",
+      "previousVersion": "0.3.0",
+      "publishedAt": "2026-10-09T11:19:32.486Z"
+    },
+    {
+      "name": "@byndyusoft-ui/use-throttled-value",
+      "previousVersion": "0.3.0",
+      "publishedAt": "2026-10-09T11:19:50.008Z"
+    },
+    {
+      "name": "@byndyusoft-ui/text-area",
+      "previousVersion": "0.0.1",
+      "publishedAt": "2026-10-09T15:16:17.602Z"
+    },
+    {
+      "name": "@byndyusoft-ui/text-input",
+      "previousVersion": "0.0.1",
+      "publishedAt": "2026-10-09T15:42:36.730Z"
+    }
+  ]
+}

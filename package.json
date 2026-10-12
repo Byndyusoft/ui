@@ -17,6 +17,8 @@
     "build": "npm run clean && turbo build",
     "clean": "turbo clean && rimraf .turbo",
     "test": "vitest run --typecheck --reporter=verbose",
+    "test:packages": "turbo run build --filter=@byndyusoft-ui/text-area --filter=@byndyusoft-ui/text-input --filter=@byndyusoft-ui/use-debounced-value --filter=@byndyusoft-ui/use-throttled-value && node scripts/test-hook-packages.mjs",
+    "test:release-packages": "npm run test:packages",
     "test:watch": "vitest watch --typecheck",
     "lint:check": "turbo lint:check",
     "lint:fix": "turbo lint:fix",
@@ -31,7 +33,8 @@
     "start": "storybook dev -p 6009",
     "set-changes": "changeset",
     "update-packages-versions": "changeset version",
-    "publish": "changeset publish"
+    "publish": "changeset publish",
+    "publish:release-packages": "node scripts/publish-release-packages.mjs"
   },
   "repository": {
     "type": "git",
