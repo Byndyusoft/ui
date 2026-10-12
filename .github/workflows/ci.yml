@@ -49,7 +49,7 @@ jobs:
             - name: Run Tests
               run: npm run test
 
-            - name: Test packed packages with published dependencies
+            - name: Test packed packages
               run: npm run test:packages
 
             - name: Build Storybook
