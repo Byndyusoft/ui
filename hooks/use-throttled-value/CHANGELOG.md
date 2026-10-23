@@ -1,5 +1,13 @@
 # @byndyusoft-ui/use-throttled-value
 
+## 0.3.1
+
+### Patch Changes
+
+-   Build the selected hooks, TextArea and TextInput as CommonJS so their published packages load in Node.js and test runners. Preserve default and named exports and TypeScript types for require and import consumers. Keep React and existing hook dependencies external.
+-   Updated dependencies
+    -   @byndyusoft-ui/use-throttled-callback@0.3.1
+
 ## 0.3.0
 
 ### Minor Changes

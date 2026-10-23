@@ -1,6 +1,6 @@
 {
   "name": "@byndyusoft-ui/use-throttled-value",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "React-хук Byndyusoft UI для состояния с ограниченной частотой обновлений",
   "keywords": [
     "byndyusoft",
@@ -21,7 +21,7 @@
     "url": "git+https://github.com/Byndyusoft/ui.git"
   },
   "scripts": {
-    "build": "tsc --project tsconfig.build.json",
+    "build": "rimraf dist && rollup --config ../../rollup.hooks.config.mjs",
     "clean": "rimraf dist && rimraf .turbo && rimraf node_modules && rimraf package-lock.json",
     "lint:check": "npm run eslint:check && npm run prettier:check && npm run stylelint:check",
     "lint:fix": "npm run eslint:fix && npm run prettier:fix && npm run stylelint:fix",
@@ -40,12 +40,26 @@
     "access": "public"
   },
   "dependencies": {
-    "@byndyusoft-ui/use-throttled-callback": "0.3.0"
+    "@byndyusoft-ui/use-throttled-callback": "0.3.1"
   },
   "files": [
     "dist/**/*"
   ],
   "peerDependencies": {
     "react": ">=17"
-  }
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "type": "commonjs"
 }

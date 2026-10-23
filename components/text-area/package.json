@@ -1,6 +1,6 @@
 {
   "name": "@byndyusoft-ui/text-area",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Компонент TextArea библиотеки Byndyusoft UI",
   "keywords": [
     "byndyusoft",
@@ -11,15 +11,19 @@
   "author": "Byndyusoft Frontend Developer <frontend@byndyusoft.com>",
   "homepage": "https://github.com/Byndyusoft/ui/tree/master/components/text-area#readme",
   "license": "Apache-2.0",
-  "type": "module",
+  "type": "commonjs",
   "main": "dist/index.js",
-  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "default": "./dist/index.js"
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
     },
     "./package.json": "./package.json"
   },
@@ -31,7 +35,7 @@
     "url": "git+https://github.com/Byndyusoft/ui.git"
   },
   "scripts": {
-    "build": "rollup --config",
+    "build": "rimraf dist && rollup --config",
     "clean": "rimraf dist && rimraf .turbo && rimraf node_modules && rimraf package-lock.json",
     "lint:check": "npm run eslint:check && npm run prettier:check && npm run stylelint:check",
     "lint:fix": "npm run eslint:fix && npm run prettier:fix && npm run stylelint:fix",
@@ -52,10 +56,10 @@
     "react": ">=17"
   },
   "dependencies": {
-    "@byndyusoft-ui/use-debounced-callback": "^0.0.1",
+    "@byndyusoft-ui/use-debounced-callback": "^0.0.2",
     "@byndyusoft-ui/use-isomorphic-layout-effect": "^0.0.0",
     "@byndyusoft-ui/use-latest-ref": "^1.0.1",
-    "@byndyusoft-ui/use-resize-observer": "^0.0.1",
-    "@byndyusoft-ui/use-throttled-callback": "^0.3.0"
+    "@byndyusoft-ui/use-resize-observer": "^0.0.2",
+    "@byndyusoft-ui/use-throttled-callback": "^0.3.1"
   }
 }
