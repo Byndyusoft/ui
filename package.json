@@ -17,7 +17,6 @@
     "build": "npm run clean && turbo build",
     "clean": "turbo clean && rimraf .turbo",
     "test": "vitest run --typecheck --reporter=verbose",
-    "test:packages": "node scripts/test-hook-packages.mjs",
     "test:watch": "vitest watch --typecheck",
     "lint:check": "turbo lint:check",
     "lint:fix": "turbo lint:fix",
