@@ -5,6 +5,7 @@ import { IHttpRequestConfig, IHttpResponse, THttpParams, THttpRequestExecutor, T
 
 const executor: THttpRequestExecutor = <T>(config: IHttpRequestConfig): Promise<IHttpResponse<T>> =>
     Promise.resolve({
+        data: undefined as T,
         status: HTTP_STATUS_CODES.OK,
         statusText: 'OK',
         headers: {},

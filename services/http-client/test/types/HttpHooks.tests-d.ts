@@ -12,6 +12,7 @@ import {
 
 const config: IHttpRequestConfig = { method: HTTP_METHODS.GET, url: '/items' };
 const response: IHttpResponse = {
+    data: undefined,
     status: HTTP_STATUS_CODES.OK,
     statusText: 'OK',
     headers: {},
@@ -19,6 +20,7 @@ const response: IHttpResponse = {
 };
 
 const nonStandardStatusResponse: IHttpResponse = {
+    data: undefined,
     status: 499,
     statusText: 'Client Closed Request',
     headers: {},

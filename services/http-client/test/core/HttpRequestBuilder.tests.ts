@@ -16,6 +16,7 @@ function createExecutor(configs: IHttpRequestConfig[] = []): THttpRequestExecuto
         configs.push(config);
 
         return Promise.resolve({
+            data: undefined as T,
             status: HTTP_STATUS_CODES.OK,
             statusText: 'OK',
             headers: {},

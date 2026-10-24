@@ -6,6 +6,7 @@ import { IHttpClientAdapter, IHttpRequestConfig, IHttpResponse } from '../../src
 
 function createResponse<T>(config: IHttpRequestConfig): IHttpResponse<T> {
     return {
+        data: undefined as T,
         status: HTTP_STATUS_CODES.OK,
         statusText: 'OK',
         headers: {},
