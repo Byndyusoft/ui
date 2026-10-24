@@ -1,0 +1,49 @@
+{
+  "name": "@byndyusoft-ui/use-resize-observer",
+  "version": "0.0.1",
+  "description": "React-хук Byndyusoft UI для наблюдения за размерами элементов",
+  "keywords": [
+    "byndyusoft",
+    "byndyusoft-ui",
+    "react",
+    "hook",
+    "use-resize-observer"
+  ],
+  "author": "Byndyusoft Frontend Stream <frontend@byndyusoft.com>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-resize-observer#readme",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Byndyusoft/ui.git"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "clean": "rimraf dist && rimraf .turbo && rimraf node_modules && rimraf package-lock.json",
+    "lint:check": "npm run eslint:check && npm run prettier:check && npm run stylelint:check",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix && npm run stylelint:fix",
+    "eslint:check": "eslint src --config ../../eslint.config.js",
+    "eslint:fix": "eslint src --config ../../eslint.config.js --fix",
+    "prettier:check": "prettier --check \"**/*.{ts,tsx,json,md,mdx}\"",
+    "prettier:fix": "prettier --write \"**/*.{ts,tsx,json,md,mdx}\"",
+    "stylelint:check": "stylelint '**/*.{css,scss}' --allow-empty-input",
+    "stylelint:fix": "stylelint '**/*.{css,scss}' --fix --allow-empty-input",
+    "test": "vitest run --typecheck --root ../.. hooks/use-resize-observer/src"
+  },
+  "bugs": {
+    "url": "https://github.com/Byndyusoft/ui/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@byndyusoft-ui/use-isomorphic-layout-effect": "^0.0.0"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "peerDependencies": {
+    "react": ">=17"
+  }
+}

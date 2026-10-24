@@ -1,0 +1,30 @@
+import { Meta, Markdown, Canvas, Source, ArgTypes } from '@storybook/blocks';
+import Readme from '../../README.md?raw';
+import Plural from '../Plural';
+import * as PluralStories from './Plural.stories';
+
+<Meta title="components/Plural" of={PluralStories} />
+
+<Markdown>{Readme}</Markdown>
+
+## Использование
+
+Чтобы использовать компонент в проекте:
+
+1. Импортируйте компонент:
+
+<Source language="javascript" code="import Plural from '@byndyusoft-ui/plural';" />
+
+2. Передайте количество, локаль и формы:
+
+-   ru
+
+<Canvas sourceState="shown" of={PluralStories.RuStory} />
+
+-   en
+
+<Canvas sourceState="shown" of={PluralStories.EnStory} />
+
+## Props
+
+<ArgTypes of={Plural} />

@@ -1,20 +1,9 @@
-import { Meta, Canvas, Source } from '@storybook/addon-docs';
-import { Markdown } from "@storybook/blocks";
+import { Canvas, Markdown, Meta } from '@storybook/blocks';
 import Readme from '../../README.md?raw';
-import {ThrottledValueStory} from './useThrottledValue.stories';
+import * as Stories from './useThrottledValue.stories';
 
-<Meta title="hooks/useThrottledValue"/>
+<Meta of={Stories} />
 
 <Markdown>{Readme}</Markdown>
 
-
-## Usage
-
-To use the hook in your project you must:
-
-1. Import the hook where you need it:
-
-<Source language="javascript" code="import useThrottledValue from '@byndyusoft-ui/use-throttled-value';" />
-
-
-<Canvas of={ThrottledValueStory} />
+<Canvas of={Stories.ThrottledValueStory} />

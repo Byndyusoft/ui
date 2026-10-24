@@ -1,51 +1,100 @@
-# `@byndyusoft-ui/use-throttle`
----
-> A React hook that throttles value updates to a specified delay.
+# `@byndyusoft-ui/use-throttled-value`
 
-### Installation
+React-хук для состояния с ограниченной частотой обновлений. API построен по образцу `useState` и `use-debounced-value`; управление интервалом выполняет `@byndyusoft-ui/use-throttled-callback`.
 
-```
-npm i @byndyusoft-ui/use-throttled-value
-```
-### Usage
+## Установка
 
-#### useThrottledValue
-```jsx
-import React, { useState, useMemo } from "react";
-import { useThrottledValue } from '@byndyusoft-ui/use-throttled-value';
-
-const initValue = 0;
-
-export default function App() {
-  const [throttledValue, setThrottledValue] = useThrottledValue(initValue, 1500);
-
-  const performHeavyCalculation = () => {
-    setThrottledValue(Math.floor(Math.random() * 10000));
-  };
-  
-  return (
-    <div>
-      <button onClick={performHeavyCalculation}>Calculate</button>
-      <p>Throttled value: {throttledValue}</p>
-    </div>
-  );
-}
+```sh
+npm install @byndyusoft-ui/use-throttled-value
 ```
 
-### Options for useThrottledValue
+## Использование
 
-The `useThrottledValue` hook accepts an optional third parameter, which is an options object. The options object can have the following properties:
+```tsx
+import React, { useState } from 'react';
+import useThrottledValue from '@byndyusoft-ui/use-throttled-value';
 
-- `leading`: Specifies whether the function should be called on the leading edge of the timeout. Default is `true`.
-- `trailing`: Specifies whether the function should be called on the trailing edge of the timeout. Default is `true`.
+const Example = (): JSX.Element => {
+    const [value, setValue] = useState('');
+    const [savedValue, setSavedValue] = useThrottledValue('', 500);
 
-```jsx
-const [throttledValue, setThrottledValue] = useThrottledValue(0, 1500, { leading: false });
+    return (
+        <div>
+            <label>
+                Текст
+                <input
+                    value={value}
+                    onChange={event => {
+                        const nextValue = event.target.value;
 
-const [throttledValue, setThrottledValue] = useThrottledValue(0, 1500, { trailing: false });
-
-// Callback will not be called!
-const [throttledValue, setThrottledValue] = useThrottledValue(0, 1500, { leading: false, trailing: false });
+                        setValue(nextValue);
+                        setSavedValue(nextValue);
+                    }}
+                />
+            </label>
+            <p>Сохранённое значение: {savedValue}</p>
+            <button type="button" onClick={setSavedValue.flush}>
+                Применить сейчас
+            </button>
+            <button type="button" onClick={setSavedValue.cancel}>
+                Отменить ожидание
+            </button>
+        </div>
+    );
+};
 ```
 
->If both `leading` and `trailing` are set to `false`, the function will not be called at all. This configuration effectively disables the throttling mechanism, as the function will never be executed.
+## Параметры и результат
+
+```ts
+useThrottledValue<T>(
+    initialValue: T | (() => T),
+    delay: number,
+    options?: IThrottledCallbackOptions
+): [T, IThrottledCallback<[SetStateAction<T>]>];
+```
+
+-   Начальное состояние или ленивый инициализатор работают как в `useState`. Состояние доступно сразу, без таймера. Изменение начального аргумента при последующих рендерах не меняет состояние.
+-   Setter принимает новое значение или функцию `(previousValue: T) => T`.
+-   По умолчанию первый вызов setter применяется сразу, а последнее обновление в пределах интервала применяется после ожидания. После отложенного обновления следующий немедленный вызов также ограничен интервалом.
+-   Ожидающие функции обновления не накапливаются: сохраняется только последняя. Она выполняется при применении обновления и получает актуальное состояние. Отброшенные функции не выполняются.
+-   Объекты и массивы сохраняются по ссылке, без копирования.
+-   Setter сохраняет ссылку при неизменных задержке и опциях. Обновление состояния не меняет setter. Кортеж сохраняет ссылку при неизменных состоянии и setter.
+-   `delay` — обязательное конечное неотрицательное число миллисекунд. Изменение задержки не перезапускает текущий таймер и применяется к следующему ожиданию.
+-   `options.leading` и `options.trailing` по умолчанию равны `true`. Их поведение и изменение во время ожидания совпадают с `use-throttled-callback`.
+-   При `delay: 0` первое обновление с `leading: true` выполняется синхронно; отложенное обновление остаётся асинхронным.
+-   При размонтировании ожидающее обновление отменяется. При серверном рендере возвращается начальное состояние без таймеров.
+
+Хук доступен как экспорт по умолчанию и именованный экспорт `useThrottledValue`. Тип кортежа экспортируется как `TUseThrottledValueReturn<T>`.
+
+## Ленивый инициализатор и функция обновления
+
+```tsx
+const [count, setCount] = useThrottledValue(() => 0, 500);
+
+setCount(previousCount => previousCount + 1);
+```
+
+Для хранения самой функции в состоянии передавайте обёртку, как в `useState`:
+
+```tsx
+const [handler, setHandler] = useThrottledValue(() => initialHandler, 500);
+
+setHandler(() => nextHandler);
+```
+
+## Опции и управление ожиданием
+
+```tsx
+const [value, setValue] = useThrottledValue('', 500, { leading: false });
+
+setValue('новое значение');
+setValue.flush();
+
+setValue('отменённое значение');
+setValue.cancel();
+```
+
+`leading: false` откладывает первое обновление на полный интервал. `trailing: false` отбрасывает промежуточные обновления. При отключении обоих режимов состояние не меняется и таймеры не создаются.
+
+`flush()` немедленно применяет последнее ожидающее обновление один раз. При `leading: true` после него начинается новый ограничивающий интервал. Без ожидающего обновления `flush()` ничего не делает. `cancel()` отменяет обновление и сбрасывает ограничение; уже применённое состояние сохраняется. Ручные `flush()` и `cancel()` могут нарушать обычный минимальный интервал.

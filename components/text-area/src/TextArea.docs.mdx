@@ -1,0 +1,29 @@
+import { Markdown, Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import Readme from '../README.md?raw';
+import * as TextAreaStories from './TextArea.stories';
+
+<Meta of={TextAreaStories} />
+
+<Markdown>{Readme}</Markdown>
+
+## Примеры
+
+### Вызов после паузы
+
+<Canvas of={TextAreaStories.Debounced} />
+
+### Ограничение частоты
+
+<Canvas of={TextAreaStories.Throttled} />
+
+### Автоматическая высота
+
+<Canvas of={TextAreaStories.AutoHeight} />
+
+### Совместная работа
+
+<Canvas of={TextAreaStories.Combined} />
+
+## Все пропсы
+
+<ArgTypes of={TextAreaStories} />
