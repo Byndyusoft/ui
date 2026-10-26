@@ -30,6 +30,21 @@ import Plural from '@byndyusoft-ui/plural';
 />;
 ```
 
+Формы можно вынести в константу и проверить их соответствие локали с помощью `TPluralForms`:
+
+```tsx
+import Plural, { type TPluralForms } from '@byndyusoft-ui/plural';
+
+const projectPluralForms = {
+    one: 'проект',
+    few: 'проекта',
+    many: 'проектов',
+    other: 'проекта'
+} satisfies TPluralForms<'ru'>;
+
+<Plural count={count} locale="ru" forms={projectPluralForms} />;
+```
+
 Компонент рендерит только выбранную форму. Число можно вывести рядом отдельно, чтобы его форматировать, округлять или отображать по правилам конкретного интерфейса.
 
 `locale` можно не передавать. По умолчанию используется `ru`, поэтому без `locale` нужно передать формы для русского языка:
