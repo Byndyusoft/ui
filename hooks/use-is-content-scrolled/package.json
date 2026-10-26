@@ -1,0 +1,49 @@
+{
+  "name": "@byndyusoft-ui/use-is-content-scrolled",
+  "version": "0.0.1",
+  "description": "Byndyusoft UI React Hook",
+  "keywords": [
+    "byndyusoft",
+    "byndyusoft-ui",
+    "react",
+    "hook",
+    "scroll",
+    "content"
+  ],
+  "author": "Byndyusoft Frontend Stream <frontend@byndyusoft.com>",
+  "homepage": "https://github.com/Byndyusoft/ui/tree/master/hooks/use-is-content-scrolled#readme",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Byndyusoft/ui.git"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "clean": "rimraf dist && rimraf .turbo && rimraf node_modules && rimraf package-lock.json",
+    "lint": "eslint src --config ../../eslint.config.js"
+  },
+  "bugs": {
+    "url": "https://github.com/Byndyusoft/ui/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@byndyusoft-ui/use-event-listener": "^0.1.2",
+    "@byndyusoft-ui/use-isomorphic-layout-effect": "^0.0.0"
+  }
+}
