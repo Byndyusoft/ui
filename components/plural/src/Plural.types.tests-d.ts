@@ -20,9 +20,9 @@ const enForms = {
 // Файл проверяет не runtime-поведение, а типовую связь locale и forms.
 describe('components/Plural/types', () => {
     test('требует соответствия forms динамической locale', () => {
-        // @ts-expect-error: forms must be correlated with the concrete locale branch
         React.createElement(Plural, {
             count: 2,
+            // @ts-expect-error: forms must be correlated with the concrete locale branch
             locale,
             forms: enForms
         });
