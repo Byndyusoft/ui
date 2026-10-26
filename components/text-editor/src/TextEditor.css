@@ -1,0 +1,40 @@
+.byndyusoft-text-editor {
+    border: 1px solid #b5b5b5;
+    border-radius: 4px;
+}
+
+.byndyusoft-text-editor__toolbar {
+    padding: 8px;
+    border-bottom: 1px solid #b5b5b5;
+}
+
+.byndyusoft-text-editor__toolbar [role='toolbar'] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.byndyusoft-text-editor__toolbar [aria-pressed='true'] {
+    background-color: #dce9ff;
+}
+
+.byndyusoft-text-editor__input {
+    box-sizing: border-box;
+    height: 100px;
+    min-height: 100px;
+    padding: 8px;
+    overflow: auto;
+    overflow-wrap: anywhere;
+}
+
+.byndyusoft-text-editor__input[aria-disabled='true'] {
+    opacity: 0.5;
+}
+
+.byndyusoft-text-editor__input .is-editor-empty:first-child::before {
+    float: left;
+    height: 0;
+    color: #757575;
+    pointer-events: none;
+    content: attr(data-placeholder);
+}
