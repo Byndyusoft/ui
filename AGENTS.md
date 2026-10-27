@@ -1,13 +1,17 @@
-# Инструкции для работы с репозиторием
+# AGENTS.md
 
 ## Назначение и структура
 
-Byndyusoft UI — монорепозиторий публикуемых React-компонентов, хуков, типов и стилей.
+Byndyusoft UI — монорепозиторий публикуемых React-компонентов, хуков, сервисов, типов и стилей
+на Turborepo и npm workspaces.
 Каждая сущность — отдельный npm workspace с именем `@byndyusoft-ui/<имя>`.
+У TypeScript-пакетов точка входа обычно `src/index.ts`, результат сборки — `dist/`;
+CSS-пакеты могут публиковать исходные файлы без сборки.
 
 -   `components/*` — React-компоненты; сборка Rollup через `rollup.base.config.mjs`.
 -   `hooks/*` — React-хуки; обычно сборка TypeScript через `tsconfig.build.json`.
 -   `services/local-storage` — сервис работы с localStorage; сборка TypeScript.
+-   `services/http-client` — HTTP-клиент; декларации собираются TypeScript, ESM/CommonJS — Rollup.
 -   `packages/types` — общие TypeScript-типы и тесты типов.
 -   `styles/css-utilities` — SCSS-утилиты, собираемые Sass в `dist/index.css`.
 -   `styles/reset-css`, `styles/keyframes-css` — пакеты исходного CSS.
@@ -52,9 +56,11 @@ Byndyusoft UI — монорепозиторий публикуемых React-к
 | Задача                                           | Команда                                                                   |
 | ------------------------------------------------ | ------------------------------------------------------------------------- |
 | Все тесты, включая тесты типов                   | `npm test`                                                                |
-| Тесты одного пакета, пример                      | `npm test -- hooks/use-debounced-callback/src`                            |
+| Выборочные тесты через корневой конфиг, пример   | `npm test -- hooks/use-debounced-callback/src`                            |
+| Тесты http-client с его конфигом и typecheck     | `npm test --workspace=@byndyusoft-ui/http-client`                         |
 | Тесты в режиме наблюдения                        | `npm run test:watch`                                                      |
 | Общие проверки линтерами                         | `npm run lint:check`                                                      |
+| Исправление замечаний линтеров                   | `npm run lint:fix`                                                        |
 | Линтеры одного workspace, пример                 | `npm run lint:check --workspace=@byndyusoft-ui/text-area`                 |
 | Проверка форматирования workspace, пример        | `npm run prettier:check --workspace=@byndyusoft-ui/text-area`             |
 | Форматирование конкретного файла                 | `npx --no-install prettier --write <путь-к-файлу>`                        |
@@ -76,10 +82,16 @@ Byndyusoft UI — монорепозиторий публикуемых React-к
     `services/local-storage` есть только `lint`; у `packages/types` нет скриптов линтинга.
     Проверяй доступные скрипты. Общий `lint:check` охватывает пакеты, где этот скрипт определён.
 -   Для выборочных тестов используй фильтр пути через корневой `npm test`.
+    `npm test --workspace=<имя-пакета>` запускает пакетный скрипт `test`, если он есть и настроен корректно.
+    Например, скрипт `services/http-client` явно выбирает свой конфиг и включает typecheck.
+    Скрипт `hooks/use-timeout` использует `--project`, поэтому без настройки проектов в корневом конфиге
+    для этого хука используй фильтр пути: `npm test -- hooks/use-timeout/src`.
     Корневой Vitest не объявляет `test.projects`; наличие пакетного `vitest.config.mjs`
     само по себе не делает пакет именованным проектом для `--project`.
 -   Актуальные имена команд: `lint:check`, `prettier:fix`, `build-storybook`.
     Корневых `lint`, `prettier:write`, `build:storybook` нет, хотя они упомянуты в документации.
+-   Для отдельных линтеров доступны корневые `eslint:check` / `eslint:fix`,
+    `stylelint:check` / `stylelint:fix`, `prettier:check` / `prettier:fix`.
 
 ## Код и публичный API
 
@@ -108,14 +120,24 @@ Byndyusoft UI — монорепозиторий публикуемых React-к
 
 Prettier задаёт отступ в 4 пробела, одинарные кавычки, отсутствие завершающих запятых,
 ширину строки 120; JSON форматируется с отступом в 2 пробела.
+Конфигурация содержит переопределение кавычек для стилей; проверяй фактический `prettier.config.js`.
 ESLint и Stylelint используют конфигурации Byndyusoft. Форматируй только затронутые файлы,
 чтобы не создавать посторонние изменения.
+
+Пакетные ESLint-скрипты обычно используют `../../eslint.config.js`. Его overrides ослабляют
+правила для файлов, соответствующих настроенным test/story-шаблонам; проверяй glob перед
+тем, как рассчитывать на исключение.
+
+Pre-commit запускает lint-staged. В `lint-staged.config.js` сейчас указан шаблон
+`{ts,tsx,js,jsx,json,css,scss,md}` без `*.` и команда `prettier` без `--write`.
+Поэтому не полагайся на автоматическую проверку или исправление форматирования этим хуком.
 
 Тестовый раннер — Vitest 3. Общий конфиг `vitest.config.mjs` включает globals и jsdom;
 `setupTests.ts` подключает jest-dom и mock localStorage.
 
 -   Runtime-тесты обычно называются `*.tests.ts` или `*.tests.tsx` и лежат рядом с реализацией
-    либо в `src/__tests__`. Также поддерживаются суффиксы `.test` и `.spec`.
+    либо в `src/__tests__`; у `http-client` — в отдельном `test/`.
+    Также поддерживаются суффиксы `.test` и `.spec`.
 -   Тесты типов называются `*.tests-d.ts`, используют `expectTypeOf` и запускаются через `--typecheck`
     в корневом `npm test`. Проверяй публичную точку входа, если меняется API или вывод типов.
 -   Для компонентов используй `@testing-library/react`, для хуков — `@testing-library/react-hooks`,
@@ -145,7 +167,7 @@ ESLint и Stylelint используют конфигурации Byndyusoft. Ф
 -   Для изменений кода запускай тесты затронутых пакетов, доступные линтеры и сборку с зависимостями.
     Проверяй потребителей, если меняется общий хук, тип или публичный API.
 -   Для изменений UI и историй проверяй Storybook. При широких изменениях ориентируйся на набор CI:
-    `npm run lint:check`, `npm test`, `npm run build`, `npm run build-storybook`.
+    `npm run lint:check` → `npm test` → `npm run build` → `npm run build-storybook`.
 -   Для правок только документации достаточно проверки форматирования и соответствия ссылок/команд.
 -   Если проверка падает из-за существующей проблемы, укажи команду, причину и влияние на результат.
     Не скрывай ошибку отключением проверки и не исправляй посторонние пакеты без необходимости.
@@ -158,6 +180,8 @@ ESLint и Stylelint используют конфигурации Byndyusoft. Ф
     не требует повышения версии пакетов.
 -   `npm run update-packages-versions` и `npm run publish` относятся к релизному процессу;
     запускай их только в рамках задачи на выпуск версии.
+-   Пакеты публикуются в scope `@byndyusoft-ui/` с `access: "public"`;
+    Changesets обновляет внутренние зависимости с `updateInternalDependencies: "patch"`.
 -   Changesets использует `master` как `baseBranch`. README также содержит старые указания
     про `next`; выбирай базу ветки по задаче и фактическому состоянию Git.
 -   Сообщения коммитов проверяются Conventional Commits. При подготовке PR используй
