@@ -1,52 +1,100 @@
 # `@byndyusoft-ui/use-throttled-callback`
----
-> A React hook that throttles the execution of a function to ensure it is called at most once every specified delay.
 
-### Installation
+React-хук для ограничения частоты вызовов функции. Автоматические вызовы разделены интервалом `delay`; отложенный вызов получает последние аргументы и актуальный обработчик.
 
+## Установка
+
+```sh
+npm install @byndyusoft-ui/use-throttled-callback
 ```
-npm i @byndyusoft-ui/use-throttled-callback
-```
 
-### Usage
+## Использование
 
-#### useThrottledCallback
-```jsx
+```tsx
 import React, { useState } from 'react';
 import useThrottledCallback from '@byndyusoft-ui/use-throttled-callback';
 
-const App = () => {
-    const [count, setCount] = useState(0);
-
-    const throttledHandleClick = useThrottledCallback(() => {
-        setCount(prevCount => prevCount + 1);
-    }, 1500);
+const Example = (): JSX.Element => {
+    const [value, setValue] = useState('');
+    const [savedValue, setSavedValue] = useState('');
+    const save = useThrottledCallback(setSavedValue, 500);
 
     return (
         <div>
-            <h1>Throttle Click Demo</h1>
-            <p>Count: {count}</p>
-            <button onClick={throttledHandleClick}>Click me</button>
+            <label>
+                Текст
+                <input
+                    value={value}
+                    onChange={event => {
+                        const nextValue = event.target.value;
+
+                        setValue(nextValue);
+                        save(nextValue);
+                    }}
+                />
+            </label>
+            <p>Сохранённое значение: {savedValue}</p>
+            <button type="button" onClick={save.flush}>
+                Сохранить сейчас
+            </button>
+            <button type="button" onClick={save.cancel}>
+                Отменить ожидание
+            </button>
         </div>
     );
 };
-
-export default App;
 ```
 
-### Options  `useThrottledCallback`
+## Параметры и результат
 
-The useThrottledCallback accept an optional third parameter, which is an options object. The options object can have the following properties:
-- `leading`: Specifies whether the function should be called on the leading edge of the timeout. Default is `true`.
-- `trailing`: Specifies whether the function should be called on the trailing edge of the timeout. Default is `true`.
+`useThrottledCallback(callback, delay, options?)` возвращает вызываемую функцию с методами `cancel()` и `flush()`. Типы аргументов выводятся из `callback`, включая необязательные и остальные аргументы. Возвращаемое значение обработчика не используется.
 
-```jsx
-const throttleCallback = useThrottledCallback(() => {}, 1500, { leading: false });
+Хук доступен как экспорт по умолчанию и именованный экспорт `useThrottledCallback`. Типы `IThrottledCallback<TArgs>` и `IThrottledCallbackOptions` экспортируются из пакета.
 
-const throttleCallback = useThrottledCallback(() => {}, 1500, { trailing: false });
+-   `delay` обязателен и должен быть конечным неотрицательным числом миллисекунд.
+-   `leading` и `trailing` по умолчанию равны `true`.
+-   Повторные вызовы в пределах интервала заменяют ожидающие аргументы, но не продлевают текущий таймер. При непрерывном вводе обработчик продолжает вызываться; полной паузы, как в debounce, не требуется.
+-   Между автоматическими вызовами проходит не меньше установленного для следующего ожидания интервала. После `trailing` новый `leading` не выполняется немедленно.
+-   Замена обработчика использует актуальную функцию без изменения ссылки на возвращаемую функцию и без перезапуска таймера.
+-   Изменение `delay` сохраняет срок текущего таймера. Следующее ожидание использует новую задержку.
+-   Возвращаемая функция сохраняет ссылку при неизменных задержке и опциях. При изменении настроек используйте функцию из нового результата хука. Ссылки на методы `cancel` и `flush` сохраняются.
+-   Повторные вызовы из самого обработчика сохраняются для следующего разрешённого выполнения. Исключение из обработчика передаётся вызывающей стороне и не блокирует хук навсегда.
+-   При размонтировании таймер и ожидающие аргументы очищаются. Автоматического выполнения обработчика нет.
+-   При серверном рендере сам вызов хука не обращается к DOM и не создаёт таймеров.
 
-// Callback will not be called!
-const throttleCallback = useThrottledCallback(() => {}, 1500, { leading: false, trailing: false });
+## Режимы leading и trailing
+
+| leading | trailing | Поведение                                                                                                                                                       |
+| ------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `true`  | `true`   | Первый вызов выполняется сразу. При повторных вызовах последнее значение выполняется в конце интервала. Следующий вызов также ограничен интервалом.             |
+| `true`  | `false`  | Первый вызов выполняется сразу. Вызовы до конца интервала игнорируются.                                                                                         |
+| `false` | `true`   | Первый вызов начинает ожидание. В конце интервала выполняются последние аргументы. После завершения следующий вызов начинает новое ожидание на полный интервал. |
+| `false` | `false`  | Обработчик не вызывается; таймеры не создаются.                                                                                                                 |
+
+При стандартных опциях одиночный вызов выполняется один раз сразу, без повторного `trailing`.
+
+Пример для `delay: 100` и стандартных опций: вызов в `0` мс выполняется сразу, повторный вызов в `50` мс выполняется в `100` мс. Новый вызов в `101` мс ожидает до `200` мс.
+
+Изменение `leading` не запускает ожидающий вызов раньше срока. Отключение `trailing` удаляет ожидающие аргументы, сохраняя текущее ограничение частоты. Отключение обоих режимов полностью отменяет ожидание. Повторное включение не восстанавливает удалённые аргументы.
+
+При `delay: 0` первый `leading` остаётся синхронным, а `trailing` выполняется асинхронно. Для полностью отложенного выполнения используйте `{ leading: false }`.
+
+## Управление ожиданием
+
+-   `cancel()` очищает таймер, аргументы и ограничение текущего интервала. Следующий вызов начинает новый интервал; при `leading: true` он может выполниться сразу.
+-   `flush()` немедленно выполняет последнее ожидающее `trailing` один раз. Если ожидания нет, ничего не делает и не снимает ограничение частоты.
+-   После `flush()` при `leading: true` ограничение отсчитывается заново от принудительного вызова. При `leading: false` следующий вызов начинает новое полное ожидание.
+-   Ручное применение `flush()` или сброс через `cancel()` может нарушать обычный минимальный интервал: это явное управление со стороны потребителя.
+
+Аргументы сохраняются по ссылке. При передаче React-события `event.target.value` отражает текущее значение DOM в момент выполнения; после завершения синхронного обработчика `event.currentTarget` становится `null`. Чтобы сохранить значение на момент ввода, передайте скопированную строку.
+
+## Выполнение при размонтировании
+
+Если требуется применить последний ожидающий вызов при размонтировании, выполните `flush()` в layout-очистке до пассивной отмены внутри хука:
+
+```tsx
+const save = useThrottledCallback(onSave, delay);
+useLayoutEffect(() => save.flush, [save.flush]);
 ```
 
->If both `leading` and `trailing` are set to `false`, the function will not be called at all. This configuration effectively disables the throttling mechanism, as the function will never be executed.
+При серверном рендере используйте изоморфный layout-эффект, например `@byndyusoft-ui/use-isomorphic-layout-effect`.

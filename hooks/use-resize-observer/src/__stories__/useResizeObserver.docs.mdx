@@ -1,0 +1,11 @@
+import { Canvas, Markdown, Meta } from '@storybook/blocks';
+import Readme from '../../README.md?raw';
+import * as Stories from './useResizeObserver.stories';
+
+<Meta of={Stories} />
+
+<Markdown>{Readme}</Markdown>
+
+<Canvas of={Stories.SingleElement} />
+
+<Canvas of={Stories.MultipleElements} />

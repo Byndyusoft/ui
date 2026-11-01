@@ -1,16 +1,15 @@
-import { useMemo, useState } from 'react';
+import { SetStateAction, useMemo, useState } from 'react';
 import useThrottledCallback, { IThrottledCallbackOptions } from '@byndyusoft-ui/use-throttled-callback';
-import { InitialState } from '@byndyusoft-ui/types';
 import { TUseThrottledValueReturn } from './useThrottledValue.types';
 
 const useThrottledValue = <T>(
-    value: InitialState<T>,
+    initialValue: T | (() => T),
     delay: number,
-    option?: IThrottledCallbackOptions
+    options?: IThrottledCallbackOptions
 ): TUseThrottledValueReturn<T> => {
-    const [throttledValue, setValue] = useState<T>(value);
+    const [throttledValue, setValue] = useState<T>(initialValue);
 
-    const setThrottledValue = useThrottledCallback<[T]>(setValue, delay, option);
+    const setThrottledValue = useThrottledCallback<[SetStateAction<T>]>(setValue, delay, options);
 
     return useMemo(() => [throttledValue, setThrottledValue], [throttledValue, setThrottledValue]);
 };

@@ -1,0 +1,25 @@
+import { Markdown, Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import Readme from '../README.md?raw';
+import * as TextInputStories from './TextInput.stories';
+
+<Meta of={TextInputStories} />
+
+<Markdown>{Readme}</Markdown>
+
+## Примеры
+
+### Вызов после паузы
+
+<Canvas of={TextInputStories.Debounced} />
+
+### Ограничение частоты
+
+<Canvas of={TextInputStories.Throttled} />
+
+### Совместная работа
+
+<Canvas of={TextInputStories.Combined} />
+
+## Все пропсы
+
+<ArgTypes of={TextInputStories} />

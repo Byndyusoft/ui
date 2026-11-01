@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
-import ModalsProvider, { useModals, useModalsState } from './';
 import Flex from '@byndyusoft-ui/flex';
+import { ModalsProvider, useModals, useModalsState } from './ModalsContext';
 import styles from './ModalsProvider.stories.module.css';
 
 const meta: Meta<typeof ModalsProvider> = {
