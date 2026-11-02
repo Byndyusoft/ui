@@ -1,6 +1,6 @@
 import { getStyleEntries, registerStyles, resetStyles } from '../utilities';
 
-describe('components/View/layoutStylesRegistry', () => {
+describe('components/View/stylesRegistry', () => {
     const config = { unit: '8px', values: { md: 1 } } as const;
     const css = '.bsui-p-md{padding:calc(var(--bsui-unit, 8px) * 1)}';
 

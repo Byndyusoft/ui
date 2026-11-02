@@ -1,7 +1,7 @@
 import React from 'react';
 import { describe, expectTypeOf, test } from 'vitest';
 import { createView } from '../createView';
-import { buildSpacingCss, getSpacingClassName, getSpacingValue, validateValuesKeys } from '../utilities';
+import { buildCss, getSpacingClassName, getSpacingValue, validateValuesKeys } from '../utilities';
 import type { ICreatedViewProps, ISpacingProps, IViewConfig } from '../types';
 import { spacingPropPrefixes, spacingUnitVariable } from '../constants';
 
@@ -27,7 +27,7 @@ describe('components/View/createView/types', () => {
     });
 
     test('экспортирует утилиты генерации CSS и проверки конфигурации', () => {
-        expectTypeOf(buildSpacingCss(View.config)).toEqualTypeOf<string>();
+        expectTypeOf(buildCss(View.config)).toEqualTypeOf<string>();
         expectTypeOf(getSpacingClassName('p', 'md')).toEqualTypeOf<string>();
         expectTypeOf(getSpacingValue('8px', 1)).toEqualTypeOf<string>();
         expectTypeOf(validateValuesKeys).returns.toBeVoid();

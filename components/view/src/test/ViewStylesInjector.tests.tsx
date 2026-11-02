@@ -4,11 +4,11 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { createView } from '../createView';
 import { ViewStylesInjector } from '../ViewStylesInjector';
-import { resetLayoutStyles } from '../utilities';
+import { resetStyles } from '../utilities';
 
 describe('components/View/ViewStylesInjector', () => {
     afterEach(() => {
-        resetLayoutStyles();
+        resetStyles();
         document.head.querySelectorAll('style[id^="bsui-layout-"]').forEach(style => style.remove());
     });
 
@@ -23,7 +23,7 @@ describe('components/View/ViewStylesInjector', () => {
     });
 
     test('при наличии отрендеренного компонентом style инъектор не добавляет дубль', () => {
-        resetLayoutStyles();
+        resetStyles();
         createView({ unit: '8px', values: { md: 1 } } as const);
 
         // эмулируем клиент после SSR: автоинъекции ещё не было, в head лежит серверный style
@@ -39,7 +39,7 @@ describe('components/View/ViewStylesInjector', () => {
 
         document.head.appendChild(serverStyle);
 
-        resetLayoutStyles();
+        resetStyles();
         createView({ unit: '8px', values: { md: 1 } } as const);
 
         expect(document.head.querySelectorAll('style[id^="bsui-layout-"]')).toHaveLength(1);
