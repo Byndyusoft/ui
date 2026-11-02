@@ -33,8 +33,8 @@ export const Flex = createFlex(View);
 ```tsx
 import { Flex, View } from '@/shared/ui/layout';
 
-<Flex direction="column" gap="lg" padding="xl">
-    <View marginBottom="md">...</View>
+<Flex direction="column" gap="lg" p="xl">
+    <View mb="md">...</View>
     <Flex gap="sm" alignItems="center">
         ...
     </Flex>
@@ -44,19 +44,21 @@ import { Flex, View } from '@/shared/ui/layout';
 gap-пропсы принимают те же токены, что и spacing-пропсы View. Стили (классы отступов,
 gap и flex-модификаторы) генерируются автоматически и доставляются так же, как у
 `createView`: автоинъекция в браузере и компонент `ViewStylesInjector` для SSR — подробности
-в README `@byndyusoft-ui/view`.
+в README `@byndyusoft-ui/view`. Flex поддерживает короткие aliases spacing-пропсов View
+(`m`, `mt`, `mh`, `p`, `pt`, `ph` и остальные); правила приоритета, aliases и сокращения
+классов описаны в README View.
 
 ## Props
 
-| Проп                         | Тип                                                                                 | Описание                    |
-| ---------------------------- | ----------------------------------------------------------------------------------- | --------------------------- |
-| `direction`                  | `row \| row-reverse \| column \| column-reverse`                                    | `flex-direction`            |
-| `wrap`                       | `nowrap \| wrap \| wrap-reverse`                                                    | `flex-wrap`                 |
-| `justifyContent`             | `flex-start \| flex-end \| center \| space-between \| space-around \| space-evenly` | `justify-content`           |
-| `alignContent`               | варианты выше + `stretch`                                                           | `align-content`             |
-| `alignItems`                 | `flex-start \| flex-end \| center \| baseline \| stretch`                           | `align-items`               |
-| `gap`, `rowGap`, `columnGap` | токен `values`                                                                      | Отступы между элементами    |
-| spacing-пропсы               | токен `values`                                                                      | Все отступы созданного View |
+| Проп                         | Тип                                                                                 | Описание                  |
+| ---------------------------- | ----------------------------------------------------------------------------------- | ------------------------- |
+| `direction`                  | `row \| row-reverse \| column \| column-reverse`                                    | `flex-direction`          |
+| `wrap`                       | `nowrap \| wrap \| wrap-reverse`                                                    | `flex-wrap`               |
+| `justifyContent`             | `flex-start \| flex-end \| center \| space-between \| space-around \| space-evenly` | `justify-content`         |
+| `alignContent`               | варианты выше + `stretch`                                                           | `align-content`           |
+| `alignItems`                 | `flex-start \| flex-end \| center \| baseline \| stretch`                           | `align-items`             |
+| `gap`, `rowGap`, `columnGap` | токен `values`                                                                      | Отступы между элементами  |
+| spacing-пропсы View          | токен `values`                                                                      | Полные и короткие отступы |
 
 Остальные пропсы (`as`, `className`, нативные атрибуты) проксируются в созданный View.
 
@@ -64,7 +66,7 @@ gap и flex-модификаторы) генерируются автомати�
 
 Из точки входа пакета также доступны:
 
--   `buildFlexCss(config)` — генерация CSS для `gap`, `rowGap` и `columnGap`.
+-   `buildCss(config)` — генерация CSS для `gap`, `rowGap` и `columnGap`.
 -   `flexModifiersCss` — CSS базового класса и модификаторов раскладки.
 -   `blockClassName` — базовый класс `bsui-flex`.
 -   `getDirectionModifier`, `getWrapModifier`, `getAlignContentModifier`,

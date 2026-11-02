@@ -1,6 +1,6 @@
 import React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
-import { InputType } from '@storybook/types';
+import type { Meta, StoryObj } from '@storybook/react';
+import type { InputType } from '@storybook/types';
 import { createView } from './createView';
 
 const config = {
@@ -33,19 +33,33 @@ const tokenControl: InputType = {
 const spacingControls = Object.fromEntries(
     [
         'margin',
+        'm',
         'marginTop',
+        'mt',
         'marginRight',
+        'mr',
         'marginBottom',
+        'mb',
         'marginLeft',
+        'ml',
         'marginHorizontal',
+        'mh',
         'marginVertical',
+        'mv',
         'padding',
+        'p',
         'paddingTop',
+        'pt',
         'paddingRight',
+        'pr',
         'paddingBottom',
+        'pb',
         'paddingLeft',
+        'pl',
         'paddingHorizontal',
-        'paddingVertical'
+        'ph',
+        'paddingVertical',
+        'pv'
     ].map(name => [name, tokenControl])
 );
 
@@ -76,6 +90,34 @@ export const RuntimeUnitOverride: TStory = {
                 <ViewContent />
             </View>
         </div>
+    ),
+    argTypes: spacingControls
+};
+
+export const CompactAliases: TStory = {
+    args: {
+        m: 'md',
+        p: 'lg'
+    },
+    render: args => (
+        <View {...args}>
+            <ViewContent />
+        </View>
+    ),
+    argTypes: spacingControls
+};
+
+export const CompactEqualSides: TStory = {
+    args: {
+        marginTop: 'md',
+        marginRight: 'md',
+        marginBottom: 'md',
+        marginLeft: 'md'
+    },
+    render: args => (
+        <View {...args}>
+            <ViewContent />
+        </View>
     ),
     argTypes: spacingControls
 };

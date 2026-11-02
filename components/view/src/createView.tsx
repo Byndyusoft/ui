@@ -1,26 +1,22 @@
 import { createElement, FC } from 'react';
-import { buildSpacingCss, getSpacingClassName, registerStyles, validateValuesKeys } from './utilities';
+import { buildCss, buildSpacingClassNames, registerStyles, resolveSpacingProps, validateValuesKeys } from './utilities';
 import { ICreatedView, ICreatedViewProps, IViewConfig, TSpacingValues } from './types';
-import { spacingPropsNames, spacingPropPrefixes } from './constants';
+import { spacingPropsNames } from './constants';
 
 export function createView<TGrid extends TSpacingValues>(config: IViewConfig<TGrid>): ICreatedView<TGrid> {
     validateValuesKeys(config.values);
 
-    registerStyles(config, buildSpacingCss(config));
+    registerStyles(config, buildCss(config));
 
     const CreatedView: FC<ICreatedViewProps<TGrid>> = ({ as = 'div', className, children, ...props }) => {
-        const classNames: Array<string> = [];
         const domProps = { ...props };
+        const resolvedSpacingProps = resolveSpacingProps(props);
 
         spacingPropsNames.forEach(name => {
-            const token = props[name];
-
-            if (token) {
-                classNames.push(getSpacingClassName(spacingPropPrefixes[name], token));
-
-                delete domProps[name];
-            }
+            delete domProps[name];
         });
+
+        const classNames = buildSpacingClassNames(resolvedSpacingProps);
 
         if (className) {
             classNames.push(className);

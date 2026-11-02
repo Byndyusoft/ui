@@ -2,14 +2,14 @@ import { FC, HTMLAttributes, ReactHTML } from 'react';
 
 export type TSpacingValues = Record<string, number>;
 
-export interface IViewConfig<TGrid extends TSpacingValues = TSpacingValues> {
+export interface IViewConfig<TValues extends TSpacingValues = TSpacingValues> {
     unit: string;
-    values: TGrid;
+    values: TValues;
 }
 
-export type TValuesToken<TGrid extends TSpacingValues> = Extract<keyof TGrid, string>;
+export type TValuesToken<TValues extends TSpacingValues> = Extract<keyof TValues, string>;
 
-export interface ISpacingProps<TToken extends string = string> {
+export interface IResolvedSpacingProps<TToken extends string = string> {
     margin?: TToken;
     marginTop?: TToken;
     marginRight?: TToken;
@@ -24,6 +24,23 @@ export interface ISpacingProps<TToken extends string = string> {
     paddingLeft?: TToken;
     paddingHorizontal?: TToken;
     paddingVertical?: TToken;
+}
+
+export interface ISpacingProps<TToken extends string = string> extends IResolvedSpacingProps<TToken> {
+    m?: TToken;
+    mt?: TToken;
+    mr?: TToken;
+    mb?: TToken;
+    ml?: TToken;
+    mh?: TToken;
+    mv?: TToken;
+    p?: TToken;
+    pt?: TToken;
+    pr?: TToken;
+    pb?: TToken;
+    pl?: TToken;
+    ph?: TToken;
+    pv?: TToken;
 }
 
 export interface ICreatedViewProps<TGrid extends TSpacingValues>

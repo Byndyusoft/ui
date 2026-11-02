@@ -66,6 +66,15 @@ describe('components/Flex/createFlex', () => {
         expect(screen.getByTestId('flex')).toHaveClass('bsui-flex', 'bsui-p-md');
     });
 
+    test('проксирует короткие spacing aliases и не передаёт их в DOM', () => {
+        render(<Flex m="md" p="lg" data-testid="flex" />);
+        const element = screen.getByTestId('flex');
+
+        expect(element).toHaveClass('bsui-flex bsui-m-md bsui-p-lg', { exact: true });
+        expect(element).not.toHaveAttribute('m');
+        expect(element).not.toHaveAttribute('p');
+    });
+
     test('сохраняет порядок spacing, пользовательских классов, модификаторов и gap', () => {
         render(<Flex padding="md" className="custom" direction="column" gap="sm" data-testid="flex" />);
 

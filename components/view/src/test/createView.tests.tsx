@@ -26,6 +26,83 @@ describe('components/View/createView', () => {
         expect(element).not.toHaveAttribute('style');
     });
 
+    test('маппит короткие aliases margin и padding в те же CSS-классы', () => {
+        render(<View m="md" p="lg" data-testid="view" />);
+        const element = screen.getByTestId('view');
+
+        expect(element).toHaveClass('bsui-m-md bsui-p-lg', { exact: true });
+        expect(element).not.toHaveAttribute('m');
+        expect(element).not.toHaveAttribute('p');
+    });
+
+    test('разрешает полные и короткие aliases в порядке ключей итоговых props', () => {
+        render(
+            <>
+                <View margin="sm" m="md" data-testid="short-last" />
+                <View m="md" margin="lg" data-testid="long-last" />
+                <View margin="lg" m={undefined} data-testid="undefined-last" />
+            </>
+        );
+
+        expect(screen.getByTestId('short-last')).toHaveClass('bsui-m-md', { exact: true });
+        expect(screen.getByTestId('long-last')).toHaveClass('bsui-m-lg', { exact: true });
+        expect(screen.getByTestId('undefined-last')).toHaveClass('bsui-m-lg', { exact: true });
+    });
+
+    test('применяет приоритет общих, осевых и физических margin/padding props', () => {
+        render(
+            <>
+                <View margin="sm" marginTop="md" marginHorizontal="lg" data-testid="margin" />
+                <View marginHorizontal="md" marginLeft="sm" marginRight="lg" marginTop="sm" data-testid="horizontal" />
+                <View marginVertical="md" marginTop="sm" marginBottom="lg" marginRight="sm" data-testid="vertical" />
+                <View padding="lg" paddingVertical="sm" paddingTop="md" data-testid="padding" />
+            </>
+        );
+
+        expect(screen.getByTestId('margin')).toHaveClass('bsui-m-sm', { exact: true });
+        expect(screen.getByTestId('horizontal')).toHaveClass('bsui-mt-sm bsui-mh-md', { exact: true });
+        expect(screen.getByTestId('vertical')).toHaveClass('bsui-mr-sm bsui-mv-md', { exact: true });
+        expect(screen.getByTestId('padding')).toHaveClass('bsui-p-lg', { exact: true });
+    });
+
+    test('схлопывает одинаковые токены четырёх сторон в общий margin/padding класс', () => {
+        render(
+            <View
+                marginTop="md"
+                marginRight="md"
+                marginBottom="md"
+                marginLeft="md"
+                paddingTop="sm"
+                paddingRight="sm"
+                paddingBottom="sm"
+                paddingLeft="sm"
+                data-testid="view"
+            />
+        );
+
+        expect(screen.getByTestId('view')).toHaveClass('bsui-m-md bsui-p-sm', { exact: true });
+    });
+
+    test('схлопывает одинаковые пары сторон в horizontal/vertical классы', () => {
+        render(<View marginTop="md" marginBottom="md" paddingLeft="sm" paddingRight="sm" data-testid="view" />);
+
+        expect(screen.getByTestId('view')).toHaveClass('bsui-mv-md bsui-ph-sm', { exact: true });
+    });
+
+    test('оставляет одиночную сторону без shorthand-класса', () => {
+        render(<View marginTop="md" paddingRight="sm" data-testid="view" />);
+
+        expect(screen.getByTestId('view')).toHaveClass('bsui-mt-md bsui-pr-sm', { exact: true });
+    });
+
+    test('не схлопывает разные токены только из-за совпадения множителей', () => {
+        const AliasValuesView = createView({ unit: '8px', values: { a: 1, b: 1, c: 1, d: 1 } } as const);
+
+        render(<AliasValuesView marginTop="a" marginRight="b" marginBottom="c" marginLeft="d" data-testid="view" />);
+
+        expect(screen.getByTestId('view')).toHaveClass('bsui-mt-a bsui-mr-b bsui-mb-c bsui-ml-d', { exact: true });
+    });
+
     test('не прокидывает spacing-пропсы в DOM и сохраняет нативные атрибуты', () => {
         render(<View padding="md" id="root" data-testid="view" aria-label="block" />);
         const element = screen.getByTestId('view');

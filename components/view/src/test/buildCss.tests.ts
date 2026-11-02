@@ -1,6 +1,6 @@
 import { buildCss } from '../utilities';
 
-describe('components/View/buildSpacingCss', () => {
+describe('components/View/buildCss', () => {
     const config = {
         unit: '8px',
         values: { sm: 0.5, md: 1, lg: 1.5 }

@@ -31,12 +31,35 @@ export const View = createView({
 import { View } from '@/shared/ui/layout';
 
 // padding: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' — автокомплит и проверка типов
-<View padding="lg" marginBottom="md" />;
+<View p="lg" mb="md" />;
+```
+
+Короткие aliases доступны для всех margin- и padding-пропсов: `m`, `mt`, `mr`, `mb`,
+`ml`, `mh`, `mv` и `p`, `pt`, `pr`, `pb`, `pl`, `ph`, `pv`. Полные имена продолжают
+поддерживаться и принимают те же токены.
+
+Если полная форма и её alias заданы одновременно, используется последняя определённая
+запись в порядке ключей итогового props-объекта; `undefined` считается отсутствующим.
+Для разных свойств действует приоритет: общий `margin`/`padding` перекрывает осевые и
+сторонние props, а `marginHorizontal`/`paddingHorizontal` и вертикальные варианты
+перекрывают соответствующие стороны.
+
+```tsx
+<View margin="sm" mt="md" />; // margin применяется ко всем сторонам
+<View mh="lg" ml="sm" />; // mh применяется слева и справа
 ```
 
 CSS генерируется автоматически при создании компонента: классы `bsui-p-lg`, `bsui-mv-md`
 и т.п. со значениями `calc(var(--bsui-unit, 8px) * <множитель>)`. Inline-стили не
 используются, атрибут `style` не выставляется.
+Если все четыре эффективных стороны имеют одинаковый токен, используется один общий
+класс (`bsui-m-md` или `bsui-p-md`); одинаковые горизонтальные/вертикальные пары
+сворачиваются в `mh`/`mv` или `ph`/`pv`. Сравниваются имена токенов, не множители.
+
+```tsx
+<View marginTop="md" marginRight="md" marginBottom="md" marginLeft="md" />
+// применяет один класс bsui-m-md
+```
 
 ### Рантайм-переопределение юнита
 
@@ -84,7 +107,9 @@ import { ViewStylesInjector } from '@byndyusoft-ui/view';
 | `as`                                                                                                            | `keyof ReactHTML` | Тег или компонент для рендера (по умолчанию `div`) |
 | `className`                                                                                                     | `string`          | Дополнительный класс, мержится со сгенерированными |
 | `margin`, `marginTop`, `marginRight`, `marginBottom`, `marginLeft`, `marginHorizontal`, `marginVertical`        | токен сетки       | Внешние отступы                                    |
+| `m`, `mt`, `mr`, `mb`, `ml`, `mh`, `mv`                                                                         | токен сетки       | Короткие aliases внешних отступов                  |
 | `padding`, `paddingTop`, `paddingRight`, `paddingBottom`, `paddingLeft`, `paddingHorizontal`, `paddingVertical` | токен сетки       | Внутренние отступы                                 |
+| `p`, `pt`, `pr`, `pb`, `pl`, `ph`, `pv`                                                                         | токен сетки       | Короткие aliases внутренних отступов               |
 
 Остальные нативные атрибуты (`id`, `data-*`, `aria-*`, обработчики) передаются в DOM как есть.
 
@@ -92,7 +117,7 @@ import { ViewStylesInjector } from '@byndyusoft-ui/view';
 
 Из точки входа пакета также доступны:
 
--   `buildSpacingCss(config)` — генерация CSS отступов без регистрации стилей.
+-   `buildCss(config)` — генерация CSS отступов без регистрации стилей.
 -   `getSpacingClassName(prefix, token)` — имя класса, например `bsui-p-md`.
 -   `getSpacingValue(unit, multiplier)` — CSS-значение отступа через `calc` и переменную юнита.
 -   `spacingPropPrefixes` — соответствие spacing-пропсов префиксам классов.

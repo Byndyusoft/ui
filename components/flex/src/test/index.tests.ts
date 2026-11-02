@@ -5,7 +5,7 @@ describe('components/Flex/exports', () => {
         expect(Object.keys(flex)).toEqual(
             expect.arrayContaining([
                 'createFlex',
-                'buildFlexCss',
+                'buildCss',
                 'flexModifiersCss',
                 'blockClassName',
                 'getDirectionModifier',
@@ -26,7 +26,7 @@ describe('components/Flex/exports', () => {
         expect(flex.getAlignContentModifier('stretch')).toBe('bsui-flex--ac-stretch');
         expect(flex.getAlignItemsModifier('center')).toBe('bsui-flex--ai-center');
         expect(flex.getJustifyContentModifier('space-between')).toBe('bsui-flex--jc-space-between');
-        expect(flex.buildFlexCss({ unit: '8px', values: { md: 1 } })).toContain(
+        expect(flex.buildCss({ unit: '8px', values: { md: 1 } })).toContain(
             '.bsui-flex--g-md{gap:calc(var(--bsui-unit, 8px) * 1)}'
         );
         expect(flex.flexModifiersCss).toContain('.bsui-flex{display:flex}');

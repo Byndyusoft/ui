@@ -6,9 +6,9 @@ describe('components/View/exports', () => {
             expect.arrayContaining([
                 'createView',
                 'ViewStylesInjector',
-                'registerLayoutStyles',
+                'registerStyles',
                 'getSpacingValue',
-                'buildSpacingCss',
+                'buildCss',
                 'getSpacingClassName',
                 'spacingPropPrefixes',
                 'spacingUnitVariable',
@@ -16,6 +16,8 @@ describe('components/View/exports', () => {
             ])
         );
         expect(view.spacingUnitVariable).toBe('--bsui-unit');
+        expect(view.spacingPropPrefixes.m).toBe('m');
+        expect(view.spacingPropPrefixes.p).toBe('p');
         expect(view.getSpacingClassName(view.spacingPropPrefixes.padding, 'md')).toBe('bsui-p-md');
         expect(view.getSpacingValue('8px', 1)).toBe('calc(var(--bsui-unit, 8px) * 1)');
         expect(view.buildCss({ unit: '8px', values: { md: 1 } })).toContain(

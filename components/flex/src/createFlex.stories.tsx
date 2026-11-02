@@ -71,3 +71,33 @@ export const ColumnWithView: TStory = {
         </Flex>
     )
 };
+
+export const ShortSpacingAliases: TStory = {
+    args: {
+        direction: 'column',
+        m: 'md',
+        p: 'lg'
+    },
+    render: args => (
+        <Flex {...args}>
+            <FlexItem />
+            <FlexItem />
+        </Flex>
+    ),
+    argTypes: {
+        m: tokenControl,
+        mt: tokenControl,
+        mr: tokenControl,
+        mb: tokenControl,
+        ml: tokenControl,
+        mh: tokenControl,
+        mv: tokenControl,
+        p: tokenControl,
+        pt: tokenControl,
+        pr: tokenControl,
+        pb: tokenControl,
+        pl: tokenControl,
+        ph: tokenControl,
+        pv: tokenControl
+    }
+};

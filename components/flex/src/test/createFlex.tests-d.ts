@@ -62,6 +62,17 @@ describe('components/Flex/createFlex/types', () => {
         });
     });
 
+    test('наследует короткие spacing aliases View', () => {
+        React.createElement(Flex, { m: 'sm', mt: 'md', ph: 'lg', pv: 'sm' });
+
+        const invalidProps: ICreatedFlexProps<typeof values> = {
+            // @ts-expect-error: короткий alias принимает только токены values
+            p: 'huge'
+        };
+
+        expectTypeOf(invalidProps).not.toBeNever();
+    });
+
     test('экспортирует генераторы CSS и модификаторов', () => {
         expectTypeOf(buildCss(View.config)).toEqualTypeOf<string>();
         expectTypeOf(flexModifiersCss).toEqualTypeOf<string>();
