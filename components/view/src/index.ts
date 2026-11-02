@@ -1,12 +1,27 @@
 export { createView } from './createView';
-export { LayoutStyles } from './LayoutStyles';
-export { registerLayoutStyles } from './layoutStylesRegistry';
-export { getSpacingValue } from './buildSpacingCss';
+export { ViewStylesInjector } from './ViewStylesInjector';
 export {
+    registerLayoutStyles,
+    getLayoutStyleEntries,
+    resetLayoutStyles,
+    buildSpacingCss,
+    getSpacingClassName,
+    getSpacingValue,
+    validateValuesKeys
+} from './utilities';
+export {
+    spacingUnitVariable,
+    spacingPropPrefixes,
+    spacingSideProperties,
+    valuesTokenPattern,
+    spacingPropsNames
+} from './constants';
+export type {
     IViewConfig,
-    TSpacingGrid,
-    TGridToken,
+    TSpacingValues,
+    TValuesToken,
     ISpacingProps,
     ICreatedViewProps,
-    ICreatedView
-} from './LayoutConfig.types';
+    ICreatedView,
+    IViewStyleEntry as ILayoutStyleEntry
+} from './types';

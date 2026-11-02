@@ -1,11 +1,11 @@
 import { describe, expectTypeOf, test } from 'vitest';
-import { ICreatedViewProps, IViewConfig, TGridToken } from './index';
+import { ICreatedViewProps, IViewConfig, TValuesToken } from '../types';
 
 const grid = { xs: 0.25, md: 1, '150': 1.5 } as const;
 
-describe('components/View/LayoutConfig.types', () => {
+describe('components/View/types', () => {
     test('выводит токены сетки из ключей конфигурации', () => {
-        expectTypeOf<TGridToken<typeof grid>>().toEqualTypeOf<'xs' | 'md' | '150'>();
+        expectTypeOf<TValuesToken<typeof grid>>().toEqualTypeOf<'xs' | 'md' | '150'>();
     });
 
     test('типизирует spacing-пропсы токенами сетки', () => {
@@ -21,6 +21,6 @@ describe('components/View/LayoutConfig.types', () => {
     });
 
     test('конфигурация требует юнит и сетку множителей', () => {
-        expectTypeOf<IViewConfig<typeof grid>>().toMatchTypeOf<{ unit: string; grid: typeof grid }>();
+        expectTypeOf<IViewConfig<typeof grid>>().toMatchTypeOf<{ unit: string; values: typeof grid }>();
     });
 });

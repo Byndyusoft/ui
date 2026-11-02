@@ -5,7 +5,7 @@ import { createView } from './createView';
 
 const config = {
     unit: '8px',
-    grid: { xs: 0.25, sm: 0.5, md: 1, lg: 1.5, xl: 2, xxl: 3 }
+    values: { xs: 0.25, sm: 0.5, md: 1, lg: 1.5, xl: 2, xxl: 3 }
 } as const;
 
 const View = createView(config);
@@ -26,7 +26,7 @@ function ViewContent(): JSX.Element {
 }
 
 const tokenControl: InputType = {
-    options: Object.keys(config.grid),
+    options: Object.keys(config.values),
     control: { type: 'select' }
 };
 

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
-import { getLayoutStyleEntries } from './layoutStylesRegistry';
+import { getLayoutStyleEntries } from './utilities';
 
-export const LayoutStyles: FC = () => (
+export const ViewStylesInjector: FC = () => (
     <>
         {getLayoutStyleEntries().map(entry => (
             // eslint-disable-next-line react/no-danger -- CSS генерируется библиотекой из валидированной конфигурации
@@ -10,4 +10,4 @@ export const LayoutStyles: FC = () => (
     </>
 );
 
-LayoutStyles.displayName = 'LayoutStyles';
+ViewStylesInjector.displayName = 'ViewStylesInjector';

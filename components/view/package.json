@@ -40,5 +40,8 @@
   },
   "peerDependencies": {
     "react": ">=17"
+  },
+  "dependencies": {
+    "classnames": "^2.5.1"
   }
 }

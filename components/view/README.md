@@ -23,7 +23,7 @@ import { createView } from '@byndyusoft-ui/view';
 
 export const View = createView({
     unit: '8px',
-    grid: { xs: 0.25, sm: 0.5, md: 1, lg: 1.5, xl: 2, xxl: 3 }
+    values: { xs: 0.25, sm: 0.5, md: 1, lg: 1.5, xl: 2, xxl: 3 }
 } as const);
 ```
 
@@ -57,15 +57,15 @@ CSS генерируется автоматически при создании 
 ### SSR
 
 В браузере стили инъецируются автоматически при импорте. Для SSR добавьте компонент
-`LayoutStyles` в корень приложения (или в `<head>` шаблона): серверный HTML будет
+`ViewStylesInjector` в корень приложения (или в `<head>` шаблона): серверный HTML будет
 содержать стили, а при гидратации дубли не создаются.
 
 ```tsx
-import { LayoutStyles } from '@byndyusoft-ui/view';
+import { ViewStylesInjector } from '@byndyusoft-ui/view';
 
 <html>
     <head>
-        <LayoutStyles />
+        <ViewStylesInjector />
     </head>
     <body>...</body>
 </html>;
@@ -79,11 +79,27 @@ import { LayoutStyles } from '@byndyusoft-ui/view';
 
 ## Props
 
-| Проп | Тип | Описание |
-| --- | --- | --- |
-| `as` | `keyof ReactHTML` | Тег или компонент для рендера (по умолчанию `div`) |
-| `className` | `string` | Дополнительный класс, мержится со сгенерированными |
-| `margin`, `marginTop`, `marginRight`, `marginBottom`, `marginLeft`, `marginHorizontal`, `marginVertical` | токен сетки | Внешние отступы |
-| `padding`, `paddingTop`, `paddingRight`, `paddingBottom`, `paddingLeft`, `paddingHorizontal`, `paddingVertical` | токен сетки | Внутренние отступы |
+| Проп                                                                                                            | Тип               | Описание                                           |
+| --------------------------------------------------------------------------------------------------------------- | ----------------- | -------------------------------------------------- |
+| `as`                                                                                                            | `keyof ReactHTML` | Тег или компонент для рендера (по умолчанию `div`) |
+| `className`                                                                                                     | `string`          | Дополнительный класс, мержится со сгенерированными |
+| `margin`, `marginTop`, `marginRight`, `marginBottom`, `marginLeft`, `marginHorizontal`, `marginVertical`        | токен сетки       | Внешние отступы                                    |
+| `padding`, `paddingTop`, `paddingRight`, `paddingBottom`, `paddingLeft`, `paddingHorizontal`, `paddingVertical` | токен сетки       | Внутренние отступы                                 |
 
 Остальные нативные атрибуты (`id`, `data-*`, `aria-*`, обработчики) передаются в DOM как есть.
+
+## Утилиты и типы
+
+Из точки входа пакета также доступны:
+
+-   `buildSpacingCss(config)` — генерация CSS отступов без регистрации стилей.
+-   `getSpacingClassName(prefix, token)` — имя класса, например `bsui-p-md`.
+-   `getSpacingValue(unit, multiplier)` — CSS-значение отступа через `calc` и переменную юнита.
+-   `spacingPropPrefixes` — соответствие spacing-пропсов префиксам классов.
+-   `spacingUnitVariable` — имя CSS-переменной `--bsui-unit`.
+-   `validateValuesKeys(grid)` — проверка допустимости имён токенов; при ошибке бросает исключение.
+-   `registerStyles(config, css)` и `ViewStylesInjector` — регистрация и вывод стилей, в том числе для SSR.
+
+Публичные типы: `IViewConfig`, `TSpacingValues`, `TValuesToken`, `ISpacingProps`,
+`ICreatedViewProps` и `ICreatedView`. Созданный компонент имеет `displayName = 'View'`
+и сохраняет исходную конфигурацию в `View.config`. Передача DOM-ref не поддерживается.

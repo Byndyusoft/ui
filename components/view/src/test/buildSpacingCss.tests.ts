@@ -1,9 +1,9 @@
-import { buildSpacingCss } from './buildSpacingCss';
+import { buildSpacingCss } from '../utilities';
 
 describe('components/View/buildSpacingCss', () => {
     const config = {
         unit: '8px',
-        grid: { sm: 0.5, md: 1, lg: 1.5 }
+        values: { sm: 0.5, md: 1, lg: 1.5 }
     } as const;
 
     test('генерирует классы отступов со значением от юнита и множителя', () => {
@@ -25,6 +25,6 @@ describe('components/View/buildSpacingCss', () => {
         const css = buildSpacingCss(config);
         const rulesCount = css.split('}').length - 1;
 
-        expect(rulesCount).toBe(14 * Object.keys(config.grid).length);
+        expect(rulesCount).toBe(14 * Object.keys(config.values).length);
     });
 });

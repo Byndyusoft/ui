@@ -1,25 +1,24 @@
 import { createElement, FC } from 'react';
-import { buildSpacingCss, getSpacingClassName, spacingPropPrefixes } from './buildSpacingCss';
-import { ICreatedView, ICreatedViewProps, ISpacingProps, IViewConfig, TSpacingGrid } from './LayoutConfig.types';
-import { registerLayoutStyles } from './layoutStylesRegistry';
-import { validateGridKeys } from './validateGridKeys';
+import { buildSpacingCss, getSpacingClassName, registerStyles, validateValuesKeys } from './utilities';
+import { ICreatedView, ICreatedViewProps, IViewConfig, TSpacingValues } from './types';
+import { spacingPropsNames, spacingPropPrefixes } from './constants';
 
-const spacingPropsNames = Object.keys(spacingPropPrefixes) as Array<keyof ISpacingProps>;
+export function createView<TGrid extends TSpacingValues>(config: IViewConfig<TGrid>): ICreatedView<TGrid> {
+    validateValuesKeys(config.values);
 
-export function createView<TGrid extends TSpacingGrid>(config: IViewConfig<TGrid>): ICreatedView<TGrid> {
-    validateGridKeys(config.grid);
-
-    registerLayoutStyles(config, buildSpacingCss(config));
+    registerStyles(config, buildSpacingCss(config));
 
     const CreatedView: FC<ICreatedViewProps<TGrid>> = ({ as = 'div', className, children, ...props }) => {
         const classNames: Array<string> = [];
+        const domProps = { ...props };
 
         spacingPropsNames.forEach(name => {
             const token = props[name];
 
             if (token) {
                 classNames.push(getSpacingClassName(spacingPropPrefixes[name], token));
-                delete props[name];
+
+                delete domProps[name];
             }
         });
 
@@ -27,10 +26,10 @@ export function createView<TGrid extends TSpacingGrid>(config: IViewConfig<TGrid
             classNames.push(className);
         }
 
-        return createElement(as, { className: classNames.join(' ') || undefined, ...props }, children);
+        return createElement(as, { className: classNames.join(' ') || undefined, ...domProps }, children);
     };
 
-    CreatedView.displayName = 'CreatedView';
+    CreatedView.displayName = 'View';
 
     return Object.assign(CreatedView, { config });
 }
