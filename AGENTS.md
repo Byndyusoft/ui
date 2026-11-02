@@ -9,7 +9,6 @@ Byndyusoft UI — монорепозиторий публикуемых React-к
 -   `hooks/*` — React-хуки; обычно сборка TypeScript через `tsconfig.build.json`.
 -   `services/local-storage` — сервис работы с localStorage; сборка TypeScript.
 -   `packages/types` — общие TypeScript-типы и тесты типов.
--   `styles/css-utilities` — SCSS-утилиты, собираемые Sass в `dist/index.css`.
 -   `styles/reset-css`, `styles/keyframes-css` — пакеты исходного CSS.
 -   `.storybook` — общий Storybook; истории и MDX лежат рядом с исходниками пакетов.
 -   `.templates/create` — шаблоны Hygen для компонентов и хуков.

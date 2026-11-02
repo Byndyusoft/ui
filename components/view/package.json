@@ -40,8 +40,5 @@
   },
   "peerDependencies": {
     "react": ">=17"
-  },
-  "dependencies": {
-    "@byndyusoft-ui/css-utilities": "^0.0.1"
   }
 }

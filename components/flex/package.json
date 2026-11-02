@@ -42,7 +42,6 @@
     "react": ">=17"
   },
   "dependencies": {
-    "@byndyusoft-ui/css-utilities": "^0.0.1",
     "@byndyusoft-ui/view": "^0.0.1",
     "classnames": "^2.3.1"
   }

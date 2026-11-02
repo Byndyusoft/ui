@@ -41,5 +41,9 @@
   "peerDependencies": {
     "react": ">=17",
     "react-dom": ">=17"
+  },
+  "devDependencies": {
+    "@byndyusoft-ui/flex": "^0.0.1",
+    "@byndyusoft-ui/view": "^0.0.1"
   }
 }
