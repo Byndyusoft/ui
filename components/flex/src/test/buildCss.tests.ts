@@ -1,10 +1,11 @@
-import { buildFlexCss, flexModifiersCss } from './buildFlexCss';
+import { flexModifiersCss } from '../constants';
+import { buildCss } from '../utilities';
 
-describe('components/Flex/buildFlexCss', () => {
-    const config = { unit: '8px', grid: { md: 1, lg: 1.5 } } as const;
+describe('components/Flex/buildCss', () => {
+    const config = { unit: '8px', values: { md: 1, lg: 1.5 } } as const;
 
-    test('генерирует gap-классы для каждого токена сетки', () => {
-        const css = buildFlexCss(config);
+    test('генерирует gap-классы для каждого токена values', () => {
+        const css = buildCss(config);
         const mdValue = 'calc(var(--bsui-unit, 8px) * 1)';
         const lgValue = 'calc(var(--bsui-unit, 8px) * 1.5)';
 
@@ -14,9 +15,9 @@ describe('components/Flex/buildFlexCss', () => {
     });
 
     test('покрывает три gap-варианта на каждый токен', () => {
-        const rulesCount = buildFlexCss(config).split('}').length - 1;
+        const rulesCount = buildCss(config).split('}').length - 1;
 
-        expect(rulesCount).toBe(3 * Object.keys(config.grid).length);
+        expect(rulesCount).toBe(3 * Object.keys(config.values).length);
     });
 
     test('модификаторы раскладки заданы плоским CSS', () => {

@@ -1,13 +1,13 @@
 import React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
-import { InputType } from '@storybook/types';
+import type { Meta, StoryObj } from '@storybook/react';
+import type { InputType } from '@storybook/types';
 import { createView } from '@byndyusoft-ui/view';
 import { createFlex } from './createFlex';
-import { alignContentVariants, alignItemsVariants, directions, flexWraps, justifyContentVariants } from './Flex.types';
+import { alignContentVariants, alignItemsVariants, directions, flexWraps, justifyContentVariants } from './constants';
 
 const config = {
     unit: '8px',
-    grid: { xs: 0.25, sm: 0.5, md: 1, lg: 1.5, xl: 2, xxl: 3 }
+    values: { xs: 0.25, sm: 0.5, md: 1, lg: 1.5, xl: 2, xxl: 3 }
 } as const;
 
 const View = createView(config);
@@ -29,7 +29,7 @@ function FlexItem(): JSX.Element {
 }
 
 const tokenControl: InputType = {
-    options: Object.keys(config.grid),
+    options: Object.keys(config.values),
     control: { type: 'select' }
 };
 

@@ -1,10 +1,10 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { createView } from '@byndyusoft-ui/view';
-import { createFlex } from './createFlex';
+import { createFlex } from '../createFlex';
 
 describe('components/Flex/createFlex', () => {
-    const View = createView({ unit: '8px', grid: { sm: 0.5, md: 1, lg: 1.5 } } as const);
+    const View = createView({ unit: '8px', values: { sm: 0.5, md: 1, lg: 1.5 } } as const);
     const Flex = createFlex(View);
 
     afterEach(() => {
@@ -48,6 +48,12 @@ describe('components/Flex/createFlex', () => {
         expect(screen.getByTestId('flex')).toHaveClass('bsui-flex--g-lg');
     });
 
+    test('gap имеет приоритет над rowGap и columnGap', () => {
+        render(<Flex gap="md" rowGap="sm" columnGap="lg" data-testid="flex" />);
+
+        expect(screen.getByTestId('flex')).toHaveClass('bsui-flex bsui-flex--g-md', { exact: true });
+    });
+
     test('разводит разные rowGap и columnGap по классам', () => {
         render(<Flex rowGap="sm" columnGap="lg" data-testid="flex" />);
 
@@ -60,8 +66,66 @@ describe('components/Flex/createFlex', () => {
         expect(screen.getByTestId('flex')).toHaveClass('bsui-flex', 'bsui-p-md');
     });
 
+    test('сохраняет порядок spacing, пользовательских классов, модификаторов и gap', () => {
+        render(<Flex padding="md" className="custom" direction="column" gap="sm" data-testid="flex" />);
+
+        expect(Array.from(screen.getByTestId('flex').classList)).toEqual([
+            'bsui-p-md',
+            'bsui-flex',
+            'custom',
+            'bsui-flex--fd-column',
+            'bsui-flex--g-sm'
+        ]);
+        expect(screen.getByTestId('flex')).toHaveClass(
+            'bsui-p-md bsui-flex custom bsui-flex--fd-column bsui-flex--g-sm',
+            { exact: true }
+        );
+    });
+
+    test('повторно использует замороженные props и передаёт нативные атрибуты и события', () => {
+        const onClick = vi.fn();
+        const props = Object.freeze({
+            as: 'section',
+            direction: 'column',
+            wrap: 'wrap',
+            alignContent: 'stretch',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: 'sm',
+            padding: 'md',
+            id: 'layout',
+            'aria-label': 'layout',
+            'data-testid': 'flex',
+            style: Object.freeze({ color: 'red' }),
+            onClick,
+            children: 'content'
+        } as const);
+        const { rerender } = render(<Flex {...props} />);
+
+        fireEvent.click(screen.getByTestId('flex'));
+        rerender(<Flex {...props} className="custom" />);
+
+        const element = screen.getByTestId('flex');
+
+        expect(onClick).toHaveBeenCalledTimes(1);
+        expect(props.direction).toBe('column');
+        expect(props.gap).toBe('sm');
+        expect(props.padding).toBe('md');
+        expect(props.style).toEqual({ color: 'red' });
+        expect(element.tagName).toBe('SECTION');
+        expect(element).toHaveAttribute('id', 'layout');
+        expect(element).toHaveAttribute('aria-label', 'layout');
+        expect(element).toHaveStyle({ color: 'rgb(255, 0, 0)' });
+        expect(element).toHaveTextContent('content');
+        expect(element).toHaveClass('bsui-p-md bsui-flex custom bsui-flex--g-sm');
+
+        ['direction', 'wrap', 'alignContent', 'alignItems', 'justifyContent', 'gap', 'padding'].forEach(name => {
+            expect(element).not.toHaveAttribute(name);
+        });
+    });
+
     test('регистрирует модификаторы и gap в тот же style-элемент, что и стили View', () => {
-        const freshView = createView({ unit: '4px', grid: { md: 1 } } as const);
+        const freshView = createView({ unit: '4px', values: { md: 1 } } as const);
 
         createFlex(freshView);
 
@@ -77,5 +141,9 @@ describe('components/Flex/createFlex', () => {
 
     test('несёт конфигурацию созданного View', () => {
         expect(Flex.config).toEqual(View.config);
+    });
+
+    test('использует публичное имя Flex', () => {
+        expect(Flex.displayName).toBe('Flex');
     });
 });

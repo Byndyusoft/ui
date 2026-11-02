@@ -1,10 +1,10 @@
 export { createView } from './createView';
 export { ViewStylesInjector } from './ViewStylesInjector';
 export {
-    registerLayoutStyles,
-    getLayoutStyleEntries,
-    resetLayoutStyles,
-    buildSpacingCss,
+    registerStyles,
+    getStyleEntries,
+    resetStyles,
+    buildCss,
     getSpacingClassName,
     getSpacingValue,
     validateValuesKeys

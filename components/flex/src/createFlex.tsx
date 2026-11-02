@@ -1,44 +1,22 @@
-import React, { FC } from 'react';
+import React, { type FC } from 'react';
 import cn from 'classnames';
-import { ICreatedView, registerLayoutStyles, TSpacingGrid } from '@byndyusoft-ui/view';
-import { buildFlexCss, flexModifiersCss } from './buildFlexCss';
-import { ICreatedFlex, ICreatedFlexProps } from './createFlex.types';
+import { registerStyles, type ICreatedView, type TSpacingValues } from '@byndyusoft-ui/view';
+import { blockClassName, flexModifiersCss } from './constants';
+import type { ICreatedFlex, ICreatedFlexProps } from './types';
 import {
+    buildCss,
     getAlignContentModifier,
     getAlignItemsModifier,
     getDirectionModifier,
+    getGapClassNames,
     getJustifyContentModifier,
     getWrapModifier
-} from './flexModifiers';
+} from './utilities';
 
-const blockClassName = 'bsui-flex';
+export function createFlex<TValues extends TSpacingValues>(view: ICreatedView<TValues>): ICreatedFlex<TValues> {
+    registerStyles(view.config, flexModifiersCss + buildCss(view.config));
 
-function getGapClassNames(gap?: string, rowGap?: string, columnGap?: string): Array<string> {
-    if (gap) {
-        return [`${blockClassName}--g-${gap}`];
-    }
-
-    if (rowGap === columnGap && columnGap !== undefined) {
-        return [`${blockClassName}--g-${columnGap}`];
-    }
-
-    const classNames: Array<string> = [];
-
-    if (rowGap) {
-        classNames.push(`${blockClassName}--rg-${rowGap}`);
-    }
-
-    if (columnGap) {
-        classNames.push(`${blockClassName}--cg-${columnGap}`);
-    }
-
-    return classNames;
-}
-
-export function createFlex<TGrid extends TSpacingGrid>(view: ICreatedView<TGrid>): ICreatedFlex<TGrid> {
-    registerLayoutStyles(view.config, flexModifiersCss + buildFlexCss(view.config));
-
-    const CreatedFlex: FC<ICreatedFlexProps<TGrid>> = ({
+    const CreatedFlex: FC<ICreatedFlexProps<TValues>> = ({
         className,
         children,
         direction,
@@ -65,7 +43,7 @@ export function createFlex<TGrid extends TSpacingGrid>(view: ICreatedView<TGrid>
         return React.createElement(view, { className: flexClassName, ...props }, children);
     };
 
-    CreatedFlex.displayName = 'CreatedFlex';
+    CreatedFlex.displayName = 'Flex';
 
     return Object.assign(CreatedFlex, { config: view.config });
 }

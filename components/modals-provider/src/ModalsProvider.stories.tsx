@@ -7,7 +7,7 @@ import styles from './ModalsProvider.stories.module.css';
 
 const View = createView({
     unit: '1rem',
-    grid: { '025': 0.25, '100': 1, '300': 3 }
+    values: { '025': 0.25, '100': 1, '300': 3 }
 } as const);
 
 const Flex = createFlex(View);

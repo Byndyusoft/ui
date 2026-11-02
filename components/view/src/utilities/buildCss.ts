@@ -3,7 +3,7 @@ import { getSpacingClassName } from './getSpacingClassName';
 import { getSpacingValue } from './getSpacingValue';
 import { IViewConfig, TSpacingValues } from '../types';
 
-export function buildSpacingCss<TGrid extends TSpacingValues>(config: IViewConfig<TGrid>): string {
+export function buildCss<TGrid extends TSpacingValues>(config: IViewConfig<TGrid>): string {
     const rules: Array<string> = [];
 
     Object.entries(config.values).forEach(([token, multiplier]) => {
