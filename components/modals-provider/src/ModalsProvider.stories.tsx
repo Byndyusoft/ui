@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
-import Flex from '@byndyusoft-ui/flex';
+import { createFlex } from '@byndyusoft-ui/flex';
+import { createView } from '@byndyusoft-ui/view';
 import { ModalsProvider, useModals, useModalsState } from './ModalsContext';
 import styles from './ModalsProvider.stories.module.css';
+
+const View = createView({
+    step: { value: 1, unit: 'rem' },
+    values: { '025': 0.25, '100': 1, '300': 3 }
+} as const);
+
+const Flex = createFlex(View);
 
 const meta: Meta<typeof ModalsProvider> = {
     title: 'components/ModalsProvider',
@@ -18,9 +26,9 @@ const ModalsProviderContent = () => {
     const modalsState = useModalsState();
 
     return (
-        <Flex gap="su300">
-            <Flex direction="column" gap="su100">
-                <Flex as="label" direction="column" gap="su025">
+        <Flex gap="300">
+            <Flex direction="column" gap="100">
+                <Flex as="label" direction="column" gap="025">
                     Current modal ID
                     <input
                         type="number"
@@ -30,7 +38,7 @@ const ModalsProviderContent = () => {
                     />
                 </Flex>
 
-                <Flex gap="su025">
+                <Flex gap="025">
                     <button onClick={() => modalsActions.register(currentModalId)}>Register</button>
 
                     <button onClick={() => modalsActions.open(currentModalId)}>Open</button>

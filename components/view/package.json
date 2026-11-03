@@ -1,6 +1,6 @@
 {
   "name": "@byndyusoft-ui/view",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "Byndyusoft UI View React Component",
   "keywords": [
     "byndyusoft",
@@ -30,7 +30,8 @@
     "prettier:check": "prettier --check \"**/*.{ts,tsx,css,scss,json}\"",
     "prettier:fix": "prettier --write \"**/*.{ts,tsx,css,scss,json}\"",
     "stylelint:check": "stylelint '**/*.{css,scss}' --allow-empty-input",
-    "stylelint:fix": "stylelint '**/*.{css,scss}' --fix --allow-empty-input"
+    "stylelint:fix": "stylelint '**/*.{css,scss}' --fix --allow-empty-input",
+    "test": "vitest run --typecheck --root ../.. --exclude '**/.delta/**' components/view/src"
   },
   "bugs": {
     "url": "https://github.com/Byndyusoft/ui/issues"
@@ -42,6 +43,6 @@
     "react": ">=17"
   },
   "dependencies": {
-    "@byndyusoft-ui/css-utilities": "^0.0.1"
+    "classnames": "^2.5.1"
   }
 }
