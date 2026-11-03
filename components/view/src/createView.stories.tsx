@@ -10,6 +10,7 @@ const config = {
 
 const View = createView(config);
 const AppView = createView({ ...config, prefix: 'app' });
+const viewRef = React.createRef<HTMLElement>();
 
 const meta: Meta<typeof View> = {
     title: 'components/View/createView',
@@ -71,6 +72,15 @@ export const Default: TStory = {
     },
     render: args => (
         <View {...args}>
+            <ViewContent />
+        </View>
+    ),
+    argTypes: spacingControls
+};
+
+export const ForwardedRef: TStory = {
+    render: args => (
+        <View {...args} as="section" ref={viewRef}>
             <ViewContent />
         </View>
     ),

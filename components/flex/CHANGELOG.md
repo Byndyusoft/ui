@@ -1,5 +1,13 @@
 # @byndyusoft-ui/flex
 
+## 1.0.1
+
+### Patch Changes
+
+-   Фабричные компоненты View и Flex теперь принимают object и callback refs на фактически отрендеренный HTMLElement; Flex пересылает ref через созданный View.
+-   Updated dependencies
+    -   @byndyusoft-ui/view@1.0.1
+
 ## 1.0.0
 
 ### Major Changes

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { createView } from '../createView';
 import { spacingPropPrefixes } from '../constants';
@@ -33,6 +33,30 @@ describe('components/View/createView', () => {
         expect(element).toHaveClass('bsui-m-md bsui-p-lg', { exact: true });
         expect(element).not.toHaveAttribute('m');
         expect(element).not.toHaveAttribute('p');
+    });
+
+    test('передаёт object ref на DOM-элемент, выбранный через as', () => {
+        const ref = createRef<HTMLElement>();
+
+        render(<View as="section" ref={ref} data-testid="view" />);
+
+        expect(ref.current).toBe(screen.getByTestId('view'));
+        expect(ref.current?.tagName).toBe('SECTION');
+    });
+
+    test('callback ref получает DOM-элемент и очищается при размонтировании', () => {
+        const receivedElements: Array<HTMLElement | null> = [];
+        const ref = (element: HTMLElement | null): void => {
+            receivedElements.push(element);
+        };
+        const { unmount } = render(<View as="article" ref={ref} data-testid="view" />);
+        const element = screen.getByTestId('view');
+
+        expect(receivedElements).toEqual([element]);
+
+        unmount();
+
+        expect(receivedElements).toEqual([element, null]);
     });
 
     test('применяет пользовательский prefix к spacing-классам', () => {

@@ -108,16 +108,26 @@ import { ViewStylesInjector } from '@byndyusoft-ui/view';
 
 ## Props
 
-| Проп                                                                                                            | Тип               | Описание                                           |
-| --------------------------------------------------------------------------------------------------------------- | ----------------- | -------------------------------------------------- |
-| `as`                                                                                                            | `keyof ReactHTML` | Тег или компонент для рендера (по умолчанию `div`) |
-| `className`                                                                                                     | `string`          | Дополнительный класс, мержится со сгенерированными |
-| `margin`, `marginTop`, `marginRight`, `marginBottom`, `marginLeft`, `marginHorizontal`, `marginVertical`        | токен сетки       | Внешние отступы                                    |
-| `m`, `mt`, `mr`, `mb`, `ml`, `mh`, `mv`                                                                         | токен сетки       | Короткие aliases внешних отступов                  |
-| `padding`, `paddingTop`, `paddingRight`, `paddingBottom`, `paddingLeft`, `paddingHorizontal`, `paddingVertical` | токен сетки       | Внутренние отступы                                 |
-| `p`, `pt`, `pr`, `pb`, `pl`, `ph`, `pv`                                                                         | токен сетки       | Короткие aliases внутренних отступов               |
+| Проп                                                                                                            | Тип                      | Описание                                           |
+| --------------------------------------------------------------------------------------------------------------- | ------------------------ | -------------------------------------------------- |
+| `as`                                                                                                            | `keyof ReactHTML`        | Тег или компонент для рендера (по умолчанию `div`) |
+| `ref`                                                                                                           | `React.Ref<HTMLElement>` | Ref на фактически отрендеренный HTML-элемент       |
+| `className`                                                                                                     | `string`                 | Дополнительный класс, мержится со сгенерированными |
+| `margin`, `marginTop`, `marginRight`, `marginBottom`, `marginLeft`, `marginHorizontal`, `marginVertical`        | токен сетки              | Внешние отступы                                    |
+| `m`, `mt`, `mr`, `mb`, `ml`, `mh`, `mv`                                                                         | токен сетки              | Короткие aliases внешних отступов                  |
+| `padding`, `paddingTop`, `paddingRight`, `paddingBottom`, `paddingLeft`, `paddingHorizontal`, `paddingVertical` | токен сетки              | Внутренние отступы                                 |
+| `p`, `pt`, `pr`, `pb`, `pl`, `ph`, `pv`                                                                         | токен сетки              | Короткие aliases внутренних отступов               |
 
 Остальные нативные атрибуты (`id`, `data-*`, `aria-*`, обработчики) передаются в DOM как есть.
+`ref` может быть object или callback ref и указывает на HTML-элемент, включая выбранный через `as`.
+Его тип — общий `HTMLElement` и не сужается автоматически под конкретный тег.
+
+```tsx
+import { useRef } from 'react';
+
+const viewRef = useRef<HTMLElement>(null);
+<View as="section" ref={viewRef} p="md" />;
+```
 
 ## Утилиты и типы
 
@@ -134,4 +144,4 @@ import { ViewStylesInjector } from '@byndyusoft-ui/view';
 
 Публичные типы: `IViewConfig`, `TSpacingValues`, `TValuesToken`, `ISpacingProps`,
 `ICreatedViewProps` и `ICreatedView`. Созданный компонент имеет `displayName = 'View'`
-и сохраняет исходную конфигурацию в `View.config`. Передача DOM-ref не поддерживается.
+и сохраняет исходную конфигурацию в `View.config`.

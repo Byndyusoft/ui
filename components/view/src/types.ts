@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes, ReactHTML } from 'react';
+import { ForwardRefExoticComponent, HTMLAttributes, ReactHTML, RefAttributes } from 'react';
 
 export type TSpacingValues = Record<string, number>;
 
@@ -58,7 +58,8 @@ export interface ICreatedViewProps<TGrid extends TSpacingValues>
     className?: string;
 }
 
-export interface ICreatedView<TGrid extends TSpacingValues> extends FC<ICreatedViewProps<TGrid>> {
+export interface ICreatedView<TGrid extends TSpacingValues>
+    extends ForwardRefExoticComponent<ICreatedViewProps<TGrid> & RefAttributes<HTMLElement>> {
     readonly config: IViewConfig<TGrid>;
 }
 

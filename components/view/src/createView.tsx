@@ -1,4 +1,4 @@
-import { createElement, FC } from 'react';
+import { createElement, forwardRef } from 'react';
 import { buildCss, buildSpacingClassNames, registerStyles, resolveSpacingProps, validateValuesKeys } from './utilities';
 import { validateViewConfig } from './utilities/validateViewConfig';
 import { ICreatedView, ICreatedViewProps, IViewConfig, TSpacingValues } from './types';
@@ -10,22 +10,24 @@ export function createView<TGrid extends TSpacingValues>(config: IViewConfig<TGr
 
     registerStyles(config, buildCss(config));
 
-    const CreatedView: FC<ICreatedViewProps<TGrid>> = ({ as = 'div', className, children, ...props }) => {
-        const domProps = { ...props };
-        const resolvedSpacingProps = resolveSpacingProps(props);
+    const CreatedView = forwardRef<HTMLElement, ICreatedViewProps<TGrid>>(
+        ({ as = 'div', className, children, ...props }, ref) => {
+            const domProps = { ...props };
+            const resolvedSpacingProps = resolveSpacingProps(props);
 
-        spacingPropsNames.forEach(name => {
-            delete domProps[name];
-        });
+            spacingPropsNames.forEach(name => {
+                delete domProps[name];
+            });
 
-        const classNames = buildSpacingClassNames(resolvedSpacingProps, config.prefix);
+            const classNames = buildSpacingClassNames(resolvedSpacingProps, config.prefix);
 
-        if (className) {
-            classNames.push(className);
+            if (className) {
+                classNames.push(className);
+            }
+
+            return createElement(as, { className: classNames.join(' ') || undefined, ...domProps, ref }, children);
         }
-
-        return createElement(as, { className: classNames.join(' ') || undefined, ...domProps }, children);
-    };
+    );
 
     CreatedView.displayName = 'View';
 

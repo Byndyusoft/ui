@@ -39,6 +39,20 @@ describe('components/Flex/createFlex/types', () => {
         React.createElement(Flex, { gap: 'sm', rowGap: 'md', columnGap: 'lg' });
     });
 
+    test('принимает object и callback refs на HTMLElement', () => {
+        React.createElement(Flex, { ref: React.createRef<HTMLElement>(), as: 'main' });
+        const callbackRef: React.RefCallback<HTMLElement> = element => {
+            if (element !== null) {
+                expectTypeOf(element.tagName).toEqualTypeOf<string>();
+            }
+        };
+
+        React.createElement(Flex, { ref: callbackRef });
+
+        // @ts-expect-error: ref созданного Flex должен указывать на HTMLElement
+        React.createElement(Flex, { ref: React.createRef<SVGElement>() });
+    });
+
     test('отклоняет gap-значения вне values', () => {
         const invalidProps: ICreatedFlexProps<{ sm: 0.5; md: 1; lg: 1.5 }> = {
             // @ts-expect-error: токен отсутствует в values конфигурации

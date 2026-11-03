@@ -1,8 +1,7 @@
 import React from 'react';
 import { describe, expectTypeOf, test } from 'vitest';
-import { createView } from '../createView';
+import { createView, type ICreatedView, type ICreatedViewProps, type ISpacingProps, type IViewConfig } from '../index';
 import { buildCss, getSpacingClassName, getSpacingValue, validateValuesKeys } from '../utilities';
-import type { ICreatedViewProps, ISpacingProps, IViewConfig } from '../types';
 import { spacingPropPrefixes, spacingUnitVariable } from '../constants';
 
 const View = createView({ step: { value: 8, unit: 'px' }, values: { sm: 0.5, md: 1, lg: 1.5 } } as const);
@@ -10,6 +9,24 @@ const View = createView({ step: { value: 8, unit: 'px' }, values: { sm: 0.5, md:
 describe('components/View/createView/types', () => {
     test('принимает токены сетки в spacing-пропсах', () => {
         React.createElement(View, { padding: 'sm', marginHorizontal: 'md', marginBottom: 'lg' });
+    });
+
+    test('принимает object и callback refs на HTMLElement', () => {
+        React.createElement(View, { ref: React.createRef<HTMLElement>(), as: 'section' });
+        const callbackRef: React.RefCallback<HTMLElement> = element => {
+            if (element !== null) {
+                expectTypeOf(element.tagName).toEqualTypeOf<string>();
+            }
+        };
+
+        React.createElement(View, { ref: callbackRef });
+
+        expectTypeOf(View).toMatchTypeOf<ICreatedView<typeof View.config.values>>();
+    });
+
+    test('отклоняет ref не на HTML-элемент', () => {
+        // @ts-expect-error: фабричный компонент ref-ит только HTMLElement
+        React.createElement(View, { ref: React.createRef<SVGElement>() });
     });
 
     test('отклоняет значения вне сетки', () => {

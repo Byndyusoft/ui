@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import type { ForwardRefExoticComponent, RefAttributes } from 'react';
 import type { ICreatedViewProps, IViewConfig, TSpacingValues, TValuesToken } from '@byndyusoft-ui/view';
 import type {
     alignContentVariants,
@@ -29,6 +29,7 @@ export interface ICreatedFlexProps<TValues extends TSpacingValues> extends ICrea
     columnGap?: TValuesToken<TValues>;
 }
 
-export interface ICreatedFlex<TValues extends TSpacingValues> extends FC<ICreatedFlexProps<TValues>> {
+export interface ICreatedFlex<TValues extends TSpacingValues>
+    extends ForwardRefExoticComponent<ICreatedFlexProps<TValues> & RefAttributes<HTMLElement>> {
     readonly config: IViewConfig<TValues>;
 }

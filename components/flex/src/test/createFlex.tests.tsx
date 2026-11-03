@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { createView, getStyleEntries } from '@byndyusoft-ui/view';
 import { createFlex } from '../createFlex';
@@ -18,6 +18,30 @@ describe('components/Flex/createFlex', () => {
         const element = screen.getByTestId('flex');
 
         expect(element).toHaveClass('bsui-flex', { exact: true });
+    });
+
+    test('пересылает object ref на DOM-элемент, выбранный через as', () => {
+        const ref = createRef<HTMLElement>();
+
+        render(<Flex as="main" ref={ref} data-testid="flex" />);
+
+        expect(ref.current).toBe(screen.getByTestId('flex'));
+        expect(ref.current?.tagName).toBe('MAIN');
+    });
+
+    test('callback ref получает конечный DOM-элемент и очищается при размонтировании', () => {
+        const receivedElements: Array<HTMLElement | null> = [];
+        const ref = (element: HTMLElement | null): void => {
+            receivedElements.push(element);
+        };
+        const { unmount } = render(<Flex as="article" ref={ref} data-testid="flex" />);
+        const element = screen.getByTestId('flex');
+
+        expect(receivedElements).toEqual([element]);
+
+        unmount();
+
+        expect(receivedElements).toEqual([element, null]);
     });
 
     test('применяет модификаторы раскладки', () => {

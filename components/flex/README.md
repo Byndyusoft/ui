@@ -65,15 +65,28 @@ const Flex = createFlex(View); // классы app-flex, app-flex--g-md и т.п
 
 ## Props
 
-| Проп                         | Тип                                                                                 | Описание                  |
-| ---------------------------- | ----------------------------------------------------------------------------------- | ------------------------- |
-| `direction`                  | `row \| row-reverse \| column \| column-reverse`                                    | `flex-direction`          |
-| `wrap`                       | `nowrap \| wrap \| wrap-reverse`                                                    | `flex-wrap`               |
-| `justifyContent`             | `flex-start \| flex-end \| center \| space-between \| space-around \| space-evenly` | `justify-content`         |
-| `alignContent`               | варианты выше + `stretch`                                                           | `align-content`           |
-| `alignItems`                 | `flex-start \| flex-end \| center \| baseline \| stretch`                           | `align-items`             |
-| `gap`, `rowGap`, `columnGap` | токен `values`                                                                      | Отступы между элементами  |
-| spacing-пропсы View          | токен `values`                                                                      | Полные и короткие отступы |
+| Проп                         | Тип                                                                                 | Описание                            |
+| ---------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------- |
+| `direction`                  | `row \| row-reverse \| column \| column-reverse`                                    | `flex-direction`                    |
+| `wrap`                       | `nowrap \| wrap \| wrap-reverse`                                                    | `flex-wrap`                         |
+| `justifyContent`             | `flex-start \| flex-end \| center \| space-between \| space-around \| space-evenly` | `justify-content`                   |
+| `alignContent`               | варианты выше + `stretch`                                                           | `align-content`                     |
+| `alignItems`                 | `flex-start \| flex-end \| center \| baseline \| stretch`                           | `align-items`                       |
+| `gap`, `rowGap`, `columnGap` | токен `values`                                                                      | Отступы между элементами            |
+| spacing-пропсы View          | токен `values`                                                                      | Полные и короткие отступы           |
+| `ref`                        | `React.Ref<HTMLElement>`                                                            | Ref на host element созданного View |
+
+`ref` указывает на тот же HTMLElement, который рендерит созданный View, в том числе при
+переопределении тега через `as`:
+
+```tsx
+import { useRef } from 'react';
+
+const flexRef = useRef<HTMLElement>(null);
+<Flex as="section" ref={flexRef} gap="md">
+    ...
+</Flex>;
+```
 
 Остальные пропсы (`as`, `className`, нативные атрибуты) проксируются в созданный View.
 
@@ -92,4 +105,4 @@ const Flex = createFlex(View); // классы app-flex, app-flex--g-md и т.п
 
 Публичные типы: `ICreatedFlex`, `ICreatedFlexProps`, `TFlexDirection`, `TFlexWrap`,
 `TAlignContent`, `TAlignItems` и `TJustifyContent`. Созданный компонент имеет
-`displayName = 'Flex'` и хранит конфигурацию View в `Flex.config`. Передача DOM-ref не поддерживается.
+`displayName = 'Flex'` и хранит конфигурацию View в `Flex.config`.

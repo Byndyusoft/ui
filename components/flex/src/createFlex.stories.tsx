@@ -14,6 +14,7 @@ const View = createView(config);
 const Flex = createFlex(View);
 const AppView = createView({ ...config, prefix: 'app' });
 const AppFlex = createFlex(AppView);
+const flexRef = React.createRef<HTMLElement>();
 
 const meta: Meta<typeof Flex> = {
     title: 'components/Flex/createFlex',
@@ -66,6 +67,15 @@ export const CustomPrefix: TStory = {
             <FlexItem />
             <FlexItem />
         </AppFlex>
+    )
+};
+
+export const ForwardedRef: TStory = {
+    render: () => (
+        <Flex as="section" ref={flexRef} direction="column" gap="md">
+            <FlexItem />
+            <FlexItem />
+        </Flex>
     )
 };
 
