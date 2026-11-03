@@ -45,6 +45,10 @@ describe('components/View/types', () => {
     });
 
     test('конфигурация требует юнит и сетку множителей', () => {
-        expectTypeOf<IViewConfig<typeof grid>>().toMatchTypeOf<{ unit: string; values: typeof grid }>();
+        expectTypeOf<IViewConfig<typeof grid>>().toMatchTypeOf<{
+            step: { value: number; unit: 'px' | 'rem' };
+            values: typeof grid;
+            prefix?: string;
+        }>();
     });
 });

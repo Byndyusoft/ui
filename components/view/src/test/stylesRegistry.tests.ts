@@ -1,7 +1,7 @@
 import { getStyleEntries, registerStyles, resetStyles } from '../utilities';
 
 describe('components/View/stylesRegistry', () => {
-    const config = { unit: '8px', values: { md: 1 } } as const;
+    const config = { step: { value: 8, unit: 'px' }, values: { md: 1 } } as const;
     const css = '.bsui-p-md{padding:calc(var(--bsui-unit, 8px) * 1)}';
 
     afterEach(() => {
@@ -32,6 +32,14 @@ describe('components/View/stylesRegistry', () => {
 
         expect(document.head.querySelectorAll('style[id^="bsui-layout-"]')).toHaveLength(1);
         expect(document.getElementById(entry.id)?.textContent).toBe(css + gapCss);
+    });
+
+    test('регистрирует отдельные записи для разных CSS-префиксов', () => {
+        const defaultEntry = registerStyles(config, css);
+        const customEntry = registerStyles({ ...config, prefix: 'app' }, '.app-p-md{padding:8px}');
+
+        expect(customEntry.id).not.toBe(defaultEntry.id);
+        expect(getStyleEntries()).toHaveLength(2);
     });
 
     test('не дублирует стили, отрендеренные на сервере', () => {

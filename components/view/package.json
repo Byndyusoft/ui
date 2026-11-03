@@ -30,7 +30,8 @@
     "prettier:check": "prettier --check \"**/*.{ts,tsx,css,scss,json}\"",
     "prettier:fix": "prettier --write \"**/*.{ts,tsx,css,scss,json}\"",
     "stylelint:check": "stylelint '**/*.{css,scss}' --allow-empty-input",
-    "stylelint:fix": "stylelint '**/*.{css,scss}' --fix --allow-empty-input"
+    "stylelint:fix": "stylelint '**/*.{css,scss}' --fix --allow-empty-input",
+    "test": "vitest run --typecheck --root ../.. --exclude '**/.delta/**' components/view/src"
   },
   "bugs": {
     "url": "https://github.com/Byndyusoft/ui/issues"

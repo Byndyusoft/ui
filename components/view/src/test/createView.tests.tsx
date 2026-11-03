@@ -5,7 +5,7 @@ import { spacingPropPrefixes } from '../constants';
 import { resetStyles } from '../utilities';
 
 describe('components/View/createView', () => {
-    const config = { unit: '8px', values: { sm: 0.5, md: 1, lg: 1.5 } } as const;
+    const config = { step: { value: 8, unit: 'px' }, values: { sm: 0.5, md: 1, lg: 1.5 } } as const;
     const View = createView(config);
 
     afterEach(() => {
@@ -33,6 +33,14 @@ describe('components/View/createView', () => {
         expect(element).toHaveClass('bsui-m-md bsui-p-lg', { exact: true });
         expect(element).not.toHaveAttribute('m');
         expect(element).not.toHaveAttribute('p');
+    });
+
+    test('применяет пользовательский prefix к spacing-классам', () => {
+        const AppView = createView({ ...config, prefix: 'app' });
+
+        render(<AppView m="md" paddingTop="sm" data-testid="view" />);
+
+        expect(screen.getByTestId('view')).toHaveClass('app-m-md app-pt-sm', { exact: true });
     });
 
     test('разрешает полные и короткие aliases в порядке ключей итоговых props', () => {
@@ -96,7 +104,10 @@ describe('components/View/createView', () => {
     });
 
     test('не схлопывает разные токены только из-за совпадения множителей', () => {
-        const AliasValuesView = createView({ unit: '8px', values: { a: 1, b: 1, c: 1, d: 1 } } as const);
+        const AliasValuesView = createView({
+            step: { value: 8, unit: 'px' },
+            values: { a: 1, b: 1, c: 1, d: 1 }
+        } as const);
 
         render(<AliasValuesView marginTop="a" marginRight="b" marginBottom="c" marginLeft="d" data-testid="view" />);
 
@@ -168,12 +179,12 @@ describe('components/View/createView', () => {
 
         // eslint-disable-next-line testing-library/no-node-access -- тест проверяет инъекцию style-элемента в head
         expect(document.head.querySelector('style[id^="bsui-layout-"]')?.textContent).toContain(
-            '.bsui-p-md{padding:calc(var(--bsui-unit, 8px) * 1)}'
+            '.bsui-p-md{padding:8px}'
         );
     });
 
     test('бросает ошибку на недопустимом токене сетки', () => {
-        expect(() => createView({ unit: '8px', values: { 'my token': 1 } })).toThrow(
+        expect(() => createView({ step: { value: 8, unit: 'px' }, values: { 'my token': 1 } })).toThrow(
             'недопустимый токен сетки "my token"'
         );
     });

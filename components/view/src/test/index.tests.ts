@@ -20,8 +20,9 @@ describe('components/View/exports', () => {
         expect(view.spacingPropPrefixes.p).toBe('p');
         expect(view.getSpacingClassName(view.spacingPropPrefixes.padding, 'md')).toBe('bsui-p-md');
         expect(view.getSpacingValue('8px', 1)).toBe('calc(var(--bsui-unit, 8px) * 1)');
-        expect(view.buildCss({ unit: '8px', values: { md: 1 } })).toContain(
-            '.bsui-p-md{padding:calc(var(--bsui-unit, 8px) * 1)}'
+        expect(view.getSpacingValue({ value: 8, unit: 'px' }, 1.5)).toBe('12px');
+        expect(view.buildCss({ step: { value: 8, unit: 'px' }, values: { md: 1 } })).toContain(
+            '.bsui-p-md{padding:8px}'
         );
         expect(() => view.validateValuesKeys({ 'invalid token': 1 })).toThrow('недопустимый токен');
     });

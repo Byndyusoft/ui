@@ -2,9 +2,17 @@ import { FC, HTMLAttributes, ReactHTML } from 'react';
 
 export type TSpacingValues = Record<string, number>;
 
+export type TSpacingUnit = 'px' | 'rem';
+
+export interface ISpacingStep {
+    value: number;
+    unit: TSpacingUnit;
+}
+
 export interface IViewConfig<TValues extends TSpacingValues = TSpacingValues> {
-    unit: string;
+    step: ISpacingStep;
     values: TValues;
+    prefix?: string;
 }
 
 export type TValuesToken<TValues extends TSpacingValues> = Extract<keyof TValues, string>;

@@ -1,3 +1,3 @@
-export function getSpacingClassName(prefix: string, token: string): string {
-    return `bsui-${prefix}-${token}`;
+export function getSpacingClassName(spacingPrefix: string, token: string, classPrefix = 'bsui'): string {
+    return `${classPrefix}-${spacingPrefix}-${token}`;
 }

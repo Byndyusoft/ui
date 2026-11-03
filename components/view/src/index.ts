@@ -17,8 +17,10 @@ export {
     spacingPropsNames
 } from './constants';
 export type {
+    ISpacingStep,
     IViewConfig,
     TSpacingValues,
+    TSpacingUnit,
     TValuesToken,
     ISpacingProps,
     ICreatedViewProps,

@@ -7,12 +7,12 @@ export function buildCss<TGrid extends TSpacingValues>(config: IViewConfig<TGrid
     const rules: Array<string> = [];
 
     Object.entries(config.values).forEach(([token, multiplier]) => {
-        const value = getSpacingValue(config.unit, multiplier);
+        const value = getSpacingValue(config.step, multiplier);
 
         Object.entries(spacingSideProperties).forEach(([prefix, properties]) => {
             const declarations = properties.map(property => `${property}:${value}`).join(';');
 
-            rules.push(`.${getSpacingClassName(prefix, token)}{${declarations}}`);
+            rules.push(`.${getSpacingClassName(prefix, token, config.prefix)}{${declarations}}`);
         });
     });
 

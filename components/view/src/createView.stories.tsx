@@ -4,11 +4,12 @@ import type { InputType } from '@storybook/types';
 import { createView } from './createView';
 
 const config = {
-    unit: '8px',
+    step: { value: 8, unit: 'px' },
     values: { xs: 0.25, sm: 0.5, md: 1, lg: 1.5, xl: 2, xxl: 3 }
 } as const;
 
 const View = createView(config);
+const AppView = createView({ ...config, prefix: 'app' });
 
 const meta: Meta<typeof View> = {
     title: 'components/View/createView',
@@ -76,19 +77,19 @@ export const Default: TStory = {
     argTypes: spacingControls
 };
 
-export const RuntimeUnitOverride: TStory = {
+export const CustomPrefix: TStory = {
     args: {
         padding: 'xl',
         marginBottom: 'md'
     },
     render: args => (
-        <div style={{ '--bsui-unit': '4px' } as React.CSSProperties}>
+        <div>
             <p>
-                Юнит переопределён до 4px для этого поддерева через <code>--bsui-unit</code>
+                Prefix <code>app</code> задаёт отдельный namespace CSS-классов для этой сетки.
             </p>
-            <View {...args}>
+            <AppView {...args}>
                 <ViewContent />
-            </View>
+            </AppView>
         </div>
     ),
     argTypes: spacingControls

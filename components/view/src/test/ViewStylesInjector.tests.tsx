@@ -13,18 +13,18 @@ describe('components/View/ViewStylesInjector', () => {
     });
 
     test('рендерит style-элементы со стабильным id и сгенерированным CSS', () => {
-        createView({ unit: '8px', values: { md: 1 } } as const);
+        createView({ step: { value: 8, unit: 'px' }, values: { md: 1 } } as const);
 
         const { container } = render(<ViewStylesInjector />);
         const style = container.querySelector('style');
 
         expect(style?.id).toMatch(/^bsui-layout-/);
-        expect(style?.textContent).toContain('.bsui-p-md{padding:calc(var(--bsui-unit, 8px) * 1)}');
+        expect(style?.textContent).toContain('.bsui-p-md{padding:8px}');
     });
 
     test('при наличии отрендеренного компонентом style инъектор не добавляет дубль', () => {
         resetStyles();
-        createView({ unit: '8px', values: { md: 1 } } as const);
+        createView({ step: { value: 8, unit: 'px' }, values: { md: 1 } } as const);
 
         // эмулируем клиент после SSR: автоинъекции ещё не было, в head лежит серверный style
         document.head.querySelectorAll('style[id^="bsui-layout-"]').forEach(style => style.remove());
@@ -40,7 +40,7 @@ describe('components/View/ViewStylesInjector', () => {
         document.head.appendChild(serverStyle);
 
         resetStyles();
-        createView({ unit: '8px', values: { md: 1 } } as const);
+        createView({ step: { value: 8, unit: 'px' }, values: { md: 1 } } as const);
 
         expect(document.head.querySelectorAll('style[id^="bsui-layout-"]')).toHaveLength(1);
         expect(document.getElementById(serverStyle.id)).toBe(serverStyle);

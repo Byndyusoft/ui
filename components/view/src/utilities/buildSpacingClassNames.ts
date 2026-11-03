@@ -14,12 +14,13 @@ function getSharedToken<TToken extends string>(...tokens: Array<TToken | undefin
 
 function buildBoxSpacingClassNames<TToken extends string>(
     boxName: 'margin' | 'padding',
-    spacingProps: IResolvedSpacingProps<TToken>
+    spacingProps: IResolvedSpacingProps<TToken>,
+    classPrefix: string
 ): Array<string> {
     const getToken = (propName: string): TToken | undefined =>
         spacingProps[propName as keyof IResolvedSpacingProps<TToken>];
     const getClassName = (propName: string, token: TToken): string =>
-        getSpacingClassName(spacingPropPrefixes[propName as keyof ISpacingProps], token);
+        getSpacingClassName(spacingPropPrefixes[propName as keyof ISpacingProps], token, classPrefix);
     const boxPrefix = spacingPropPrefixes[boxName];
     const allSidesToken = getToken(boxName);
     const horizontalPropName = `${boxName}Horizontal`;
@@ -39,7 +40,7 @@ function buildBoxSpacingClassNames<TToken extends string>(
     const allSidesClassToken = getSharedToken(topToken, rightToken, bottomToken, leftToken);
 
     if (allSidesClassToken !== undefined) {
-        return [getSpacingClassName(boxPrefix, allSidesClassToken)];
+        return [getSpacingClassName(boxPrefix, allSidesClassToken, classPrefix)];
     }
 
     const horizontalPairToken = getSharedToken(leftToken, rightToken);
@@ -67,10 +68,11 @@ function buildBoxSpacingClassNames<TToken extends string>(
 }
 
 export function buildSpacingClassNames<TToken extends string>(
-    spacingProps: IResolvedSpacingProps<TToken>
+    spacingProps: IResolvedSpacingProps<TToken>,
+    classPrefix = 'bsui'
 ): Array<string> {
     return [
-        ...buildBoxSpacingClassNames('margin', spacingProps),
-        ...buildBoxSpacingClassNames('padding', spacingProps)
+        ...buildBoxSpacingClassNames('margin', spacingProps, classPrefix),
+        ...buildBoxSpacingClassNames('padding', spacingProps, classPrefix)
     ];
 }
