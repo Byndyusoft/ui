@@ -1,10 +1,11 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { createView } from '@byndyusoft-ui/view';
+import { createView, getStyleEntries } from '@byndyusoft-ui/view';
 import { createFlex } from '../createFlex';
 
 describe('components/Flex/createFlex', () => {
-    const View = createView({ unit: '8px', values: { sm: 0.5, md: 1, lg: 1.5 } } as const);
+    const config = { step: { value: 8, unit: 'px' }, values: { sm: 0.5, md: 1, lg: 1.5 } } as const;
+    const View = createView(config);
     const Flex = createFlex(View);
 
     afterEach(() => {
@@ -75,6 +76,22 @@ describe('components/Flex/createFlex', () => {
         expect(element).not.toHaveAttribute('p');
     });
 
+    test('наследует custom prefix View для spacing, gap и flex-модификаторов', () => {
+        const AppView = createView({ ...config, prefix: 'app' });
+        const AppFlex = createFlex(AppView);
+
+        render(<AppFlex direction="column" gap="md" p="sm" data-testid="app-flex" />);
+
+        expect(screen.getByTestId('app-flex')).toHaveClass('app-p-sm app-flex app-flex--fd-column app-flex--g-md', {
+            exact: true
+        });
+
+        const appStyles = getStyleEntries().find(entry => entry.css.includes('.app-p-sm{padding:4px}'));
+
+        expect(appStyles?.css).toContain('.app-flex{display:flex}');
+        expect(appStyles?.css).toContain('.app-flex--g-md{gap:8px}');
+    });
+
     test('сохраняет порядок spacing, пользовательских классов, модификаторов и gap', () => {
         render(<Flex padding="md" className="custom" direction="column" gap="sm" data-testid="flex" />);
 
@@ -134,18 +151,18 @@ describe('components/Flex/createFlex', () => {
     });
 
     test('регистрирует модификаторы и gap в тот же style-элемент, что и стили View', () => {
-        const freshView = createView({ unit: '4px', values: { md: 1 } } as const);
+        const freshView = createView({ step: { value: 4, unit: 'px' }, values: { md: 1 } } as const);
 
         createFlex(freshView);
 
-        const marker = '.bsui-p-md{padding:calc(var(--bsui-unit, 4px) * 1)}';
+        const marker = '.bsui-p-md{padding:4px}';
         // eslint-disable-next-line testing-library/no-node-access -- тест проверяет инъекцию style-элемента в head
         const styles = Array.from(document.head.querySelectorAll('style[id^="bsui-layout-"]'));
         const stylesWithSpacing = styles.filter(style => style.textContent?.includes(marker));
 
         expect(stylesWithSpacing).toHaveLength(1);
         expect(stylesWithSpacing[0]).toHaveTextContent('.bsui-flex{display:flex}');
-        expect(stylesWithSpacing[0]).toHaveTextContent('.bsui-flex--g-md{gap:calc(var(--bsui-unit, 4px) * 1)}');
+        expect(stylesWithSpacing[0]).toHaveTextContent('.bsui-flex--g-md{gap:4px}');
     });
 
     test('несёт конфигурацию созданного View', () => {

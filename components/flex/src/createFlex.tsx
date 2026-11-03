@@ -1,7 +1,7 @@
 import React, { type FC } from 'react';
 import cn from 'classnames';
 import { registerStyles, type ICreatedView, type TSpacingValues } from '@byndyusoft-ui/view';
-import { blockClassName, flexModifiersCss } from './constants';
+import { buildFlexModifiersCss, getFlexBlockClassName } from './constants';
 import type { ICreatedFlex, ICreatedFlexProps } from './types';
 import {
     buildCss,
@@ -14,7 +14,9 @@ import {
 } from './utilities';
 
 export function createFlex<TValues extends TSpacingValues>(view: ICreatedView<TValues>): ICreatedFlex<TValues> {
-    registerStyles(view.config, flexModifiersCss + buildCss(view.config));
+    const classPrefix = view.config.prefix;
+
+    registerStyles(view.config, buildFlexModifiersCss(classPrefix) + buildCss(view.config));
 
     const CreatedFlex: FC<ICreatedFlexProps<TValues>> = ({
         className,
@@ -30,14 +32,14 @@ export function createFlex<TValues extends TSpacingValues>(view: ICreatedView<TV
         ...props
     }) => {
         const flexClassName = cn(
-            blockClassName,
+            getFlexBlockClassName(classPrefix),
             className,
-            getDirectionModifier(direction),
-            getWrapModifier(wrap),
-            getAlignContentModifier(alignContent),
-            getAlignItemsModifier(alignItems),
-            getJustifyContentModifier(justifyContent),
-            ...getGapClassNames(gap, rowGap, columnGap)
+            getDirectionModifier(direction, classPrefix),
+            getWrapModifier(wrap, classPrefix),
+            getAlignContentModifier(alignContent, classPrefix),
+            getAlignItemsModifier(alignItems, classPrefix),
+            getJustifyContentModifier(justifyContent, classPrefix),
+            ...getGapClassNames(gap, rowGap, columnGap, classPrefix)
         );
 
         return React.createElement(view, { className: flexClassName, ...props }, children);

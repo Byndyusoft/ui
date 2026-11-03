@@ -31,7 +31,7 @@ import type {
 
 const values = { sm: 0.5, md: 1, lg: 1.5 } as const;
 
-const View = createView({ unit: '8px', values });
+const View = createView({ step: { value: 8, unit: 'px' }, values });
 const Flex = createFlex(View);
 
 describe('components/Flex/createFlex/types', () => {
@@ -50,6 +50,7 @@ describe('components/Flex/createFlex/types', () => {
 
     test('выводит конфигурацию из типа созданного View', () => {
         expectTypeOf(Flex.config.values).toEqualTypeOf<typeof values>();
+        expectTypeOf(Flex.config.step.unit).toEqualTypeOf<'px' | 'rem'>();
     });
 
     test('сохраняет модификаторы раскладки и spacing-пропсы', () => {
@@ -78,6 +79,7 @@ describe('components/Flex/createFlex/types', () => {
         expectTypeOf(flexModifiersCss).toEqualTypeOf<string>();
         expectTypeOf<typeof blockClassName>().toEqualTypeOf<'bsui-flex'>();
         expectTypeOf(getDirectionModifier('column')).toEqualTypeOf<string>();
+        expectTypeOf(getDirectionModifier('column', 'app')).toEqualTypeOf<string>();
         expectTypeOf(getWrapModifier('wrap')).toEqualTypeOf<string>();
         expectTypeOf(getAlignContentModifier('stretch')).toEqualTypeOf<string>();
         expectTypeOf(getAlignItemsModifier('center')).toEqualTypeOf<string>();

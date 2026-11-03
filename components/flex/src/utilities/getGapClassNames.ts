@@ -1,6 +1,11 @@
-import { blockClassName } from '../constants';
+export function getGapClassNames(
+    gap?: string,
+    rowGap?: string,
+    columnGap?: string,
+    classPrefix = 'bsui'
+): Array<string> {
+    const blockClassName = `${classPrefix}-flex`;
 
-export function getGapClassNames(gap?: string, rowGap?: string, columnGap?: string): Array<string> {
     if (gap) {
         return [`${blockClassName}--g-${gap}`];
     }

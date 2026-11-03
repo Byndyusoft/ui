@@ -23,7 +23,7 @@ import { createView } from '@byndyusoft-ui/view';
 import { createFlex } from '@byndyusoft-ui/flex';
 
 export const View = createView({
-    unit: '8px',
+    step: { value: 8, unit: 'px' },
     values: { xs: 0.25, sm: 0.5, md: 1, lg: 1.5, xl: 2, xxl: 3 }
 } as const);
 
@@ -44,9 +44,24 @@ import { Flex, View } from '@/shared/ui/layout';
 gap-пропсы принимают те же токены, что и spacing-пропсы View. Стили (классы отступов,
 gap и flex-модификаторы) генерируются автоматически и доставляются так же, как у
 `createView`: автоинъекция в браузере и компонент `ViewStylesInjector` для SSR — подробности
-в README `@byndyusoft-ui/view`. Flex поддерживает короткие aliases spacing-пропсов View
+в README `@byndyusoft-ui/view`. Шаг `step` фиксируется при создании фабрики, а gap и отступы
+выводятся готовыми CSS-длинами; дробные множители токенов поддерживаются. Flex наследует
+`prefix` созданного View (по умолчанию `bsui`), поэтому его классы используют тот же namespace.
+Flex поддерживает короткие aliases spacing-пропсов View
 (`m`, `mt`, `mh`, `p`, `pt`, `ph` и остальные); правила приоритета, aliases и сокращения
 классов описаны в README View.
+
+Чтобы использовать отдельный namespace, задайте `prefix` в `createView`; он автоматически
+применится и к классам Flex:
+
+```tsx
+const View = createView({
+    step: { value: 1, unit: 'rem' },
+    prefix: 'app',
+    values: { sm: 0.5, md: 1 }
+} as const);
+const Flex = createFlex(View); // классы app-flex, app-flex--g-md и т.п.
+```
 
 ## Props
 

@@ -6,12 +6,14 @@ import { createFlex } from './createFlex';
 import { alignContentVariants, alignItemsVariants, directions, flexWraps, justifyContentVariants } from './constants';
 
 const config = {
-    unit: '8px',
+    step: { value: 8, unit: 'px' },
     values: { xs: 0.25, sm: 0.5, md: 1, lg: 1.5, xl: 2, xxl: 3 }
 } as const;
 
 const View = createView(config);
 const Flex = createFlex(View);
+const AppView = createView({ ...config, prefix: 'app' });
+const AppFlex = createFlex(AppView);
 
 const meta: Meta<typeof Flex> = {
     title: 'components/Flex/createFlex',
@@ -56,6 +58,15 @@ export const Default: TStory = {
         rowGap: tokenControl,
         columnGap: tokenControl
     }
+};
+
+export const CustomPrefix: TStory = {
+    render: () => (
+        <AppFlex direction="column" gap="md">
+            <FlexItem />
+            <FlexItem />
+        </AppFlex>
+    )
 };
 
 export const ColumnWithView: TStory = {

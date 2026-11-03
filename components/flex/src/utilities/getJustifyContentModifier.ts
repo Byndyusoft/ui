@@ -1,6 +1,6 @@
-import { blockClassName } from '../constants';
+import { getFlexBlockClassName } from '../constants';
 import type { TJustifyContent } from '../types';
 
-export function getJustifyContentModifier(justifyContent?: TJustifyContent): string {
-    return justifyContent ? `${blockClassName}--jc-${justifyContent}` : '';
+export function getJustifyContentModifier(justifyContent?: TJustifyContent, classPrefix = 'bsui'): string {
+    return justifyContent ? `${getFlexBlockClassName(classPrefix)}--jc-${justifyContent}` : '';
 }

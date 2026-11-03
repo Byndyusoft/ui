@@ -6,7 +6,7 @@ import { ModalsProvider, useModals, useModalsState } from './ModalsContext';
 import styles from './ModalsProvider.stories.module.css';
 
 const View = createView({
-    unit: '1rem',
+    step: { value: 1, unit: 'rem' },
     values: { '025': 0.25, '100': 1, '300': 3 }
 } as const);
 

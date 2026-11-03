@@ -26,8 +26,9 @@ describe('components/Flex/exports', () => {
         expect(flex.getAlignContentModifier('stretch')).toBe('bsui-flex--ac-stretch');
         expect(flex.getAlignItemsModifier('center')).toBe('bsui-flex--ai-center');
         expect(flex.getJustifyContentModifier('space-between')).toBe('bsui-flex--jc-space-between');
-        expect(flex.buildCss({ unit: '8px', values: { md: 1 } })).toContain(
-            '.bsui-flex--g-md{gap:calc(var(--bsui-unit, 8px) * 1)}'
+        expect(flex.getDirectionModifier('column', 'app')).toBe('app-flex--fd-column');
+        expect(flex.buildCss({ step: { value: 8, unit: 'px' }, values: { md: 1 } })).toContain(
+            '.bsui-flex--g-md{gap:8px}'
         );
         expect(flex.flexModifiersCss).toContain('.bsui-flex{display:flex}');
         expect(flex.directions).toContain('column');
